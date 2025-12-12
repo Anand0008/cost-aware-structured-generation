@@ -1,0 +1,189 @@
+# ============================================================================
+# THRESHOLDS CONFIGURATION
+# Purpose: All numerical thresholds for consensus, quality scoring, retrieval
+# Used by: All pipeline scripts that make decisions based on thresholds
+# ============================================================================
+
+# ----------------------------------------------------------------------------
+# CONSENSUS THRESHOLDS (Voting & Debate)
+# ----------------------------------------------------------------------------
+
+consensus:
+  # Initial voting threshold - must reach this for immediate acceptance
+  initial_threshold: 0.80  # 80% weighted agreement
+  
+  # Debate Round 2 threshold - lower bar after debate
+  debate_round2_threshold: 0.70  # 70% weighted agreement
+  
+  # Minimum acceptance threshold - below this = human review
+  minimum_acceptance: 0.60  # 60% is absolute minimum
+  
+  # Maximum debate rounds before giving up
+  max_debate_rounds: 2
+  
+  # Expected percentage of questions needing debate
+  expected_debate_rate: 0.40  # 40% of fields will need debate
+  
+  # Percentage of questions expected to need Round 2
+  expected_round2_rate: 0.10  # 10% will need second debate round
+
+# ----------------------------------------------------------------------------
+# CACHE THRESHOLDS (Semantic Similarity)
+# ----------------------------------------------------------------------------
+
+cache:
+  # Similarity threshold for cache hit (cosine similarity)
+  similarity_threshold: 0.97  # 97% similarity = same question
+  
+  # Maximum age of cached results (seconds)
+  max_age_seconds: 31536000  # 1 year (365 days)
+  
+  # Whether to use cache at all
+  enabled: true
+  
+  # Check cache even if question IDs are different
+  # (useful for finding duplicate questions across years)
+  check_across_years: true
+
+# ----------------------------------------------------------------------------
+# RETRIEVAL THRESHOLDS (RAG)
+# ----------------------------------------------------------------------------
+
+retrieval:
+  # Dense retrieval (Qdrant vector search)
+  dense:
+    score_threshold: 0.70  # Minimum cosine similarity (0-1)
+    top_k: 10              # Results per collection (books, videos)
+    
+  # Sparse retrieval (BM25 keyword search)
+  sparse:
+    top_k: 10              # Number of results to retrieve
+    min_score: 5.0         # Minimum BM25 score (optional filter)
+  
+  # Final merged results
+  merged:
+    top_k: 6               # Final number of chunks to use as context
+    
+  # Relevance scoring for final chunks
+  min_relevance_score: 0.60  # Warn if best chunk is below this
+
+# ----------------------------------------------------------------------------
+# LOGPROBS THRESHOLDS (GPT-5.1 Confidence Calibration)
+# ----------------------------------------------------------------------------
+
+logprobs:
+  # High entropy = model is uncertain (trigger debate)
+  high_entropy_threshold: 0.7  # Above this = uncertain
+  
+  # Low entropy = model is confident (trust it)
+  low_entropy_threshold: 0.3   # Below this = very confident
+  
+  # Maximum difference between explicit and implicit confidence
+  # If exceeded, flag as miscalibrated
+  confidence_mismatch_threshold: 0.30  # 30% difference allowed
+  
+  # Whether to use logprobs at all
+  enabled: true
+  
+  # Override model's self-reported confidence if mismatch detected
+  override_on_mismatch: true
+
+# ----------------------------------------------------------------------------
+# QUALITY SCORING THRESHOLDS
+# ----------------------------------------------------------------------------
+
+quality:
+  # Quality bands (0-1 scale)
+  bands:
+    gold_threshold: 0.90    # ≥0.90 = GOLD (excellent)
+    silver_threshold: 0.80  # ≥0.80 = SILVER (good)
+    bronze_threshold: 0.70  # ≥0.70 = BRONZE (acceptable)
+    # Below 0.70 = REVIEW (needs human review)
+  
+  # Quality metric weights (must sum to 1.0)
+  metric_weights:
+    avg_model_confidence: 0.30    # How confident were models?
+    consensus_rate: 0.25           # How much did they agree?
+    debate_efficiency: 0.20        # Fewer debates = better
+    rag_relevance: 0.15            # Was RAG context helpful?
+    field_completeness: 0.10       # All fields filled?
+  
+  # Minimum acceptable scores for individual metrics
+  min_acceptable:
+    avg_model_confidence: 0.80     # At least 80% confidence
+    consensus_rate: 0.70           # At least 70% fields converged
+    rag_relevance: 0.60            # RAG must be somewhat relevant
+    field_completeness: 0.95       # 95% of fields must be filled
+
+# ----------------------------------------------------------------------------
+# IMAGE CONSENSUS THRESHOLDS
+# ----------------------------------------------------------------------------
+
+image_consensus:
+  # Agreement threshold for image descriptions
+  min_agreement: 0.80  # 80% agreement between 3 vision models
+  
+  # Minimum description quality score
+  min_quality_score: 0.85
+  
+  # Whether to include low-quality descriptions for DeepSeek
+  # (If false, DeepSeek gets generic "image unavailable" message)
+  use_low_quality: false
+
+# ----------------------------------------------------------------------------
+# COST & BUDGET THRESHOLDS
+# ----------------------------------------------------------------------------
+
+cost_control:
+  # Maximum cost per question (USD) - alert if exceeded
+  max_cost_per_question: 0.25  # $0.25 per question
+  
+  # Total budget for entire run (USD) - pause if exceeded
+  max_total_budget: 250.00  # $250 for safety (actual ~$173)
+  
+  # Warn if cumulative cost reaches percentage of budget
+  warn_at_percentage: 0.80  # Warn at 80% of budget
+  
+  # Whether to enforce hard limits
+  enforce_limits: true
+  
+  # Cost per model thresholds (alert if any model exceeds)
+  max_cost_per_model:
+    gemini_2.5_pro: 50.00
+    claude_sonnet_4.5: 80.00
+    deepseek_r1: 15.00
+    gpt_5_1: 50.00
+
+# ----------------------------------------------------------------------------
+# TIME & PERFORMANCE THRESHOLDS
+# ----------------------------------------------------------------------------
+
+performance:
+  # Maximum processing time per question (seconds)
+  max_time_per_question: 300  # 5 minutes (DeepSeek can be slow)
+  
+  # Warn if any stage exceeds these times
+  stage_timeouts:
+    classification: 15        # Gemini 2.0 Flash should be fast
+    retrieval: 10             # Qdrant + BM25 should be quick
+    model_generation: 240     # DeepSeek bottleneck (180s avg)
+    voting: 5
+    debate_round1: 60
+    debate_round2: 60
+    synthesis: 10
+  
+  # API call timeout (seconds)
+  api_timeout: 120
+  
+  # Maximum retries for failed API calls
+  max_retries: 3
+  
+  # Exponential backoff base (seconds)
+  retry_base_delay: 2  # 2s, 4s, 8s...
+
+# ----------------------------------------------------------------------------
+# FIELD VALIDATION THRESHOLDS
+# ----------------------------------------------------------------------------
+
+validation:
+  # Minimum number of items for lis
