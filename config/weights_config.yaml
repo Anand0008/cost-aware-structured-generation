@@ -1,0 +1,179 @@
+# ============================================================================
+# ADAPTIVE WEIGHTS CONFIGURATION
+# Purpose: Define how to weight each model based on question type
+# Used by: voting_engine.py, debate_orchestrator.py
+# ============================================================================
+
+# ----------------------------------------------------------------------------
+# WEIGHT STRATEGIES
+# Each strategy assigns different weights to the 4 models based on their strengths
+# Weights must sum to 1.0
+# ----------------------------------------------------------------------------
+
+weight_strategies:
+  
+  # BALANCED - Slight boost to Gemini/Claude for pedagogical depth
+  # Use for: Mixed questions, general use
+  BALANCED:
+    gemini_2.5_pro: 0.28
+    claude_sonnet_4.5: 0.28
+    deepseek_r1: 0.22
+    gpt_5_1: 0.22
+  
+  # CONCEPTUAL_WEIGHTED - Boost pedagogical models for conceptual questions
+  # Use for: Pure conceptual/theory questions requiring deep explanations
+  CONCEPTUAL_WEIGHTED:
+    gemini_2.5_pro: 0.30
+    claude_sonnet_4.5: 0.35
+    deepseek_r1: 0.15
+    gpt_5_1: 0.20
+  
+  # MATH_WEIGHTED - DeepSeek gets 2× weight for mathematical questions
+  # Use for: Derivations, proofs, numerical calculations (text-only)
+  MATH_WEIGHTED:
+    gemini_2.5_pro: 0.20
+    claude_sonnet_4.5: 0.20
+    deepseek_r1: 0.40
+    gpt_5_1: 0.20
+  
+  # NUMERICAL_WEIGHTED - Boost DeepSeek for numerical calculations
+  # Use for: Numerical calculations, plug-and-chug problems
+  NUMERICAL_WEIGHTED:
+    gemini_2.5_pro: 0.20
+    claude_sonnet_4.5: 0.20
+    deepseek_r1: 0.40
+    gpt_5_1: 0.20
+  
+  # APPLICATION_WEIGHTED - Boost pedagogical models for application problems
+  # Use for: Conceptual application, MCQ reasoning, scenario-based questions
+  APPLICATION_WEIGHTED:
+    gemini_2.5_pro: 0.30
+    claude_sonnet_4.5: 0.30
+    deepseek_r1: 0.20
+    gpt_5_1: 0.20
+  
+  # VISION_WEIGHTED - Boost vision models, reduce DeepSeek (can't see images)
+  # Use for: Conceptual questions WITH images (diagrams, graphs, circuits)
+  VISION_WEIGHTED:
+    gemini_2.5_pro: 0.35
+    claude_sonnet_4.5: 0.30
+    deepseek_r1: 0.10
+    gpt_5_1: 0.25
+  
+  # MATH_IMAGE_HYBRID - Math questions WITH images
+  # Use for: Derivations/calculations that include diagrams
+  # All models get similar weight since DeepSeek gets robust image description
+  MATH_IMAGE_HYBRID:
+    gemini_2.5_pro: 0.28
+    claude_sonnet_4.5: 0.28
+    deepseek_r1: 0.28
+    gpt_5_1: 0.16
+
+# ----------------------------------------------------------------------------
+# QUESTION TYPE TO STRATEGY MAPPING
+# Maps the combined question type (from classification) to a weight strategy
+# Format: {content_type}_{media_type} -> strategy_name
+# ----------------------------------------------------------------------------
+
+question_type_to_strategy:
+  
+  # Conceptual/Theoretical questions
+  conceptual_theory_text_only: CONCEPTUAL_WEIGHTED
+  conceptual_theory_image_based: VISION_WEIGHTED
+  
+  # Mathematical derivations
+  mathematical_derivation_text_only: MATH_WEIGHTED
+  mathematical_derivation_image_based: MATH_IMAGE_HYBRID
+  
+  # Numerical calculations
+  numerical_calculation_text_only: NUMERICAL_WEIGHTED
+  numerical_calculation_image_based: MATH_IMAGE_HYBRID
+  
+  # Conceptual applications (MCQs, reasoning)
+  conceptual_application_text_only: APPLICATION_WEIGHTED
+  conceptual_application_image_based: VISION_WEIGHTED
+  
+  # Fallback for unknown types
+  unknown: BALANCED
+
+# ----------------------------------------------------------------------------
+# CONFIDENCE-BASED WEIGHT ADJUSTMENT (for Debate Round 2)
+# When debate doesn't converge, weights are adjusted by model confidence
+# ----------------------------------------------------------------------------
+
+confidence_adjustment:
+  enabled: true
+  
+  # How much to scale weights by confidence
+  # Formula: adjusted_weight = original_weight × (confidence ^ scaling_factor)
+  scaling_factor: 1.0  # 1.0 = linear scaling, >1.0 = exponential
+  
+  # Minimum confidence to participate in voting
+  min_confidence_threshold: 0.50  # Models below 50% confidence are excluded
+  
+  # Use adjusted confidence from logprobs (GPT-5.1 only)
+  use_logprobs_calibration: true
+
+# ----------------------------------------------------------------------------
+# MODEL-SPECIFIC NOTES (for reference)
+# ----------------------------------------------------------------------------
+
+model_characteristics:
+  gemini_2.5_pro:
+    strengths:
+      - Comprehensive step-by-step explanations
+      - Excellent vision capabilities
+      - Good at identifying common mistakes
+    best_for:
+      - Thorough problem breakdowns
+      - Image analysis
+      - Conceptual depth
+  
+  claude_sonnet_4.5:
+    strengths:
+      - Perfect confidence calibration (1.0 avg)
+      - Best pedagogical flashcards
+      - Clear real-world examples
+    best_for:
+      - Student learning content
+      - Exam strategy
+      - High-quality explanations
+  
+  deepseek_r1:
+    strengths:
+      - Mathematical rigor
+      - Physics/engineering derivations
+      - Long-form reasoning (3909 tokens avg)
+    best_for:
+      - Complex math problems
+      - Multi-step derivations
+      - Technical accuracy
+    limitations:
+      - No vision (text-only)
+      - Slower (180s per question)
+  
+  gpt_5_1:
+    strengths:
+      - Logprobs for confidence calibration
+      - Good vision capabilities
+      - Well-balanced performance
+      - Cost-effective ($1.25 input vs $2.50)
+    best_for:
+      - Quality validation
+      - Confidence scoring
+      - Balanced judgments
+
+# ----------------------------------------------------------------------------
+# VALIDATION RULES
+# ----------------------------------------------------------------------------
+
+validation:
+  # Ensure all weights sum to 1.0
+  enforce_sum_to_one: true
+  tolerance: 0.001  # Allow ±0.001 rounding error
+  
+  # Warn if any weight is too extreme
+  warn_if_weight_below: 0.10
+  warn_if_weight_above: 0.50
+
+# ============================================================================
