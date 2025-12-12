@@ -1,0 +1,202 @@
+# ============================================================================
+# MODELS CONFIGURATION
+# Purpose: Centralized config for all LLM APIs and database connections
+# Used by: All pipeline scripts that need model access or database connections
+# ============================================================================
+
+# ----------------------------------------------------------------------------
+# MAIN MODELS (Used for question tagging)
+# ----------------------------------------------------------------------------
+
+models:
+  # Google Gemini 2.5 Flash - TESTING VERSION (cheaper)
+  gemini_2.5_pro:
+    provider: google
+    api_endpoint: https://generativelanguage.googleapis.com/v1beta
+    model_id: gemini-2.5-flash  # Changed from gemini-2.5-pro for testing
+    pricing:
+      input_per_1m: 0.15     # USD per 1M input tokens (Flash is cheaper)
+      output_per_1m: 0.60    # USD per 1M output tokens
+    parameters:
+      temperature: 0.1      # Low temperature for consistent outputs
+      max_tokens: 8000      # Maximum output length
+      top_p: 0.95
+      top_k: 40
+    supports_vision: true   # Can process images
+    supports_json: true     # Can output structured JSON
+    api_key_env: YOUR_ENV_VAR_OR_KEY_HERE
+  
+  # Anthropic Claude 3 Haiku - TESTING VERSION (cheaper, available in ap-south-1)
+  claude_sonnet_4.5:
+    provider: aws_bedrock   # Using AWS Bedrock for Claude
+    region: ap-south-1      # Using ap-south-1 where model is available
+    model_id: anthropic.claude-3-haiku-20240307-v1:0  # Claude 3 Haiku for testing
+    pricing:
+      input_per_1m: 3.00    # USD per 1M input tokens
+      output_per_1m: 15.00  # USD per 1M output tokens
+    parameters:
+      temperature: 0.1
+      max_tokens: 8000
+      top_p: 0.95
+    supports_vision: true
+    supports_json: true
+    api_key_env: YOUR_ENV_VAR_OR_KEY_HERE
+    api_secret_env: YOUR_SECRET_HERE
+    aws_region_env: ap-south-1
+  
+  # DeepSeek R1 (Reasoner) - Math and physics specialist
+  deepseek_r1:
+    provider: deepseek
+    api_endpoint: https://api.deepseek.com/v1
+    model_id: deepseek-reasoner  # Or deepseek-chat if reasoner not available
+    pricing:
+      input_per_1m: 0.55    # USD per 1M input tokens
+      output_per_1m: 2.19   # USD per 1M output tokens
+    parameters:
+      temperature: 0.1
+      max_tokens: 8000
+    supports_vision: false  # Text-only model
+    supports_json: true
+    api_key_env: YOUR_ENV_VAR_OR_KEY_HERE
+  
+  # OpenAI GPT-5.1 - Quality validation with logprobs
+  gpt_5_1:  # Using underscore to match code references
+    provider: openai
+    api_endpoint: https://api.openai.com/v1
+    model_id: gpt-5.1  # Or gpt-4o-2024-11-20 for specific version
+    pricing:
+      input_per_1m: 1.250    # USD per 1M input tokens
+      output_per_1m: 10.00  # USD per 1M output tokens
+    parameters:
+      temperature: 0.1
+      max_tokens: 8000
+      top_p: 0.95
+      logprobs: true        # Enable logprobs for confidence calibration
+      top_logprobs: 5       # Return top 5 token probabilities
+    supports_vision: true
+    supports_json: true
+    api_key_env: YOUR_ENV_VAR_OR_KEY_HERE
+
+# ----------------------------------------------------------------------------
+# CLASSIFICATION MODEL (Used only for question type detection)
+# ----------------------------------------------------------------------------
+
+classification_model:
+  gemini_2.0_flash_exp:
+    provider: google
+    api_endpoint: https://generativelanguage.googleapis.com/v1beta
+    model_id: gemini-2.0-flash-exp
+    pricing:
+      input_per_1m: 0.00    # FREE (uses your Gemini credits)
+      output_per_1m: 0.00
+    parameters:
+      temperature: 0.1
+      max_tokens: 1000      # Classification needs less tokens
+    supports_vision: true
+    supports_json: true
+    api_key_env: YOUR_ENV_VAR_OR_KEY_HERE
+
+# ----------------------------------------------------------------------------
+# VECTOR DATABASE (Qdrant)
+# ----------------------------------------------------------------------------
+
+qdrant:
+  # LOCAL DEVELOPMENT
+  #local:
+    #host: localhost
+    #port: 6333
+    #grpc_port: 6334
+    #api_key: null         # No auth for local
+    #https: false
+  
+  # PRODUCTION (Qdrant Cloud or AWS-hosted)
+  # Uncomment and fill when moving to production
+  cloud:
+  url: https://21b6949d-e314-4ce8-868f-4387603f9976.us-east4-0.gcp.cloud.qdrant.io:6333  # e.g., https://xyz.aws.cloud.qdrant.io
+  api_key_env: YOUR_ENV_VAR_OR_KEY_HERE
+  https: true
+  
+  # Collection names (don't change these unless you re-index)
+  collections:
+    books: qbt_books      # Book chunks collection (11,892 vectors)
+    videos: qbt_videos    # Video chunks collection (13,563 vectors)
+  
+  # Search parameters
+  search:
+    top_k: 10             # How many results to retrieve per collection
+    score_threshold: 0.70 # Minimum similarity score (0-1)
+
+# ----------------------------------------------------------------------------
+# CACHE DATABASE (Redis)
+# ----------------------------------------------------------------------------
+
+redis:
+  # LOCAL DEVELOPMENT
+  local:
+    host: localhost
+    port: 6379
+    db: 0               # Database number (0-15)
+    password: null      # No password for local
+  
+  # PRODUCTION (AWS ElastiCache)
+  # Uncomment and fill when moving to production
+  # cloud:
+  #   url: YOUR_ELASTICACHE_ENDPOINT_HERE  # e.g., redis://xyz.cache.amazonaws.com:6379
+  #   password_env: REDIS_PASSWORD
+  #   ssl: true
+  
+  # Cache settings
+  cache:
+    ttl_seconds: 31536000  # 1 year expiry for cached results
+    similarity_threshold: 0.97  # 97% similarity for cache hit
+
+# ----------------------------------------------------------------------------
+# EMBEDDING MODEL (BGE-large-en-v1.5)
+# ----------------------------------------------------------------------------
+
+embedding_model:
+  name: BAAI/bge-large-en-v1.5
+  dimension: 1024           # Vector dimension
+  max_length: 800           # Max input tokens
+  normalize: true           # L2 normalization
+  device: cpu               # Change to 'cuda' if you have GPU
+  batch_size: 32            # Batch size for encoding
+  
+  # Model path (downloads automatically if not present)
+  cache_dir: ./models/bge-large-en-v1.5
+
+# ----------------------------------------------------------------------------
+# CLOUD STORAGE (Optional - for production)
+# ----------------------------------------------------------------------------
+
+# AWS S3 for storing outputs (uncomment when deploying to AWS)
+# s3:
+#   bucket: YOUR_S3_BUCKET_NAME_HERE  # e.g., qbt-tagged-questions
+#   region: ap-south-1
+#   prefix: tagged_questions/          # Folder prefix in bucket
+#   credentials_env: AWS_ACCESS_KEY_ID
+
+# Google Cloud Storage (alternative to S3)
+# gcs:
+#   bucket: YOUR_GCS_BUCKET_NAME_HERE
+#   credentials_env: GOOGLE_APPLICATION_CREDENTIALS
+
+# ----------------------------------------------------------------------------
+# ENVIRONMENT DETECTION
+# ----------------------------------------------------------------------------
+
+environment:
+  production: false       # Set to true when deploying to AWS
+  log_level: INFO         # DEBUG, INFO, WARNING, ERROR
+  enable_monitoring: true # Enable health checks and cost tracking
+  max_retries: 1          # API call retry attempts
+  timeout_seconds: 300    # API call timeout
+
+# ----------------------------------------------------------------------------
+# NOTES:
+# 1. Never commit this file with actual API keys - use environment variables
+# 2. Your .env file should contain all the *_env values listed above
+# 3. Local Qdrant must be running: docker run -p 6333:6333 qdrant/qdrant
+# 4. Redis is optional for local testing - cache will be disabled if unavailable
+# 5. Update 'production: true' and cloud URLs when deploying to AWS
+# ============================================================================
