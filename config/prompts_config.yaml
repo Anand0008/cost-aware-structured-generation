@@ -1,0 +1,299 @@
+# ============================================================================
+# PROMPTS CONFIGURATION
+# Purpose: Metadata about prompt templates (file locations, variables, tokens)
+# Used by: prompt_builder.py to load and fill prompt templates
+# ============================================================================
+
+# ----------------------------------------------------------------------------
+# PROMPT TEMPLATES
+# Each prompt has: file path, estimated tokens, and required variables
+# ----------------------------------------------------------------------------
+
+prompts:
+  
+  # Base system prompt for all 4 main models
+  base_system:
+    file: prompts/system_prompt_base.txt
+    estimated_tokens: 4000  # UPDATED: Was 1800, now accurate
+    description: "Core system prompt with complete 5-tier schema and instructions"
+    variables:
+      - rag_context
+      - question_id
+      - year
+      - marks
+      - negative_marks
+      - question_type
+      - question_text
+      - options
+      - answer_key
+      - image_description
+      - content_type
+      - media_type
+      - weight_strategy
+    usage:
+      - model_orchestrator (all models: Gemini 2.5 Pro, Claude Sonnet 4.5, DeepSeek R1, GPT-5.1)
+      - debate_orchestrator (all models in debate rounds)
+  
+  # Question classification prompt (Gemini 2.0 Flash Exp)
+  classification:
+    file: prompts/classification_prompt.txt
+    estimated_tokens: 300
+    description: "Classify question into content_type, media_type, difficulty, and determine GPT-5.1 usage"
+    variables:
+      - question_text       # Full question text
+      - options            # MCQ options (A, B, C, D)
+      - has_image          # Boolean - does question have image?
+    outputs:  # NEW SECTION
+      - content_type       # conceptual_theory | mathematical_derivation | numerical_calculation | conceptual_application
+      - media_type         # text_only | image_based
+      - difficulty_score   # 1-10 scale
+      - complexity_flags   # Array of flags (requires_derivation, multi_concept_integration, etc.)
+      - use_gpt51          # Boolean - should GPT-5.1 be used?
+      - classification_confidence
+      - classification_reasoning
+    usage:
+      - question_classifier
+  
+  # Image description prompt (Claude + GPT-5.1 + Gemini)
+  image_description:
+    file: prompts/image_description_prompt.txt
+    estimated_tokens: 400
+    description: "Generate detailed technical description of question image"
+    variables:
+      - question_text      # Context for what the image might show
+    note: "image_base64 is passed to API separately, not as a text variable"
+    usage:
+      - image_consensus (for Claude Sonnet 4.5, GPT-4o, and Gemini 2.5 Pro)
+  
+  # Debate Round 1 prompt
+  debate_round1:
+    file: prompts/debate_round1_prompt.txt
+    estimated_tokens: 800  # UPDATED: Was 600, more accurate with examples
+    description: "Ask models to explain reasoning for disputed field"
+    variables:
+      - batch_number           # Current batch number
+      - total_batches          # Total number of batches
+      - field_count            # Number of fields in this batch
+      - disputed_fields_data   # Batched field data with answers and other models
+      - rag_context            # Original RAG chunks (for reference)
+    usage:
+      - debate_orchestrator (Round 1)
+  
+  # Debate Round 2 prompt
+  debate_round2:
+    file: prompts/debate_round2_prompt.txt
+    estimated_tokens: 800  # UPDATED: Was 500, includes Round 1 arguments
+    description: "Final vote with all arguments visible, may include GPT-5.1 as tiebreaker"
+    variables:
+      - batch_number               # Current batch number
+      - total_batches              # Total number of batches
+      - field_count                # Number of fields in this batch
+      - gpt51_added                # Boolean - was GPT-5.1 added in this round?
+      - gpt51_context              # Context about GPT-5.1 addition
+      - disputed_fields_data       # Batched field data
+      - round1_debate_history      # Arguments from Round 1
+      - rag_context                # Original RAG chunks
+      - adjusted_weights_info      # New confidence-adjusted weights
+    usage:
+      - debate_orchestrator (Round 2)
+
+# ----------------------------------------------------------------------------
+# RAG CONTEXT TEMPLATE
+# How to format the 6 retrieved chunks in prompts
+# ----------------------------------------------------------------------------
+
+rag_context_template:
+  header: "# RETRIEVED KNOWLEDGE (Use this to support your explanation):"
+  
+  chunk_format: |
+    
+    ## CHUNK {rank} (Relevance: {score:.2f})
+    **Source:** {source_type} - {source_name}
+    **Reference:** {reference}
+    
+    {text}
+    
+    ---
+  
+  footer: "\n# End of retrieved knowledge. Base your explanations on this context when relevant.\n"
+  
+  max_chunks: 6
+  max_text_length_per_chunk: 800  # Each chunk is 800 tokens
+
+# ----------------------------------------------------------------------------
+# OUTPUT SCHEMA REFERENCE
+# This is embedded in the base_system prompt
+# Documenting structure here for reference
+# ----------------------------------------------------------------------------
+
+output_schema:
+  description: "5-tier JSON structure for tagged questions"
+  
+  tiers:
+    tier_0_classification:
+      fields:
+        - content_type
+        - media_type
+        - combined_type
+        - weight_strategy
+        - classification_confidence
+        - classification_method
+        - classifier_model
+        - classification_reasoning
+      note: "Generated by question_classifier (Stage 2)"
+    
+    tier_1_core_research:
+      fields:
+        - answer_validation
+        - explanation
+        - hierarchical_tags
+        - prerequisites
+        - difficulty_analysis
+        - textbook_references
+        - video_references
+        - step_by_step_solution
+        - formulas_principles
+        - real_world_applications
+      note: "Generated by models in Stage 5, merged in Stage 8"
+    
+    tier_2_student_learning:
+      fields:
+        - common_mistakes
+        - mnemonics_memory_aids
+        - flashcards
+        - real_world_context
+        - exam_strategy
+      note: "Generated by models in Stage 5, merged in Stage 8"
+    
+    tier_3_enhanced_learning:
+      fields:
+        - search_keywords
+        - alternative_methods
+        - connections_to_other_subjects
+        - deeper_dive_topics
+      note: "Generated by models in Stage 5, merged in Stage 8"
+    
+    tier_4_metadata_and_future:
+      fields:
+        - question_metadata
+        - syllabus_mapping
+        - rag_quality
+        - model_meta
+        - quality_score
+        - cost_breakdown
+        - token_usage
+        - processing_time
+        - future_questions_potential
+      note: "Metadata added by synthesis_engine (Stage 8)"
+    
+    tier_5_future_features:
+      fields:
+        - historical_analysis
+        - comparative_analysis
+        - advanced_learning_aids
+        - interactive_elements
+      note: "Placeholders only - populated in post-processing after all years processed"
+
+# ----------------------------------------------------------------------------
+# PROMPT BUILDING SETTINGS
+# ----------------------------------------------------------------------------
+
+prompt_building:
+  # Whether to include examples in prompts
+  include_examples: false  # Set to true if you want few-shot examples
+  
+  # Maximum total prompt length (input tokens) - for system prompt only
+  max_system_prompt_tokens: 5000
+  
+  # Maximum total input (system + RAG + question)
+  max_total_input_tokens: 12000  # UPDATED: Realistic limit for all models
+  
+  # Truncation strategy if prompt exceeds max
+  truncation_strategy: "truncate_rag"  # Options: truncate_rag, truncate_examples, error
+  
+  # Whether to validate filled prompts before sending
+  validate_before_send: true
+
+# ----------------------------------------------------------------------------
+# SPECIAL INSTRUCTIONS BY MODEL
+# Some models need specific formatting
+# ----------------------------------------------------------------------------
+
+model_specific:
+  gemini_2.5_pro:
+    json_mode: true
+    response_mime_type: "application/json"
+    supports_images: true
+    context_window: 2000000  # 2M tokens
+    
+  claude_sonnet_4.5:
+    json_mode: false  # Use structured prompt instead
+    xml_tags: false   # Don't use XML formatting
+    supports_images: true
+    context_window: 200000  # 200K tokens
+    
+  deepseek_r1:
+    json_mode: true
+    response_format: {"type": "json_object"}
+    supports_images: false  # Uses consensus image description instead
+    context_window: 128000  # 128K tokens
+    
+  gpt_5_1:  # UPDATED: Uses underscore for config key consistency
+    json_mode: true
+    response_format: {"type": "json_object"}
+    supports_images: true
+    context_window: 128000  # 128K tokens (verify actual limit when available)
+    note: "Used selectively based on difficulty_score >= 6 or low consensus in debate"
+
+# ----------------------------------------------------------------------------
+# PROMPT VALIDATION RULES
+# ----------------------------------------------------------------------------
+
+validation:
+  # Check for missing variables before filling
+  check_missing_variables: true
+  
+  # Check token count after filling
+  check_token_count: true
+  
+  # Warn if prompt seems too long
+  warn_if_tokens_exceed: 10000  # UPDATED: Was 3500, now realistic
+  
+  # Required phrases in model response prompts
+  required_phrases:
+    - "tier_0_classification"
+    - "tier_1_core_research"
+    - "tier_2_student_learning"
+    - "tier_3_enhanced_learning"
+    - "tier_4_metadata_and_future"
+  
+  # Required phrases in classification prompt
+  classification_required:
+    - "difficulty_score"
+    - "use_gpt51"
+    - "complexity_flags"
+
+# ----------------------------------------------------------------------------
+# CONDITIONAL MODEL USAGE RULES
+# ----------------------------------------------------------------------------
+
+conditional_models:
+  gpt_5_1:
+    stage_5_triggers:  # Initial generation
+      - "difficulty_score >= 6"
+      - "requires_derivation in complexity_flags"
+      - "multi_concept_integration in complexity_flags"
+      - "ambiguous_wording in complexity_flags"
+      - "image_interpretation_complex in complexity_flags"
+      - "edge_case_scenario in complexity_flags"
+    
+    stage_7_trigger:  # Debate Round 2
+      condition: "consensus_score < 70% after Round 1 AND use_gpt51 = false in Stage 5"
+      purpose: "Add as 4th model for tiebreaker when debates fail to converge"
+    
+    estimated_usage:
+      stage_5: "~57% of questions (748/1300)"
+      stage_7: "~4% of questions (56/1300)"
+      total: "~62% of questions (804/1300)"
+
+# ============================================================================
