@@ -203,10 +203,11 @@ If you use this codebase or dataset in your research, please cite:
 
 **Research Paper:**
 ```bibtex
-@article{wankhade2025costaware,
+@misc{wankhade2026costaware,
   title={Cost-Aware Structured Generation: High-Fidelity Synthesis via Hybrid RAG and Adaptive Conditional Compute},
   author={Wankhade, Anand},
-  journal={arXiv preprint},
-  year={2025}
+  year={2026},
+  publisher={GitHub},
+  howpublished={\url{https://github.com/Anand0008/cost-aware-structured-generation}}
 }
 ```
