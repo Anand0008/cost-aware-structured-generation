@@ -10,7 +10,7 @@ Outputs:
     - edges.csv: All relationships (REQUIRES, ENABLES, TESTS, etc.)
     - kg_statistics.json: Summary statistics
 
-Author: QBT Pipeline
+Author: Anand Wankhade
 ============================================================================
 """
 

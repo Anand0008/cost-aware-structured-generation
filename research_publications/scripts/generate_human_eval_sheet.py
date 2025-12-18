@@ -17,7 +17,7 @@ Selection Logic:
         4. Common Mistakes
         5. Generated Explanations
 
-Author: QBT Pipeline
+Author: Anand Wankhade
 ============================================================================
 """
 

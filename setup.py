@@ -50,9 +50,9 @@ setup(
     description="GATE AE SOTA Question Tagging Pipeline - Multi-model consensus system",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    author="GATE AE Pipeline Team",
-    author_email="your.email@example.com",
-    url="https://github.com/yourusername/gate-ae-pipeline",
+    author="Anand Wankhade",
+    author_email="anandwankhade0008@gmail.com",
+    url="https://github.com/Anand0008/cost-aware-structured-generation",
     license="MIT",
     
     # ========================================================================
