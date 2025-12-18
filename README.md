@@ -203,11 +203,12 @@ If you use this codebase or dataset in your research, please cite:
 
 **Research Paper:**
 ```bibtex
-@misc{wankhade2026costaware,
+@article{wankhade2026costaware,
   title={Cost-Aware Structured Generation: High-Fidelity Synthesis via Hybrid RAG and Adaptive Conditional Compute},
   author={Wankhade, Anand},
+  journal={Zenodo},
   year={2026},
-  publisher={GitHub},
-  howpublished={\url{https://github.com/Anand0008/cost-aware-structured-generation}}
+  doi={10.5281/zenodo.18270482},
+  url={https://doi.org/10.5281/zenodo.18270482}
 }
 ```
