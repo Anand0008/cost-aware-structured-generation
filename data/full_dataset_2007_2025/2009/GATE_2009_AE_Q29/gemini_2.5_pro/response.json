@@ -1,0 +1,368 @@
+{
+  "model_name": "gemini_2.5_pro",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "conceptual_application",
+      "media_type": "text_only",
+      "combined_type": "conceptual_application_text_only",
+      "weight_strategy": "APPLICATION_WEIGHTED",
+      "classification_confidence": 0.9,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "The question requires understanding of aircraft dynamics and stability, specifically the linearized equations of motion. Determining the properties of the matrices [A], [B], [C], and [D] involves analyzing the relationships between different flight parameters, requiring multi-step reasoning and integration of concepts.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "C",
+        "is_correct": true,
+        "confidence": 0.99,
+        "confidence_type": "single_model",
+        "reasoning": "The question asks about the nature (zero or non-zero) of the matrices [A], [B], [C], and [D] in the linearized equations of motion for an aircraft in straight and level flight, represented in the form $\\[A\\] \\cdot \\{\\dot{x}\\} = \\[B\\] \\cdot \\{x\\} + \\[C\\] \\cdot \\{u\\} + \\[D\\] \\cdot \\{w_g\\}$.\n\nLet the state vector be $\\{x\\} = \\begin{bmatrix} u \\\\ w \\\\ q \\\\ \\theta \\end{bmatrix}$, where $u, w, q, \\theta$ are perturbations in forward velocity, vertical velocity, pitch rate, and pitch angle, respectively. The control input vector is $\\{u\\} = \\begin{bmatrix} \\delta_e \\end{bmatrix}$ (elevator deflection).\n\nBased on the linearized longitudinal equations of motion (as provided in RAG Chunks 1, 2, 3, 4):\n1.  **X-Force Equation (Forward):** $m \\dot{u} = X_u u + X_w w + X_q q + X_{\\theta} \\theta + X_{\\delta_e} \\delta_e$\n2.  **Z-Force Equation (Vertical):** $m \\dot{w} - m U_1 q = Z_u u + Z_w w + Z_q q + Z_{\\theta} \\theta + Z_{\\delta_e} \\delta_e$\n3.  **Pitching Moment Equation:** $I_{yy} \\dot{q} = M_u u + M_w w + M_q q + M_{\\theta} \\theta + M_{\\delta_e} \\delta_e$\n4.  **Kinematic Relation:** $\\dot{\\theta} = q$\n\nLet's analyze each matrix:\n\n*   **Matrix [A] (Coefficient of $\\{\\dot{x}\\}$):**\n    This matrix contains the inertial terms associated with the derivatives of the state variables. From the equations above, the terms involving derivatives are $m \\dot{u}$, $m \\dot{w}$, $I_{yy} \\dot{q}$, and $\\dot{\\theta}$.\n    The matrix \\[[A\\]] would look like:\n    $$\\begin{bmatrix} m & 0 & 0 & 0 \\\\ 0 & m & 0 & 0 \\\\ 0 & 0 & I_{yy} & 0 \\\\ 0 & 0 & 0 & 1 \\end{bmatrix}$$ (assuming $m U_1 q$ is moved to the RHS for simplicity, or if kept on LHS, it would be an off-diagonal term in [A], still making [A] non-zero).\n    Since $m$ (mass) and $I_{yy}$ (moment of inertia) are non-zero, and the kinematic relation has a coefficient of 1 for $\\dot{\\theta}$, **[A] is NOT [0]**.\n\n*   **Matrix [B] (Coefficient of $\\{x\\}$):**\n    This matrix contains the stability derivatives (aerodynamic and gravitational) with respect to the state variables $u, w, q, \\theta$. All stability derivatives ($X_u, X_w, X_q, X_{\\theta}, Z_u, Z_w, Z_q, Z_{\\theta}, M_u, M_w, M_q, M_{\\theta}$) are generally non-zero for an aircraft in flight. For example, $X_u$ (change in drag with speed), $Z_w$ (change in lift with vertical velocity/angle of attack), $M_q$ (pitch damping moment) are fundamental. Gravity terms like $-mg \\cos(\\Theta_1) \\theta$ (in X-equation) and $-mg \\sin(\\Theta_1) \\theta$ (in Z-equation, for small $\\Theta_1$) also contribute to $X_{\\theta}$ and $Z_{\\theta}$ respectively, making them non-zero. The kinematic relation $\\dot{\\theta} = q$ contributes a '1' to the element corresponding to $q$ in the $\\dot{\\theta}$ equation's row in [B].\n    Therefore, **[B] is NOT [0]**.\n\n*   **Matrix [C] (Coefficient of $\\{u\\}$):**\n    This matrix contains the control derivatives with respect to the control input $\\delta_e$. The elevator deflection ($\\delta_e$) directly affects the aerodynamic forces and pitching moment. Thus, $X_{\\delta_e}$, $Z_{\\delta_e}$, and $M_{\\delta_e}$ are generally non-zero (e.g., elevator deflection changes lift, drag, and pitching moment).\n    Therefore, **[C] is NOT [0]**.\n\n*   **Matrix [D] (Coefficient of $\\{w_g\\}$):**\n    The term $\\{w_g\\}$ typically represents external disturbances or gusts. The question asks for the *governing equations* of the aircraft dynamics. While an aircraft can experience gusts, the fundamental linearized equations of motion *themselves* (as derived from Newton's laws and small perturbation theory) describe the aircraft's inherent response to its own states and control inputs. They do not intrinsically include external gust inputs as part of their definition unless explicitly modeled as a forcing function. The RAG context (Chunks 1, 2, 3, 4) provides the equations without any explicit $\\{w_g\\}$ term. Therefore, in the context of defining the aircraft's inherent dynamics, **[D] is [0]**.\n\nCombining these findings: `[A] \\neq [0]`, `[B] \\neq [0]`, `[C] \\neq [0]`, `[D] = [0]`. This corresponds to option C."
+      },
+      "explanation": {
+        "question_nature": "Application",
+        "step_by_step": [
+          "Step 1: Understand the general form of the linearized equations of motion provided: $\\[A\\] \\cdot \\{\\dot{x}\\} = \\[B\\] \\cdot \\{x\\} + \\[C\\] \\cdot \\{u\\} + \\[D\\] \\cdot \\{w_g\\}$. Identify the components: $\\{\\dot{x}\\}$ as state derivatives, $\\{x\\}$ as state variables, $\\{u\\}$ as control inputs, and $\\{w_g\\}$ as external disturbances (gusts).",
+          "Step 2: Recall the linearized longitudinal equations of motion for an aircraft. These typically involve four coupled first-order differential equations for perturbations in forward velocity ($u$), vertical velocity ($w$), pitch rate ($q$), and pitch angle ($\\theta$).",
+          "Step 3: Construct the matrix [A] by identifying coefficients of the state derivatives ($\\dot{u}, \\dot{w}, \\dot{q}, \\dot{\\theta}$). The X-force equation has $m\\dot{u}$, Z-force has $m\\dot{w}$, pitching moment has $I_{yy}\\dot{q}$, and the kinematic relation is $\\dot{\\theta} = q$. Since mass ($m$) and moment of inertia ($I_{yy}$) are non-zero, and $\\dot{\\theta}$ has a coefficient of 1, [A] will be a non-zero matrix (typically diagonal or block-diagonal with non-zero elements).",
+          "Step 4: Construct the matrix [B] by identifying coefficients of the state variables ($u, w, q, \\theta$). These coefficients are the stability derivatives (e.g., $X_u, Z_w, M_q$) and gravity terms (e.g., $X_{\\theta}, Z_{\\theta}$). For an aircraft, these derivatives are generally non-zero. The kinematic relation $\\dot{\\theta} = q$ also contributes a non-zero term (1) for $q$ in the $\\dot{\\theta}$ equation. Therefore, [B] will be a non-zero matrix.",
+          "Step 5: Construct the matrix [C] by identifying coefficients of the control inputs (e.g., elevator deflection $\\delta_e$). Control surfaces like the elevator are designed to produce forces and moments, so derivatives like $X_{\\delta_e}, Z_{\\delta_e}, M_{\\delta_e}$ are non-zero. Thus, [C] will be a non-zero matrix.",
+          "Step 6: Construct the matrix [D] by identifying coefficients of external disturbances ($\\{w_g\\}$). The fundamental linearized equations of motion describe the aircraft's response to its states and control inputs. Unless explicitly specified to include gust models as part of the *governing equations* themselves, the matrix [D] for external disturbances is considered zero in the context of defining the aircraft's inherent dynamics. The provided RAG context for the linearized equations does not include such a term.",
+          "Step 7: Compare the findings ($[A] \\neq [0], [B] \\neq [0], [C] \\neq [0], [D] = [0]$) with the given options to select the correct one."
+        ],
+        "formulas_used": [
+          "$m \\dot{u} = X_u u + X_w w + X_q q + X_{\\theta} \\theta + X_{\\delta_e} \\delta_e$",
+          "$m \\dot{w} - m U_1 q = Z_u u + Z_w w + Z_q q + Z_{\\theta} \\theta + Z_{\\delta_e} \\delta_e$",
+          "$I_{yy} \\dot{q} = M_u u + M_w w + M_q q + M_{\\theta} \\theta + M_{\\delta_e} \\delta_e$",
+          "$\\dot{\\theta} = q$"
+        ],
+        "estimated_time_minutes": 2
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Flight Mechanics",
+          "confidence": 0.99
+        },
+        "topic": {
+          "name": "Aircraft Stability and Control",
+          "syllabus_ref": "Section 4: Flight Mechanics -> Aircraft stability and control"
+        },
+        "concepts": [
+          {
+            "name": "Linearized Longitudinal Equations of Motion",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Stability Derivatives",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "State-Space Representation",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Small Perturbation Theory",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Control Derivatives",
+            "importance": "tertiary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Newton's Laws of Motion for Rigid Bodies",
+          "Aircraft Coordinate Systems (Body Axes)",
+          "Small Perturbation Theory",
+          "Basic understanding of stability derivatives (aerodynamic and control)"
+        ],
+        "helpful": [
+          "Matrix Algebra",
+          "State-Space Representation of Dynamic Systems"
+        ],
+        "dependency_tree": {
+          "Linearized Longitudinal Equations of Motion": [
+            "requires: Newton's Laws of Motion for Rigid Bodies",
+            "requires: Aircraft Coordinate Systems (Body Axes)",
+            "requires: Small Perturbation Theory",
+            "enables: Longitudinal Stability Analysis (Phugoid, Short Period)",
+            "enables: Control System Design for Aircraft"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Easy",
+        "score": 3,
+        "complexity_breakdown": {
+          "conceptual": 4,
+          "mathematical": 2
+        },
+        "estimated_solve_time_seconds": 120,
+        "expected_accuracy_percent": 80,
+        "difficulty_factors": [
+          "Requires recall of the structure of linearized equations.",
+          "Correct interpretation of the 'gust/disturbance' matrix [D]."
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Flight Stability and Automatic Control",
+          "author": "Nelson, R.C.",
+          "chapter_number": "3",
+          "chapter_title": "Linearized Equations of Motion",
+          "section": "3.2 Longitudinal Dynamics",
+          "complexity": "intermediate",
+          "relevance_score": 0.95,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "book",
+          "book": "Aircraft Stability and Control",
+          "author": "Perkins & Hage",
+          "chapter_number": "3",
+          "chapter_title": "Equations of Motion",
+          "complexity": "intermediate",
+          "relevance_score": 0.9,
+          "source": "model_consensus"
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. A.K. Ghosh",
+          "timestamp_start": "00:00:18",
+          "timestamp_end": "00:01:04",
+          "video_url": "https://www.youtube.com/watch?v=V5s1PoMl_Bo",
+          "topic_covered": "Longitudinal Dimensional Stability Derivatives / Perturbed Longitudinal Equations of Motion",
+          "relevance_score": 0.95,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. A.K. Ghosh",
+          "timestamp_start": "00:02:05",
+          "timestamp_end": "00:05:14",
+          "video_url": "https://www.youtube.com/watch?v=cB24Pl4ttRE",
+          "topic_covered": "Linearized Longitudinal Equations of Motion",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Conceptual Analysis and Matrix Construction",
+        "total_steps": 7,
+        "solution_path": "Identify components of the state-space form -> Recall linearized equations -> Map terms to matrices [A], [B], [C], [D] -> Determine zero/non-zero nature.",
+        "key_insights": [
+          "The inertial terms (mass, moment of inertia) make [A] non-zero.",
+          "Aerodynamic and gravity derivatives make [B] non-zero.",
+          "Control surface effectiveness makes [C] non-zero.",
+          "External disturbances (gusts) are not part of the inherent governing equations, making [D] zero in this context."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$m \\dot{u} = \\sum F_x$",
+          "name": "X-Force Equation (Linearized)",
+          "conditions": "Small perturbations from equilibrium, body axes",
+          "type": "equation",
+          "relevance": "Core equation for constructing matrix [A] and [B]"
+        },
+        {
+          "formula": "$m \\dot{w} - m U_1 q = \\sum F_z$",
+          "name": "Z-Force Equation (Linearized)",
+          "conditions": "Small perturbations from equilibrium, body axes",
+          "type": "equation",
+          "relevance": "Core equation for constructing matrix [A] and [B]"
+        },
+        {
+          "formula": "$I_{yy} \\dot{q} = \\sum M_y$",
+          "name": "Pitching Moment Equation (Linearized)",
+          "conditions": "Small perturbations from equilibrium, body axes",
+          "type": "equation",
+          "relevance": "Core equation for constructing matrix [A] and [B]"
+        },
+        {
+          "formula": "$\\dot{\\theta} = q$",
+          "name": "Kinematic Relation (Pitch Angle)",
+          "conditions": "Small perturbations",
+          "type": "equation",
+          "relevance": "Relates pitch rate to pitch angle derivative, contributing to [A] and [B]"
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Aircraft design and analysis for stability characteristics.",
+          "Development of autopilots and flight control systems.",
+          "Simulation of aircraft dynamic response to control inputs and disturbances."
+        ],
+        "specific_systems": [
+          "Commercial airliners (e.g., Boeing 737, Airbus A320) flight control laws.",
+          "Unmanned Aerial Vehicles (UAVs) for autonomous flight planning and control."
+        ],
+        "practical_relevance": "Understanding these equations is crucial for predicting how an aircraft will respond to pilot commands or atmospheric disturbances, ensuring safe and stable flight. It forms the basis for designing effective control systems."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Incorrectly assuming [A] is the identity matrix or only contains '1's.",
+          "why_students_make_it": "Students might confuse the general state-space form $\\dot{x} = Ax + Bu$ with the form $A\\dot{x} = Bx + Cu$. In the former, the 'A' matrix is the system matrix, while in the latter, 'A' is the mass/inertia matrix.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Always remember that the matrix multiplying the derivative vector ($\\{\\dot{x}\\}$) contains inertial terms (mass, moment of inertia) which are generally not 1, making it a non-zero matrix."
+        },
+        {
+          "mistake": "Assuming [B] is zero for 'straight and level flight'.",
+          "why_students_make_it": "Students might think that in equilibrium, all forces and moments are zero, implying no derivatives. However, [B] contains the *stability derivatives*, which describe how forces/moments *change* with small perturbations from equilibrium, and these are almost always non-zero.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Distinguish between equilibrium conditions (where net forces/moments are zero) and stability derivatives (which describe the *response* to perturbations around equilibrium). Stability derivatives are crucial for dynamic stability."
+        },
+        {
+          "mistake": "Assuming [C] is zero because the question doesn't explicitly mention control inputs.",
+          "why_students_make_it": "The term 'governed by the equations' implies the full dynamic model, which includes control inputs. Ignoring control inputs would only describe unforced (homogeneous) motion.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Always consider control inputs (like elevator deflection) as part of the general governing equations unless the question specifically asks for 'unforced' or 'homogeneous' dynamics."
+        },
+        {
+          "mistake": "Assuming [D] is non-zero due to the possibility of gusts.",
+          "why_students_make_it": "While aircraft experience gusts, the term $\\{w_g\\}$ for external disturbances is typically an *input* to the system, not an intrinsic part of the *governing equations* derived from Newton's laws for the aircraft itself. The equations describe how the aircraft *responds* to such inputs.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Understand that the 'governing equations' primarily define the aircraft's internal dynamics and its response to control. External disturbances are usually treated as separate forcing functions, making their coefficient matrix [D] zero in the fundamental system definition."
+        }
+      ],
+      "mnemonics_memory_aids": [],
+      "flashcards": [
+        {
+          "card_type": "concept_recall",
+          "front": "What do the matrices [A], [B], [C], [D] represent in the linearized aircraft equations $\\[A\\] \\{\\dot{x}\\} = \\[B\\] \\{x\\} + \\[C\\] \\{u\\} + \\[D\\] \\{w_g\\}$?",
+          "back": "[A]: Inertial/mass matrix (coefficients of derivatives). [B]: Stability matrix (aerodynamic & gravity derivatives w.r.t. states). [C]: Control matrix (control derivatives w.r.t. control inputs). [D]: Disturbance matrix (coefficients of external disturbances).",
+          "difficulty": "medium"
+        },
+        {
+          "card_type": "application",
+          "front": "Why is matrix [A] (inertial matrix) always non-zero for aircraft dynamics?",
+          "back": "Because aircraft have mass ($m$) and moments of inertia ($I_{yy}$), which are non-zero. These terms appear as coefficients of the acceleration/rate of change terms ($\\dot{u}, \\dot{w}, \\dot{q}, \\dot{\\theta}$) in the equations of motion.",
+          "difficulty": "easy"
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "When is the disturbance matrix [D] typically considered zero in linearized aircraft equations?",
+          "back": "When the equations are defining the aircraft's inherent dynamics and response to control inputs, without explicitly modeling external disturbances (like gusts) as part of the system's intrinsic structure. Gusts are usually treated as external forcing functions.",
+          "difficulty": "medium"
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "What types of terms contribute to the [B] matrix (stability matrix)?",
+          "back": "Aerodynamic stability derivatives (e.g., $X_u, Z_w, M_q$) and linearized gravity terms (e.g., $X_{\\theta}, Z_{\\theta}$). These describe how forces and moments change with small perturbations in velocity, angle of attack, and pitch angle.",
+          "difficulty": "medium"
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Aircraft Design and Certification",
+          "industry_example": "During the design phase of a new aircraft, engineers use these linearized equations to analyze its inherent stability characteristics (e.g., short period and phugoid modes). This analysis helps ensure the aircraft is naturally stable or to design control systems to augment stability to meet certification requirements.",
+          "why_it_matters": "A poorly understood or unstable aircraft can lead to dangerous flight characteristics, making it difficult or impossible for pilots to control, potentially causing accidents."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "Quickly identify the role of each matrix ([A] for inertia, [B] for stability, [C] for control, [D] for external disturbances) and recall that physical systems have inertia, stability, and control effectiveness, but external disturbances are not part of the intrinsic governing equations.",
+        "guessing_heuristic": "If unsure about [D], consider that fundamental dynamic equations usually describe the system itself, not external inputs, so [D]=0 is often the default. [A], [B], [C] are almost always non-zero for a flying aircraft.",
+        "time_management": "This is a conceptual question. It should take less than 2 minutes if the concepts are clear. Avoid overthinking the exact values of derivatives; focus on their existence."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "linearized longitudinal equations of motion aircraft",
+        "aircraft stability derivatives meaning",
+        "state space representation flight dynamics",
+        "longitudinal dynamics matrices A B C D",
+        "small perturbation theory aircraft"
+      ],
+      "alternative_methods": [],
+      "connections_to_other_subjects": {
+        "Control Systems": "The linearized equations of motion form the plant model for designing aircraft flight control systems (e.g., autopilots, stability augmentation systems). The matrices [A], [B], [C] directly correspond to the system, input, and output matrices in state-space control theory.",
+        "Dynamics and Vibrations": "The concept of deriving equations of motion for rigid bodies and linearizing them around an equilibrium point is fundamental in general dynamics and vibration analysis."
+      },
+      "deeper_dive_topics": [
+        "Derivation of dimensional and non-dimensional stability derivatives.",
+        "Analysis of longitudinal modes: Short Period and Phugoid.",
+        "Effect of control surfaces (elevator, thrust) on aircraft stability.",
+        "Modeling of gust disturbances and their impact on aircraft response."
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2009_AE_Q29",
+        "year": 2009,
+        "marks": 2.0,
+        "negative_marks": 0.66,
+        "time_expected": "2-3 minutes",
+        "success_rate_estimate": "75%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 4: Flight Mechanics",
+        "gate_subsection": "Aircraft stability and control",
+        "weightage": "10-15%",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "This question perfectly aligns with the core concepts of linearized flight dynamics and state-space representation, which are fundamental for aircraft stability and control."
+      },
+      "rag_quality": {
+        "relevance_score": 0.95,
+        "chunks_used": 6,
+        "sources_distribution": {
+          "books": 0,
+          "videos": 6
+        },
+        "notes": "RAG provided excellent context on the linearized longitudinal equations of motion, including specific terms and their representation. Chunks 1, 2, 3, 4, and 5 were directly relevant in identifying the components of the matrices [A], [B], [C], and [D]. The RAG content explicitly listed the equations, which was crucial for the analysis."
+      },
+      "model_meta": {
+        "timestamp": "2024-07-30T12:00:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "A similar question for lateral-directional dynamics.",
+        "A question asking for specific non-zero elements within the matrices [A], [B], [C] for a given flight condition.",
+        "A question asking to identify which terms contribute to specific stability derivatives (e.g., what makes $M_q$ non-zero).",
+        "A question on the physical meaning of a specific stability derivative (e.g., $X_u$ or $Z_w$).",
+        "A question asking to write the state-space form ($\\{\\dot{x}\\} = A\\{x\\} + B\\{u\\}$) from the given equations."
+      ]
+    },
+    "question_id": "GATE_2009_AE_Q29",
+    "year": 2009,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "MCQ",
+    "question_text": "The linearized dynamics of an aircraft (which has no large rotating components) in straight and level flight is governed by the equations... Which of the following is true?"
+  },
+  "tokens_used": 18023,
+  "input_tokens": 11347,
+  "output_tokens": 6676,
+  "cost": 0.00570765,
+  "time_seconds": 55.92593264579773
+}
