@@ -5,7 +5,7 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18270482.svg)](https://zenodo.org/records/18270482)
 
 **Author:** Anand Wankhade  
-**Paper:** [Read the full research paper](research_publications/papers/Cost_Aware_Structured_Generation.md)
+**Paper:** [Read the full research paper (PDF)](research_publications/papers/Cost-Aware%20Structured%20Generation%20High-Fidelity%20Synthesis.pdf)
 
 > **Abstract:** We introduce a domain-agnostic 14-stage pipeline that integrates Hybrid RAG with Reciprocal Rank Fusion, conditional compute routing based on query difficulty, and adaptive voting strategies. This architecture achieves **93.5% overall precision** with a hallucination rate of only **0.31%** (1 error in 325 human-reviewed samples) on 1,200+ complex aerospace engineering questions, reducing costs by **50.4%** compared to standard ensembles.
 
