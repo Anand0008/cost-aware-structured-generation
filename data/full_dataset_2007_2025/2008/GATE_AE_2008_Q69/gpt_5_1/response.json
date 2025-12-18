@@ -1,0 +1,390 @@
+{
+  "model_name": "gpt_5_1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "conceptual_application",
+      "media_type": "text_only",
+      "combined_type": "conceptual_application_text_only",
+      "weight_strategy": "APPLICATION_WEIGHTED",
+      "classification_confidence": 0.9,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "The question requires understanding Airy's stress function and relating it to different beam loading conditions. It involves multiple concepts from solid mechanics and requires some reasoning to match the stress function to the correct beam type. It requires understanding of stress distributions in beams.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "C",
+        "is_correct": true,
+        "confidence": 0.97,
+        "confidence_type": "single_model",
+        "reasoning": "From the Airy stress function \\(\\phi(x,y) = -\\dfrac{P x y^3}{4c^3} + \\dfrac{3P x y}{4c}\\), we compute stresses using plane stress relations: \\(\\sigma_x = \\partial^2 \\phi / \\partial y^2\\), \\(\\sigma_y = \\partial^2 \\phi / \\partial x^2 = 0\\), and \\(\\tau_{xy} = -\\partial^2 \\phi / \\partial x \\partial y\\). Differentiating: \\n\\(\\partial \\phi/\\partial y = -\\dfrac{3P x y^2}{4c^3} + \\dfrac{3P x}{4c}\\) \\n\\(\\Rightarrow \\sigma_x = \\partial^2 \\phi/\\partial y^2 = -\\dfrac{3P x y}{2c^3}\\). \\n\\(\\partial \\phi/\\partial x = -\\dfrac{P y^3}{4c^3} + \\dfrac{3P y}{4c}\\) \\n\\(\\Rightarrow \\tau_{xy} = -\\partial^2 \\phi/\\partial x \\partial y = -\\left(-\\dfrac{3P y^2}{4c^3} + \\dfrac{3P}{4c}\\right) = \\dfrac{3P y^2}{4c^3} - \\dfrac{3P}{4c}.\\) \\nSo \\(\\tau_{xy}\\) is independent of \\(x\\): the shear stress distribution is the same at every cross-section along the beam. This corresponds to a constant internal shear force along the length, which is produced by a single end shear load with no distributed loading. Next, evaluate boundary tractions. On the top and bottom surfaces \\(y = \\pm c\\): \\nAt \\(y = c\\): \\(\\tau_{xy} = \\dfrac{3P c^2}{4c^3} - \\dfrac{3P}{4c} = 0\\). \\nAt \\(y = -c\\): \\(\\tau_{xy} = \\dfrac{3P c^2}{4c^3} - \\dfrac{3P}{4c} = 0\\). \\nThus the top and bottom are traction-free, as in a prismatic beam with no surface loads. On the end \\(x = 0\\): \\(\\sigma_x = 0\\) and \\(\\tau_{xy} = \\dfrac{3P y^2}{4c^3} - \\dfrac{3P}{4c}\\). The shear traction varies parabolically over the depth and integrates to a resultant shear force \\(P\\) (this is the standard shear stress distribution in a rectangular section under shear force P). Therefore, the end \\(x=0\\) carries a shear load \\(P\\). On the other end \\(x=L\\), the same internal stress state exists but the boundary is clamped (zero displacement and rotation), not free; the Airy function describes internal stresses, not directly the displacement boundary. The only configuration consistent with: (i) plane stress, (ii) no distributed load, (iii) a single shear load \\(P\\) applied at one end, and (iv) the other end fixed, is a cantilever clamped at \\(x=L\\) with a shear load \\(P\\) at \\(x=0\\). This matches option C."
+      },
+      "explanation": {
+        "question_nature": "Application",
+        "step_by_step": [
+          "Identify stress components from the Airy stress function using plane stress relations: \\(\\sigma_x = \\partial^2\\phi/\\partial y^2\\), \\(\\sigma_y = \\partial^2\\phi/\\partial x^2\\), \\(\\tau_{xy} = -\\partial^2\\phi/\\partial x\\partial y\\).",
+          "Differentiate \\(\\phi(x,y) = -\\dfrac{Pxy^3}{4c^3} + \\dfrac{3Pxy}{4c}\\) to obtain \\(\\sigma_x\\), \\(\\sigma_y\\), and \\(\\tau_{xy}\\).",
+          "Observe that \\(\\tau_{xy}\\) is independent of \\(x\\), meaning the internal shear force is constant along the beam, which implies no distributed load and a single end shear.",
+          "Check boundary conditions on the top and bottom surfaces \\(y = \\pm c\\): verify that shear traction \\(\\tau_{xy}\\) is zero there, so these surfaces are traction-free, as in a standard beam.",
+          "Evaluate the shear traction on the cross-section at \\(x = 0\\); show that its distribution over \\(-c \\le y \\le c\\) is parabolic and integrates to a resultant shear force of magnitude \\(P\\).",
+          "Conclude that the beam is loaded only by a shear force \\(P\\) at \\(x = 0\\), with the other end fixed, which corresponds to a cantilever clamped at \\(x = L\\) carrying a shear load \\(P\\) at \\(x = 0\\) (option C)."
+        ],
+        "formulas_used": [
+          "$\\sigma_x = \\frac{\\partial^2 \\phi}{\\partial y^2}$",
+          "$\\sigma_y = \\frac{\\partial^2 \\phi}{\\partial x^2}$",
+          "$\\tau_{xy} = -\\frac{\\partial^2 \\phi}{\\partial x \\partial y}$",
+          "$\\phi(x,y) = -\\frac{P x y^3}{4 c^3} + \\frac{3 P x y}{4 c}$",
+          "$T_n = \\sigma_x n_x + \\tau_{xy} n_y$",
+          "$V = \\int_{-c}^{c} \\tau_{xy} \\, b \\, dy$"
+        ],
+        "estimated_time_minutes": 4
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Structures",
+          "confidence": 0.99
+        },
+        "topic": {
+          "name": "Two-dimensional elasticity and Airy stress function",
+          "syllabus_ref": "Section 3: Structures \\\\u2192 Elasticity, energy methods, and failure theories"
+        },
+        "concepts": [
+          {
+            "name": "Airy stress function in plane stress",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Stress components from stress function",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Shear stress distribution in beams",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Boundary tractions and resultants",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Cantilever vs simply supported boundary conditions",
+            "importance": "tertiary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Plane stress and plane strain basics",
+          "Definition and role of Airy stress function",
+          "How to obtain stress components from Airy stress function",
+          "Shear stress distribution in rectangular beams under shear force",
+          "Concept of boundary traction and resultant forces"
+        ],
+        "helpful": [
+          "Relationship between internal stress resultants and external loads in beams",
+          "Familiarity with cantilever and simply supported beam behavior"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Plane stress and Airy stress function formulation",
+            "requires: Differentiation to obtain \\(\\sigma_x\\), \\(\\sigma_y\\), \\(\\tau_{xy}\\)",
+            "enables: Interpreting stress functions as specific loading and support conditions",
+            "enables: Advanced elasticity solutions for complex beam and plate problems"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Medium",
+        "score": 6,
+        "complexity_breakdown": {
+          "conceptual": 7,
+          "mathematical": 5,
+          "problem_solving": 6
+        },
+        "estimated_solve_time_seconds": 210,
+        "expected_accuracy_percent": 45,
+        "difficulty_factors": [
+          "Requires comfort with Airy stress function relations",
+          "Needs interpretation of boundary tractions and internal resultants",
+          "Multiple beam configurations must be distinguished conceptually"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Aircraft Structures for Engineering Students",
+          "author": "T.H.G. Megson",
+          "chapter_number": "2",
+          "chapter_title": "Two-dimensional problems in elasticity",
+          "section": "Airy stress function applications to beams",
+          "page_range": "approx. 40-60",
+          "complexity": "intermediate",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval",
+          "text_snippet": "An Airy stress function is a powerful tool in 2D elasticity. For a cantilever beam of length L and thin rectangular cross-section... Show that the stress state given by simple beam theory can be represented by the Airy function..."
+        },
+        {
+          "source_type": "book",
+          "book": "Theory of Elasticity",
+          "author": "Timoshenko and Goodier",
+          "chapter_number": "4",
+          "chapter_title": "Two-Dimensional Problems in Elasticity",
+          "section": "Airy stress function and applications",
+          "page_range": "80-120",
+          "complexity": "advanced",
+          "relevance_score": 0.85,
+          "source": "model_consensus",
+          "text_snippet": ""
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. S.P. Harsha",
+          "timestamp_start": "00:45:42",
+          "timestamp_end": "00:50:00",
+          "video_url": "",
+          "book_reference": "Beer & Johnston, Mechanics of Materials",
+          "topic_covered": "Shear force and bending moment in beams, including simply supported beam with UDL",
+          "relevance_score": 0.4,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. Nachiketa Tiwari",
+          "timestamp_start": "00:04:35",
+          "timestamp_end": "00:15:00",
+          "video_url": "",
+          "book_reference": "Timoshenko, Strength of Materials",
+          "topic_covered": "Deflection of beams and superposition; general beam behavior under loads",
+          "relevance_score": 0.3,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "First Principles Derivation",
+        "total_steps": 6,
+        "solution_path": "Compute stresses from Airy function \\u2192 Examine x-dependence and boundary tractions \\u2192 Integrate shear traction to find resultant \\u2192 Match with beam configuration",
+        "key_insights": [
+          "The x-independence of \\(\\tau_{xy}\\) implies constant shear force along the beam, ruling out distributed loading.",
+          "Zero shear traction on top and bottom surfaces indicates no external loading there, consistent with a standard beam.",
+          "The shear traction distribution at one end matches the classical parabolic shear stress for a rectangular section under a single shear force P."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$\\sigma_x = \\frac{\\partial^2 \\phi}{\\partial y^2}$",
+          "name": "Normal stress from Airy stress function",
+          "conditions": "Plane stress or plane strain in Cartesian coordinates",
+          "type": "equation",
+          "relevance": "Used to compute axial normal stress from the given Airy function"
+        },
+        {
+          "formula": "$\\sigma_y = \\frac{\\partial^2 \\phi}{\\partial x^2}$",
+          "name": "Transverse normal stress from Airy stress function",
+          "conditions": "Plane stress/strain",
+          "type": "equation",
+          "relevance": "Shows that \\(\\sigma_y = 0\\) for this problem, consistent with beam theory"
+        },
+        {
+          "formula": "$\\tau_{xy} = -\\frac{\\partial^2 \\phi}{\\partial x \\partial y}$",
+          "name": "Shear stress from Airy stress function",
+          "conditions": "Plane stress/strain",
+          "type": "equation",
+          "relevance": "Core relation to find shear stress distribution and infer shear force"
+        },
+        {
+          "formula": "$V = \\int_{-c}^{c} \\tau_{xy} \\, b \\, dy$",
+          "name": "Resultant shear force from shear stress distribution",
+          "conditions": "Uniform thickness b, shear traction acting over depth",
+          "type": "equation",
+          "relevance": "Used conceptually to see that the end shear resultant equals P"
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Design and analysis of aircraft wing spars modeled as cantilever beams under tip loads",
+          "Analysis of helicopter rotor blades treated as cantilevers with concentrated root or tip loads"
+        ],
+        "specific_systems": [
+          "Fixed-wing aircraft wing root under lift and engine loads",
+          "Cantilevered tailplane or fin structures"
+        ],
+        "practical_relevance": "Understanding how a given stress function corresponds to actual support and loading conditions is crucial when validating finite element models or analytical solutions for structural components in aerospace applications."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Assuming any Airy stress function with x appears must correspond to a distributed load along the beam.",
+          "why_students_make_it": "They associate x-dependence directly with distributed loading without checking how stresses vary with x.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "common",
+          "how_to_avoid": "Always compute the actual stress components and see whether they depend on x; constant shear stress along x implies no distributed load.",
+          "consequence": "Leads to choosing simply supported or uniformly loaded options instead of the correct cantilever with end load."
+        },
+        {
+          "mistake": "Not checking boundary tractions on y = ±c and x = 0, and instead guessing based on beam sketches.",
+          "why_students_make_it": "Under time pressure, they skip the traction calculations and rely on intuition.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Systematically evaluate stresses on each boundary and infer whether it is traction-free, loaded, or fixed.",
+          "consequence": "Incorrect identification of the loading and support conditions."
+        },
+        {
+          "mistake": "Sign or differentiation errors when computing \\(\\tau_{xy} = -\\partial^2 \\phi/\\partial x \\partial y\\).",
+          "why_students_make_it": "They forget the negative sign or mix up the order of differentiation.",
+          "type": "Sign Error",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Write the definition of \\(\\tau_{xy}\\) explicitly before differentiating and check with a quick dimensional or symmetry sense check.",
+          "consequence": "Wrong shear stress distribution and wrong conclusion about the type of loading."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "S-S-T: Sigma from Second derivative, Tau has a minus sign Too",
+          "concept": "Remembering stress components from Airy stress function",
+          "effectiveness": "medium",
+          "context": "Use when recalling \\(\\sigma_x, \\sigma_y, \\tau_{xy}\\) relations."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "From an Airy stress function \\(\\phi(x,y)\\), how do you obtain \\(\\sigma_x\\) and \\(\\tau_{xy}\\) in plane stress?",
+          "back": "Use \\(\\sigma_x = \\partial^2 \\phi/\\partial y^2\\) and \\(\\tau_{xy} = -\\partial^2 \\phi/\\partial x \\partial y\\).",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "If \\(\\tau_{xy}\\) is independent of x along a prismatic beam, what does that say about the shear force distribution?",
+          "back": "The internal shear force is constant along the beam, implying no distributed transverse load and typically a single end shear load.",
+          "difficulty": "medium",
+          "time_limit_seconds": 45
+        },
+        {
+          "card_type": "application",
+          "front": "Given a beam with traction-free top and bottom surfaces and a parabolic shear traction only at one end, what common beam model does this represent?",
+          "back": "A cantilever beam with a shear load applied at the free end and the other end clamped.",
+          "difficulty": "medium",
+          "time_limit_seconds": 45
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "What key check prevents misidentifying a stress function as a uniformly distributed load case?",
+          "back": "Check whether \\(\\tau_{xy}\\) (and thus shear force) varies with x. UDL gives linearly varying shear force, not constant.",
+          "difficulty": "medium",
+          "time_limit_seconds": 45
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Modeling aircraft wing as a cantilever under tip or root loads",
+          "industry_example": "A transport aircraft wing root experiences large shear and bending due to lift and engine thrust; elasticity solutions with Airy stress functions help validate finite element models.",
+          "why_it_matters": "Incorrect interpretation of stress states can lead to underestimating loads and unsafe structural designs."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "If you recognize Airy stress function relations, this is a quick conceptual question: compute \\(\\tau_{xy}\\), check its x-dependence and boundary tractions, then match to the closest beam configuration.",
+        "guessing_heuristic": "If \\(\\tau_{xy}\\) is constant in x and there is no sign of distributed loading, favor a cantilever with an end load over simply supported or UDL options.",
+        "time_management": "Limit detailed algebra; focus on patterns (x-dependence, boundary zeros) to decide within 3–4 minutes."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "Airy stress function cantilever beam",
+        "plane stress elasticity Megson example",
+        "shear stress distribution rectangular beam",
+        "GATE AE Airy stress function question",
+        "boundary tractions from stress function",
+        "cantilever beam end shear load elasticity"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Use equilibrium of stress resultants",
+          "description": "Instead of detailed boundary traction analysis, integrate the shear stress over a cross-section to find the shear force and check if it is constant along x. Then compare with standard shear and bending moment diagrams for different beam/load cases.",
+          "pros_cons": "Pros: Emphasizes physical interpretation and may be faster. Cons: Requires comfort with mapping internal resultants to external loads and supports.",
+          "when_to_use": "Useful when you quickly see that \\(\\tau_{xy}\\) is x-independent and want to shortcut detailed boundary checks."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Solid Mechanics": "Links directly to shear force and bending moment diagrams and classical beam theory.",
+        "Finite Element Methods": "Airy stress function solutions serve as benchmarks for validating 2D elasticity FEM codes.",
+        "Structural Analysis": "Understanding internal stress distributions helps in designing and sizing structural members."
+      },
+      "deeper_dive_topics": [
+        "Derivation of Airy stress function and biharmonic equation",
+        "Exact elasticity solutions for beams vs Euler–Bernoulli beam theory",
+        "Saint-Venant’s principle and end effects in beams",
+        "Use of complex variable methods (Muskhelishvili) for 2D elasticity"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_AE_2008_Q69",
+        "year": 2008,
+        "marks": 2.0,
+        "negative_marks": 0.66,
+        "time_expected": "3-4 minutes",
+        "success_rate_estimate": "45%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 3: Structures",
+        "gate_subsection": "Elasticity, energy methods, and failure theories",
+        "weightage": "5-8%",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Excellent conceptual question linking elasticity (Airy stress function) with basic beam theory and boundary conditions."
+      },
+      "rag_quality": {
+        "relevance_score": 0.5,
+        "chunks_used": 3,
+        "sources_distribution": {
+          "books": 2,
+          "videos": 1
+        },
+        "notes": "RAG provided general context on beams and Airy stress function examples (Megson) and beam loading diagrams, which are conceptually related but did not directly solve this specific Airy function identification problem. Core reasoning relied on standard elasticity relations from model knowledge."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-18T00:00:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Given a different Airy stress function, ask students to derive the corresponding distributed load along the beam.",
+        "Modify the cross-section shape (e.g., I-beam) and ask for qualitative shear stress distribution from the stress function.",
+        "Ask to compute the maximum shear stress and compare with elementary beam theory predictions.",
+        "Extend to plane strain and ask how the Airy stress function relations change."
+      ]
+    },
+    "question_id": "GATE_AE_2008_Q69",
+    "year": 2008,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "MCQ",
+    "question_text": "A beam occupies a region 0 ≤ x ≤ L; -c ≤ y ≤ c; -0.5 ≤ z ≤ 0.5 as shown below. The beam can be considered to be in plane stress condition in x-y plane. Airy's stress function for the beam is given as: φ(x, y) = -(Pxy³)/(4c³) + (3Pxy)/(4c) where P is a constant. The above stress function pertains to a"
+  },
+  "tokens_used": 14811,
+  "input_tokens": 9583,
+  "output_tokens": 5228,
+  "cost": 0.06425875,
+  "time_seconds": 107.16602540016174
+}
