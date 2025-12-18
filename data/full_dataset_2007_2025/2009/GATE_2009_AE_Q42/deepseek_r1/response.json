@@ -1,0 +1,323 @@
+{
+  "model_name": "deepseek_r1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "image_based",
+      "combined_type": "numerical_calculation_image_based",
+      "weight_strategy": "MATH_IMAGE_HYBRID",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "The question requires calculating bending stress given a bending moment and load factor. It involves understanding bending stress distribution in idealized sections and applying the load factor concept. It requires multiple steps to determine the maximum bending stress, and integrates concepts from structural mechanics.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "B",
+        "is_correct": true,
+        "confidence": 0.7,
+        "confidence_type": "single_model",
+        "reasoning": "Official GATE answer key indicates option B (3.5 × 10^6 N/m^2). My detailed calculation yields 7 × 10^6 N/m^2 (option C), likely due to a common mistake in interpreting the bending moment amplification by load factor or geometry. However, per instructions, the official answer is treated as correct. Possibly, some solvers forget to square the distance in moment of inertia or misinterpret the neutral axis location, leading to B. I will explain the correct methodology while noting the discrepancy."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Step 1: Understand the idealized section. From the image, two booms each of area A = 1 cm² = 1 × 10⁻⁴ m². They are symmetrically placed about the centroid. Horizontal distance between booms is 0.5 m, suggesting y-coordinates ±0.25 m. Vertical offsets from the chord line (neutral axis) are ±0.025 m, so z-coordinates relative to centroid are z₁ = +0.025 m, z₂ = -0.025 m.",
+          "Step 2: Compute moment of inertia about y-axis (I_yy). For point areas, I_yy = Σ A_i z_i² = (1e-4)×(0.025²) + (1e-4)×(0.025²) = 1.25 × 10⁻⁷ m⁴.",
+          "Step 3: Determine bending moment. In steady level flight, M_y = 10 N·m. At load factor n = 3.5, the design bending moment is M = n × M_y = 3.5 × 10 = 35 N·m.",
+          "Step 4: Apply simple bending formula for symmetric bending about y-axis (since booms are collinear, neutral axis is y-axis). Bending stress σ = (M / I_yy) × z. Maximum stress occurs at boom with largest |z| = 0.025 m.",
+          "Step 5: Calculate σ_max = (35 N·m / 1.25e-7 m⁴) × 0.025 m = 7 × 10⁶ N/m² (or 7 MPa).",
+          "Step 6: Compare with options. 7 × 10⁶ N/m² corresponds to option C. However, official answer is B (3.5 × 10⁶ N/m²). A possible error leading to B is using M_y = 10 N·m without multiplying by n, or using an incorrect moment of inertia formula."
+        ],
+        "formulas_used": [
+          "$\\sigma = \\frac{M}{I} y$ (for symmetric bending about neutral axis)",
+          "$I_{yy} = \\sum A_i z_i^2$",
+          "$M = n \\times M_{\\text{steady}}$",
+          "$\\sigma_{\\text{max}} = \\frac{M \\times z_{\\text{max}}}{I_{yy}}$"
+        ],
+        "estimated_time_minutes": 3
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Structures",
+          "confidence": 0.95
+        },
+        "topic": {
+          "name": "Bending of Idealized Aircraft Sections",
+          "syllabus_ref": "Section 4: Structures - Aircraft Structures, Structural Idealization, Bending and Shear of Beams"
+        },
+        "concepts": [
+          {
+            "name": "Bending Stress in Idealized Booms",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Structural Idealization",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Moment of Inertia Calculation",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Load Factor Effect on Bending Moment",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Bending stress formula for beams: $\\sigma = My/I$",
+          "Concept of moment of inertia for point masses/areas",
+          "Structural idealization (lumping skin area into booms)",
+          "Load factor definition (n = L/W)"
+        ],
+        "helpful": [
+          "Understanding of unsymmetrical bending theory",
+          "Coordinate transformation for moments of inertia"
+        ],
+        "dependency_tree": {
+          "Maximum Bending Stress in Idealized Wing": [
+            "requires: Bending stress formula",
+            "requires: Moment of inertia calculation",
+            "requires: Load factor relation to bending moment",
+            "enables: Analysis of multi-boom wing sections",
+            "enables: Stress analysis under maneuver loads"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Medium",
+        "score": 5,
+        "complexity_breakdown": {
+          "conceptual": 4,
+          "mathematical": 5,
+          "problem_solving": 6
+        },
+        "estimated_solve_time_seconds": 120,
+        "expected_accuracy_percent": 60,
+        "difficulty_factors": [
+          "Interpreting idealized geometry from image",
+          "Correctly applying load factor to bending moment",
+          "Avoiding mistakes in moment of inertia calculation"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Aircraft Structures for Engineering Students",
+          "author": "T.H.G. Megson",
+          "chapter_number": "23",
+          "chapter_title": "Wings",
+          "section": "§23.2",
+          "page_range": "Not specified",
+          "complexity": "intermediate",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval",
+          "text_snippet": "In a more realistic, multicell wing section, bending moments cause direct stresses... In the idealized model, it is assumed that only the booms can carry these direct stresses."
+        },
+        {
+          "source_type": "book",
+          "book": "Aircraft Structures for Engineering Students",
+          "author": "T.H.G. Megson",
+          "chapter_number": "20",
+          "chapter_title": "Structural Idealization",
+          "section": "Not specified",
+          "page_range": "Not specified",
+          "complexity": "intermediate",
+          "relevance_score": 0.8,
+          "source": "rag_retrieval",
+          "text_snippet": "The core idea is to replace the complex, distributed material with a simplified model... booms are assumed to carry all the direct stress."
+        }
+      ],
+      "video_references": [],
+      "step_by_step_solution": {
+        "approach_type": "Direct Formula Application with Idealization",
+        "total_steps": 6,
+        "solution_path": "Geometry interpretation → Moment of inertia calculation → Load factor application → Bending stress formula → Maximum stress identification",
+        "key_insights": [
+          "The two booms are collinear; neutral axis is perpendicular to line joining them (y-axis).",
+          "Load factor linearly scales the bending moment from steady flight to maneuver condition."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$\\sigma = \\frac{M_y}{I_{yy}} z$",
+          "name": "Bending Stress for Symmetric Bending about y-axis",
+          "conditions": "When bending moment is purely about y-axis and section is symmetric such that I_yz=0, or for collinear booms where neutral axis is perpendicular to boom line.",
+          "type": "equation",
+          "relevance": "Core formula for calculating direct stress in each boom."
+        },
+        {
+          "formula": "$I_{yy} = \\sum_{i} A_i z_i^2$",
+          "name": "Moment of Inertia about y-axis",
+          "conditions": "For idealized booms treated as point areas.",
+          "type": "equation",
+          "relevance": "Necessary to compute section resistance to bending about y-axis."
+        },
+        {
+          "formula": "$M = n \\times M_{\\text{steady}}$",
+          "name": "Maneuver Bending Moment",
+          "conditions": "When load factor n is given, and steady flight moment is known.",
+          "type": "equation",
+          "relevance": "Relates steady flight moment to design moment for stress calculation."
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Wing root stress analysis during pull-up maneuvers in aircraft design.",
+          "Preliminary sizing of spar caps in wing boxes using idealized boom models."
+        ],
+        "specific_systems": [
+          "Light aircraft wings with simple spar and stringer arrangements.",
+          "UAV wing structures analyzed with lumped mass models."
+        ],
+        "practical_relevance": "Ensuring wing structural integrity under gust and maneuver loads is critical for safety. Idealized methods allow quick stress estimates during conceptual design."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Forgetting to multiply steady flight bending moment by load factor n, thus using M_y=10 N·m instead of 35 N·m.",
+          "why_students_make_it": "Overlooking that load factor scales the loads; may think stress is directly proportional to n without scaling moment first.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Remember: Load factor multiplies inertial loads, hence internal bending moment. Write M_design = n * M_steady explicitly.",
+          "consequence": "Stress off by factor of 3.5 (e.g., get 2e6 instead of 7e6)."
+        },
+        {
+          "mistake": "Incorrect moment of inertia calculation: using I_yy = A*(z1 + z2) or I_yy = A*d^2 where d is horizontal distance.",
+          "why_students_make_it": "Confusion between moment of inertia formula for point masses and forgetting the squared distance.",
+          "type": "Calculation",
+          "severity": "High",
+          "frequency": "occasional",
+          "how_to_avoid": "Recall I_yy = Σ A_i * (z_i)^2. For two symmetric booms, I_yy = 2A*z².",
+          "consequence": "I_yy becomes too large or small, leading to order-of-magnitude errors in stress."
+        },
+        {
+          "mistake": "Using y-coordinate instead of z-coordinate in bending stress formula for M_y.",
+          "why_students_make_it": "Misunderstanding that bending stress due to M_y depends on distance perpendicular to y-axis (z), not along y.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Associate moment axis with the coordinate that is squared in I: M_y relates to z; M_z relates to y.",
+          "consequence": "Stress calculation uses wrong lever arm, possibly using 0.25 m instead of 0.025 m."
+        },
+        {
+          "mistake": "Not converting boom area from cm² to m² consistently, leading to factor of 10⁴ error.",
+          "why_students_make_it": "Rushing through unit conversion, especially when dimensions are in mixed units (cm, m).",
+          "type": "Units",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Always convert all quantities to base SI units (m, m², N, m⁴) before plugging into formulas.",
+          "consequence": "Stress off by 10⁴ (e.g., 7e10 instead of 7e6)."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "My Z Izz: M_y uses Z-coordinate and I_yy (not I_zz).",
+          "concept": "Which coordinate to use for bending stress due to M_y",
+          "effectiveness": "medium",
+          "context": "When recalling σ = M_y * z / I_yy."
+        },
+        {
+          "mnemonic": "Load Factor = Lift/Weight, so Multiply Moment",
+          "concept": "Load factor scales bending moment",
+          "effectiveness": "high",
+          "context": "Remembering M_maneuver = n * M_steady."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "What is the bending stress formula for a point boom due to bending moment M_y?",
+          "back": "$\\sigma = \\frac{M_y \\cdot z}{I_{yy}}$, where z is distance from neutral axis (y-axis), and $I_{yy} = \\sum A_i z_i^2$.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "In structural idealization of wings, what do booms carry and what does skin carry?",
+          "back": "Booms carry direct (axial) stress; skin carries only shear stress. The skin's direct stress contribution is lumped into boom areas.",
+          "difficulty": "medium",
+          "time_limit_seconds": 45
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "When load factor n is given, how does it affect the bending moment for stress calculation?",
+          "back": "The design bending moment = n × steady level flight moment. Do not apply n directly to stress; apply it to moment first.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "application",
+          "front": "For two equal booms at (±a, ±b), what is I_yy?",
+          "back": "$I_{yy} = 2A b^2$, where A is boom area and b is vertical distance from centroid.",
+          "difficulty": "medium",
+          "time_limit_seconds": 40
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Wing root stress analysis during a pull-up maneuver.",
+          "industry_example": "Aircraft designers calculate maximum bending stress at wing root for certification under limit load factors (e.g., n=3.5 for general aviation).",
+          "why_it_matters": "Exceeding allowable stress can lead to structural failure. Idealized methods provide quick checks before detailed FEM analysis."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "Quick 2-minute calculation: identify geometry, compute I_yy, apply M=n*M_y, use σ=M*z/I_yy.",
+        "guessing_heuristic": "If unsure, note that stress is proportional to n; options have factors of 1, 3.5, 7. 7 is n times 2, and 2e6 is plausible for steady flight stress, so C is likely. But official answer is B.",
+        "time_management": "Spend no more than 3 minutes; if stuck, guess B (official answer) and move on."
+      }
+    },
+    "tier_3_enhanced_learning": {},
+    "question_id": "GATE_2009_AE_Q42",
+    "year": 2009,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "MCQ",
+    "question_text": "A wing root cross section is idealized using lumped areas (booms) as shown below. The wing root bending moment in steady level flight is My = 10 N-m. If the airplane flies at a load factor n = 3.5, the maximum bending stress at the root is",
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2009_AE_Q42",
+        "year": 2009,
+        "marks": 2.0
+      },
+      "syllabus_mapping": {
+        "gate_section": "General"
+      },
+      "rag_quality": {
+        "relevance_score": 0.5,
+        "notes": "Auto-generated",
+        "sources_distribution": {}
+      },
+      "model_meta": {
+        "timestamp": "2025-12-19T04:46:12.594316",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": []
+    }
+  },
+  "tokens_used": 25823,
+  "input_tokens": 9823,
+  "output_tokens": 16000,
+  "cost": 0.040442650000000004,
+  "time_seconds": 483.9436454772949
+}
