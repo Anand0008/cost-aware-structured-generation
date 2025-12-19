@@ -1,0 +1,416 @@
+{
+  "model_name": "deepseek_r1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "conceptual_application",
+      "media_type": "text_only",
+      "combined_type": "conceptual_application_text_only",
+      "weight_strategy": "APPLICATION_WEIGHTED",
+      "classification_confidence": 0.9,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "The question requires understanding potential flow, circulation, and how they combine around a cylinder. It's not a direct calculation, but rather choosing the correct stream function based on conceptual understanding of the flow field. It integrates concepts of fluid mechanics.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": false,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "C",
+        "is_correct": true,
+        "confidence": 0.99,
+        "confidence_type": "single_model",
+        "reasoning": "Option C matches the standard formulation for the stream function of potential flow past a circular cylinder (uniform flow + doublet) plus the contribution from a vortex (point vortex at the origin). The uniform+doublet part is $V_\\infty r (1 - R^2/r^2) \\sin\\theta$. The vortex stream function is $\\frac{\\Gamma}{2\\pi} \\ln r$. The condition $\\psi=0$ on $r=R$ is enforced by subtracting the constant $\\frac{\\Gamma}{2\\pi} \\ln R$ from the vortex term, resulting in $\\frac{\\Gamma}{2\\pi} \\ln(r/R)$. This is a direct application of superposition, as detailed in the retrieved knowledge (Chunk 1). Options A and B use $\\cos\\theta$ for the doublet part, which is the form of the potential function, not the stream function. Option D uses $(1+R^2/r^2)$ for the doublet part, which is incorrect as the correct form subtracts the doublet contribution."
+      },
+      "explanation": {
+        "question_nature": "Application",
+        "step_by_step": [
+          "Step 1: Recall the elementary potential flow solutions. For flow past a non-spinning cylinder: uniform flow + doublet. For a vortex at the origin: $\\psi_{vortex} = \\frac{\\Gamma}{2\\pi} \\ln r$.",
+          "Step 2: Write the stream function for a uniform flow of velocity $V_\\infty$ in the x-direction: $\\psi_{uniform} = V_\\infty r \\sin\\theta$.",
+          "Step 3: Write the stream function for a doublet of strength $\\mu$ at the origin: $\\psi_{doublet} = -\\frac{\\mu}{2\\pi r} \\sin\\theta$. For the doublet strength that creates a cylinder of radius $R$, we have $\\mu = 2\\pi V_\\infty R^2$. Substituting gives $\\psi_{doublet} = -V_\\infty \\frac{R^2}{r} \\sin\\theta$.",
+          "Step 4: Superpose the uniform flow and doublet to get the flow past a stationary cylinder: $\\psi_{cylinder} = V_\\infty r \\sin\\theta - V_\\infty \\frac{R^2}{r} \\sin\\theta = V_\\infty \\sin\\theta (r - \\frac{R^2}{r}) = V_\\infty r (1 - \\frac{R^2}{r^2}) \\sin\\theta$.",
+          "Step 5: Superpose the vortex stream function: $\\psi_{total} = \\psi_{cylinder} + \\psi_{vortex} = V_\\infty r (1 - \\frac{R^2}{r^2}) \\sin\\theta + \\frac{\\Gamma}{2\\pi} \\ln r$.",
+          "Step 6: Apply the given boundary condition: $\\psi = 0$ on the cylinder surface $r=R$. The cylinder part is already zero at $r=R$ ($V_\\infty R (1-1) \\sin\\theta = 0$). The vortex part at $r=R$ is $\\frac{\\Gamma}{2\\pi} \\ln R$, which is not zero. To satisfy $\\psi=0$ on $r=R$, we must adjust the vortex term by a constant. The standard adjustment is to write $\\psi_{vortex} = \\frac{\\Gamma}{2\\pi} \\ln(r/R)$, which is zero when $r=R$.",
+          "Step 7: The final stream function satisfying $\\psi=0$ on $r=R$ is $\\psi = V_\\infty r (1 - \\frac{R^2}{r^2}) \\sin\\theta + \\frac{\\Gamma}{2\\pi} \\ln(r/R)$. This matches Option C."
+        ],
+        "formulas_used": [
+          "$\\psi_{uniform} = V_\\infty r \\sin\\theta$",
+          "$\\psi_{doublet} = -\\frac{\\mu}{2\\pi r} \\sin\\theta$",
+          "$\\mu = 2\\pi V_\\infty R^2$ (for cylinder radius R)",
+          "$\\psi_{cylinder} = V_\\infty r \\sin\\theta (1 - \\frac{R^2}{r^2})$",
+          "$\\psi_{vortex} = \\frac{\\Gamma}{2\\pi} \\ln r$",
+          "$\\psi_{vortex,adjusted} = \\frac{\\Gamma}{2\\pi} \\ln(r/R)$"
+        ],
+        "estimated_time_minutes": 3
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Aerodynamics",
+          "confidence": 1.0
+        },
+        "topic": {
+          "name": "Incompressible Potential Flow",
+          "syllabus_ref": "Section 2: Aerodynamics -> Low Speed Aerodynamics -> Sub-topic: Potential Flow Theory"
+        },
+        "concepts": [
+          {
+            "name": "Superposition of Elementary Flows",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Stream Function",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Flow Past a Circular Cylinder",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Vortex (Point Vortex)",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Boundary Condition (psi=0 on body)",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Definition of stream function for 2D, incompressible, irrotational flow",
+          "Stream functions for elementary flows: uniform flow, doublet, and vortex in polar coordinates",
+          "Concept of superposition in potential flow",
+          "How a doublet combined with uniform flow creates flow past a cylinder"
+        ],
+        "helpful": [
+          "Potential function vs. stream function",
+          "Physical interpretation of circulation (Gamma)",
+          "Kutta-Joukowski theorem (for context)"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Stream function definition and properties",
+            "requires: Knowledge of elementary flow solutions (uniform, doublet, vortex)",
+            "requires: Principle of superposition",
+            "enables: Calculation of velocity field from this stream function",
+            "enables: Understanding of lift generation on a spinning cylinder (Magnus effect)"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Easy",
+        "score": 3,
+        "complexity_breakdown": {
+          "conceptual": 4,
+          "mathematical": 2,
+          "problem_solving": 3
+        },
+        "estimated_solve_time_seconds": 120,
+        "expected_accuracy_percent": 75,
+        "difficulty_factors": [
+          "Direct recall and application of a standard formula",
+          "Trick: Options include potential function forms (cosine) to confuse",
+          "Must remember to adjust vortex term for psi=0 on surface"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Fundamentals of Aerodynamics",
+          "author": "J. D. Anderson",
+          "chapter_number": "3",
+          "chapter_title": "Fundamentals of Inviscid, Incompressible Flow",
+          "section": "3.13, 3.14",
+          "page_range": "245-260 (approx.)",
+          "complexity": "intermediate",
+          "relevance_score": 1.0,
+          "source": "rag_retrieval",
+          "text_snippet": "Flow past a circular cylinder can be modeled by superimposing a uniform flow and a doublet... Adding circulation (a vortex) shifts stagnation points and generates lift."
+        },
+        {
+          "source_type": "book",
+          "book": "Intro to Aerodynamics",
+          "author": "J. D. Anderson",
+          "chapter_number": "3",
+          "chapter_title": "Fundamentals of Inviscid, Incompressible Flow",
+          "section": "3.13",
+          "complexity": "intermediate",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval",
+          "text_snippet": "Stream Function for Flow Over a Cylinder: $\\psi = V_{\\infty} r \\sin\\theta (1 - \\frac{R^2}{r^2})$"
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. K.P. Sinhamahapatra",
+          "timestamp_start": "00:48:36",
+          "timestamp_end": "00:55:00",
+          "video_url": "https://www.youtube.com/watch?v=JBeEjcLB9oY",
+          "book_reference": "Anderson, J.D., 'Fundamentals of Aerodynamics'",
+          "topic_covered": "Flow past a circular cylinder with circulation (Kutta-Joukowski theory)",
+          "relevance_score": 0.95,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. K.P. Sinhamahapatra",
+          "timestamp_start": "00:00:13",
+          "timestamp_end": "00:05:06",
+          "video_url": "https://www.youtube.com/watch?v=JBeEjcLB9oY",
+          "book_reference": "Anderson, J.D., 'Fundamentals of Aerodynamics'",
+          "topic_covered": "Potential function and zero streamline for uniform flow + doublet (cylinder without circulation)",
+          "relevance_score": 0.8,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Direct Formula Application and Superposition",
+        "total_steps": 7,
+        "solution_path": "Recall elementary stream functions → Superpose uniform flow and doublet for cylinder → Add vortex contribution → Apply boundary condition (psi=0 at r=R) → Match with options.",
+        "key_insights": [
+          "The stream function for a cylinder uses $\\sin\\theta$, while the potential function uses $\\cos\\theta$. This helps eliminate options A and B immediately.",
+          "The doublet contribution for a cylinder is subtractive: $(1 - R^2/r^2)$, not additive. This eliminates option D.",
+          "The vortex term must be adjusted by a constant ($\\ln(R)$) to satisfy psi=0 on the surface."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$\\psi_{cylinder} = V_\\infty r \\sin\\theta \\left(1 - \\frac{R^2}{r^2}\\right)$",
+          "name": "Stream Function for Flow Past a Circular Cylinder (No Circulation)",
+          "conditions": "Inviscid, incompressible, irrotational flow. Doublet strength $\\mu = 2\\pi V_\\infty R^2$.",
+          "type": "equation",
+          "relevance": "Core component of the solution."
+        },
+        {
+          "formula": "$\\psi_{vortex} = \\frac{\\Gamma}{2\\pi} \\ln r$",
+          "name": "Stream Function for a Point Vortex at Origin",
+          "conditions": "Circulation $\\Gamma$ is constant. Positive $\\Gamma$ indicates counterclockwise rotation.",
+          "type": "equation",
+          "relevance": "Adds circulation to the flow."
+        },
+        {
+          "formula": "$\\psi = \\psi_{cylinder} + \\frac{\\Gamma}{2\\pi} \\ln\\left(\\frac{r}{R}\\right)$",
+          "name": "Combined Stream Function with Boundary Condition",
+          "conditions": "$\\psi=0$ on $r=R$.",
+          "type": "equation",
+          "relevance": "Final answer, satisfies the given condition."
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Analysis of the Magnus effect on spinning projectiles or cylinders (e.g., Flettner rotor ships)",
+          "Simplified modeling of flow around bluff bodies with rotation in wind tunnels"
+        ],
+        "specific_systems": [
+          "Flettner rotor (spinning cylinder used for ship propulsion)",
+          "Spinning baseball or cricket ball (conceptual understanding of swing)"
+        ],
+        "practical_relevance": "This potential flow model provides a foundational understanding of how circulation generates lift on a body, even without an airfoil shape. It's a classic demonstration of the Kutta-Joukowski theorem."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Confusing the stream function with the potential function, leading to selection of options with $\\cos\\theta$ (A or B).",
+          "why_students_make_it": "The potential function for the same flow is $\\phi = V_\\infty r \\cos\\theta (1 + R^2/r^2) + \\frac{\\Gamma}{2\\pi}\\theta$. Students often mix up the forms.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Remember: Uniform flow stream function uses $\\sin\\theta$, potential uses $\\cos\\theta$. Doublet stream function uses $-\\sin\\theta$, potential uses $+\\cos\\theta$. Associate 'stream' with 'sine' (both start with 's').",
+          "consequence": "Will choose the wrong option (A or B)."
+        },
+        {
+          "mistake": "Using the wrong sign for the doublet term: $(1 + R^2/r^2)$ instead of $(1 - R^2/r^2)$, leading to option D.",
+          "why_students_make_it": "Misremembering the derived formula or incorrectly superposing the doublet sign.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "occasional",
+          "how_to_avoid": "Derive or memorize: $\\psi_{doublet} = -\\frac{\\mu}{2\\pi r} \\sin\\theta$. Superposition gives $\\psi = V_\\infty r \\sin\\theta - \\frac{\\mu}{2\\pi r} \\sin\\theta$. Substitute $\\mu = 2\\pi V_\\infty R^2$ to get the correct form.",
+          "consequence": "Will choose option D."
+        },
+        {
+          "mistake": "Forgetting to adjust the vortex term to satisfy $\\psi=0$ on $r=R$, i.e., using $\\ln r$ instead of $\\ln(r/R)$.",
+          "why_students_make_it": "Directly adding the standard vortex stream function without considering the given boundary condition.",
+          "type": "Application",
+          "severity": "Medium",
+          "frequency": "common",
+          "how_to_avoid": "Always check if the combined stream function satisfies the given condition. If not, add a constant. For $\\psi=0$ at $r=R$, the vortex term must be zero at $r=R$, so use $\\ln(r/R)$.",
+          "consequence": "The expression won't satisfy psi=0 at r=R, but this specific mistake might still lead to selecting C if the constant is ignored in the options (they all have ln(r/R)). The options already include the adjustment."
+        },
+        {
+          "mistake": "Incorrect sign for the vortex stream function (using negative $\\frac{\\Gamma}{2\\pi} \\ln r$).",
+          "why_students_make_it": "Sign conventions for vortex stream function vary across textbooks (some use $+$, some use $-$).",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Stick to one standard (e.g., Anderson: $\\psi_{vortex} = \\frac{\\Gamma}{2\\pi} \\ln r$). Check the resulting tangential velocity: $u_\\theta = -\\partial \\psi / \\partial r = -\\frac{\\Gamma}{2\\pi r}$. Positive $\\Gamma$ gives negative $u_\\theta$ (clockwise) if this convention is used. The problem's answer uses the positive sign, so follow that.",
+          "consequence": "May doubt the correct answer, but the options only show the positive sign."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "SSC: Stream Function for Cylinder = Sine, Subtract, Circle. (Sine theta, Subtract R^2/r^2, describes a Circle).",
+          "concept": "Remembering the form $V_\\infty r (1 - R^2/r^2) \\sin\\theta$ for cylinder flow.",
+          "effectiveness": "high",
+          "context": "When recalling the non-circulatory cylinder stream function."
+        },
+        {
+          "mnemonic": "Vortex Log: Vortex contribution is a Logarithm (ln).",
+          "concept": "Remembering the vortex stream function is proportional to ln(r).",
+          "effectiveness": "medium",
+          "context": "Recalling the form of elementary flows."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "What is the stream function for incompressible potential flow past a circular cylinder (radius R, freestream V_inf) WITHOUT circulation?",
+          "back": "$\\psi = V_\\infty r \\sin\\theta \\left(1 - \\frac{R^2}{r^2}\\right)$. Derived from uniform flow + doublet.",
+          "difficulty": "easy",
+          "time_limit_seconds": 20
+        },
+        {
+          "card_type": "formula_recall",
+          "front": "What is the stream function for a point vortex of circulation $\\Gamma$ at the origin?",
+          "back": "$\\psi_{vortex} = \\frac{\\Gamma}{2\\pi} \\ln r$. (Sign convention: Anderson).",
+          "difficulty": "easy",
+          "time_limit_seconds": 20
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "How do you modify the vortex stream function to ensure $\\psi=0$ on the surface of a cylinder at r=R?",
+          "back": "Add a constant: Use $\\frac{\\Gamma}{2\\pi} \\ln(r/R)$ instead of $\\frac{\\Gamma}{2\\pi} \\ln r$. This ensures at r=R, ln(1)=0.",
+          "difficulty": "medium",
+          "time_limit_seconds": 25
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "What is the key difference between the stream function and potential function for the uniform flow + doublet cylinder flow?",
+          "back": "Stream function uses $\\sin\\theta$ and $(1 - R^2/r^2)$. Potential function uses $\\cos\\theta$ and $(1 + R^2/r^2)$.",
+          "difficulty": "medium",
+          "time_limit_seconds": 25
+        },
+        {
+          "card_type": "application",
+          "front": "For the GATE 2011 AE Q21, which option is correct and why?",
+          "back": "Option C: $V_\\infty r (1 - R^2/r^2) \\sin\\theta + \\frac{\\Gamma}{2\\pi} \\ln(r/R)$. It has the correct cylinder part (sine, subtractive doublet) and the vortex part adjusted for psi=0 at r=R.",
+          "difficulty": "medium",
+          "time_limit_seconds": 30
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Magnus Effect",
+          "industry_example": "Flettner rotor ships use spinning vertical cylinders to generate thrust from wind. The circulation around the cylinder creates a pressure difference (lift) perpendicular to the wind direction, propelling the ship.",
+          "why_it_matters": "Demonstrates a non-airfoil method of generating lift using circulation, validating the Kutta-Joukowski theorem."
+        },
+        {
+          "application": "Sports Ball Aerodynamics",
+          "industry_example": "A spinning baseball or cricket ball experiences a lateral force (swing or curve) due to the Magnus effect. The spin imparts circulation, altering the pressure distribution.",
+          "why_it_matters": "Understanding this basic potential flow model helps explain the physics behind ball movement in sports."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "This is a standard recall/application question. Quickly eliminate options with cosθ (A,B) as they are potential functions. Then eliminate option D with (1+R^2/r^2). Only C remains. Should take <1 minute.",
+        "guessing_heuristic": "If unsure, remember: stream function for cylinder always has sinθ and (1 - R^2/r^2). Only C and D have sinθ. Between them, choose the one with subtraction (C).",
+        "time_management": "Allocate 1-2 minutes max. It's a 1-mark question with negative marking, but high confidence."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "potential flow circular cylinder circulation stream function",
+        "superposition uniform flow doublet vortex",
+        "Kutta Joukowski theorem cylinder",
+        "Magnus effect spinning cylinder",
+        "Anderson aerodynamics cylinder with circulation",
+        "GATE aerospace potential flow questions",
+        "psi=0 on cylinder boundary condition",
+        "elementary flows combination"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Start from Potential Function",
+          "description": "Construct the combined potential function $\\phi = V_\\infty r \\cos\\theta (1 + R^2/r^2) + \\frac{\\Gamma}{2\\pi}\\theta$. Then derive the stream function using the Cauchy-Riemann relations in polar coordinates: $u_r = \\frac{\\partial \\phi}{\\partial r} = \\frac{1}{r}\\frac{\\partial \\psi}{\\partial \\theta}$, $u_\\theta = \\frac{1}{r}\\frac{\\partial \\phi}{\\partial \\theta} = -\\frac{\\partial \\psi}{\\partial r}$. Integrate to find $\\psi$.",
+          "pros_cons": "More mathematically rigorous but longer. Good for verifying the result. Con: Time-consuming for an MCQ.",
+          "when_to_use": "During study to deepen understanding of the relationship between potential and stream function."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "subject_name_1": "Complex Analysis",
+        "connection_1": "Potential flow can be analyzed using complex potentials $W(z) = \\phi + i\\psi$, where $z = re^{i\\theta}$. The cylinder with circulation flow corresponds to $W(z) = V_\\infty (z + R^2/z) + \\frac{i\\Gamma}{2\\pi} \\ln(z)$.",
+        "subject_name_2": "Fluid Mechanics",
+        "connection_2": "This is an application of inviscid, incompressible flow theory. Connects to the Navier-Stokes equations (Euler equations limit) and the concept of irrotationality.",
+        "subject_name_3": "Mathematics",
+        "connection_3": "Superposition principle stems from linearity of Laplace's equation ($\\nabla^2 \\psi = 0$). The solution is a linear combination of harmonic functions."
+      },
+      "deeper_dive_topics": [
+        "Kutta-Joukowski Theorem: Lift per unit span = $\\rho V_\\infty \\Gamma$. Calculate lift for this cylinder.",
+        "Stagnation Point Locations: Solve $u_\\theta(r=R)=0$ to find where stagnation points move due to circulation.",
+        "Joukowski Transformation: How this cylinder flow can be transformed to flow around an airfoil, generating airfoil theory.",
+        "d'Alembert's Paradox: Why this inviscid model predicts zero drag but finite lift (with circulation)."
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2011_AE_Q21",
+        "year": 2011,
+        "marks": 1.0,
+        "negative_marks": 0.33,
+        "time_expected": "2-3 minutes",
+        "success_rate_estimate": "75%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 2: Aerodynamics",
+        "gate_subsection": "Low Speed Aerodynamics",
+        "weightage": "~8-10% of Aerodynamics section",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Perfectly aligned with GATE AE syllabus topic 'Potential Flows'."
+      },
+      "rag_quality": {
+        "relevance_score": 0.85,
+        "chunks_used": 4,
+        "sources_distribution": {
+          "books": 2,
+          "videos": 2
+        },
+        "notes": "RAG context was highly relevant. Chunk 1 directly provided the combined stream function for cylinder with circulation and discussed the adjustment for psi=0 on the surface (though it used a negative sign for vortex, the concept of adding constant is clear). Chunks 2, 3, 4, 5, 6 provided the foundational formulas for cylinder without circulation and velocity components. The RAG context sufficiently covered the needed concepts for a complete analysis."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-13T10:30:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Calculate the location of stagnation points on the cylinder surface for a given Gamma.",
+        "Determine the lift per unit span using the Kutta-Joukowski theorem for this flow.",
+        "Find the pressure coefficient distribution on the cylinder surface.",
+        "Modify the problem: flow past a cylinder with a vortex placed at a location other than the origin."
+      ]
+    },
+    "question_id": "GATE_2011_AE_Q21",
+    "year": 2011,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "MCQ",
+    "question_text": "Consider a potential flow with free stream velocity V_inf, over a spinning circular cylinder of radius R and circulation Gamma. The stream function, psi, where psi = 0 on the cylinder surface, in cylindrical coordinates (r,theta) is given by"
+  },
+  "tokens_used": 20349,
+  "input_tokens": 11040,
+  "output_tokens": 9309,
+  "cost": 0.02645871,
+  "time_seconds": 292.52575969696045
+}
