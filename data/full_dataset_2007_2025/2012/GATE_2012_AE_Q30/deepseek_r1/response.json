@@ -1,0 +1,324 @@
+{
+  "model_name": "deepseek_r1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "text_only",
+      "combined_type": "numerical_calculation_text_only",
+      "weight_strategy": "NUMERICAL_WEIGHTED",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "This is a numerical calculation problem involving modal analysis and initial conditions to find the amplitude of vibration. It requires understanding of mode shapes, natural frequencies, and superposition, making it a multi-concept integration problem with multiple steps.",
+      "difficulty_score": 7,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "2",
+        "is_correct": true,
+        "confidence": 0.98,
+        "confidence_type": "single_model",
+        "reasoning": "The initial displacement is expressed as a linear combination of mode shapes. Solving for modal coefficients yields C1=2 and C2=0, indicating only the first mode is excited. The response for the first degree of freedom is u1(t) = 2 cos(ω1 t), so its maximum amplitude is 2 mm. This matches the given answer key."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Step 1: Recall that for an undamped 2-DOF system, the free vibration response is a superposition of normal modes: $\\mathbf{u}(t) = \\sum_{i=1}^{2} \\boldsymbol{\\phi}_i (C_i \\cos(\\omega_i t) + D_i \\sin(\\omega_i t))$, where $\\boldsymbol{\\phi}_i$ are mode shapes, $\\omega_i$ are natural frequencies, and $C_i, D_i$ are constants.",
+          "Step 2: Apply initial conditions: zero initial velocity $\\dot{\\mathbf{u}}(0) = \\mathbf{0}$ implies $D_i = 0$ for all i. Thus, $\\mathbf{u}(t) = \\sum_{i=1}^{2} \\boldsymbol{\\phi}_i C_i \\cos(\\omega_i t)$.",
+          "Step 3: Use initial displacement $\\mathbf{u}(0) = \\{2, 1\\}^T$ mm to find $C_i$: $\\sum_{i=1}^{2} \\boldsymbol{\\phi}_i C_i = \\mathbf{u}(0)$.",
+          "Step 4: Substitute given mode shapes $\\boldsymbol{\\phi}_1 = \\{1, 0.5\\}^T$ and $\\boldsymbol{\\phi}_2 = \\{1, -0.675\\}^T$: $C_1 \\{1, 0.5\\} + C_2 \\{1, -0.675\\} = \\{2, 1\\}$.",
+          "Step 5: Solve the linear equations: $C_1 + C_2 = 2$ and $0.5 C_1 - 0.675 C_2 = 1$. From first, $C_1 = 2 - C_2$. Substitute into second: $0.5(2 - C_2) - 0.675 C_2 = 1 \\Rightarrow 1 - 1.175 C_2 = 1 \\Rightarrow C_2 = 0$, then $C_1 = 2$.",
+          "Step 6: The response for first degree of freedom is $u_1(t) = 1 \\cdot C_1 \\cos(\\omega_1 t) = 2 \\cos(2\\pi \\cdot 0.45 \\cdot t)$. The maximum amplitude is $|2| = 2$ mm."
+        ],
+        "formulas_used": [
+          "$\\mathbf{u}(t) = \\sum_{i=1}^{n} \\boldsymbol{\\phi}_i (C_i \\cos(\\omega_i t) + D_i \\sin(\\omega_i t))$",
+          "$\\mathbf{u}(0) = \\sum_{i=1}^{n} \\boldsymbol{\\phi}_i C_i$",
+          "$\\dot{\\mathbf{u}}(0) = \\sum_{i=1}^{n} \\boldsymbol{\\phi}_i \\omega_i D_i$"
+        ],
+        "estimated_time_minutes": 2
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Structures",
+          "confidence": 0.9
+        },
+        "topic": {
+          "name": "Vibrations of Multi-Degree-of-Freedom Systems",
+          "syllabus_ref": "Section 4: Structures, Vibrations"
+        },
+        "concepts": [
+          {
+            "name": "Modal Superposition",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Free Vibration Response",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Mode Shapes",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Initial Conditions",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Linear Algebra for solving systems of equations",
+          "Single-Degree-of-Freedom Free Vibration",
+          "Concept of Mode Shapes and Natural Frequencies"
+        ],
+        "helpful": [
+          "Orthogonality of Mode Shapes",
+          "Matrix Methods in Vibrations"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Understanding of harmonic motion",
+            "requires: Vector representation of displacements",
+            "enables: Analysis of complex structural vibrations",
+            "enables: Modal analysis in engineering design"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Easy",
+        "score": 3,
+        "complexity_breakdown": {
+          "conceptual": 4,
+          "mathematical": 3,
+          "problem_solving": 3
+        },
+        "estimated_solve_time_seconds": 120,
+        "expected_accuracy_percent": 80,
+        "difficulty_factors": [
+          "Requires setting up linear equations correctly",
+          "Simple arithmetic without complex calculations"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Mechanical Vibrations",
+          "author": "S.S. Rao",
+          "chapter_number": "6",
+          "chapter_title": "Multi-Degree-of-Freedom Systems",
+          "section": "Free Vibration of Undamped Systems",
+          "page_range": null,
+          "complexity": "intermediate",
+          "relevance_score": 0.8,
+          "source": "rag_retrieval",
+          "text_snippet": "The general solution for the displacement vector can be expressed as a superposition of normal modes."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. Mira Mitra",
+          "timestamp_start": "00:00:18",
+          "timestamp_end": "00:02:20",
+          "video_url": "https://www.youtube.com/watch?v=q07Jm4KX1iE",
+          "book_reference": "S.S. Rao",
+          "topic_covered": "2-DOF free vibration response problem",
+          "relevance_score": 0.7,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Direct Linear Combination Method",
+        "total_steps": 6,
+        "solution_path": "Modal Superposition → Apply Initial Conditions → Solve for Coefficients → Extract Response → Find Maximum",
+        "key_insights": [
+          "Zero initial velocity simplifies the response to cosine terms only.",
+          "Initial displacement may excite only some modes; here only first mode is excited."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$\\mathbf{u}(t) = \\sum_{i=1}^{n} \\boldsymbol{\\phi}_i (C_i \\cos(\\omega_i t) + D_i \\sin(\\omega_i t))$",
+          "name": "General Solution for Undamped MDOF Free Vibration",
+          "conditions": "For linear, undamped systems with known mode shapes and natural frequencies",
+          "type": "equation",
+          "relevance": "Core formula for constructing the response"
+        },
+        {
+          "formula": "$\\mathbf{u}(0) = \\sum_{i=1}^{n} \\boldsymbol{\\phi}_i C_i$",
+          "name": "Initial Displacement Condition",
+          "conditions": "At time t=0, with zero initial velocity if D_i=0",
+          "type": "equation",
+          "relevance": "Used to determine modal coefficients C_i"
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Vibration analysis of aircraft wings under gust loads",
+          "Design of engine mounts to avoid resonance"
+        ],
+        "specific_systems": [
+          "Helicopter rotor blades vibration modes",
+          "Satellite solar panel deployment dynamics"
+        ],
+        "practical_relevance": "Understanding free vibration response helps in predicting and mitigating excessive vibrations that can lead to fatigue failure."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Assuming that both modes are always excited equally, without solving for coefficients.",
+          "why_students_make_it": "Overgeneralization from single-DOF systems or lack of attention to initial conditions.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "common",
+          "how_to_avoid": "Always set up and solve the linear equations for modal coefficients based on given initial conditions.",
+          "consequence": "Incorrect amplitude calculation, possibly including contributions from non-excited modes."
+        },
+        {
+          "mistake": "Confusing frequency units: using Hz directly in cos(ωt) without converting to rad/s, though max amplitude is independent of ω here.",
+          "why_students_make_it": "Forgetting that ω = 2πf for harmonic motion, but in this problem, it doesn't affect the max amplitude.",
+          "type": "Units",
+          "severity": "Low",
+          "frequency": "occasional",
+          "how_to_avoid": "Remember that natural frequencies in Hz must be multiplied by 2π to get angular frequency for time-dependent terms, but for max amplitude, it's not needed.",
+          "consequence": "If calculating displacement at a specific time, would lead to error."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "MODAL: Modes Overlap Determines Amplitude Linearly",
+          "concept": "Modal superposition involves linear combination of modes",
+          "effectiveness": "medium",
+          "context": "When solving for response using mode shapes"
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "concept_recall",
+          "front": "What is the general form of free vibration response for an undamped MDOF system?",
+          "back": "u(t) = Σ φ_i (C_i cos(ω_i t) + D_i sin(ω_i t)), where φ_i are mode shapes, ω_i are natural frequencies, and C_i, D_i are constants from initial conditions.",
+          "difficulty": "medium",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "application",
+          "front": "Given mode shapes φ1 and φ2, and initial displacement u(0), how do you find C1 and C2?",
+          "back": "Set up linear equations: C1φ1 + C2φ2 = u(0), then solve for C1 and C2 using vector components.",
+          "difficulty": "easy",
+          "time_limit_seconds": 45
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "Why might initial velocity being zero simplify the free vibration response?",
+          "back": "Zero initial velocity implies D_i = 0 in the general solution, so response contains only cosine terms.",
+          "difficulty": "easy",
+          "time_limit_seconds": 20
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Structural health monitoring",
+          "industry_example": "Using mode shapes and frequencies to detect cracks in aircraft structures by comparing with baseline vibrations.",
+          "why_it_matters": "Early detection of damage prevents catastrophic failures."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "Quickly set up linear equations for modal coefficients; if initial velocity is zero, response is simpler.",
+        "guessing_heuristic": "If initial displacement matches one mode shape closely, that mode might dominate.",
+        "time_management": "Allocate 2-3 minutes for this 2-mark question."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "2-DOF free vibration initial conditions",
+        "modal superposition method",
+        "mode shapes natural frequencies",
+        "vibration response calculation",
+        "multi-degree-of-freedom systems",
+        "structural dynamics examples",
+        "S.S. Rao vibrations",
+        "GATE AE vibrations questions"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Orthogonality-based Method",
+          "description": "Use mass matrix and orthogonality conditions to find modal coefficients: C_i = (φ_i^T M u(0)) / (φ_i^T M φ_i).",
+          "pros_cons": "More general but requires knowledge of mass matrix; not applicable here since M is not given.",
+          "when_to_use": "When mass matrix is known and mode shapes are mass-normalized or orthogonal."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Mathematics": "Linear algebra for solving systems of equations and vector spaces.",
+        "Physics": "Principles of harmonic motion and superposition."
+      },
+      "deeper_dive_topics": [
+        "Damped multi-degree-of-freedom vibrations",
+        "Forced vibration response using modal analysis",
+        "Continuous systems vs. discrete MDOF systems"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2012_AE_Q30",
+        "year": 2012,
+        "marks": 2.0,
+        "negative_marks": 0.0,
+        "time_expected": "2-3 minutes",
+        "success_rate_estimate": "80%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 4: Structures",
+        "gate_subsection": "Vibrations",
+        "weightage": "Approximately 10-15% in Structures section",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Well-aligned with core vibration concepts in aerospace structures."
+      },
+      "rag_quality": {
+        "relevance_score": 0.5,
+        "chunks_used": 4,
+        "sources_distribution": {
+          "books": 1,
+          "videos": 3
+        },
+        "notes": "RAG chunks provide general background on 2-DOF free vibration, modal superposition, and initial conditions, but do not directly address the specific calculation without mass matrix. The solution used linear combination of mode shapes, which is consistent with the principles but not explicitly detailed in RAG. Relied on internal knowledge for the solving process."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-13T10:30:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "What if initial velocities are non-zero?",
+        "How does damping affect the maximum amplitude?",
+        "Given mass and stiffness matrices, find mode shapes and then response.",
+        "Maximum amplitude of second degree of freedom instead of first."
+      ]
+    },
+    "question_id": "GATE_2012_AE_Q30",
+    "year": 2012,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "NAT",
+    "question_text": "The mode shapes of an un-damped two degrees of freedom system are {1 0.5}^T and {1 -0.675}^T. The corresponding natural frequencies are 0.45 Hz and 1.2471 Hz. The maximum amplitude (in mm) of vibration of the first degree of freedom due to an initial displacement of {2 1}^T (in mm) and zero initial velocities is ____."
+  },
+  "tokens_used": 18721,
+  "input_tokens": 9775,
+  "output_tokens": 8946,
+  "cost": 0.024967990000000002,
+  "time_seconds": 246.19382762908936
+}
