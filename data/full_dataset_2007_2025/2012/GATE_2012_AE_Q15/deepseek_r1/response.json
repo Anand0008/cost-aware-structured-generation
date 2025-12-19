@@ -1,0 +1,368 @@
+{
+  "model_name": "deepseek_r1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "conceptual_application",
+      "media_type": "text_only",
+      "combined_type": "conceptual_application_text_only",
+      "weight_strategy": "APPLICATION_WEIGHTED",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "This question requires applying the concepts of thrust, drag, lift, weight, and rate of climb in a steady climb condition. It involves understanding how a change in thrust affects the equilibrium and requires multi-step reasoning to determine the new rate of climb qualitatively.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "B",
+        "is_correct": true,
+        "confidence": 0.9,
+        "confidence_type": "single_model",
+        "reasoning": "In a steady climb, rate of climb \\( V_c = V \\sin(\\gamma) = V \\frac{T - D}{W} \\). After a 10% thrust drop, \\( T_2 = 0.9 T_1 \\). At the same speed \\( V \\), the aircraft establishes a new equilibrium with a lower climb angle \\( \\gamma_2 \\). Since \\( L = W \\cos(\\gamma) \\), a decrease in \\( \\gamma \\) increases \\( \\cos(\\gamma) \\), thus increasing lift and induced drag. Therefore, drag \\( D_2 > D_1 \\). Consequently, \\( T_2 - D_2 = 0.9 T_1 - D_2 < 0.9 T_1 - D_1 \\). Since \\( T_1 - D_1 = W \\sin(\\gamma_1) \\), we have \\( 0.9 T_1 - D_1 = 0.9 W \\sin(\\gamma_1) - 0.1 D_1 \\). With \\( D_2 > D_1 \\), \\( T_2 - D_2 < 0.9 W \\sin(\\gamma_1) - 0.1 D_1 \\). The drop in \\( T-D \\) is more than 10% of the initial \\( T-D \\), so \\( V_{c2} < 0.9 V_{c1} \\), meaning the rate of climb is lower by more than 10%. Linearization analysis confirms that \\( \\frac{dV_c}{dT} = \\frac{V}{W - 2B \\sin(\\gamma)} > \\frac{V}{W} \\) for positive \\( B \\), indicating a larger sensitivity to thrust changes when drag varies with climb angle."
+      },
+      "explanation": {
+        "question_nature": "Application",
+        "step_by_step": [
+          "Step 1: Recall the force balance for steady climb. Along flight path: \\( T - D - W \\sin(\\gamma) = 0 \\), so \\( \\sin(\\gamma) = \\frac{T - D}{W} \\). Perpendicular: \\( L = W \\cos(\\gamma) \\).",
+          "Step 2: Rate of climb is \\( V_c = V \\sin(\\gamma) = V \\frac{T - D}{W} \\), where \\( V \\) is airspeed.",
+          "Step 3: Initially, thrust \\( T_1 \\), drag \\( D_1 \\), climb angle \\( \\gamma_1 \\), rate of climb \\( V_{c1} = V \\frac{T_1 - D_1}{W} \\).",
+          "Step 4: After a 10% thrust drop, new thrust \\( T_2 = 0.9 T_1 \\). The aircraft reaches new equilibrium at the same speed \\( V \\), so new climb angle \\( \\gamma_2 \\) and drag \\( D_2 \\).",
+          "Step 5: Since speed is constant, drag depends on lift coefficient. From \\( L = W \\cos(\\gamma) \\), if \\( \\gamma_2 < \\gamma_1 \\) (thrust decreased), then \\( \\cos(\\gamma_2) > \\cos(\\gamma_1) \\), so lift increases. With higher lift at same speed, induced drag increases. Thus, \\( D_2 > D_1 \\).",
+          "Step 6: Compare new rate of climb: \\( V_{c2} = V \\frac{T_2 - D_2}{W} = V \\frac{0.9 T_1 - D_2}{W} \\). Since \\( D_2 > D_1 \\), \\( 0.9 T_1 - D_2 < 0.9 T_1 - D_1 \\).",
+          "Step 7: Express \\( 0.9 T_1 - D_1 \\) in terms of initial conditions: \\( T_1 = D_1 + W \\sin(\\gamma_1) \\), so \\( 0.9 T_1 - D_1 = 0.9 D_1 + 0.9 W \\sin(\\gamma_1) - D_1 = 0.9 W \\sin(\\gamma_1) - 0.1 D_1 \\).",
+          "Step 8: Since \\( D_2 > D_1 \\), \\( V_{c2} < V \\frac{0.9 W \\sin(\\gamma_1) - 0.1 D_1}{W} = 0.9 V \\sin(\\gamma_1) - 0.1 V \\frac{D_1}{W} = 0.9 V_{c1} - 0.1 V \\frac{D_1}{W} \\). Thus, \\( V_{c2} < 0.9 V_{c1} \\), indicating a drop of more than 10%."
+        ],
+        "formulas_used": [
+          "$T - D - W \\sin(\\gamma) = 0$",
+          "$L = W \\cos(\\gamma)$",
+          "$V_c = V \\sin(\\gamma) = V \\frac{T - D}{W}$",
+          "$D = \\frac{1}{2} \\rho V^2 S C_D = \\frac{1}{2} \\rho V^2 S (C_{D0} + K C_L^2)$",
+          "$C_L = \\frac{2L}{\\rho V^2 S}$"
+        ],
+        "estimated_time_minutes": 3
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Flight Mechanics",
+          "confidence": 0.95
+        },
+        "topic": {
+          "name": "Climb Performance",
+          "syllabus_ref": "Section 4: Flight Mechanics -> Performance"
+        },
+        "concepts": [
+          {
+            "name": "Rate of Climb",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Thrust-Drag Equilibrium",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Induced Drag Variation",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Steady Climb Forces",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Forces on aircraft in steady flight",
+          "Drag polar and induced drag concept",
+          "Rate of climb definition and formula",
+          "Thrust required for climb"
+        ],
+        "helpful": [
+          "Linearization techniques for sensitivity analysis",
+          "Aircraft performance curves"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Forces in steady climb",
+            "requires: Drag as function of lift",
+            "enables: Understanding climb performance variations",
+            "enables: Analysis of engine failure effects"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Medium",
+        "score": 6,
+        "complexity_breakdown": {
+          "conceptual": 7,
+          "mathematical": 5,
+          "problem_solving": 6
+        },
+        "estimated_solve_time_seconds": 180,
+        "expected_accuracy_percent": 60,
+        "difficulty_factors": [
+          "Requires understanding that drag changes with climb angle",
+          "Non-linear relationship between thrust and rate of climb"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Introduction to Flight",
+          "author": "John D. Anderson Jr.",
+          "chapter_number": "6",
+          "chapter_title": "Elements of Airplane Performance",
+          "section": "6.8",
+          "page_range": "Not specified",
+          "complexity": "introductory",
+          "relevance_score": 0.8,
+          "source": "rag_retrieval",
+          "text_snippet": "Rate of climb formula: R/C = V_\\infty sin(\\theta) for steady unaccelerated climb."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. A.K. Ghosh",
+          "timestamp_start": "00:00:00",
+          "timestamp_end": "00:04:51",
+          "video_url": "Not specified",
+          "book_reference": "Anderson, J.D.",
+          "topic_covered": "Rate of Climb Fundamentals",
+          "relevance_score": 0.7,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. A.K. Ghosh",
+          "timestamp_start": "00:04:56",
+          "timestamp_end": "00:10:09",
+          "video_url": "https://www.youtube.com/watch?v=-_-dCBe1Ib4",
+          "book_reference": "Nelson, R.C.",
+          "topic_covered": "Velocity Stability",
+          "relevance_score": 0.5,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "First Principles Analysis with Linearization",
+        "total_steps": 8,
+        "solution_path": "Force Balance → Rate of Climb Expression → Effect of Thrust Drop → Drag Change → Comparison",
+        "key_insights": [
+          "Drag increases when climb angle decreases due to increased lift and induced drag.",
+          "The drop in rate of climb is amplified by the drag increase, leading to more than 10% reduction."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$V_c = V \\sin(\\gamma)$",
+          "name": "Rate of Climb",
+          "conditions": "Steady, unaccelerated climb",
+          "type": "equation",
+          "relevance": "Direct definition of rate of climb"
+        },
+        {
+          "formula": "$T = D + W \\sin(\\gamma)$",
+          "name": "Force Balance in Climb",
+          "conditions": "Steady climb along flight path",
+          "type": "equation",
+          "relevance": "Relates thrust, drag, and climb angle"
+        },
+        {
+          "formula": "$L = W \\cos(\\gamma)$",
+          "name": "Lift in Climb",
+          "conditions": "Steady climb perpendicular to flight path",
+          "type": "equation",
+          "relevance": "Shows lift variation with climb angle"
+        },
+        {
+          "formula": "$D = \\frac{1}{2} \\rho V^2 S C_D$ with $C_D = C_{D0} + K C_L^2$",
+          "name": "Drag Polar",
+          "conditions": "Incompressible flow, parabolic drag polar",
+          "type": "equation",
+          "relevance": "Drag dependence on lift coefficient, hence on climb angle"
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Aircraft climb performance after engine failure or thrust reduction",
+          "Pilot procedures for maintaining airspeed during climb with degraded thrust"
+        ],
+        "specific_systems": [
+          "Commercial aircraft like Boeing 737 during climb phase",
+          "Military aircraft in combat climb scenarios"
+        ],
+        "practical_relevance": "Understanding how rate of climb responds to thrust changes is crucial for flight safety, performance planning, and emergency handling."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Assuming drag remains constant after thrust drop, leading to the conclusion that rate of climb drops by exactly 10%.",
+          "why_students_make_it": "Oversimplification of the force balance, neglecting the coupling between climb angle and induced drag.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Always consider how lift and drag change with flight path angle in climb performance analysis.",
+          "consequence": "Incorrect answer A (lower by exactly 10%)"
+        },
+        {
+          "mistake": "Thinking that rate of climb is directly proportional to thrust without accounting for drag variation.",
+          "why_students_make_it": "Misapplying linear proportionality from simplified models.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Use the full expression \\( V_c = V \\frac{T - D}{W} \\) and recognize that D is a function of γ.",
+          "consequence": "Underestimating the drop in rate of climb"
+        },
+        {
+          "mistake": "Confusing rate of climb with climb angle, and not considering the effect of speed constant condition.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "how_to_avoid": "Clearly distinguish between \\( V_c \\) and \\( \\gamma \\), and note that V is specified as constant in the new equilibrium."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "T-D Drop, Drag Up, Climb Down More",
+          "concept": "When thrust drops, drag increases due to climb angle change, causing rate of climb to decrease more than thrust drop percentage.",
+          "effectiveness": "medium",
+          "context": "Remembering the amplification effect in climb performance"
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "What is the rate of climb formula for steady climb?",
+          "back": "\\( V_c = V \\sin(\\gamma) = V \\frac{T - D}{W} \\), where V is airspeed, γ is climb angle, T is thrust, D is drag, W is weight.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "How does lift change with climb angle in steady climb?",
+          "back": "Lift \\( L = W \\cos(\\gamma) \\). As climb angle γ increases, cos(γ) decreases, so lift decreases. For small γ, lift ≈ W.",
+          "difficulty": "medium",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "Why is drag not constant when thrust changes in a steady climb at constant speed?",
+          "back": "Because climb angle changes, affecting lift \\( L = W \\cos(\\gamma) \\), which changes lift coefficient and induced drag. Drag increases when γ decreases.",
+          "difficulty": "hard",
+          "time_limit_seconds": 45
+        },
+        {
+          "card_type": "application",
+          "front": "Aircraft in steady climb has 10% thrust drop. If speed remains same, rate of climb changes by:",
+          "back": "More than 10% decrease, because drag increases due to reduced climb angle, amplifying the effect.",
+          "difficulty": "medium",
+          "time_limit_seconds": 30
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Engine failure during climb-out after takeoff",
+          "industry_example": "In a twin-engine aircraft, if one engine fails, thrust is reduced by approximately 50%. Pilots must maintain airspeed and accept a lower rate of climb, often following specific procedures like V2 speed for climb.",
+          "why_it_matters": "Understanding the amplified reduction in climb performance is critical for safe flight planning and emergency response."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "This is a conceptual application question. If you recall the rate of climb formula and understand drag variation, it can be solved in 2-3 minutes.",
+        "guessing_heuristic": "If unsure, eliminate option A (too simplistic) and D (unpredictable is unlikely in standard performance theory). Between B and C, consider that drag changes worsen the effect, so likely more than 10%.",
+        "time_management": "Allocate 2-3 minutes; if stuck, move on and return later."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "aircraft rate of climb thrust drop",
+        "steady climb performance",
+        "thrust drag equilibrium climb",
+        "induced drag climb angle",
+        "aircraft climb angle change",
+        "engine failure climb performance",
+        "excess power rate of climb",
+        "GATE aerospace climb questions"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Energy Method",
+          "description": "Consider the aircraft's total energy (potential + kinetic). Rate of climb is related to excess power. Thrust drop reduces excess power, and due to drag increase, the effect is magnified.",
+          "pros_cons": "Provides physical insight but less direct for quantitative comparison.",
+          "when_to_use": "For conceptual understanding without detailed force balance."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Aerodynamics": "Drag polar and induced drag concepts are from aerodynamics.",
+        "Propulsion": "Thrust characteristics and engine performance affect available thrust.",
+        "Control Systems": "Maintaining equilibrium after disturbance relates to stability."
+      },
+      "deeper_dive_topics": [
+        "Effect of altitude on rate of climb after thrust reduction",
+        "Numerical simulation of climb performance with varying thrust",
+        "Inclusion of compressibility effects on drag at high speeds"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2012_AE_Q15",
+        "year": 2012,
+        "marks": 1.0,
+        "negative_marks": 0.33,
+        "time_expected": "2-3 minutes",
+        "success_rate_estimate": "60%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 4: Flight Mechanics",
+        "gate_subsection": "Performance",
+        "weightage": "Approximately 10-15% in Flight Mechanics",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Well-aligned with core performance concepts, testing application of fundamental principles."
+      },
+      "rag_quality": {
+        "relevance_score": 0.7,
+        "chunks_used": 3,
+        "sources_distribution": {
+          "books": 1,
+          "videos": 2
+        },
+        "notes": "RAG chunks provided relevant formulas and concepts for climb performance, including rate of climb, force balance, and climb angle effects. However, the chunks had moderate relevance scores (0.48-0.49), and some chunks were about velocity stability or trim, which are less directly relevant. The core concepts needed were covered in chunks about rate of climb and climb forces."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-13T10:30:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Effect of altitude change on rate of climb after thrust reduction",
+        "Rate of climb change if both thrust and speed change",
+        "Maximum climb angle after thrust drop",
+        "Time to climb to a certain altitude after engine failure"
+      ]
+    },
+    "question_id": "GATE_2012_AE_Q15",
+    "year": 2012,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "MCQ",
+    "question_text": "An aircraft in a steady climb suddenly experiences a 10% drop in thrust. After a new equilibrium is reached at the same speed, the new rate of climb is"
+  },
+  "tokens_used": 23918,
+  "input_tokens": 9523,
+  "output_tokens": 14395,
+  "cost": 0.0367627,
+  "time_seconds": 412.4370262622833
+}
