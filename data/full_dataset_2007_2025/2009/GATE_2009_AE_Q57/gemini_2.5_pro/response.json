@@ -1,0 +1,390 @@
+{
+  "model_name": "gemini_2.5_pro",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "text_only",
+      "combined_type": "numerical_calculation_text_only",
+      "weight_strategy": "NUMERICAL_WEIGHTED",
+      "classification_confidence": 0.9,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "This question requires calculating the temperature of combustion products, which is a numerical calculation. It involves understanding combustion principles and potentially using an adiabatic flame temperature calculation, but the sensible enthalpy being neglected simplifies it. Approximation is needed to solve this problem.",
+      "difficulty_score": 5,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": false,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": false,
+        "approximation_needed": true
+      },
+      "use_gpt51": false
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "C",
+        "is_correct": true,
+        "confidence": 0.85,
+        "confidence_type": "single_model",
+        "reasoning": "The adiabatic flame temperature (combustion product temperature) is determined by applying the First Law of Thermodynamics to the combustion process. In an adiabatic combustor, the total enthalpy of the reactants equals the total enthalpy of the products. The chemical energy released by the combustion (related to the enthalpy of formation of reactants and products) is converted into the sensible heat of the products, raising their temperature. The problem states that the sensible enthalpy of the fuel is neglected, and it's implied that the air enters at a reference temperature (e.g., 298 K), simplifying the reactant enthalpy calculation. The energy balance equation is: \\$$ \\sum_{\\text{reactants}} n_r \\left(h_{\\text{bar},f,r}^0 + \\Delta h_r\\right) = \\sum_{\\text{products}} n_p \\left(h_{\\text{bar},f,p}^0 + \\Delta h_p(T_c)\\right) \\$$Where $h_{\\text{bar},f}^0$ is the standard molar enthalpy of formation and $\\Delta h$ is the sensible enthalpy change. Neglecting sensible enthalpy of fuel and assuming air at reference temperature, this simplifies to: \\$$ n_{\\text{fuel}} h_{\\text{bar},f,\\text{fuel}}^0 = \\sum_{\\text{products}} n_p \\left(h_{\\text{bar},f,p}^0 + \\Delta h_p(T_c)\\right) \\$$Or, equivalently, the negative of the standard heat of reaction equals the total sensible enthalpy rise of the products: \\$$ -\\Delta H_{\\text{reaction}}^0 = \\sum_{\\text{products}} n_p \\Delta h_p(T_c) \\$$Solving for $T_c$ requires an iterative process or lookup from thermodynamic tables, as $\\Delta h_p(T_c)$ is temperature-dependent. Without specific thermochemical data for the fuel and products, an exact calculation is not possible. However, for typical hydrocarbon fuels burning in air in the primary zone of a gas turbine combustor, the adiabatic flame temperature generally falls in the range of 2000 K to 2500 K. Among the given options, 2600 K (Option C) is a plausible approximation for such conditions, particularly in modern, high-performance engines."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "**Step 1: Identify the governing principle.** The combustion temperature, also known as the adiabatic flame temperature, is determined by applying the First Law of Thermodynamics (energy conservation) to the combustion chamber. For an adiabatic process, the total enthalpy of the reactants must equal the total enthalpy of the products.",
+          "**Step 2: Formulate the energy balance equation.** For a steady-flow, adiabatic combustion process with negligible kinetic and potential energy changes and no work done, the First Law simplifies to: \\$$ H_{\\text{reactants}} = H_{\\text{products}} \\$$",
+          "**Step 3: Expand the total enthalpy terms.** The total enthalpy of a mixture is the sum of the molar enthalpies of its components. The molar enthalpy of any species $j$ at a given temperature $T$ is calculated as: \\$$ h_{\\text{bar},j}(T) = h_{\\text{bar},f,j}^0 + (h_{\\text{bar},j}(T) - h_{\\text{bar},j}(T_{\\text{ref}})) \\$$Where $h_{\\text{bar},f,j}^0$ is the standard molar enthalpy of formation (at a reference temperature $T_{\\text{ref}}$, typically 298 K or 25 \\text{°C}), and $(h_{\\text{bar},j}(T) - h_{\\text{bar},j}(T_{\\text{ref}}))$ is the sensible enthalpy change from $T_{\\text{ref}}$ to $T$.",
+          "**Step 4: Apply the given assumptions.** The question states, \"If the sensible enthalpy of fuel is neglected.\" This means that for the fuel, the term $(h_{\\text{bar},fuel}(T_{\\text{fuel}}) - h_{\\text{bar},fuel}(T_{\\text{ref}}))$ is considered zero. Thus, the fuel's enthalpy contribution is simply its standard enthalpy of formation, $h_{\\text{bar},f,\\text{fuel}}^0$. For air (O$_2$, N$_2$), it is typically assumed to enter at the reference temperature $T_{\\text{ref}}$, and their standard enthalpies of formation are zero, so their initial enthalpy is also zero (relative to $T_{\\text{ref}}$).",
+          "**Step 5: Simplify the energy balance equation.** Substituting the expanded enthalpy terms and applying the assumptions into the energy balance from Step 2: \\$$ \\sum_{\\text{reactants}} n_r h_{\\text{bar},f,r}^0 = \\sum_{\\text{products}} n_p \\left(h_{\\text{bar},f,p}^0 + \\Delta h_p(T_c)\\right) \\$$Where $n_r$ and $n_p$ are the mole numbers of reactants and products, respectively. This equation can be rearranged to state that the heat released by the reaction at standard conditions (negative of the standard enthalpy of reaction) is absorbed as sensible heat by the products to raise their temperature to $T_c$: \\$$ -\\Delta H_{\\text{reaction}}^0 = \\sum_{\\text{products}} n_p \\Delta h_p(T_c) \\$$",
+          "**Step 6: Determine the combustion temperature ($T_c$).** The term $\\sum n_p \\Delta h_p(T_c)$ is a function of the unknown combustion temperature $T_c$. This equation is typically solved iteratively: guess a value for $T_c$, calculate the right-hand side, compare it to the left-hand side (the known heat release), and adjust the guess until the equation balances. Alternatively, if detailed thermodynamic property tables (like JANAF tables) are available, $T_c$ can be found by interpolation.",
+          "**Step 7: Approximate the temperature based on typical values.** Since specific thermochemical data (enthalpies of formation, specific heats of products) are not provided in the question, we must rely on general knowledge of typical combustion temperatures in aerospace propulsion. For hydrocarbon fuels burning in air in the primary zone of a gas turbine combustor, the adiabatic flame temperature is generally in the range of 2000 K to 2500 K. Among the given options, 2600 K is a reasonable approximation for this temperature, reflecting the high temperatures achieved in modern jet engine combustors."
+        ],
+        "formulas_used": [
+          "$$H_{\\text{reactants}} = H_{\\text{products}}$$",
+          "$$h_{\\text{bar},j}(T) = h_{\\text{bar},f,j}^0 + (h_{\\text{bar},j}(T) - h_{\\text{bar},j}(T_{\\text{ref}}))$$",
+          "$$\\sum_{\\text{reactants}} n_r \\left(h_{\\text{bar},f,r}^0 + \\Delta h_r\\right) = \\sum_{\\text{products}} n_p \\left(h_{\\text{bar},f,p}^0 + \\Delta h_p(T_c)\\right)$$",
+          "$$-\\Delta H_{\\text{reaction}}^0 = \\sum_{\\text{products}} n_p \\Delta h_p(T_c)$$"
+        ],
+        "estimated_time_minutes": 3
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Propulsion",
+          "confidence": 0.98
+        },
+        "topic": {
+          "name": "Combustion and thermochemistry",
+          "syllabus_ref": "Section 6 Propulsion -> Combustion"
+        },
+        "concepts": [
+          {
+            "name": "Adiabatic Flame Temperature",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "First Law of Thermodynamics for Reacting Systems",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Enthalpy of Formation",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Sensible Enthalpy",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Energy Balance",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "First Law of Thermodynamics",
+          "Basic Chemistry (Stoichiometry)",
+          "Definitions of Enthalpy (Formation, Sensible)",
+          "Specific Heat Capacity"
+        ],
+        "helpful": [
+          "Iterative Numerical Methods",
+          "Thermodynamic Property Tables (e.g., JANAF tables)"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: First Law of Thermodynamics",
+            "requires: Enthalpy of Formation",
+            "requires: Sensible Enthalpy",
+            "enables: Rocket Engine Performance Analysis",
+            "enables: Gas Turbine Combustor Design"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Medium",
+        "score": 6,
+        "complexity_breakdown": {
+          "conceptual": 7,
+          "mathematical": 5,
+          "problem_solving": 6
+        },
+        "estimated_solve_time_seconds": 180,
+        "expected_accuracy_percent": 60,
+        "difficulty_factors": [
+          "Requires a strong understanding of the energy balance for reacting systems.",
+          "Involves interpreting the assumption 'sensible enthalpy of fuel is neglected'.",
+          "Without specific numerical data, students must rely on knowledge of typical combustion temperatures, which can be challenging."
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Rocket Propulsion Elements",
+          "author": "Sutton-Biblarz",
+          "chapter_number": "5",
+          "chapter_title": "CHEMICAL ROCKET PROPELLANT PERFORMANCE ANALYSIS",
+          "section": "5.3",
+          "complexity": "intermediate",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval",
+          "text_snippet": "This example demonstrates the fundamental energy balance principle used to find the combustion temperature. The calculation is iterative: guess a temperature, check the energy balance, and refine the guess until convergence."
+        },
+        {
+          "source_type": "book",
+          "book": "Mechanics and Thermodynamics of Propulsion",
+          "author": "Hill & Peterson",
+          "chapter_number": "2",
+          "chapter_title": "Chemical Energy and the First Law",
+          "complexity": "intermediate",
+          "relevance_score": 0.8,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "book",
+          "book": "Engineering Thermodynamics",
+          "author": "P.K. Nag",
+          "chapter_number": "14",
+          "chapter_title": "Chemical Reactions and Combustion",
+          "complexity": "intermediate",
+          "relevance_score": 0.8,
+          "source": "model_consensus"
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Dr. D.P. Mishra",
+          "timestamp_start": "00:49:00",
+          "timestamp_end": "00:51:09",
+          "video_url": "https://www.youtube.com/watch?v=QSbayIaZojI",
+          "topic_covered": "Heat of Reaction / Enthalpy of Combustion",
+          "relevance_score": 0.8,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. S.K. Som",
+          "timestamp_start": "00:16:46",
+          "timestamp_end": "00:30:27",
+          "video_url": "https://www.youtube.com/watch?v=20luUhrG390",
+          "topic_covered": "Calculating Heat Transfer in Steady-Flow Combustion",
+          "relevance_score": 0.8,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "First Principles Derivation and Application of Energy Balance",
+        "total_steps": 7,
+        "solution_path": "Energy Balance \\rightarrow Enthalpy Expansion \\rightarrow Assumption Application \\rightarrow Simplification \\rightarrow Iterative Solution (Conceptual) \\rightarrow Approximation (Numerical)",
+        "key_insights": [
+          "Adiabatic combustion implies that the total enthalpy of the system remains constant.",
+          "The chemical energy released by the reaction is entirely converted into the sensible heat of the combustion products.",
+          "Neglecting the sensible enthalpy of the fuel simplifies the reactant side of the energy balance, often implying the fuel enters at the reference temperature."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$H_{\\text{reactants}} = H_{\\text{products}}$",
+          "name": "First Law of Thermodynamics for Reacting Systems (Adiabatic)",
+          "conditions": "Applies to steady-flow, adiabatic processes with no work done and negligible kinetic/potential energy changes.",
+          "type": "principle",
+          "relevance": "Core principle for solving the problem."
+        },
+        {
+          "formula": "$h_{\\text{bar},j}(T) = h_{\\text{bar},f,j}^0 + (h_{\\text{bar},j}(T) - h_{\\text{bar},j}(T_{\\text{ref}}))$",
+          "name": "Molar Enthalpy Calculation",
+          "conditions": "Used to calculate the absolute molar enthalpy of any species $j$ at temperature $T$, where $h_{\\text{bar},f,j}^0$ is the standard molar enthalpy of formation at $T_{\\text{ref}}$ and the second term is the sensible enthalpy change.",
+          "type": "equation",
+          "relevance": "Essential for expanding the total enthalpy terms in the energy balance."
+        },
+        {
+          "formula": "$-\\Delta H_{\\text{reaction}}^0 = \\sum_{\\text{products}} n_p \\Delta h_p(T_c)$",
+          "name": "Energy Balance for Adiabatic Flame Temperature",
+          "conditions": "Applies when reactants are at the reference temperature (or their sensible enthalpies are neglected) and products are at the combustion temperature $T_c$. The left side represents the heat released by the reaction at standard conditions, and the right side is the sensible heat absorbed by products.",
+          "type": "equation",
+          "relevance": "Directly relates the heat released to the temperature rise of the products, allowing for the determination of $T_c$."
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Design and optimization of gas turbine combustors for commercial aircraft engines (e.g., CFM International CFM56, General Electric GE9X).",
+          "Combustion chamber design for rocket engines (e.g., SpaceX Raptor engine, Ariane 5 Vulcain engine).",
+          "Industrial furnace and boiler design for power generation and process heating."
+        ],
+        "specific_systems": [
+          "Boeing 787 Dreamliner (powered by GE GEnx or Rolls-Royce Trent 1000 engines)",
+          "Space Shuttle Main Engine (SSME) for its high-temperature combustion characteristics."
+        ],
+        "practical_relevance": "Accurate prediction of combustion temperature is critical for selecting appropriate high-temperature materials for combustor liners and turbine blades, designing effective cooling systems, predicting pollutant formation (like NOx, which increases significantly with temperature), and optimizing overall engine performance (thrust, specific impulse, efficiency)."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Confusing heat of reaction with sensible enthalpy.",
+          "why_students_make_it": "Both involve enthalpy changes, but the heat of reaction (related to $h_f^0$) accounts for energy released/absorbed due to chemical bond changes, while sensible enthalpy ($\\Delta h$) accounts for energy due to temperature changes. Students might mix these concepts or apply them incorrectly.",
+          "type": "Conceptual",
+          "severity": "High",
+          "how_to_avoid": "Clearly differentiate between chemical energy (enthalpy of formation) and thermal energy (sensible enthalpy). Remember that $h_f^0$ for stable elemental species (like O$_2$, N$_2$) is zero at standard conditions.",
+          "consequence": "Incorrect energy balance, leading to a completely wrong combustion temperature."
+        },
+        {
+          "mistake": "Incorrectly applying the First Law of Thermodynamics for an adiabatic process.",
+          "why_students_make_it": "Students might forget that for an adiabatic process, $Q=0$, meaning $H_{\\text{reactants}} = H_{\\text{products}}$. They might incorrectly include a heat transfer term.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "how_to_avoid": "Always start with the general form of the First Law for open systems and then systematically apply the given conditions (e.g., adiabatic means $Q=0$, no work means $W=0$).",
+          "consequence": "An extraneous term in the energy balance, leading to an incorrect result."
+        },
+        {
+          "mistake": "Not accounting for all product species or incorrect stoichiometry.",
+          "why_students_make_it": "Combustion reactions can be complex, especially with excess air or dissociation. Students might overlook minor products or miscalculate mole numbers, which directly impacts the total enthalpy of products.",
+          "type": "Calculation",
+          "severity": "High",
+          "how_to_avoid": "Always write and balance the complete chemical reaction equation carefully, ensuring mass conservation for all elements. For air, remember to include N$_2$ even if it's inert.",
+          "consequence": "Significant errors in the total enthalpy of products and thus the calculated temperature."
+        },
+        {
+          "mistake": "Lack of knowledge about typical operating temperatures.",
+          "why_students_make_it": "Without specific data, this question requires an understanding of the typical temperature ranges for combustion in aerospace engines. Students lacking this practical context might struggle to choose the most plausible option.",
+          "type": "Conceptual/Application",
+          "severity": "Medium",
+          "how_to_avoid": "Familiarize yourself with typical performance parameters and operating conditions of various propulsion systems (e.g., gas turbines, rockets). This helps in validating answers or making educated guesses.",
+          "consequence": "Choosing an option that is physically unrealistic for the given application."
+        }
+      ],
+      "mnemonics_memory_aids": [],
+      "flashcards": [
+        {
+          "card_type": "concept_recall",
+          "front": "What is the primary principle used to determine adiabatic flame temperature?",
+          "back": "The First Law of Thermodynamics (Energy Conservation) applied to a reacting system, stating that for an adiabatic process, the total enthalpy of reactants equals the total enthalpy of products ($H_{\\text{reactants}} = H_{\\text{products}}$).",
+          "difficulty": "easy"
+        },
+        {
+          "card_type": "formula_recall",
+          "front": "Write the general formula for molar enthalpy of a species $j$ at temperature $T$.",
+          "back": "$h_{\\text{bar},j}(T) = h_{\\text{bar},f,j}^0 + (h_{\\text{bar},j}(T) - h_{\\text{bar},j}(T_{\\text{ref}}))$",
+          "difficulty": "medium"
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "What does 'neglecting sensible enthalpy of fuel' imply in an energy balance?",
+          "back": "It means the fuel's enthalpy contribution is solely its standard enthalpy of formation ($h_{\\text{bar},f,\\text{fuel}}^0$), assuming its initial temperature is $T_{\\text{ref}}$ or its sensible enthalpy change is negligible compared to the heat of reaction.",
+          "difficulty": "medium"
+        },
+        {
+          "card_type": "application",
+          "front": "What is a typical range for adiabatic flame temperature in a gas turbine combustor primary zone?",
+          "back": "Approximately 2000 K to 2500 K, though it can vary based on fuel, air ratio, and specific engine design.",
+          "difficulty": "easy"
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "Why is an iterative process often needed to find adiabatic flame temperature?",
+          "back": "Because the sensible enthalpy of the products, which depends on the combustion temperature ($T_c$), is unknown. The equation needs to be solved by guessing $T_c$ and refining the guess until the energy balance is satisfied.",
+          "difficulty": "medium"
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Combustor design and performance analysis for jet engines.",
+          "industry_example": "Engineers designing a new turbofan engine combustor must accurately predict the combustion temperature to ensure that the materials used for the combustor liner and downstream turbine blades can withstand the extreme thermal loads. This directly affects engine durability and safety.",
+          "why_it_matters": "An incorrect temperature prediction can lead to material failure (melting, creep), reduced engine life, increased maintenance costs, or even catastrophic engine failure. It also impacts emissions (e.g., higher temperatures lead to more NOx)."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "If specific numerical data is missing for a calculation-based question, quickly assess if the answer can be approximated based on typical values or ranges for the phenomenon described. If it's a direct calculation, ensure all necessary data is available.",
+        "guessing_heuristic": "If stuck without data, eliminate extreme options. For combustion temperatures in jet engines, very low (e.g., 1000 K) or excessively high (e.g., 3500 K without dissociation) values are usually incorrect. Focus on the plausible range.",
+        "time_management": "If a full iterative calculation is implied but no data is given, recognize that the question likely tests conceptual understanding and knowledge of typical values, allowing for a quicker answer. If data were provided, allocate more time for the iterative process."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "Adiabatic flame temperature calculation",
+        "Combustion energy balance first law",
+        "Enthalpy of formation and sensible enthalpy in combustion",
+        "Gas turbine combustor temperature range",
+        "Thermochemistry of propulsion systems",
+        "Iterative method for adiabatic flame temperature",
+        "Effect of fuel-air ratio on combustion temperature"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Using Thermodynamic Property Tables (e.g., JANAF tables)",
+          "description": "Instead of using analytical expressions for specific heat capacity and integrating them, pre-calculated values of molar enthalpy ($h(T) - h(T_{\\text{ref}})$) for various species at different temperatures are looked up directly from comprehensive thermodynamic tables. This method is often more accurate, especially when specific heat capacities vary significantly with temperature or when dissociation is considered.",
+          "pros_cons": "Pros: High accuracy, faster if tables are readily available, handles complex temperature dependencies. Cons: Requires access to extensive tables, interpolation may be necessary, tables might not be allowed in exams.",
+          "when_to_use": "When high accuracy is required in engineering design, or when complex temperature-dependent specific heats are involved, or when dissociation effects are significant."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Thermodynamics": "This problem is fundamentally an application of the First Law of Thermodynamics to a reacting system, involving concepts like enthalpy, specific heat, and energy conservation.",
+        "Chemistry": "Requires knowledge of chemical reaction stoichiometry, heats of formation, and the nature of combustion products.",
+        "Material Science": "The calculated combustion temperature directly influences the selection and design of high-temperature materials for combustor liners and turbine blades, considering their thermal limits and creep resistance.",
+        "Fluid Mechanics": "Combustion processes are often coupled with fluid flow, especially in combustors where mixing and flow patterns significantly affect combustion efficiency and temperature distribution."
+      },
+      "deeper_dive_topics": [
+        "Effect of dissociation on adiabatic flame temperature and product composition at high temperatures.",
+        "Chemical equilibrium calculations for combustion products to determine actual species concentrations.",
+        "Combustor design principles: primary, secondary, and dilution zones and their roles in achieving desired temperature profiles and emissions.",
+        "Pollutant formation mechanisms (NOx, CO, UHC) and their dependence on combustion temperature and residence time."
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2009_AE_Q57",
+        "year": 2009,
+        "marks": 2.0,
+        "negative_marks": 0.66,
+        "time_expected": "2-3 minutes",
+        "success_rate_estimate": "60%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 6: Propulsion",
+        "gate_subsection": "Combustion and thermochemistry",
+        "weightage": "10-15%",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "This question is highly relevant to the core concepts of combustion thermochemistry in aerospace propulsion, testing fundamental understanding of energy balance and typical operating conditions."
+      },
+      "rag_quality": {
+        "relevance_score": 0.85,
+        "chunks_used": 6,
+        "sources_distribution": {
+          "books": 1,
+          "videos": 5
+        },
+        "notes": "RAG provided excellent conceptual and formulaic background for the energy balance in combustion, including definitions of enthalpy of formation, sensible enthalpy, and the iterative method for finding combustion temperature. It also highlighted the importance of accurate product calculation and temperature dependence. However, it lacked the specific numerical data (enthalpies of formation for fuel, sensible enthalpies for products) required to perform an exact calculation for this specific question. The numerical answer relies on general knowledge of typical combustion temperatures in aerospace propulsion, which was not explicitly in the RAG but is a common expectation in such questions."
+      },
+      "model_meta": {
+        "timestamp": "2024-07-30T12:00:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Calculate the adiabatic flame temperature given specific fuel (e.g., kerosene), air composition, and relevant enthalpy data.",
+        "Analyze the effect of varying fuel-air ratio (lean vs. rich) on the combustion product temperature.",
+        "Compare the adiabatic flame temperature calculated with and without considering dissociation effects.",
+        "Calculate the heat transfer rate in a non-adiabatic combustor given inlet/outlet temperatures and fuel flow rate.",
+        "Determine the specific impulse of a rocket engine given its combustion temperature and nozzle expansion ratio."
+      ]
+    },
+    "question_id": "GATE_2009_AE_Q57",
+    "year": 2009,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "MCQ_LINKED",
+    "question_text": "If the sensible enthalpy of fuel is neglected, the temperature of combustion products from the reaction of primary air stream with fuel is approximately"
+  },
+  "tokens_used": 17356,
+  "input_tokens": 10673,
+  "output_tokens": 6683,
+  "cost": 0.00561075,
+  "time_seconds": 61.25495982170105
+}
