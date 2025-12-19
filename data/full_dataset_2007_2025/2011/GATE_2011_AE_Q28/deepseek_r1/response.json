@@ -1,0 +1,412 @@
+{
+  "model_name": "deepseek_r1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "text_only",
+      "combined_type": "numerical_calculation_text_only",
+      "weight_strategy": "NUMERICAL_WEIGHTED",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "The question requires calculating the width of a column by equating the buckling load and yield stress. It involves multiple concepts (buckling, yield stress, material properties) and requires several steps to solve, making it a medium-hard numerical calculation.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "6.00 cm",
+        "is_correct": true,
+        "confidence": 0.98,
+        "confidence_type": "single_model",
+        "reasoning": "The condition 'buckles at the same instant as it yields' means the Euler buckling critical stress equals the yield stress. For a simply supported column, Euler buckling stress is $\\sigma_{cr} = \\frac{\\pi^2 E}{(L_e/r)^2}$, where $L_e = L$ (pinned ends) and $r = d/\\sqrt{12}$ for a square cross-section. Setting $\\sigma_{cr} = \\sigma_y$ and solving for $d$ yields $d = \\frac{L\\sqrt{12}}{\\pi} \\sqrt{\\frac{\\sigma_y}{E}}$. Substituting given values (L=1.57 m, E=200 GPa, $\\sigma_y$=240 MPa) gives d ≈ 0.05997 m = 5.997 cm, which rounds to 6.00 cm, within the answer key range (5.95-6.05 cm)."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Step 1: Understand the design condition - column buckles when stress reaches yield stress, so Euler buckling stress $\\sigma_{cr}$ must equal yield stress $\\sigma_y$.",
+          "Step 2: Recall Euler buckling stress formula for a simply supported column: $\\sigma_{cr} = \\frac{\\pi^2 E}{(L_e/r)^2}$, where $L_e$ is effective length, r is radius of gyration.",
+          "Step 3: For simply supported (pinned-pinned) ends, effective length $L_e = L = 1.57$ m.",
+          "Step 4: For a square cross-section with side d, area $A = d^2$, moment of inertia $I = d^4/12$. Radius of gyration $r = \\sqrt{I/A} = \\sqrt{(d^4/12)/d^2} = d/\\sqrt{12}$.",
+          "Step 5: Substitute r into Euler stress: $\\sigma_{cr} = \\frac{\\pi^2 E}{(L / (d/\\sqrt{12}))^2} = \\frac{\\pi^2 E d^2}{12 L^2}$.",
+          "Step 6: Set $\\sigma_{cr} = \\sigma_y$: $\\frac{\\pi^2 E d^2}{12 L^2} = \\sigma_y$.",
+          "Step 7: Solve for d: $d^2 = \\frac{12 L^2 \\sigma_y}{\\pi^2 E}$ => $d = \\frac{L\\sqrt{12}}{\\pi} \\sqrt{\\frac{\\sigma_y}{E}}$.",
+          "Step 8: Substitute numerical values: L=1.57 m, E=200×10⁹ Pa, $\\sigma_y$=240×10⁶ Pa. Compute $\\sqrt{\\sigma_y/E} = \\sqrt{240e6/200e9} = \\sqrt{0.0012} = 0.03464$, $\\sqrt{12}=3.464$, so $d = (1.57 × 3.464 / 3.1416) × 0.03464 ≈ (1.57 × 1.102) × 0.03464 ≈ 1.730 × 0.03464 ≈ 0.05997 m = 5.997 cm ≈ 6.00 cm."
+        ],
+        "formulas_used": [
+          "$\\sigma_{cr} = \\frac{\\pi^2 E}{(L_e/r)^2}$",
+          "$r = \\sqrt{I/A}$",
+          "$I = d^4/12$ for square cross-section",
+          "$A = d^2$",
+          "$d = \\frac{L\\sqrt{12}}{\\pi} \\sqrt{\\frac{\\sigma_y}{E}}$"
+        ],
+        "estimated_time_minutes": 3
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Structures",
+          "confidence": 0.99
+        },
+        "topic": {
+          "name": "Buckling of Columns",
+          "syllabus_ref": "Section 4: Structures -> Stability of Columns"
+        },
+        "concepts": [
+          {
+            "name": "Euler Buckling Stress",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Radius of Gyration",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Slenderness Ratio",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Yield Stress",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Euler buckling formula for columns",
+          "Definition of radius of gyration and how to compute it for common cross-sections",
+          "Concept of effective length based on end conditions"
+        ],
+        "helpful": [
+          "Understanding of slenderness ratio and its role in column classification",
+          "Algebraic manipulation skills"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Euler buckling stress formula",
+            "requires: Geometry of square cross-section (moment of inertia, area)",
+            "enables: Design of columns for simultaneous buckling and yielding",
+            "enables: Analysis of column failure modes"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Medium",
+        "score": 5,
+        "complexity_breakdown": {
+          "conceptual": 4,
+          "mathematical": 6,
+          "problem_solving": 5
+        },
+        "estimated_solve_time_seconds": 180,
+        "expected_accuracy_percent": 70,
+        "difficulty_factors": [
+          "Requires combining buckling formula with cross-sectional geometry",
+          "Need to derive expression for d from the equality condition",
+          "Unit conversions (MPa, GPa, m, cm) must be handled carefully"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Aircraft Structures for Engineering Students",
+          "author": "T.H.G. Megson",
+          "chapter_number": "9",
+          "chapter_title": "Thin plates",
+          "section": "Buckling of columns",
+          "page_range": "N/A",
+          "complexity": "intermediate",
+          "relevance_score": 0.7,
+          "source": "rag_retrieval",
+          "text_snippet": "Formulas for Euler column buckling stress and skin buckling stress, but not directly the same cross-section."
+        },
+        {
+          "source_type": "book",
+          "book": "Mechanics of Materials",
+          "author": "Beer & Johnston",
+          "chapter_number": "10",
+          "chapter_title": "Columns",
+          "section": "Euler's Formula for Pin-Ended Columns",
+          "page_range": "N/A",
+          "complexity": "introductory",
+          "relevance_score": 0.9,
+          "source": "model_consensus",
+          "text_snippet": "Euler's formula for critical stress: $\\sigma_{cr} = \\frac{\\pi^2 E}{(L_e/r)^2}$, with examples of square cross-sections."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. S.K. Bhattacharyya",
+          "timestamp_start": "00:38:16",
+          "timestamp_end": "00:45:53",
+          "video_url": "https://www.youtube.com/watch?v=3By6vS5xY6s",
+          "book_reference": "Megson, T.H.G.",
+          "topic_covered": "Limiting slenderness ratio for Euler's formula applicability, Rankine's formula",
+          "relevance_score": 0.8,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. S.P. Harsha",
+          "timestamp_start": "00:24:24",
+          "timestamp_end": "00:28:18",
+          "video_url": "https://www.youtube.com/watch?v=Dv6AIH6ozlw",
+          "book_reference": "Beer & Johnston",
+          "topic_covered": "Relationship between buckling stress and slenderness ratio",
+          "relevance_score": 0.7,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Direct Formula Application with Derivation",
+        "total_steps": 8,
+        "solution_path": "Condition (σ_cr = σ_y) → Euler formula → Substitute r for square cross-section → Solve for d → Numerical computation",
+        "key_insights": [
+          "The condition 'buckles at the same instant as yields' translates to σ_cr = σ_y.",
+          "For a square cross-section, r = d/√12 simplifies the algebra."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$\\sigma_{cr} = \\frac{\\pi^2 E}{(L_e/r)^2}$",
+          "name": "Euler Buckling Stress",
+          "conditions": "Valid for long, slender columns with elastic buckling; simply supported ends assumed.",
+          "type": "equation",
+          "relevance": "Core formula to compute critical buckling stress."
+        },
+        {
+          "formula": "$r = \\sqrt{\\frac{I}{A}}$",
+          "name": "Radius of Gyration",
+          "conditions": "For any cross-section; I is area moment of inertia, A is cross-sectional area.",
+          "type": "definition",
+          "relevance": "Needed to express slenderness ratio in terms of geometric dimension d."
+        },
+        {
+          "formula": "$I = \\frac{d^4}{12}$",
+          "name": "Moment of Inertia of Square",
+          "conditions": "For a square of side d about centroidal axis perpendicular to side.",
+          "type": "equation",
+          "relevance": "Specific to the given cross-section."
+        },
+        {
+          "formula": "$d = \\frac{L\\sqrt{12}}{\\pi} \\sqrt{\\frac{\\sigma_y}{E}}$",
+          "name": "Derived Design Equation",
+          "conditions": "When σ_cr = σ_y for a simply supported square column.",
+          "type": "equation",
+          "relevance": "Direct formula to solve for d after applying condition."
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Design of aircraft struts and compression members where simultaneous buckling and yielding is a design goal for optimal weight."
+        ],
+        "specific_systems": [
+          "Compression members in wing ribs or fuselage frames."
+        ],
+        "practical_relevance": "Ensuring a column fails by buckling exactly at yield stress can optimize material usage, avoiding over-design (too thick) or under-design (too slender). This is critical in aerospace for weight-sensitive structures."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Using incorrect effective length: using physical length L instead of effective length L_e for simply supported condition.",
+          "why_students_make_it": "Forgetting that effective length depends on end conditions; simply supported means L_e = L, but sometimes students confuse with fixed ends.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Always identify end conditions and recall effective length factor K: pinned-pinned K=1, fixed-fixed K=0.5, fixed-pinned K=0.7, fixed-free K=2.",
+          "consequence": "Wrong L_e leads to incorrect slenderness ratio and d value."
+        },
+        {
+          "mistake": "Incorrect radius of gyration for square cross-section: using r = d/2 or d/√6.",
+          "why_students_make_it": "Confusing with circular cross-section (r=D/4) or rectangular (about different axis).",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Derive r from definition: for square, I = d⁴/12, A = d², so r = √(I/A) = d/√12. Memorize common cross-sections.",
+          "consequence": "Incorrect r leads to wrong slenderness ratio and d."
+        },
+        {
+          "mistake": "Unit inconsistency: not converting MPa, GPa to consistent Pa, or forgetting to convert d from meters to centimeters as requested.",
+          "why_students_make_it": "Rushing through numerical substitution without checking units.",
+          "type": "Units",
+          "severity": "Medium",
+          "frequency": "very_common",
+          "how_to_avoid": "Convert all inputs to base SI units (Pa, m) before calculation. Finally convert d to cm (multiply by 100).",
+          "consequence": "Answer off by orders of magnitude (e.g., 0.06 m vs 6 cm is fine, but if left as m, it's wrong)."
+        },
+        {
+          "mistake": "Setting Euler buckling load (force) equal to yield load without considering stress.",
+          "why_students_make_it": "Mixing up load and stress; the condition is about stress, not load.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "occasional",
+          "how_to_avoid": "Remember the condition is 'buckles at same instant as yields' meaning stresses are equal, not loads. Use σ_cr = P_cr/A and σ_y = P_y/A, so condition reduces to σ_cr = σ_y.",
+          "consequence": "Leads to incorrect equation: π²EI/L² = σ_y A, which gives a different d."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "SEE-Y: Stress Equals Euler Yield. (Condition: σ_Euler = σ_Yield)",
+          "concept": "Design condition for simultaneous buckling and yielding.",
+          "effectiveness": "medium",
+          "context": "When solving column design problems with buckling and yield interaction."
+        },
+        {
+          "mnemonic": "Square Radius: r = d / √12. Think: '12 inches in a foot, square root'.",
+          "concept": "Radius of gyration for square cross-section.",
+          "effectiveness": "high",
+          "context": "Recall formula for square cross-section quickly."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "What is the Euler buckling stress formula for a simply supported column?",
+          "back": "$\\sigma_{cr} = \\frac{\\pi^2 E}{(L_e/r)^2}$, where $L_e = L$ for pinned ends, r is radius of gyration.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "What does the condition 'buckles at the same instant as yields' imply mathematically?",
+          "back": "The critical Euler buckling stress equals the yield stress: $\\sigma_{cr} = \\sigma_y$.",
+          "difficulty": "easy",
+          "time_limit_seconds": 20
+        },
+        {
+          "card_type": "definition",
+          "front": "How is radius of gyration r defined for a cross-section?",
+          "back": "$r = \\sqrt{I/A}$, where I is area moment of inertia about buckling axis, A is cross-sectional area.",
+          "difficulty": "easy",
+          "time_limit_seconds": 25
+        },
+        {
+          "card_type": "application",
+          "front": "For a square column of side d, derive the expression for d when σ_cr = σ_y, given L, E, σ_y.",
+          "back": "Start: $\\frac{\\pi^2 E}{(L/(d/\\sqrt{12}))^2} = \\sigma_y$ → $d = \\frac{L\\sqrt{12}}{\\pi} \\sqrt{\\frac{\\sigma_y}{E}}$.",
+          "difficulty": "medium",
+          "time_limit_seconds": 60
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "What is a common unit mistake in this problem? How to avoid?",
+          "back": "Mixing MPa, GPa without converting to Pa. Convert: 200 GPa = 200×10⁹ Pa, 240 MPa = 240×10⁶ Pa. Use consistent SI units.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Aircraft structural design",
+          "industry_example": "Design of aluminum alloy struts in aircraft landing gear or wing compression members, where weight is critical and failure mode must be predictable.",
+          "why_it_matters": "If the column is too slender, it buckles elastically below yield, wasting material strength; if too stocky, it yields before buckling, also suboptimal. The design condition optimizes material usage for minimum weight."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "This is a standard column buckling problem with a clear condition. If you know Euler formula and radius of gyration for square, it's a quick calculation.",
+        "guessing_heuristic": "If stuck, note that d is likely in cm (not mm or m), and compute order: L~1.5, √(σ_y/E)~0.03, so d ~ (1.5*3.5/3.14)*0.03 ≈ 0.05 m = 5 cm. So guess around 5-6 cm.",
+        "time_management": "Budget 2-3 minutes; it's a 2-mark question."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "Euler buckling stress simply supported column",
+        "radius of gyration square cross-section",
+        "column design buckling yield simultaneously",
+        "slenderness ratio limiting value",
+        "critical stress equals yield stress",
+        "GATE Aerospace Structures column buckling",
+        "square column side calculation",
+        "buckling and yielding interaction"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Using Euler load and yield load equality (incorrect but common mistake)",
+          "description": "Set Euler buckling load P_cr = π²EI/L² equal to yield load P_y = σ_y A, then solve for d.",
+          "pros_cons": "Pros: Simpler equation (no r). Cons: Physically wrong because buckling is stress-based, not load-based; yields different d.",
+          "when_to_use": "Not recommended; understand why stress equality is correct."
+        },
+        {
+          "name": "Dimensional analysis approach",
+          "description": "Estimate d by considering orders of magnitude: d ~ L √(σ_y/E) = 1.57 * √(0.0012) ≈ 1.57*0.0346 ≈ 0.054 m, then adjust for π and √12 factors.",
+          "pros_cons": "Pros: Quick sanity check. Cons: Not exact; requires intuition.",
+          "when_to_use": "For rough estimation or verification."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "subject_name_1": "Mechanics of Materials",
+        "connection_description_1": "Column buckling is a core topic in strength of materials, linking stress-strain behavior (Hooke's Law) to instability.",
+        "subject_name_2": "Aircraft Structural Design",
+        "connection_description_2": "Practical application in sizing compression members in airframes for weight efficiency."
+      },
+      "deeper_dive_topics": [
+        "Inelastic buckling and tangent modulus theory for intermediate columns",
+        "Effect of initial imperfections on column behavior",
+        "Buckling of columns with different cross-sections (circular, I-section)",
+        "Combined loading (axial + bending) and interaction formulas"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2011_AE_Q28",
+        "year": 2011,
+        "marks": 2.0,
+        "negative_marks": 0.0,
+        "time_expected": "2-3 minutes",
+        "success_rate_estimate": "70%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 4: Structures",
+        "gate_subsection": "Stability of Columns",
+        "weightage": "Approx 5-8% of Structures section",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Well-aligned with GATE syllabus topic 'Buckling of columns' under Structures."
+      },
+      "rag_quality": {
+        "relevance_score": 0.75,
+        "chunks_used": 4,
+        "sources_distribution": {
+          "books": 1,
+          "videos": 3
+        },
+        "notes": "RAG chunks provided formulas for Euler buckling stress, slenderness ratio, and examples of column analysis (Chunks 1,2,3,4,6). However, they did not explicitly cover the specific condition of simultaneous buckling and yielding for a square cross-section. The derivation and numerical computation were performed using internal knowledge, guided by the principles from RAG. RAG was helpful for confirming formulas and concepts."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-13T10:30:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Change cross-section to circular hollow and ask for inner/outer diameter.",
+        "Change end conditions (e.g., fixed-free) and ask for length given d.",
+        "Ask for critical load instead of dimension, given d.",
+        "Include safety factor and ask for design load."
+      ]
+    },
+    "question_id": "GATE_2011_AE_Q28",
+    "year": 2011,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "NAT",
+    "question_text": "A simply supported slender column of square cross section (width=depth=d) has to be designed such that it buckles at the same instant as it yields. Length of the column is given to be 1.57 m and it is made of a material whose Young's modulus is 200 GPa and yield stress is 240 MPa. The width, d, of the column (in cm) should be"
+  },
+  "tokens_used": 20177,
+  "input_tokens": 13697,
+  "output_tokens": 6480,
+  "cost": 0.021724550000000002,
+  "time_seconds": 182.0205943584442
+}

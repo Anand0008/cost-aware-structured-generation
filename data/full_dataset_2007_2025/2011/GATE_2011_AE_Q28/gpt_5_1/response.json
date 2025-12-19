@@ -1,0 +1,412 @@
+{
+  "model_name": "gpt_5_1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "text_only",
+      "combined_type": "numerical_calculation_text_only",
+      "weight_strategy": "NUMERICAL_WEIGHTED",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "The question requires calculating the width of a column by equating the buckling load and yield stress. It involves multiple concepts (buckling, yield stress, material properties) and requires several steps to solve, making it a medium-hard numerical calculation.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "d \\approx 6\\,\\text{cm}",
+        "is_correct": true,
+        "confidence": 0.99,
+        "confidence_type": "single_model",
+        "reasoning": "The column is simply supported and must buckle exactly when the material reaches yield stress. For a prismatic column, this means Euler critical stress equals yield stress: $\\sigma_{cr} = \\sigma_y$. Euler stress for a pin-ended column is $\\sigma_{cr} = \\dfrac{\\pi^2 E}{(L_e/r)^2}$, where $L_e=L$ for simply supported ends and $r$ is the radius of gyration. Setting $\\sigma_{cr}=\\sigma_y$ gives the limiting slenderness ratio: $\\dfrac{L}{r} = \\sqrt{\\dfrac{\\pi^2 E}{\\sigma_y}}$. For a square cross-section of side $d$, $I = d^4/12$ and $A = d^2$, so $r = \\sqrt{I/A} = d/\\sqrt{12}$. Substituting $r$ and solving for $d$:\n1) Compute limiting slenderness ratio: $\\dfrac{L}{r} = \\sqrt{\\dfrac{\\pi^2 (200\\times10^9)}{240\\times10^6}} \\approx 90.5$.\n2) Then $r = L / 90.5 = 1.57 / 90.5 \\approx 0.01735\\,\\text{m}$.\n3) From $r = d/\\sqrt{12}$, $d = r\\sqrt{12} \\approx 0.01735 \\times 3.464 \\approx 0.0601\\,\\text{m} = 6.01\\,\\text{cm}$.\nThis lies within the official answer range 5.95\\,-\\,6.05 cm, so the key is confirmed."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Step 1: Recognize that the design requirement \\\"buckles at the same instant as it yields\\\" means Euler critical stress equals material yield stress: $\\sigma_{cr} = \\sigma_y$.",
+          "Step 2: Write Euler buckling stress for a pin-ended (simply supported) column: $\\sigma_{cr} = \\dfrac{\\pi^2 E}{(L/r)^2}$, where $L$ is the column length and $r$ is the radius of gyration.",
+          "Step 3: Set $\\sigma_{cr} = \\sigma_y$ and solve for the limiting slenderness ratio: $\\dfrac{L}{r} = \\sqrt{\\dfrac{\\pi^2 E}{\\sigma_y}}$.",
+          "Step 4: Compute this limiting slenderness ratio using $E = 200\\,\\text{GPa}$ and $\\sigma_y = 240\\,\\text{MPa}$, then find the required radius of gyration $r = L / (L/r)_{limit}$.",
+          "Step 5: Express the radius of gyration for a square cross-section of side $d$: $I = d^4/12$, $A = d^2$, so $r = \\sqrt{I/A} = d/\\sqrt{12}$. Equate this to the required $r$ and solve for $d$.",
+          "Step 6: Convert the resulting $d$ from meters to centimeters and check that it lies within the specified answer range."
+        ],
+        "formulas_used": [
+          "$P_{cr} = \\dfrac{\\pi^2 E I}{L^2}$",
+          "$\\sigma_{cr} = \\dfrac{P_{cr}}{A} = \\dfrac{\\pi^2 E}{(L/r)^2}$",
+          "$\\dfrac{L}{r} = \\sqrt{\\dfrac{\\pi^2 E}{\\sigma_y}}$",
+          "$I = \\dfrac{d^4}{12}$",
+          "$A = d^2$",
+          "$r = \\sqrt{\\dfrac{I}{A}} = \\dfrac{d}{\\sqrt{12}}$"
+        ],
+        "estimated_time_minutes": 3
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Structures",
+          "confidence": 1.0
+        },
+        "topic": {
+          "name": "Buckling of columns",
+          "syllabus_ref": "Structures and Design -> Columns and struts, buckling, Euler load"
+        },
+        "concepts": [
+          {
+            "name": "Euler buckling of columns",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Slenderness ratio and radius of gyration",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Yield stress and elastic stability interaction",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Second moment of area of square section",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Concept of column buckling and Euler critical load",
+          "Definition and calculation of radius of gyration",
+          "Stress, yield stress, and Young's modulus",
+          "Second moment of area for standard cross-sections"
+        ],
+        "helpful": [
+          "Classification of columns as short, intermediate, and long using slenderness ratio",
+          "Understanding of design against combined yielding and buckling"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Concept of column buckling and Euler critical load",
+            "requires: Definition and calculation of radius of gyration",
+            "enables: Design of columns that fail by simultaneous yielding and buckling",
+            "enables: Advanced stability analysis of aerospace structural members"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Easy",
+        "score": 3,
+        "complexity_breakdown": {
+          "conceptual": 3,
+          "mathematical": 3,
+          "problem_solving": 3
+        },
+        "estimated_solve_time_seconds": 150,
+        "expected_accuracy_percent": 80,
+        "difficulty_factors": [
+          "Requires recalling Euler stress in terms of slenderness ratio",
+          "Needs correct expression for radius of gyration of a square section",
+          "Unit consistency between GPa, MPa, meters, and centimeters"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Aircraft Structures for Engineering Students",
+          "author": "T.H.G. Megson",
+          "chapter_number": "5",
+          "chapter_title": "Buckling of columns",
+          "section": "Euler buckling and slenderness ratio",
+          "page_range": "150-170",
+          "complexity": "intermediate",
+          "relevance_score": 0.95,
+          "source": "rag_retrieval",
+          "text_snippet": "Euler column buckling stress $\\sigma_{CR,E} = \\dfrac{\\pi^2 E}{(l_e / r)^2}$, where $l_e$ is the effective length and $r$ is the radius of gyration."
+        },
+        {
+          "source_type": "book",
+          "book": "Mechanics of Materials",
+          "author": "Beer, Johnston et al.",
+          "chapter_number": "10",
+          "chapter_title": "Columns",
+          "section": "Euler formula and slenderness ratio",
+          "page_range": "560-590",
+          "complexity": "introductory",
+          "relevance_score": 0.9,
+          "source": "model_consensus",
+          "text_snippet": ""
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. S.P. Harsha",
+          "timestamp_start": "00:24:24",
+          "timestamp_end": "00:28:18",
+          "video_url": "https://www.youtube.com/watch?v=Dv6AIH6ozlw",
+          "book_reference": "Beer & Johnston - Mechanics of Materials",
+          "topic_covered": "Relationship between Euler buckling stress and slenderness ratio, definition of radius of gyration",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. S.K. Bhattacharyya",
+          "timestamp_start": "00:38:16",
+          "timestamp_end": "00:45:53",
+          "video_url": "https://www.youtube.com/watch?v=3By6vS5xY6s",
+          "book_reference": "Megson - Aircraft Structures for Engineering Students",
+          "topic_covered": "Limiting slenderness ratio for Euler applicability and interaction with yield stress",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Direct Formula Application",
+        "total_steps": 6,
+        "solution_path": "Equate Euler buckling stress to yield stress \\rightarrow compute limiting slenderness ratio \\rightarrow find required radius of gyration \\rightarrow relate to square section dimension",
+        "key_insights": [
+          "Design condition \\\"buckles as it yields\\\" is implemented by equating Euler stress to yield stress, not loads directly.",
+          "Using radius of gyration simplifies Euler stress into a function of slenderness ratio only.",
+          "For a square, radius of gyration is a simple multiple of side length, making algebra straightforward."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$P_{cr} = \\dfrac{\\pi^2 E I}{L^2}$",
+          "name": "Euler critical buckling load for pin-ended column",
+          "conditions": "Applies to long, slender columns with both ends pinned and elastic behavior.",
+          "type": "equation",
+          "relevance": "Base formula for deriving Euler buckling stress."
+        },
+        {
+          "formula": "$\\sigma_{cr} = \\dfrac{\\pi^2 E}{(L/r)^2}$",
+          "name": "Euler buckling stress in terms of slenderness ratio",
+          "conditions": "Derived using $I = A r^2$ and $\\sigma_{cr} = P_{cr}/A$.",
+          "type": "equation",
+          "relevance": "Directly used to equate buckling stress to yield stress."
+        },
+        {
+          "formula": "$\\dfrac{L}{r} = \\sqrt{\\dfrac{\\pi^2 E}{\\sigma_y}}$",
+          "name": "Limiting slenderness ratio for simultaneous yielding and buckling",
+          "conditions": "Obtained by setting $\\sigma_{cr} = \\sigma_y$ for the column material.",
+          "type": "equation",
+          "relevance": "Gives the required slenderness ratio for the design condition."
+        },
+        {
+          "formula": "$r = \\dfrac{d}{\\sqrt{12}}$",
+          "name": "Radius of gyration of square cross-section",
+          "conditions": "Square cross-section of side $d$, about centroidal axis.",
+          "type": "equation",
+          "relevance": "Relates geometric dimension d to radius of gyration needed in Euler formula."
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Design of slender struts in aircraft fuselage frames where both buckling and material yielding must be considered to avoid premature failure.",
+          "Sizing of landing gear brace members that act as columns under compressive loads during landing and taxiing."
+        ],
+        "specific_systems": [
+          "Longitudinal stringers and stiffeners in transport aircraft fuselage shells.",
+          "Support masts and antenna booms on satellites and launch vehicles."
+        ],
+        "practical_relevance": "In aerospace structures, weight-critical members are often slender; designing them so that buckling and yielding are coordinated ensures efficient use of material without excessive safety margins or risk of sudden instability."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Equating Euler critical load directly to yield load ($P_{cr} = \\sigma_y A$) without going through stress and slenderness ratio.",
+          "why_students_make_it": "They remember both concepts (buckling load and yield load) but do not recognize that the design condition is about stress equality, not necessarily load equality for arbitrary geometry.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Always write stresses explicitly: $\\sigma_{cr} = P_{cr}/A$ and compare to $\\sigma_y$. Use the slenderness ratio form $\\sigma_{cr} = \\pi^2 E/(L/r)^2$.",
+          "consequence": "Can lead to an incorrect expression for geometry and a significantly wrong dimension."
+        },
+        {
+          "mistake": "Using wrong radius of gyration for a square, such as $r = d/2$ instead of $r = d/\\sqrt{12}$.",
+          "why_students_make_it": "Confusion between radius of gyration and geometric radius or half-width.",
+          "type": "Calculation",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Memorize or quickly derive $I = d^4/12$ and $A = d^2$ for a square, then compute $r = \\sqrt{I/A} = d/\\sqrt{12}$.",
+          "consequence": "Gives a wrong relationship between d and r, leading to a noticeably incorrect answer."
+        },
+        {
+          "mistake": "Unit inconsistency: mixing GPa, MPa, meters, and centimeters without proper conversion.",
+          "why_students_make_it": "Rushing through calculations and not tracking units systematically.",
+          "type": "Units",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Convert all stresses to Pa and lengths to meters while computing, then convert the final dimension to centimeters.",
+          "consequence": "May produce an answer off by factors of 10 or 100, outside the accepted range."
+        },
+        {
+          "mistake": "Using wrong effective length factor K for simply supported column (e.g., taking $L_e = L/2$ as if it were fixed-fixed).",
+          "why_students_make_it": "Confusion between different end conditions and their effective lengths.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Remember: pinned-pinned $L_e = L$, fixed-fixed $L_e = L/2$, fixed-free $L_e = 2L$, fixed-pinned $L_e = L/\\sqrt{2}$ approximately.",
+          "consequence": "Incorrect slenderness ratio and hence wrong required dimension d."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "PEIL: Pinned-Equal-Initial-Length",
+          "concept": "For a simply supported (pinned-pinned) column, effective length $L_e$ equals actual length $L$.",
+          "effectiveness": "medium",
+          "context": "When deciding effective length factor K for Euler buckling."
+        },
+        {
+          "mnemonic": "RIG: Radius Is from Gyration: $r = \\sqrt{I/A}$",
+          "concept": "Definition of radius of gyration in terms of I and A.",
+          "effectiveness": "high",
+          "context": "Whenever converting between section properties and slenderness ratio."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "What is Euler critical buckling stress $\\sigma_{cr}$ in terms of E and slenderness ratio $L/r$ for a pin-ended column?",
+          "back": "$\\sigma_{cr} = \\dfrac{\\pi^2 E}{(L/r)^2}$",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "formula_recall",
+          "front": "For a square cross-section of side d, what are I, A, and radius of gyration r about a centroidal axis?",
+          "back": "$I = d^4/12$, $A = d^2$, and $r = \\sqrt{I/A} = d/\\sqrt{12}$.",
+          "difficulty": "medium",
+          "time_limit_seconds": 45
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "What design condition is implied by: \\\"column buckles at the same instant as it yields\\\"?",
+          "back": "The Euler buckling stress equals the material yield stress: $\\sigma_{cr} = \\sigma_y$.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "application",
+          "front": "A simply supported column must fail by buckling and yielding simultaneously. Which parameter must be set to a specific value: load, area, or slenderness ratio?",
+          "back": "The slenderness ratio $L/r$ must be set to the limiting value $\\sqrt{\\pi^2 E/\\sigma_y}$ so that Euler stress equals yield stress.",
+          "difficulty": "medium",
+          "time_limit_seconds": 45
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "Common confusion: Is radius of gyration r equal to half the side of a square section?",
+          "back": "No. For a square of side d, $r = d/\\sqrt{12}$, not $d/2$. It comes from $r = \\sqrt{I/A}$ with $I = d^4/12$ and $A = d^2$.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Design of slender compression members in aircraft fuselage and wing structures",
+          "industry_example": "Long stringers in a transport aircraft fuselage are sized so that their slenderness ratio ensures buckling does not occur before material yield, optimizing weight and safety.",
+          "why_it_matters": "If buckling occurs well before yield, the structure fails at a lower load than material strength allows, wasting weight; if yield occurs first, large permanent deformations can compromise structural integrity."
+        },
+        {
+          "application": "Spacecraft booms and masts under compressive loads",
+          "industry_example": "Deployable masts on satellites must be light yet stable; designers choose cross-section sizes so that the first failure mode is predictable and within safety margins.",
+          "why_it_matters": "Unexpected buckling can cause loss of instruments or attitude control, jeopardizing the mission."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "Identify it as a standard Euler buckling plus yield problem: write $\\sigma_{cr} = \\pi^2 E/(L/r)^2$, set equal to $\\sigma_y$, solve for $L/r$, then relate r to d. It is a short, formula-based calculation.",
+        "guessing_heuristic": "If stuck, recall that typical slenderness ratios at yield for steel-like materials are around 80-100; use that to estimate r and then d, expecting a few centimeters.",
+        "time_management": "Allocate about 2-3 minutes. Do not over-derive Euler formula; recall the slenderness ratio form directly to save time."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "Euler buckling stress slenderness ratio",
+        "radius of gyration square cross section",
+        "simultaneous yielding and buckling design",
+        "GATE AE column buckling problem",
+        "limiting slenderness ratio Euler yield",
+        "Megson aircraft structures Euler column",
+        "Rankine vs Euler column design"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Direct load-based equality using I and A explicitly",
+          "description": "Start from $P_{cr} = \\pi^2 E I / L^2$ and yield load $P_y = \\sigma_y A$. Set $P_{cr} = P_y$ and substitute $I = d^4/12$, $A = d^2$ for a square. Solve the resulting algebraic equation for d directly without introducing radius of gyration.",
+          "pros_cons": "Pros: Avoids explicit use of radius of gyration, which some students may forget. Cons: Algebra is slightly longer and less insightful about the role of slenderness ratio.",
+          "when_to_use": "Useful if you remember section properties but not the definition of radius of gyration."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Strength of Materials": "Uses concepts of stress, strain, Young's modulus, and second moment of area from basic strength of materials.",
+        "Structural Design": "Connects to design philosophy where multiple failure modes (yielding, buckling) are balanced for efficient structures.",
+        "Aerospace Structures": "Forms the basis for sizing stringers, frames, and stiffeners in aircraft and spacecraft."
+      },
+      "deeper_dive_topics": [
+        "Inelastic buckling and interaction curves between buckling and yielding",
+        "Rankine-Gordon formula for intermediate columns",
+        "Effect of different end conditions on effective length and critical load",
+        "Post-buckling behavior and imperfection sensitivity of slender structures"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2011_AE_Q28",
+        "year": 2011,
+        "marks": 2.0,
+        "negative_marks": 0.0,
+        "time_expected": "2-3 minutes",
+        "success_rate_estimate": "80%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Structures and Design",
+        "gate_subsection": "Columns and struts, buckling, Euler load, failure theories",
+        "weightage": "8-12%",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "The question nicely integrates Euler buckling with material yielding, reinforcing the importance of slenderness ratio and section properties in column design."
+      },
+      "rag_quality": {
+        "relevance_score": 0.7,
+        "chunks_used": 3,
+        "sources_distribution": {
+          "books": 1,
+          "videos": 2
+        },
+        "notes": "RAG provided general Euler buckling stress in terms of slenderness ratio and examples on limiting slenderness ratio and Rankine formula. Although not tailored to a square cross-section design problem, the core formulas and concepts were directly applicable. Section properties for a square came from internal knowledge."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-19T00:00:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Design a column of given material and cross-section such that it is just long enough for Euler buckling to govern instead of yielding.",
+        "Given a non-square (e.g., rectangular or circular) cross-section, find dimensions so that buckling and yielding occur simultaneously.",
+        "For a given column, determine whether Euler, Rankine, or pure yielding governs and compute the corresponding critical load.",
+        "Extend the problem to include different end conditions (fixed-fixed, fixed-pinned) and compare required dimensions for simultaneous buckling and yielding."
+      ]
+    },
+    "question_id": "GATE_2011_AE_Q28",
+    "year": 2011,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "NAT",
+    "question_text": "A simply supported slender column of square cross section (width=depth=d) has to be designed such that it buckles at the same instant as it yields. Length of the column is given to be 1.57 m and it is made of a material whose Young's modulus is 200 GPa and yield stress is 240 MPa. The width, d, of the column (in cm) should be"
+  },
+  "tokens_used": 18887,
+  "input_tokens": 13452,
+  "output_tokens": 5435,
+  "cost": 0.07116499999999999,
+  "time_seconds": 52.86935615539551
+}
