@@ -1,0 +1,399 @@
+{
+  "model_name": "deepseek_r1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "text_only",
+      "combined_type": "numerical_calculation_text_only",
+      "weight_strategy": "NUMERICAL_WEIGHTED",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "The question requires calculating eigenvalues from given phugoid motion characteristics. It involves understanding damping ratio and natural frequency, and then applying the relationship to find the eigenvalues. It requires multiple steps and integrates concepts from flight dynamics.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "C",
+        "is_correct": true,
+        "confidence": 1.0,
+        "confidence_type": "single_model",
+        "reasoning": "The eigenvalues for a damped oscillatory mode are given by $\\lambda = \\sigma \\pm i \\omega_d$, where $\\sigma$ is the real part (damping coefficient) and $\\omega_d$ is the damped natural frequency. Given: 10 cycles in 50 s gives period $T = 50/10 = 5$ s, so $\\omega_d = 2\\pi / T \\approx 1.2566 \\approx 1.26$ rad/s. Amplitude halves in 25 s: $e^{\\sigma \\cdot 25} = 1/2 \\Rightarrow \\sigma = -\\ln(2)/25 \\approx -0.0277 \\approx -0.028$ s$^{-1}$. Thus eigenvalues are $-0.028 \\pm 1.26i$, matching option C."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Step 1: Interpret given data. Phugoid completes 10 cycles in 50 s → damped period $T_d = 50/10 = 5$ s. Amplitude reduces to half in 25 s → time to half amplitude $T_{1/2} = 25$ s.",
+          "Step 2: Compute damped natural frequency $\\omega_d$. For an oscillatory mode, $\\omega_d = 2\\pi / T_d = 2\\pi / 5 \\approx 1.2566$ rad/s ≈ 1.26 rad/s.",
+          "Step 3: Compute real part (damping coefficient) $\\sigma$. Amplitude decays as $e^{\\sigma t}$. At $t = T_{1/2}$, amplitude is half: $e^{\\sigma T_{1/2}} = 1/2$. So, $\\sigma T_{1/2} = \\ln(1/2) = -\\ln(2)$. Thus, $\\sigma = -\\ln(2) / T_{1/2} = -0.6931 / 25 \\approx -0.027724$ s$^{-1}$ ≈ -0.028 s$^{-1}$.",
+          "Step 4: Write eigenvalues. For a second-order oscillatory mode, eigenvalues are complex conjugates: $\\lambda = \\sigma \\pm i \\omega_d = -0.028 \\pm 1.26i$.",
+          "Step 5: Match with options. Option C matches exactly. Option D has positive real part (unstable), others have incorrect frequencies or damping."
+        ],
+        "formulas_used": [
+          "$\\omega_d = \\frac{2\\pi}{T_d}$",
+          "$A(t) = A_0 e^{\\sigma t}$",
+          "$T_{1/2} = \\frac{\\ln(2)}{-\\sigma}$ or $\\sigma = -\\frac{\\ln(2)}{T_{1/2}}$",
+          "$\\lambda = \\sigma \\pm j \\omega_d$"
+        ],
+        "estimated_time_minutes": 3
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Flight Mechanics",
+          "confidence": 1.0
+        },
+        "topic": {
+          "name": "Aircraft Dynamic Stability",
+          "syllabus_ref": "Section 4: Flight Mechanics -> Stability and Control"
+        },
+        "concepts": [
+          {
+            "name": "Phugoid Mode",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Eigenvalues (Roots of Characteristic Equation)",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Damped Natural Frequency",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Time to Half Amplitude",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Second-order system dynamics (oscillatory modes)",
+          "Complex numbers and eigenvalues",
+          "Exponential decay and logarithmic relations"
+        ],
+        "helpful": [
+          "Characteristic equation for aircraft longitudinal dynamics",
+          "Phugoid mode physical understanding"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Understanding of oscillatory motion parameters (period, frequency)",
+            "requires: Exponential decay and half-life calculation",
+            "enables: Determining stability from eigenvalues",
+            "enables: Relating time-domain response to root locations"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Easy",
+        "score": 3,
+        "complexity_breakdown": {
+          "conceptual": 4,
+          "mathematical": 3,
+          "problem_solving": 3
+        },
+        "estimated_solve_time_seconds": 120,
+        "expected_accuracy_percent": 70,
+        "difficulty_factors": [
+          "Requires remembering relationship between half-amplitude time and real part of root",
+          "Simple arithmetic and careful unit handling"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Flight Stability and Automatic Control",
+          "author": "Nelson, R.C.",
+          "chapter_number": "4",
+          "chapter_title": "Longitudinal Dynamic Stability",
+          "section": "Phugoid Mode Characteristics",
+          "page_range": null,
+          "complexity": "intermediate",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval",
+          "text_snippet": "For a divergent mode, time to double amplitude is T_double = ln(2)/(-Zeta_P * Omega_P). For convergent mode, time to half amplitude T_half = ln(2)/(Zeta_P * Omega_P)."
+        },
+        {
+          "source_type": "book",
+          "book": "Aircraft Performance and Design",
+          "author": "Anderson, J.D.",
+          "chapter_number": "10",
+          "chapter_title": "Stability and Control",
+          "section": "Dynamic Stability",
+          "page_range": null,
+          "complexity": "intermediate",
+          "relevance_score": 0.7,
+          "source": "rag_retrieval",
+          "text_snippet": "The Phugoid mode is a long-period, lightly damped oscillation involving exchanges of kinetic and potential energy."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. A.K. Ghosh",
+          "timestamp_start": "00:19:09",
+          "timestamp_end": "00:22:01",
+          "video_url": "https://www.youtube.com/watch?v=F0pLRQcXvqo",
+          "book_reference": "Nelson, R.C.",
+          "topic_covered": "Half-life of longitudinal modes and approximation error",
+          "relevance_score": 0.85,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. A.K. Ghosh",
+          "timestamp_start": "00:10:40",
+          "timestamp_end": "00:14:50",
+          "video_url": "https://www.youtube.com/watch?v=NR_SZLkFroE",
+          "book_reference": "Nelson, R.C.",
+          "topic_covered": "Short period and phugoid mode characteristics and root identification",
+          "relevance_score": 0.8,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Direct Formula Application",
+        "total_steps": 5,
+        "solution_path": "Extract damped period → compute ω_d; Use half-amplitude time → compute σ; Combine for eigenvalues.",
+        "key_insights": [
+          "Time to half amplitude relates directly to real part of eigenvalue via exponential decay.",
+          "Number of cycles in given time gives damped period, hence damped natural frequency."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$\\omega_d = \\frac{2\\pi}{T_d}$",
+          "name": "Damped natural frequency",
+          "conditions": "For an underdamped oscillatory mode",
+          "type": "equation",
+          "relevance": "Used to compute imaginary part of eigenvalue from given oscillation period"
+        },
+        {
+          "formula": "$\\sigma = -\\frac{\\ln(2)}{T_{1/2}}$",
+          "name": "Real part from half-amplitude time",
+          "conditions": "Exponential decay of amplitude, A(t)=A0 e^{σt}",
+          "type": "equation",
+          "relevance": "Used to compute real part (damping) from given time to halve amplitude"
+        },
+        {
+          "formula": "$\\lambda = \\sigma \\pm j \\omega_d$",
+          "name": "Eigenvalue form for oscillatory mode",
+          "conditions": "Complex conjugate pair roots",
+          "type": "equation",
+          "relevance": "Final eigenvalue representation of phugoid mode"
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Flight testing: Determining damping characteristics of phugoid mode from flight data.",
+          "Aircraft design: Assessing handling qualities per MIL-F-8785C or similar specifications."
+        ],
+        "specific_systems": [
+          "Commercial transport aircraft (e.g., Boeing 737, Airbus A320) phugoid mode analysis.",
+          "Gliders and high-altitude long-endurance (HALE) UAVs where phugoid is pronounced."
+        ],
+        "practical_relevance": "Understanding phugoid dynamics is crucial for predicting aircraft response to disturbances and ensuring pilot workload is manageable. Certification requires meeting specific damping requirements."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Confusing damped natural frequency ($\\omega_d$) with undamped natural frequency ($\\omega_n$).",
+          "why_students_make_it": "Not paying attention to the fact that the given period is for the actual oscillation (damped), not the natural frequency.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "common",
+          "how_to_avoid": "Remember: Period measured from oscillation cycles directly gives $\\omega_d = 2\\pi/T$. $\\omega_n$ requires damping ratio: $\\omega_n = \\omega_d / \\sqrt{1-\\zeta^2}$.",
+          "consequence": "Incorrect imaginary part, leading to wrong eigenvalue."
+        },
+        {
+          "mistake": "Using $T_{1/2} = \\ln(2)/(\\zeta \\omega_n)$ instead of $\\sigma = -\\ln(2)/T_{1/2}$.",
+          "why_students_make_it": "Mixing up formulas that involve damping ratio and natural frequency rather than direct real part.",
+          "type": "Formula",
+          "severity": "High",
+          "frequency": "occasional",
+          "how_to_avoid": "Stick to amplitude decay law: $A(t) = A_0 e^{\\sigma t}$. Half-amplitude condition gives $\\sigma$ directly.",
+          "consequence": "Extra steps, potential miscalculation of $\\zeta$ and $\\omega_n$, leading to wrong $\\sigma$."
+        },
+        {
+          "mistake": "Sign error: writing eigenvalue with positive real part (unstable) when decay is given.",
+          "why_students_make_it": "Forgetting that decay implies negative real part, or misapplying formula sign.",
+          "type": "Sign Error",
+          "severity": "High",
+          "frequency": "rare",
+          "how_to_avoid": "Recall: stable mode → amplitude decays → $\\sigma < 0$. Check: $e^{\\sigma t}$ decreases only if $\\sigma$ negative.",
+          "consequence": "Choosing option D instead of C."
+        },
+        {
+          "mistake": "Incorrect period calculation: using 50 s as period instead of 5 s.",
+          "why_students_make_it": "Misreading \"completes 10 cycles in 50 s\" as period = 50 s.",
+          "type": "Calculation",
+          "severity": "High",
+          "frequency": "occasional",
+          "how_to_avoid": "Carefully read: period = total time / number of cycles.",
+          "consequence": "$\\omega_d$ off by factor of 10, leading to wrong imaginary part (e.g., 0.126 instead of 1.26)."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "Half-Time Real Part Negative (HTRPN): Half-amplitude Time gives Real Part Negative: σ = -ln2 / T_half.",
+          "concept": "Relation between half-amplitude time and real part of eigenvalue.",
+          "effectiveness": "high",
+          "context": "When given time to half or double amplitude for a damped oscillation."
+        },
+        {
+          "mnemonic": "Cycles → Frequency: Count Cycles, Compute ω_d: ω_d = 2π × (cycles/time).",
+          "concept": "Damped natural frequency from observed cycles.",
+          "effectiveness": "medium",
+          "context": "Extracting frequency from oscillation data."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "Given time to half amplitude T_{1/2}, what is the real part σ of the eigenvalue?",
+          "back": "$\\sigma = -\\frac{\\ln(2)}{T_{1/2}}$ (since amplitude decays as e^{σt}).",
+          "difficulty": "easy",
+          "time_limit_seconds": 20
+        },
+        {
+          "card_type": "formula_recall",
+          "front": "If an oscillation completes N cycles in time T_total, what is its damped natural frequency ω_d?",
+          "back": "Period T_d = T_total/N, so ω_d = 2π / T_d = 2π N / T_total.",
+          "difficulty": "easy",
+          "time_limit_seconds": 20
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "What are the typical characteristics (frequency, damping) of the phugoid mode?",
+          "back": "Long period (low frequency, ~0.1-1 rad/s), lightly damped (ζ ~0.01-0.1), involves exchange of kinetic and potential energy with nearly constant angle of attack.",
+          "difficulty": "medium",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "What is a common sign error when writing eigenvalues for a stable oscillatory mode?",
+          "back": "Writing positive real part. Stable decaying oscillation must have σ < 0. Always check: amplitude decay ⇒ σ negative.",
+          "difficulty": "easy",
+          "time_limit_seconds": 15
+        },
+        {
+          "card_type": "application",
+          "front": "Given eigenvalues -0.028 ± 1.26i, what is the time to half amplitude and damped period?",
+          "back": "T_{1/2} = -ln(2)/σ = 0.6931/0.028 ≈ 24.75 s ≈ 25 s. Damped period T_d = 2π/ω_d = 2π/1.26 ≈ 5 s.",
+          "difficulty": "medium",
+          "time_limit_seconds": 30
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Flight testing and system identification",
+          "industry_example": "Engineers analyze pilot-induced oscillations or gust responses to extract modal parameters (like phugoid frequency and damping) to verify compliance with handling qualities specifications.",
+          "why_it_matters": "Ensures aircraft is safe and pleasant to fly; inadequate damping can lead to pilot workload issues or even loss of control."
+        },
+        {
+          "application": "Aircraft certification",
+          "industry_example": "Certification authorities (e.g., FAA, EASA) require demonstration that phugoid mode meets certain damping criteria (e.g., MIL-STD-1797A).",
+          "why_it_matters": "Certification ensures all aircraft in service meet minimum safety standards for dynamic stability."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "Quick calculation: compute ω_d from cycles/time, σ from half-amplitude time, combine. Should take <2 minutes.",
+        "guessing_heuristic": "Eliminate options with positive real part (unstable). Phugoid frequency is low but not extremely low (~0.1-1 rad/s), so options with very small imaginary part (0.02, 0.2) are unlikely.",
+        "time_management": "Allocate 2-3 minutes; if stuck, guess among remaining after elimination."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "phugoid mode eigenvalues",
+        "time to half amplitude calculation",
+        "damped natural frequency from oscillation cycles",
+        "aircraft dynamic stability eigenvalues",
+        "phugoid damping ratio",
+        "characteristic roots flight mechanics",
+        "second-order system decay rate",
+        "GATE AE flight mechanics phugoid"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Using damping ratio and natural frequency",
+          "description": "Compute damping ratio ζ from T_{1/2} and ω_d using relation T_{1/2} = ln(2)/(ζ ω_n) and ω_d = ω_n sqrt(1-ζ^2). Solve for ω_n and ζ, then σ = -ζ ω_n.",
+          "pros_cons": "More steps, prone to error if ζ is small (approximations). Direct method is simpler.",
+          "when_to_use": "If asked for ζ and ω_n explicitly."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Control Systems": "Second-order system response analysis, root locus, stability criteria.",
+        "Vibrations": "Damped free vibration of a mass-spring-damper system, logarithmic decrement."
+      },
+      "deeper_dive_topics": [
+        "Approximation of phugoid mode using 2-DOF model (speed and pitch angle).",
+        "Effect of aircraft parameters (e.g., lift-to-drag ratio) on phugoid damping.",
+        "Stability augmentation systems (SAS) to improve phugoid damping.",
+        "Comparison with short period mode eigenvalues and their physical origins."
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2011_AE_Q43",
+        "year": 2011,
+        "marks": 2.0,
+        "negative_marks": 0.66,
+        "time_expected": "2-3 minutes",
+        "success_rate_estimate": "70%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 4: Flight Mechanics",
+        "gate_subsection": "Stability and Control",
+        "weightage": "Approx 10-15% in Flight Mechanics",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Well-aligned: tests core concept of dynamic stability modes and eigenvalue interpretation."
+      },
+      "rag_quality": {
+        "relevance_score": 0.85,
+        "chunks_used": 4,
+        "sources_distribution": {
+          "books": 2,
+          "videos": 2
+        },
+        "notes": "RAG context provided excellent coverage of phugoid mode characteristics, formulas for time to half amplitude, and eigenvalue calculation from roots. Chunks 2, 5, 6 were particularly relevant. However, the specific numerical example in the question was not present, but the principles were fully covered."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-13T10:30:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Given eigenvalues, find time to double amplitude for an unstable phugoid.",
+        "Given phugoid damping ratio and natural frequency, compute time to half amplitude.",
+        "Combine phugoid and short period eigenvalues to form characteristic equation.",
+        "Effect of altitude on phugoid frequency and damping."
+      ]
+    },
+    "question_id": "GATE_2011_AE_Q43",
+    "year": 2011,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "MCQ",
+    "question_text": "An aircraft in level flight encounters a vertical gust, which excites the phugoid mode. The phugoid motion completes 10 cycles in 50 s and its amplitude reduces to half of its maximum value in 25 s. The eigenvalues of the phugoid mode are"
+  },
+  "tokens_used": 15658,
+  "input_tokens": 10313,
+  "output_tokens": 5345,
+  "cost": 0.0173777,
+  "time_seconds": 167.22820353507996
+}
