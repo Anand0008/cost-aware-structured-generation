@@ -1,0 +1,419 @@
+{
+  "model_name": "gpt_5_1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "text_only",
+      "combined_type": "numerical_calculation_text_only",
+      "weight_strategy": "NUMERICAL_WEIGHTED",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "This is a numerical calculation problem involving multiple steps to find the total temperatures. It requires integrating concepts of isentropic flow, air intake efficiency, and compressor efficiency, making it a medium-hard problem.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "C",
+        "is_correct": true,
+        "confidence": 0.97,
+        "confidence_type": "single_model",
+        "reasoning": "We must find total (stagnation) temperatures at the exit of the air intake (diffuser) and at the exit of the compressor. Freestream Mach number M_0 = 0.8, ambient T_a = 223.3 K, \\gamma = 1.4, compressor pressure ratio p_{rc} = 8, diffuser efficiency \\eta_d = 0.8, compressor isentropic efficiency \\eta_c = 0.87.\n1) Ideal stagnation temperature at diffuser exit (isentropic from freestream):\nT_{t0,ideal} = T_a \\left(1 + \\frac{\\gamma-1}{2} M_0^2\\right) = 223.3 \\left(1 + 0.2 \\times 0.8^2\\right) = 223.3 (1 + 0.128) = 223.3 \\times 1.128 \\approx 252.0\\,\\text{K}.\nFor an intake, total temperature is essentially unaffected by irreversibilities (kinetic energy is small compared to enthalpy and diffuser losses mainly reduce total pressure). In standard gas-turbine cycle analysis, diffuser efficiency is defined on total pressure, not on total temperature. Hence T_{t2} \\approx T_{t0,ideal} \\approx 251.9\\,\\text{K}. This matches the first number in options A and C.\n2) Compressor exit total temperature using isentropic efficiency definition:\nIsentropic outlet temperature for pressure ratio p_{rc} = 8:\nT_{t3s} = T_{t2} \\left(p_{rc}\\right)^{(\\gamma-1)/\\gamma} = 251.9 \\times 8^{0.2857}.\n8^{0.2857} \\approx 1.811, so T_{t3s} \\approx 251.9 \\times 1.811 \\approx 456.9\\,\\text{K}.\nCompressor isentropic efficiency (for compression) is\n\\eta_c = \\frac{T_{t3s} - T_{t2}}{T_{t3} - T_{t2}} \\Rightarrow T_{t3} = T_{t2} + \\frac{T_{t3s} - T_{t2}}{\\eta_c}.\nThus T_{t3} = 251.9 + \\frac{456.9 - 251.9}{0.87} = 251.9 + \\frac{205.0}{0.87} \\approx 251.9 + 235.6 \\approx 487.5\\,\\text{K}.\nRounding and small arithmetic differences give about 486.8 K, which matches the second number in option C. Therefore the correct pair is (251.9 K, 486.8 K), i.e., option C, consistent with the official key."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Step 1: Compute the ideal stagnation temperature from freestream Mach number using $T_t = T \\left(1 + \\frac{\\gamma-1}{2} M^2\\right)$.",
+          "Step 2: Note that diffuser (intake) losses mainly reduce total pressure, not total temperature, so take $T_{t2} \\approx T_{t0,ideal}$.",
+          "Step 3: Use the compressor pressure ratio $p_{rc} = 8$ to find the isentropic compressor exit temperature $T_{t3s} = T_{t2} p_{rc}^{(\\gamma-1)/\\gamma}$. ",
+          "Step 4: Apply compressor isentropic efficiency definition $\\eta_c = \\frac{T_{t3s} - T_{t2}}{T_{t3} - T_{t2}}$ to solve for the actual compressor exit total temperature $T_{t3}$. ",
+          "Step 5: Numerically evaluate all expressions and match the resulting pair of temperatures to the closest option."
+        ],
+        "formulas_used": [
+          "$T_t = T \\left(1 + \\frac{\\gamma-1}{2} M^2\\right)$",
+          "$\\frac{T_{t2}}{T_{t1}} = \\left(\\frac{p_{t2}}{p_{t1}}\\right)^{(\\gamma-1)/\\gamma}$",
+          "$T_{t3s} = T_{t2} \\, p_{rc}^{(\\gamma-1)/\\gamma}$",
+          "$\\eta_c = \\frac{T_{t3s} - T_{t2}}{T_{t3} - T_{t2}}$",
+          "$T_{t3} = T_{t2} + \\frac{T_{t3s} - T_{t2}}{\\eta_c}$"
+        ],
+        "estimated_time_minutes": 3
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Propulsion",
+          "confidence": 0.99
+        },
+        "topic": {
+          "name": "Gas turbine engine cycle analysis (intake and compressor)",
+          "syllabus_ref": "Section 6: Propulsion -> Gas turbine engines and their cycles"
+        },
+        "concepts": [
+          {
+            "name": "Stagnation (total) temperature in compressible flow",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Isentropic flow relations for compressors and diffusers",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Compressor isentropic efficiency",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Diffuser (intake) performance and losses",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Mach number and its effect on stagnation properties",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Definition of Mach number and stagnation (total) properties",
+          "Isentropic flow relations for perfect gases",
+          "Concept of compressor pressure ratio and temperature rise",
+          "Definition of isentropic efficiency for compressors",
+          "Basic thermodynamics of ideal gases (Cp, gamma)"
+        ],
+        "helpful": [
+          "Gas turbine engine station numbering and layout",
+          "Understanding of diffuser (intake) losses and pressure recovery"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Isentropic flow relations between static and stagnation states",
+            "requires: Definition and use of compressor isentropic efficiency",
+            "enables: Complete turbojet/turbofan cycle performance analysis",
+            "enables: Design and optimization of intake and compressor stages in aircraft engines"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Easy",
+        "score": 3,
+        "complexity_breakdown": {
+          "conceptual": 3,
+          "mathematical": 3,
+          "problem_solving": 3
+        },
+        "estimated_solve_time_seconds": 150,
+        "expected_accuracy_percent": 75,
+        "difficulty_factors": [
+          "Requires remembering that diffuser efficiency mainly affects total pressure, not total temperature",
+          "Needs correct use of compressor efficiency formula (avoiding inversion of numerator/denominator)"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Mechanics and Thermodynamics of Propulsion",
+          "author": "Hill and Peterson",
+          "chapter_number": "2",
+          "chapter_title": "The Ideal Aircraft Gas Turbine Engine Cycle",
+          "section": "Stagnation properties and compressor performance",
+          "page_range": "",
+          "complexity": "intermediate",
+          "relevance_score": 0.96,
+          "source": "model_consensus",
+          "text_snippet": ""
+        },
+        {
+          "source_type": "book",
+          "book": "Gas Turbines",
+          "author": "V. Ganesan",
+          "chapter_number": "5",
+          "chapter_title": "Ideal Cycles and their Analysis",
+          "section": "Compressor and turbine efficiencies",
+          "page_range": "",
+          "complexity": "intermediate",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval",
+          "text_snippet": "Using the isentropic relation for compression: $T_2 = T_1 (p_2/p_1)^{(\\gamma-1)/\\gamma}$ and defining compressor work and efficiency."
+        },
+        {
+          "source_type": "book",
+          "book": "Gas Dynamics",
+          "author": "E. Rathakrishnan",
+          "chapter_number": "4",
+          "chapter_title": "Steady One-Dimensional Flow",
+          "section": "Stagnation properties and diffuser analysis",
+          "page_range": "",
+          "complexity": "introductory",
+          "relevance_score": 0.82,
+          "source": "rag_retrieval",
+          "text_snippet": "The isentropic relations are: $p_0/p = (1 + (\\gamma-1)/2 M^2)^{\\gamma/(\\gamma-1)}$, $T_0/T = (1 + (\\gamma-1)/2 M^2)$."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Dr. D.P. Mishra",
+          "timestamp_start": "00:05:59",
+          "timestamp_end": "00:10:07",
+          "video_url": "",
+          "book_reference": "Hill and Peterson",
+          "topic_covered": "Flight velocity and air intake (diffuser) stagnation properties",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. Bhaskar Roy and Prof. A. M. Pradeep",
+          "timestamp_start": "00:14:10",
+          "timestamp_end": "00:18:28",
+          "video_url": "",
+          "book_reference": "Hill and Peterson",
+          "topic_covered": "Ideal turbojet intake analysis and stagnation property calculation",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Direct Formula Application",
+        "total_steps": 5,
+        "solution_path": "Stagnation temperature from Mach number \\rightarrow Assume negligible total temperature loss in intake \\rightarrow Isentropic compressor temperature rise from pressure ratio \\rightarrow Correct with compressor efficiency \\rightarrow Match with options",
+        "key_insights": [
+          "Diffuser efficiency in practice is applied to total pressure recovery, not total temperature, so T_t is nearly conserved.",
+          "Compressor isentropic efficiency must be applied with the correct numerator (ideal vs actual temperature rise)."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$T_t = T \\left(1 + \\frac{\\gamma-1}{2} M^2\\right)$",
+          "name": "Static-to-stagnation temperature relation for adiabatic flow",
+          "conditions": "Applies to adiabatic, no-work, one-dimensional flow of a perfect gas",
+          "type": "equation",
+          "relevance": "Used to compute stagnation temperature at diffuser exit from freestream Mach number and ambient temperature"
+        },
+        {
+          "formula": "$T_{t3s} = T_{t2} \\, p_{rc}^{(\\gamma-1)/\\gamma}$",
+          "name": "Isentropic compressor exit temperature",
+          "conditions": "Applies for ideal isentropic compression of a perfect gas with pressure ratio $p_{rc}$",
+          "type": "equation",
+          "relevance": "Gives the ideal compressor exit total temperature before applying efficiency"
+        },
+        {
+          "formula": "$\\eta_c = \\frac{T_{t3s} - T_{t2}}{T_{t3} - T_{t2}}$",
+          "name": "Compressor isentropic efficiency definition",
+          "conditions": "Applies to steady-flow adiabatic compressor with negligible kinetic energy changes at inlet and exit",
+          "type": "equation",
+          "relevance": "Relates ideal and actual temperature rise to find actual compressor exit total temperature"
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Preliminary performance estimation of turbojet and turbofan engines, where intake and compressor exit temperatures determine compressor work and overall cycle efficiency.",
+          "Design of high-altitude aircraft engines where accurate prediction of stagnation temperatures is critical for material limits and surge margins."
+        ],
+        "specific_systems": [
+          "Military turbojet engines operating at transonic Mach numbers around 0.8 at 10 km altitude.",
+          "Civil turbofan engines during cruise, where intake and compressor performance strongly affect specific fuel consumption."
+        ],
+        "practical_relevance": "Correct estimation of stagnation temperatures at intake and compressor exits is essential for sizing compressor stages, selecting materials, and ensuring that turbine inlet temperature limits and compressor surge margins are not exceeded."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Treating diffuser efficiency as directly reducing total temperature, and multiplying the ideal stagnation temperature by 0.8.",
+          "why_students_make_it": "They confuse total pressure recovery efficiency with a generic 'efficiency' that scales all properties.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Remember: in an adiabatic diffuser, total temperature is nearly conserved; losses mainly reduce total pressure, not T_t.",
+          "consequence": "Leads to a much lower intake exit temperature and eliminates the correct option."
+        },
+        {
+          "mistake": "Using the compressor efficiency formula inverted, i.e., $\\eta_c = (T_{t3} - T_{t2})/(T_{t3s} - T_{t2})$.",
+          "why_students_make_it": "They memorize the formula without understanding that efficiency is ideal work over actual work.",
+          "type": "Calculation",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Derive the relation once from $w_s/w_a$ to fix the direction: ideal temperature rise must be in the numerator.",
+          "consequence": "Gives an unrealistically low compressor exit temperature and wrong answer."
+        },
+        {
+          "mistake": "Ignoring the given Mach number and simply assuming $T_t \\approx T$ at the intake exit.",
+          "why_students_make_it": "Underestimation of compressibility effects at M = 0.8.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "For M > 0.3, always check if compressibility is important using $T_t/T = 1 + 0.2 M^2$.",
+          "consequence": "Underestimates intake exit total temperature and shifts compressor exit temperature as well."
+        },
+        {
+          "mistake": "Using static temperature relation $T_2/T_1 = (p_2/p_1)^{(\\gamma-1)/\\gamma}$ directly for the compressor without recognizing that these are total (stagnation) states.",
+          "why_students_make_it": "Confusion between static and stagnation properties and station numbering.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Clearly label all stations with t (total) or static, and recall that compressors mainly change stagnation properties.",
+          "consequence": "Inconsistent temperatures and possible mismatch with any option."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "ICE: Intake Conserves Energy (T_t), Compressor Elevates (T_t)",
+          "concept": "Remember that diffuser mainly conserves total temperature while compressor raises it.",
+          "effectiveness": "medium",
+          "context": "Use when sketching engine station properties in cycle problems."
+        },
+        {
+          "mnemonic": "IDEAL on top: $\\eta_c = \\dfrac{\\Delta T_{ideal}}{\\Delta T_{actual}}$",
+          "concept": "Correct form of compressor isentropic efficiency.",
+          "effectiveness": "high",
+          "context": "Recall during compressor efficiency calculations to avoid inversion."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "Write the relation between static and stagnation temperature for a perfect gas in adiabatic flow.",
+          "back": "$T_t = T \\left(1 + \\frac{\\gamma-1}{2} M^2\\right)$",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "definition",
+          "front": "Define compressor isentropic efficiency in terms of stagnation temperatures.",
+          "back": "$\\eta_c = \\dfrac{T_{t3s} - T_{t2}}{T_{t3} - T_{t2}}$, where $T_{t3s}$ is the ideal (isentropic) exit total temperature for the same pressure ratio.",
+          "difficulty": "medium",
+          "time_limit_seconds": 45
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "In an adiabatic diffuser (intake), which stagnation property is mainly affected by losses: $T_t$ or $p_t$?",
+          "back": "Losses mainly reduce stagnation pressure $p_t$; stagnation temperature $T_t$ is nearly conserved.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "application",
+          "front": "Air at 220 K flows at M=0.8. Estimate the stagnation temperature.",
+          "back": "Use $T_t/T = 1 + 0.2 M^2 = 1 + 0.2(0.64) = 1.128$. So $T_t \\approx 220 \\times 1.128 \\approx 248$ K.",
+          "difficulty": "medium",
+          "time_limit_seconds": 60
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "Why is it wrong to multiply stagnation temperature by diffuser efficiency?",
+          "back": "Diffuser efficiency is defined on total pressure recovery, not on total temperature. In adiabatic flow, $T_t$ is nearly constant; losses appear as $p_t$ drop.",
+          "difficulty": "medium",
+          "time_limit_seconds": 60
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Cruise performance prediction of jet engines at high altitude.",
+          "industry_example": "At 10 km and M ≈ 0.8, accurate intake and compressor exit temperatures are used to estimate compressor work and turbine inlet temperature for engines like CFM56 on commercial airliners.",
+          "why_it_matters": "Errors in predicted temperatures can lead to underestimating turbine blade temperatures, risking overheating, or oversizing components, reducing efficiency."
+        },
+        {
+          "application": "Preliminary design of compressor stages.",
+          "industry_example": "Engineers use required total temperature rise across the compressor to determine number of stages and stage loading for turbofan engines.",
+          "why_it_matters": "Incorrect temperature rise estimates can cause compressor surge or insufficient pressure ratio, degrading thrust and fuel efficiency."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "Identify it as a standard stagnation-temperature and compressor-efficiency problem; write the key formulas and plug numbers directly. It is a quick 2–3 step calculation.",
+        "guessing_heuristic": "If stuck on efficiency placement, remember that actual exit temperature must be higher than ideal for a compressor with efficiency < 1.",
+        "time_management": "Allocate about 2–3 minutes; do not overthink diffuser efficiency on temperature—focus on Mach-to-T_t and compressor efficiency."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "compressor isentropic efficiency stagnation temperature",
+        "air intake diffuser stagnation properties Mach 0.8",
+        "gas turbine cycle analysis intake and compressor",
+        "stagnation temperature calculation from Mach number",
+        "GATE AE propulsion turbojet cycle problems",
+        "Hill Peterson aircraft gas turbine engine cycle"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Full station-by-station cycle diagram with T-s plot",
+          "description": "Draw a T-s diagram for the intake and compressor, mark stagnation states, and use isentropic lines and efficiency definitions graphically to reason about temperature changes before doing calculations.",
+          "pros_cons": "Pros: Builds strong physical intuition and reduces formula memorization. Cons: Slower and more qualitative, not ideal for time-limited exams.",
+          "when_to_use": "Useful during study and revision to understand how intake and compressor affect stagnation properties, not during quick exam calculations."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Thermodynamics": "Uses adiabatic flow and isentropic process relations for ideal gases, and definitions of efficiency based on ideal vs actual work.",
+        "Gas Dynamics": "Relies on Mach number and compressible flow relations between static and stagnation properties.",
+        "Flight Mechanics": "Freestream Mach number at a given altitude is determined from aircraft speed and ISA atmosphere, linking engine cycle to flight condition."
+      },
+      "deeper_dive_topics": [
+        "Detailed definitions and measurement of diffuser total pressure recovery factor",
+        "Multi-stage axial compressor design and stage loading limits",
+        "Off-design performance of gas turbine engines at various Mach numbers and altitudes",
+        "Effects of variable Cp and gamma on high-temperature cycle analysis"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2011_AE_Q34",
+        "year": 2011,
+        "marks": 2.0,
+        "negative_marks": 0.66,
+        "time_expected": "2-3 minutes",
+        "success_rate_estimate": "75%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 6: Propulsion",
+        "gate_subsection": "Gas turbine engines and their cycles; performance parameters",
+        "weightage": "10-15%",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Question is well-aligned with core gas turbine cycle analysis, testing understanding of stagnation properties and component efficiencies, which are central to propulsion."
+      },
+      "rag_quality": {
+        "relevance_score": 0.7,
+        "chunks_used": 3,
+        "sources_distribution": {
+          "books": 2,
+          "videos": 2
+        },
+        "notes": "RAG provided examples of intake (diffuser) analysis, stagnation property calculations from Mach number, and gas turbine cycle calculations (Ganesan, Mishra, Roy/Pradeep). These supported the use of isentropic relations and clarified that diffuser losses mainly affect total pressure. However, compressor efficiency application was inferred from general knowledge rather than explicitly from RAG."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-19T00:00:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Ask for stagnation pressures at intake and compressor exits including diffuser pressure recovery factor and compressor efficiency.",
+        "Extend the problem to compute turbine inlet temperature and specific thrust for a turbojet at the same flight condition.",
+        "Include a non-ideal intake with given total pressure recovery and ask for overall cycle efficiency impact.",
+        "Vary Mach number and altitude to study sensitivity of intake exit stagnation temperature to flight condition."
+      ]
+    },
+    "question_id": "GATE_2011_AE_Q34",
+    "year": 2011,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "MCQ",
+    "question_text": "A jet engine is operating at a Mach number of 0.8 at an altitude of 10 km. The efficiency of the air intake is 0.8 and that of the compressor is 0.87. The total temperatures (in K) at the exits of the air intake and the compressor respectively are (Ambient pressure = 26.5 kPa; Ambient temperature = 223.3 K; Gas constant, gamma = 1.4; p_rc = 8)"
+  },
+  "tokens_used": 16538,
+  "input_tokens": 10995,
+  "output_tokens": 5543,
+  "cost": 0.06917375,
+  "time_seconds": 54.31353831291199
+}
