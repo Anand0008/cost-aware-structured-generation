@@ -1,0 +1,436 @@
+{
+  "model_name": "deepseek_r1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "conceptual_application",
+      "media_type": "text_only",
+      "combined_type": "conceptual_application_text_only",
+      "weight_strategy": "APPLICATION_WEIGHTED",
+      "classification_confidence": 0.9,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "The question requires understanding the relationship between nozzle exit Mach number and thrust, considering factors like pressure ratio and area ratio. It involves multiple concepts related to nozzle performance and is not a direct recall question.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": false,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "D",
+        "is_correct": true,
+        "confidence": 0.92,
+        "confidence_type": "single_model",
+        "reasoning": "For a choked nozzle with fixed stagnation conditions (stagnation temperature T0=800 K, assumed fixed stagnation pressure P0) and fixed ambient pressure Pa (implied by flight at Mach 1.5 and ambient temperature 250 K, though exact value not needed), the thrust F = ṁ * V_e + (P_e - P_a) * A_e increases with exit Mach number M_e in the under-expanded regime (P_e > P_a). As M_e increases, the momentum thrust (ṁ * V_e) increases, and although the pressure thrust ((P_e - P_a) * A_e) decreases, the net effect is an increase in total thrust. Numerical evaluation with typical P_a/P0 ratios (e.g., 0.04) confirms that F is highest at M_e = 2.5 among the given options (1, 1.5, 2, 2.5)."
+      },
+      "explanation": {
+        "question_nature": "Application",
+        "step_by_step": [
+          "Step 1: Identify given data and assumptions. Aircraft flight Mach M_flight = 1.5, ambient temperature T_a = 250 K, stagnation temperature at nozzle entry T0 = 800 K. Nozzle is choked and always under-expanded (exit pressure P_e > ambient pressure P_a). Exhaust gas properties: molecular weight MW = 29, ratio of specific heats γ = 1.4, universal gas constant R_univ = 8314 J/kmol-K. Gas constant R = R_univ/MW = 8314/29 ≈ 286.69 J/kg-K.",
+          "Step 2: Recall thrust equation for a nozzle. Thrust F = ṁ * V_e + (P_e - P_a) * A_e, where ṁ is mass flow rate (fixed because nozzle is choked, throat area fixed), V_e is exit velocity, P_e is exit static pressure, P_a is ambient pressure, A_e is exit area.",
+          "Step 3: Express parameters in terms of exit Mach number M_e using isentropic relations (since flow is isentropic up to exit for under-expanded case, no internal shocks). Exit temperature: T_e = T0 / (1 + (γ-1)/2 * M_e^2). Exit velocity: V_e = M_e * sqrt(γ * R * T_e). Exit pressure: P_e = P0 / (1 + (γ-1)/2 * M_e^2)^{γ/(γ-1)}. Exit area ratio: A_e/A_throat = (1/M_e) * ((1 + (γ-1)/2 * M_e^2) / ((γ+1)/2))^{(γ+1)/(2(γ-1))}. Mass flow rate: ṁ = (P0 * A_throat / sqrt(T0)) * sqrt(γ/R) * ((γ+1)/2)^{-(γ+1)/(2(γ-1))}, constant for fixed P0, T0, A_throat.",
+          "Step 4: Note that P0 (stagnation pressure) and P_a are not explicitly given. However, the condition 'always under-expanded' means P_e > P_a for all M_e considered. This implies P_a is less than the smallest P_e among the options, which occurs at M_e = 2.5. Thus, choose a plausible P_a/P0 ratio (e.g., 0.04) that satisfies P_e(M_e) > P_a for all M_e. Thrust comparison is qualitatively insensitive to the exact value as long as under-expansion holds.",
+          "Step 5: Compute non-dimensional thrust F* = F/(P0 A_throat) for each M_e (1, 1.5, 2, 2.5) using the expressions from Step 3. With γ = 1.4 and chosen P_a/P0 = 0.04, calculations yield: F*(1) ≈ 1.228, F*(1.5) ≈ 1.282, F*(2) ≈ 1.356, F*(2.5) ≈ 1.399. Thus, thrust increases with M_e, and M_e = 2.5 gives the highest thrust.",
+          "Step 6: Conclude that higher exit Mach number results in higher thrust for an under-expanded choked nozzle under the given conditions, because the increase in momentum thrust outweighs the decrease in pressure thrust."
+        ],
+        "formulas_used": [
+          "$F = \\dot{m} V_e + (P_e - P_a) A_e$",
+          "$T_e = \\frac{T_0}{1 + \\frac{\\gamma - 1}{2} M_e^2}$",
+          "$V_e = M_e \\sqrt{\\gamma R T_e}$",
+          "$P_e = \\frac{P_0}{\\left(1 + \\frac{\\gamma - 1}{2} M_e^2\\right)^{\\gamma/(\\gamma-1)}}$",
+          "$\\frac{A_e}{A_t} = \\frac{1}{M_e} \\left(\\frac{1 + \\frac{\\gamma-1}{2} M_e^2}{\\frac{\\gamma+1}{2}}\\right)^{\\frac{\\gamma+1}{2(\\gamma-1)}}$",
+          "$\\dot{m} = \\frac{P_0 A_t}{\\sqrt{T_0}} \\sqrt{\\frac{\\gamma}{R}} \\left(\\frac{\\gamma+1}{2}\\right)^{-\\frac{\\gamma+1}{2(\\gamma-1)}}$"
+        ],
+        "estimated_time_minutes": 4
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Propulsion",
+          "confidence": 0.98
+        },
+        "topic": {
+          "name": "Nozzle Performance and Thrust",
+          "syllabus_ref": "Section 6: Propulsion → Aircraft and Rocket Propulsion"
+        },
+        "concepts": [
+          {
+            "name": "Thrust equation for nozzles",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Isentropic flow relations",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Choked flow",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Under-expanded nozzle",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Exit Mach number effects",
+            "importance": "primary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Isentropic relations for compressible flow (temperature, pressure, area vs. Mach number)",
+          "Thrust equation for propulsion nozzles (momentum and pressure terms)",
+          "Concept of choked flow in nozzles"
+        ],
+        "helpful": [
+          "Gas dynamics of convergent-divergent nozzles",
+          "Understanding of under-expansion and over-expansion"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Isentropic flow relations to compute exit conditions",
+            "requires: Thrust equation to combine momentum and pressure terms",
+            "enables: Optimization of nozzle expansion for maximum thrust",
+            "enables: Analysis of off-design nozzle performance"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Medium",
+        "score": 6,
+        "complexity_breakdown": {
+          "conceptual": 7,
+          "mathematical": 5,
+          "problem_solving": 6
+        },
+        "estimated_solve_time_seconds": 180,
+        "expected_accuracy_percent": 60,
+        "difficulty_factors": [
+          "Requires combining multiple compressible flow relations",
+          "Ambiguity in missing stagnation pressure and ambient pressure values",
+          "Need to understand qualitative behavior of thrust vs. Mach number"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Rocket Propulsion Elements",
+          "author": "Sutton-Biblarz",
+          "chapter_number": "3",
+          "chapter_title": "NOZZLE THEORY AND THERMODYNAMIC RELATIONS",
+          "section": "§3",
+          "page_range": null,
+          "complexity": "intermediate",
+          "relevance_score": 0.5,
+          "source": "rag_retrieval",
+          "text_snippet": "For an optimum expansion nozzle (P₂ = P₃), the pressure thrust term is zero. F = ṁ * v₂ + (P₂ - P₃) * A₂"
+        },
+        {
+          "source_type": "book",
+          "book": "Gas Turbines",
+          "author": "V. Ganesan",
+          "chapter_number": "17",
+          "chapter_title": "Rocket Propulsion",
+          "section": null,
+          "page_range": null,
+          "complexity": "intermediate",
+          "relevance_score": 0.5,
+          "source": "rag_retrieval",
+          "text_snippet": "The highest thrust for a given rocket is achieved under the condition of optimum expansion, where the static pressure of the exhaust gases at the nozzle exit exactly equals the ambient atmospheric pressure."
+        },
+        {
+          "source_type": "book",
+          "book": "Fundamentals of Aerodynamics",
+          "author": "Anderson, J.D.",
+          "chapter_number": "3",
+          "chapter_title": "Nozzle and Diffuser Flows; One-Dimensional Isentropic Flow with Area Change",
+          "section": null,
+          "page_range": null,
+          "complexity": "intermediate",
+          "relevance_score": 0.9,
+          "source": "model_consensus",
+          "text_snippet": "Isentropic flow relations link Mach number to area ratio, temperature, pressure, and density ratios. The area-Mach number relation is critical for nozzle design."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. T.M. Muruganandam",
+          "timestamp_start": "00:05:00",
+          "timestamp_end": "00:09:00",
+          "video_url": null,
+          "book_reference": "Anderson, J.D.",
+          "topic_covered": "Calculation of critical back pressures for nozzles using isentropic tables",
+          "relevance_score": 0.6,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. A. Sameen",
+          "timestamp_start": "00:31:24",
+          "timestamp_end": "00:33:45",
+          "video_url": "https://www.youtube.com/watch?v=DLzdz97XkmQ",
+          "book_reference": "Anderson, J.D., 'Fundamentals of Aerodynamics'",
+          "topic_covered": "Thrust components and nozzle design trade-offs",
+          "relevance_score": 0.7,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Direct Formula Application with Parametric Comparison",
+        "total_steps": 6,
+        "solution_path": "Thrust Equation → Isentropic Relations → Non-dimensional Comparison → Numerical Evaluation → Conclusion",
+        "key_insights": [
+          "Mass flow rate is constant because the nozzle is choked with fixed throat area and stagnation conditions.",
+          "Under-expanded condition (P_e > P_a) allows choice of a reasonable P_a/P0 ratio for comparison.",
+          "Thrust increases with exit Mach number in the under-expanded regime because the momentum thrust increase dominates."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$F = \\dot{m} V_e + (P_e - P_a) A_e$",
+          "name": "Thrust equation for nozzles",
+          "conditions": "General, applies to any nozzle exhausting into ambient pressure P_a",
+          "type": "equation",
+          "relevance": "Core equation for thrust calculation"
+        },
+        {
+          "formula": "$T_e = \\frac{T_0}{1 + \\frac{\\gamma - 1}{2} M_e^2}$",
+          "name": "Isentropic temperature relation",
+          "conditions": "Isentropic flow, constant γ, stagnation temperature T0 constant",
+          "type": "equation",
+          "relevance": "Relates exit temperature to exit Mach number"
+        },
+        {
+          "formula": "$P_e = \\frac{P_0}{\\left(1 + \\frac{\\gamma - 1}{2} M_e^2\\right)^{\\gamma/(\\gamma-1)}}$",
+          "name": "Isentropic pressure relation",
+          "conditions": "Isentropic flow, constant γ, stagnation pressure P0 constant",
+          "type": "equation",
+          "relevance": "Relates exit pressure to exit Mach number"
+        },
+        {
+          "formula": "$\\frac{A_e}{A_t} = \\frac{1}{M_e} \\left(\\frac{1 + \\frac{\\gamma-1}{2} M_e^2}{\\frac{\\gamma+1}{2}}\\right)^{\\frac{\\gamma+1}{2(\\gamma-1)}}$",
+          "name": "Area-Mach number relation",
+          "conditions": "Isentropic flow, choked throat (A_t = A*), constant γ",
+          "type": "equation",
+          "relevance": "Relates exit area to exit Mach number for a given throat area"
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Rocket nozzles designed for high altitude (low ambient pressure) often operate under-expanded at sea level, thrust still increases with expansion ratio.",
+          "Jet engine afterburner nozzles: variable geometry to adjust exit area and Mach number for maximum thrust at different flight conditions."
+        ],
+        "specific_systems": [
+          "Space Shuttle Main Engine (SSME) nozzle",
+          "F-15 Eagle afterburning turbofan nozzle"
+        ],
+        "practical_relevance": "Understanding thrust dependence on exit Mach number helps in nozzle design for optimum performance across flight envelopes, especially for supersonic aircraft and rockets."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Assuming thrust is maximum at perfectly expanded condition (P_e = P_a) and then decreases for under-expansion, leading to choosing a lower M_e.",
+          "why_students_make_it": "Over-generalization from optimum expansion theory without considering that for fixed under-expanded condition, thrust can still increase with M_e.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Remember that for an under-expanded nozzle, as M_e increases, P_e decreases but V_e increases. The net thrust typically increases until optimum expansion; below optimum (under-expanded), thrust is increasing with M_e.",
+          "consequence": "Selecting wrong option (e.g., M_e=1 or 1.5) instead of highest M_e."
+        },
+        {
+          "mistake": "Forgetting the pressure thrust term and only considering momentum thrust, thus thinking thrust is proportional to V_e only.",
+          "why_students_make_it": "Simplification often used for optimum expansion where pressure thrust is zero, but here P_e ≠ P_a.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Always write the full thrust equation: F = ṁV_e + (P_e - P_a)A_e. For under-expanded nozzles, pressure thrust is positive and contributes.",
+          "consequence": "May incorrectly rank thrust values, especially if pressure thrust contribution is significant at lower M_e."
+        },
+        {
+          "mistake": "Incorrectly using ambient conditions to compute P_a or P0. Assuming P_a = ambient static pressure from standard atmosphere without considering flight Mach number effect.",
+          "why_students_make_it": "Not recognizing that P_a is the ambient pressure at flight altitude, but P0 is the stagnation pressure at nozzle entry, which is not given and must be treated as a parameter.",
+          "type": "Application",
+          "severity": "Medium",
+          "frequency": "common",
+          "how_to_avoid": "Treat P0 and P_a as unknowns in ratio form (P_a/P0). Use the under-expanded condition to choose a plausible ratio for comparison. The qualitative result is insensitive to exact value.",
+          "consequence": "Getting stuck or making incorrect numerical comparisons."
+        },
+        {
+          "mistake": "Using the flight Mach number (M=1.5) as the exit Mach number in calculations.",
+          "why_students_make_it": "Confusion between aircraft flight Mach number and nozzle exit Mach number.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "rare",
+          "how_to_avoid": "Clearly distinguish: flight Mach number is for the aircraft moving through air; exit Mach number is for exhaust gases relative to the nozzle.",
+          "consequence": "Complete misdirection and wrong answer."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "UNDER → UP: For Under-expanded nozzles, Thrust goes Up with exit Mach number.",
+          "concept": "Thrust vs. exit Mach number trend for under-expanded nozzles",
+          "effectiveness": "medium",
+          "context": "When comparing thrust for different exit Mach numbers in under-expanded regime."
+        },
+        {
+          "mnemonic": "MPA: Momentum + Pressure = Actual thrust. Always include both.",
+          "concept": "Full thrust equation has two components",
+          "effectiveness": "high",
+          "context": "Recall thrust formula for nozzles."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "Write the complete thrust equation for a nozzle exhausting into ambient pressure P_a.",
+          "back": "$F = \\dot{m} V_e + (P_e - P_a) A_e$, where ṁ is mass flow rate, V_e is exit velocity, P_e is exit static pressure, A_e is exit area.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "What does 'under-expanded nozzle' mean?",
+          "back": "Exit pressure P_e is greater than ambient pressure P_a. The exhaust gases could expand further if the nozzle were longer.",
+          "difficulty": "medium",
+          "time_limit_seconds": 20
+        },
+        {
+          "card_type": "application",
+          "front": "For a choked, under-expanded nozzle with fixed stagnation conditions, how does thrust change with increasing exit Mach number?",
+          "back": "Thrust increases with exit Mach number because the increase in momentum thrust (ṁ V_e) outweighs the decrease in pressure thrust ((P_e - P_a) A_e).",
+          "difficulty": "hard",
+          "time_limit_seconds": 40
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "What is a common mistake when comparing thrust for different exit Mach numbers?",
+          "back": "Forgetting the pressure thrust term and considering only momentum thrust, or assuming thrust peaks at a Mach number lower than the maximum available.",
+          "difficulty": "medium",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "definition",
+          "front": "What is the condition for choked flow in a nozzle?",
+          "back": "Flow at the throat reaches Mach 1. Mass flow rate is maximum for given stagnation conditions and throat area.",
+          "difficulty": "easy",
+          "time_limit_seconds": 20
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Rocket nozzle design for space launch",
+          "industry_example": "A rocket lifting off from sea level: nozzle is designed for optimum expansion at high altitude, but at sea level it is under-expanded. Thrust still increases with nozzle expansion ratio (exit Mach number) up to the design point.",
+          "why_it_matters": "Overly large nozzles are heavy and can cause flow separation; understanding thrust trade-offs helps optimize design."
+        },
+        {
+          "application": "Military jet afterburner operation",
+          "industry_example": "F-16 fighter with afterburner: nozzle opens to increase exit area and exit Mach number for maximum thrust during takeoff or combat.",
+          "why_it_matters": "Pilots and engineers must know how nozzle setting affects thrust to maximize performance."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "This is a 2-mark linked question; if you solved previous part (Q50) on propulsive efficiency, use that context. Otherwise, recall that for under-expanded nozzles, higher exit Mach gives higher thrust. Quick conceptual answer saves time.",
+        "guessing_heuristic": "If unsure, choose the highest Mach number option (2.5) because thrust typically increases with expansion in under-expanded regime.",
+        "time_management": "Spend 2-3 minutes. Write key equations, reason qualitatively, pick answer D."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "nozzle thrust equation momentum pressure thrust",
+        "under-expanded nozzle thrust vs exit Mach number",
+        "isentropic flow relations area Mach number",
+        "choked nozzle mass flow rate constant",
+        "optimum expansion vs under-expanded",
+        "GATE aerospace propulsion nozzle questions",
+        "thrust calculation for rocket nozzle",
+        "effect of back pressure on nozzle thrust"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Thrust coefficient method",
+          "description": "Use thrust coefficient Cf = F/(P0 * A_throat). Cf is a function of area ratio (or exit Mach number) and pressure ratio P_a/P0. Compute Cf for each M_e using standard formulas or graphs and compare.",
+          "pros_cons": "Pros: Non-dimensional, directly comparable. Cons: Requires remembering Cf formula or having graph.",
+          "when_to_use": "When comparing nozzles with different expansion ratios under same stagnation conditions."
+        },
+        {
+          "name": "Numerical simulation with specific values",
+          "description": "Assume reasonable values for P0 and P_a (e.g., from flight conditions: P_a can be estimated from ambient temperature and flight Mach number using isentropic relations, and P0 from assumed compressor pressure ratio). Then compute thrust numerically for each M_e.",
+          "pros_cons": "Pros: More accurate if values are chosen realistically. Cons: More time-consuming, requires more data.",
+          "when_to_use": "When precise numbers are needed, but for GATE MCQ, qualitative trend suffices."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Thermodynamics": "Isentropic process relations link temperature, pressure, and density changes to Mach number.",
+        "Gas Dynamics": "Area-Mach number relation governs nozzle design and choking.",
+        "Flight Mechanics": "Thrust produced affects aircraft acceleration and climb performance."
+      },
+      "deeper_dive_topics": [
+        "Method of characteristics for nozzle contour design",
+        "Over-expanded nozzles and shock losses",
+        "Variable geometry nozzles in jet engines",
+        "Thrust vectoring for aircraft control"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2013_AE_Q51",
+        "year": 2013,
+        "marks": 2.0,
+        "negative_marks": 0.66,
+        "time_expected": "3-4 minutes",
+        "success_rate_estimate": "60%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 6: Propulsion",
+        "gate_subsection": "Aircraft and Rocket Propulsion",
+        "weightage": "Approx 12-15% of GATE AE",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Well-aligned with core propulsion topics: nozzle performance, thrust equation, compressible flow applications."
+      },
+      "rag_quality": {
+        "relevance_score": 0.5,
+        "chunks_used": 4,
+        "sources_distribution": {
+          "books": 3,
+          "videos": 2
+        },
+        "notes": "RAG provided general background on nozzle theory, thrust equation, choked flow, and isentropic relations (Chunks 1, 2, 3, 5). However, it did not directly address the thrust vs. exit Mach number trend for under-expanded nozzles. Chunk 4 was about gas turbine cycle analysis, less relevant. Internal knowledge was used to derive the thrust comparison and confirm the answer."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-13T10:30:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Given the same conditions, what exit Mach number gives the highest specific impulse?",
+        "How does thrust change if the nozzle is over-expanded instead of under-expanded?",
+        "Calculate the exact thrust value for a given exit Mach number with provided stagnation pressure.",
+        "Effect of changing ambient pressure with altitude on thrust for a fixed nozzle geometry."
+      ]
+    },
+    "question_id": "GATE_2013_AE_Q51",
+    "year": 2013,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "MCQ_LINKED",
+    "question_text": "For which one of the nozzle exit Mach numbers given below is the thrust highest?"
+  },
+  "tokens_used": 21265,
+  "input_tokens": 9538,
+  "output_tokens": 11727,
+  "cost": 0.03092803,
+  "time_seconds": 341.3169984817505
+}
