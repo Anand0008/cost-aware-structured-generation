@@ -1,0 +1,179 @@
+{
+  "model_name": "gemini_2.5_pro",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "conceptual_application",
+      "media_type": "text_only",
+      "combined_type": "conceptual_application_text_only",
+      "weight_strategy": "APPLICATION_WEIGHTED",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "The question requires applying the concept of fuel fraction and its impact on aircraft range. It's not a direct calculation but requires understanding the relationship between fuel, weight, and range (Breguet range equation conceptually). The difficulty is moderate as it requires understanding the non-linear relationship.",
+      "difficulty_score": 5,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": false,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": false,
+        "approximation_needed": false
+      },
+      "use_gpt51": false
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "B",
+        "is_correct": true,
+        "confidence": 0.9,
+        "confidence_type": "single_model",
+        "reasoning": "The aircraft range is governed by the Breguet Range Equation. For a given aircraft, in steady, level flight, the range ($R$) can be expressed as:\n$$R = K \\ln\\left(\\frac{W_0}{W_f}\\right)$$\nwhere $K$ is a constant that depends on aerodynamic efficiency ($L/D$), propulsive efficiency (or overall efficiency), and specific fuel consumption (or heat of combustion). $W_0$ is the initial aircraft weight (empty weight + fuel weight), and $W_f$ is the final aircraft weight (empty weight).\n\nTo analyze the effect of fuel reduction, it's often convenient to express the range in terms of the fuel mass fraction, $f_m$. The fuel mass fraction is defined as the ratio of fuel weight to initial aircraft weight:\n$$f_m = \\frac{W_{fuel}}{W_0} = \\frac{W_0 - W_f}{W_0}$$\nFrom this definition, we can express the weight ratio $W_0/W_f$ as:\n$$\\frac{W_0}{W_f} = \\frac{1}{1 - f_m}$$\nSubstituting this into the Breguet Range Equation:\n$$R = K \\ln\\left(\\frac{1}{1 - f_m}\\right) = -K \\ln(1 - f_m)$$\n\nNow, let's analyze the function $g(f_m) = -K \\ln(1 - f_m)$ for $0 < f_m < 1$ (since fuel mass fraction must be positive and less than 1). To understand how a change in $f_m$ affects $R$, we examine the second derivative of $g(f_m)$:\n$$g'(f_m) = -K \\left(\\frac{-1}{1 - f_m}\\right) = \\frac{K}{1 - f_m}$$\n$$g''(f_m) = K \\frac{1}{(1 - f_m)^2}$$\nSince $K$ is a positive constant and $(1 - f_m)^2$ is always positive for $f_m \\neq 1$, $g''(f_m)$ is always positive. This indicates that the function $R(f_m)$ is a **convex function**.\n\nA property of convex functions is that for a given percentage decrease in the input variable, the output variable decreases by a *larger* percentage. Conversely, for a given percentage increase in the input, the output increases by a *smaller* percentage.\n\nIn this question, the aircraft takes off with \"10% less fuel\". Interpreting this as a 10% reduction in the fuel mass fraction ($f_m$), i.e., $f_{m,new} = 0.9 f_{m,std}$:\nSince $R(f_m)$ is a convex function, a 10% decrease in $f_m$ will result in a decrease in range $R$ that is **more than 10%**.\n\n**Example:** Let $f_{m,std} = 0.5$ (a common fuel fraction for long-range aircraft, meaning fuel weight equals empty weight). Let $K=1$ for simplicity.\n$R_{std} = -\\ln(1 - 0.5) = -\\ln(0.5) = \\ln(2) \\approx 0.693$\nIf fuel is reduced by 10%, $f_{m,new} = 0.9 \\times 0.5 = 0.45$.\n$R_{new} = -\\ln(1 - 0.45) = -\\ln(0.55) = \\ln(1/0.55) \\approx 0.592$\nPercentage decrease in range $= \\frac{R_{std} - R_{new}}{R_{std}} \\times 100\\% = \\frac{0.693 - 0.592}{0.693} \\times 100\\% \\approx 14.57\\%$.\nSince $14.57\\% > 10\\%$, the range is lower by more than 10%."
+      },
+      "explanation": {
+        "question_nature": "Conceptual",
+        "step_by_step": [
+          "Step 1: Identify the governing principle for aircraft range, which is the Breguet Range Equation.",
+          "Step 2: Write down the Breguet Range Equation in its standard form: $R = K \\ln(W_0/W_f)$, where $R$ is range, $K$ is a constant, $W_0$ is initial weight, and $W_f$ is final (empty) weight.",
+          "Step 3: Introduce the fuel mass fraction, $f_m = (W_0 - W_f)/W_0$, which represents the proportion of the initial aircraft weight that is fuel. Rearrange this to express the weight ratio $W_0/W_f$ in terms of $f_m$, yielding $W_0/W_f = 1/(1-f_m)$.",
+          "Step 4: Substitute this expression for the weight ratio back into the Breguet Range Equation: $R = K \\ln(1/(1-f_m)) = -K \\ln(1-f_m)$.",
+          "Step 5: Analyze the mathematical properties of the function $g(x) = -\\ln(1-x)$ (where $x = f_m$). Calculate its first and second derivatives with respect to $x$. The first derivative is $g'(x) = K/(1-x)$ and the second derivative is $g''(x) = K/(1-x)^2$.",
+          "Step 6: Determine the convexity or concavity of the function. Since $g''(x) > 0$ for $0 < x < 1$ (as $K>0$), the function $R(f_m)$ is convex.",
+          "Step 7: Apply the property of convex functions: For a convex function, if the input variable (fuel mass fraction) decreases by a certain percentage, the output variable (range) will decrease by a *larger* percentage.",
+          "Step 8: Conclude that if the fuel (interpreted as fuel mass fraction) is 10% less, the range will be lower by more than 10%."
+        ],
+        "formulas_used": [
+          "$R = K \\ln\\left(\\frac{W_0}{W_f}\\right)$",
+          "$f_m = \\frac{W_0 - W_f}{W_0}$",
+          "$R = -K \\ln(1-f_m)$",
+          "$g''(x) = \\frac{K}{(1-x)^2}$"
+        ],
+        "estimated_time_minutes": 3
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Flight Mechanics",
+          "confidence": 0.98
+        },
+        "topic": {
+          "name": "Aircraft Performance",
+          "syllabus_ref": "Section 5: Flight Mechanics -> Aircraft Performance"
+        },
+        "concepts": [
+          {
+            "name": "Breguet Range Equation",
+            "importance": "primary"
+          },
+          {
+            "name": "Fuel Mass Fraction",
+            "importance": "primary"
+          },
+          {
+            "name": "Convex Functions",
+            "importance": "secondary"
+          },
+          {
+            "name": "Non-linear Relationships",
+            "importance": "secondary"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Breguet Range Equation",
+          "Definition of Fuel Mass Fraction",
+          "Basic Calculus (derivatives, understanding of convexity/concavity)",
+          "Logarithm properties"
+        ],
+        "helpful": [
+          "Aircraft weight definitions ($W_0, W_f, W_{fuel}, W_{empty}$)"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Breguet Range Equation",
+            "requires: Understanding of Fuel Mass Fraction",
+            "enables: Aircraft Mission Planning",
+            "enables: Fuel Efficiency Optimization"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Medium",
+        "score": 6,
+        "complexity_breakdown": {
+          "conceptual": 7,
+          "mathematical": 5
+        },
+        "estimated_solve_time_seconds": 180,
+        "expected_accuracy_percent": 50,
+        "difficulty_factors": [
+          "Ambiguity in the interpretation of '10% less fuel' (absolute fuel mass vs. fuel mass fraction).",
+          "Requires understanding the non-linear, specifically convex, nature of the logarithmic function in the Breguet equation."
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Introduction to Flight",
+          "author": "John D. Anderson Jr.",
+          "chapter_number": "6",
+          "chapter_title": "Elements of Airplane Performance",
+          "section": "§6.12",
+          "complexity": "introductory",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval",
+          "text_snippet": "Range: The total distance an airplane flies on a tank of fuel."
+        },
+        {
+          "source_type": "book",
+          "book": "Hill & Peterson",
+          "author": "Hill & Peterson",
+          "chapter_title": "Aircraft Performance / Flight Performance",
+          "specific_concept": "Breguet Range Equation",
+          "complexity": "intermediate",
+          "relevance_score": 0.95,
+          "source": "model_consensus"
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Dr. D.P. Mishra",
+          "timestamp_start": "00:11:51",
+          "timestamp_end": "00:"
+        }
+      ]
+    },
+    "question_id": "GATE_2012_AE_Q34",
+    "year": 2012,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "MCQ",
+    "question_text": "If an aircraft takes off with 10% less fuel in comparison to its standard configuration, its range is",
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2012_AE_Q34",
+        "year": 2012,
+        "marks": 2.0
+      },
+      "syllabus_mapping": {
+        "gate_section": "General"
+      },
+      "rag_quality": {
+        "relevance_score": 0.5,
+        "notes": "Auto-generated",
+        "sources_distribution": {}
+      },
+      "model_meta": {
+        "timestamp": "2025-12-20T05:54:01.528514",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": []
+    }
+  },
+  "tokens_used": 12858,
+  "input_tokens": 10292,
+  "output_tokens": 2566,
+  "cost": 0.0030834,
+  "time_seconds": 68.20347905158997
+}
