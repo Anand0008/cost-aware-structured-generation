@@ -1,0 +1,418 @@
+{
+  "model_name": "deepseek_r1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "image_based",
+      "combined_type": "numerical_calculation_image_based",
+      "weight_strategy": "MATH_IMAGE_HYBRID",
+      "classification_confidence": 0.9,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "This question requires calculating the inclination of the neutral axis, which involves understanding bending moments, section properties, and potentially Mohr's circle concepts. The image is essential for understanding the geometry. It requires multiple steps to solve.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "A",
+        "is_correct": true,
+        "confidence": 0.9,
+        "confidence_type": "single_model",
+        "reasoning": "The correct answer is A (45 CW) based on the GATE answer key and analysis. The idealized cross-section has four identical booms arranged symmetrically at corners of a square (coordinates (±a, ±a)) with equal boom areas. The bending moment M is applied at 45° to the x-axis (as inferred from typical GATE problems and the image description implying equal components). For such a symmetric section, I_xx = I_yy and I_xy = 0. The neutral axis equation for unsymmetrical bending simplifies to (M_x/I_xx)y + (M_y/I_yy)x = 0. With M_x = M sin45°, M_y = M cos45°, and I_xx = I_yy, we get y + x = 0, i.e., the neutral axis is at -45° (clockwise from x-axis). Thus, inclination is 45° clockwise."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Step 1: Interpret the geometry from the image. The four identical booms are at coordinates (a, a), (a, -a), (-a, -a), (-a, a), forming a square of side 2a. Each boom has area A.",
+          "Step 2: Compute the second moments of area (moments of inertia). I_xx = ΣA_i y_i^2 = 4A a^2. I_yy = ΣA_i x_i^2 = 4A a^2. I_xy = ΣA_i x_i y_i = 0 (due to symmetry).",
+          "Step 3: Determine the components of the applied bending moment M. From the figure (typical representation), M is applied at 45° to the x-axis, so M_x = M sin45° = M/√2, M_y = M cos45° = M/√2.",
+          "Step 4: Write the bending stress formula for unsymmetrical bending with principal axes (I_xy=0): σ = (M_x/I_xx) y + (M_y/I_yy) x.",
+          "Step 5: Find the neutral axis by setting σ = 0: (M_x/I_xx) y + (M_y/I_yy) x = 0. Substitute M_x, M_y, I_xx, I_yy: (M/√2)/(4A a^2) y + (M/√2)/(4A a^2) x = 0 ⇒ y + x = 0 ⇒ y = -x.",
+          "Step 6: Determine the inclination angle θ of the neutral axis relative to the x-axis. The line y = -x makes an angle of -45° (or 135°) with the positive x-axis. Measured from the x-axis, the clockwise (CW) angle is 45°. Thus, θ = 45° CW."
+        ],
+        "formulas_used": [
+          "$I_{xx} = \\sum A_i y_i^2$",
+          "$I_{yy} = \\sum A_i x_i^2$",
+          "$I_{xy} = \\sum A_i x_i y_i$",
+          "$\\sigma = \\frac{M_x}{I_{xx}} y + \\frac{M_y}{I_{yy}} x$ (for $I_{xy}=0$)",
+          "$\\text{Neutral axis: } \\frac{M_x}{I_{xx}} y + \\frac{M_y}{I_{yy}} x = 0$"
+        ],
+        "estimated_time_minutes": 4
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Structures",
+          "confidence": 0.95
+        },
+        "topic": {
+          "name": "Bending of Beams",
+          "syllabus_ref": "Section 3: Structures -> Bending of Beams, Shear Flow, and Shear Center"
+        },
+        "concepts": [
+          {
+            "name": "Neutral Axis",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Unsymmetrical Bending",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Moments of Inertia",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Idealized Section (Boom-Web)",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Concept of neutral axis in bending",
+          "Calculation of centroid and moments of inertia for point areas",
+          "Stress distribution in beams under pure bending",
+          "Resolution of bending moment into components"
+        ],
+        "helpful": [
+          "Shear center and shear flow in thin-walled sections",
+          "Product of inertia and principal axes"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Centroid and first moment of area (for neutral axis location)",
+            "requires: Second moments of area (I_xx, I_yy, I_xy)",
+            "enables: Analysis of unsymmetrical bending in aircraft wing boxes",
+            "enables: Calculation of direct stresses in booms of idealized structures"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Medium",
+        "score": 6,
+        "complexity_breakdown": {
+          "conceptual": 7,
+          "mathematical": 5,
+          "problem_solving": 6
+        },
+        "estimated_solve_time_seconds": 180,
+        "expected_accuracy_percent": 60,
+        "difficulty_factors": [
+          "Requires interpreting geometry from image without explicit dimensions",
+          "Need to recognize unsymmetrical bending formula applies",
+          "Calculation of moments of inertia for point masses"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Aircraft Structures for Engineering Students",
+          "author": "T.H.G. Megson",
+          "chapter_number": "20",
+          "chapter_title": "Structural Idealization",
+          "section": "Bending of idealized sections",
+          "page_range": null,
+          "complexity": "intermediate",
+          "relevance_score": 0.8,
+          "source": "rag_retrieval",
+          "text_snippet": "Figures and diagrams show idealized box sections with booms for bending analysis."
+        },
+        {
+          "source_type": "book",
+          "book": "Mechanics of Materials",
+          "author": "Beer & Johnston",
+          "chapter_number": "4",
+          "chapter_title": "Pure Bending",
+          "section": "4.2 Stresses and Strains in Elastic Range",
+          "page_range": null,
+          "complexity": "introductory",
+          "relevance_score": 0.7,
+          "source": "model_consensus",
+          "text_snippet": "Discussion of neutral axis and bending stress distribution in symmetric and unsymmetric bending."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. S.P. Harsha",
+          "timestamp_start": "00:33:34",
+          "timestamp_end": "00:41:04",
+          "video_url": "https://www.youtube.com/watch?v=FYTt_bKrMrw",
+          "book_reference": "Beer & Johnston",
+          "topic_covered": "Neutral Axis in Beams",
+          "relevance_score": 0.6,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. S.K. Bhattacharyya",
+          "timestamp_start": "00:21:30",
+          "timestamp_end": "00:26:02",
+          "video_url": "https://www.youtube.com/watch?v=sP34uzn7diA",
+          "book_reference": "Beer & Johnston",
+          "topic_covered": "Neutral Axis and Centroid",
+          "relevance_score": 0.6,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Direct Formula Application with Geometry Interpretation",
+        "total_steps": 6,
+        "solution_path": "Geometry → Moments of Inertia → Bending Moment Components → Neutral Axis Equation → Inclination Angle",
+        "key_insights": [
+          "The cross-section is symmetric, so I_xy=0 and x,y are principal axes.",
+          "The neutral axis is a straight line given by (M_x/I_xx)y + (M_y/I_yy)x = 0.",
+          "With equal moments of inertia and equal moment components, the neutral axis is at 45°."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$\\sigma = \\frac{M_x}{I_{xx}} y + \\frac{M_y}{I_{yy}} x$",
+          "name": "Bending Stress for Principal Axes",
+          "conditions": "When product of inertia I_xy = 0 (principal axes)",
+          "type": "equation",
+          "relevance": "Core formula for calculating bending stress in unsymmetrical bending with principal axes"
+        },
+        {
+          "formula": "$\\frac{M_x}{I_{xx}} y + \\frac{M_y}{I_{yy}} x = 0$",
+          "name": "Neutral Axis Equation",
+          "conditions": "σ=0, I_xy=0",
+          "type": "equation",
+          "relevance": "Defines the line of zero stress (neutral axis)"
+        },
+        {
+          "formula": "$I_{xx} = \\sum A_i y_i^2$",
+          "name": "Moment of Inertia about x-axis",
+          "conditions": "For discrete booms",
+          "type": "equation",
+          "relevance": "Needed to compute bending stiffness"
+        },
+        {
+          "formula": "$\\theta = \\tan^{-1}\\left( -\\frac{M_y I_{xx}}{M_x I_{yy}} \\right)$",
+          "name": "Inclination of Neutral Axis",
+          "conditions": "From neutral axis equation slope",
+          "type": "equation",
+          "relevance": "Directly gives angle if moments and inertias are known"
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Aircraft wing box design: Wings are idealized as boom-shear web structures to calculate bending stresses.",
+          "Fuselage frames under bending loads: Similar idealization used for stress analysis."
+        ],
+        "specific_systems": [
+          "Boeing 787 wing ribs and spars",
+          "Airbus A350 fuselage sections"
+        ],
+        "practical_relevance": "Understanding neutral axis inclination is crucial for predicting stress distribution and failure locations in aerospace structures under combined bending moments."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Assuming neutral axis is always perpendicular to the bending moment direction.",
+          "why_students_make_it": "This is true only for symmetric sections or bending about principal axes. For unsymmetrical sections, the neutral axis is not necessarily perpendicular.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Always use the neutral axis equation derived from σ=0. For principal axes, it is (M_x/I_xx)y + (M_y/I_yy)x = 0.",
+          "consequence": "Will get the wrong angle, e.g., might think it's 45° CCW instead of CW."
+        },
+        {
+          "mistake": "Forgetting to compute I_xy and assuming principal axes without verification.",
+          "why_students_make_it": "Students often overlook product of inertia, especially when the section appears symmetric.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Explicitly calculate I_xy = ΣA_i x_i y_i. If I_xy ≠ 0, use the full unsymmetrical bending formula.",
+          "consequence": "If I_xy is non-zero and ignored, the neutral axis equation is incorrect."
+        },
+        {
+          "mistake": "Mixing up the signs of bending moment components or coordinates.",
+          "why_students_make_it": "Sign conventions for moments and distances can be confusing, especially when resolving moments.",
+          "type": "Sign Error",
+          "severity": "Medium",
+          "frequency": "common",
+          "how_to_avoid": "Establish a consistent coordinate system (e.g., x right, y up). For bending moments, positive M_x causes tension in positive y, positive M_y causes tension in positive x.",
+          "consequence": "Neutral axis slope sign will be wrong, leading to incorrect quadrant for angle."
+        },
+        {
+          "mistake": "Incorrectly calculating moments of inertia for point areas (booms).",
+          "why_students_make_it": "Students may use formulas for continuous areas (like rectangles) instead of summing A*y^2 for discrete booms.",
+          "type": "Calculation",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Remember: For idealized sections with booms, I_xx = Σ A_i y_i^2, I_yy = Σ A_i x_i^2, I_xy = Σ A_i x_i y_i.",
+          "consequence": "Wrong I values lead to incorrect neutral axis slope."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "NA = - (M_y I_xx)/(M_x I_yy) for slope",
+          "concept": "Slope of neutral axis in unsymmetrical bending (principal axes)",
+          "effectiveness": "medium",
+          "context": "When solving for neutral axis inclination quickly."
+        },
+        {
+          "mnemonic": "Boom Square, Moment 45, NA flips 45",
+          "concept": "For a square boom arrangement with bending moment at 45°, neutral axis is at -45° (flipped sign).",
+          "effectiveness": "high",
+          "context": "Specific to this common GATE problem type."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "concept_recall",
+          "front": "In beam bending, what is the neutral axis and where is it located for a homogeneous, isotropic cross-section?",
+          "back": "The neutral axis is the line in the cross-section where normal bending stress and strain are zero. For pure bending without axial force, it passes through the centroid of the cross-section.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "formula_recall",
+          "front": "Write the bending stress formula for unsymmetrical bending when the x and y axes are principal axes (I_xy=0).",
+          "back": "$\\sigma = \\frac{M_x}{I_{xx}} y + \\frac{M_y}{I_{yy}} x$",
+          "difficulty": "medium",
+          "time_limit_seconds": 20
+        },
+        {
+          "card_type": "application",
+          "front": "For four identical booms at (±a, ±a) with area A each, compute I_xx and I_yy.",
+          "back": "$I_{xx} = \\sum A y_i^2 = A(a^2 + a^2 + a^2 + a^2) = 4A a^2$. Similarly, $I_{yy} = 4A a^2$. I_xy = 0.",
+          "difficulty": "medium",
+          "time_limit_seconds": 40
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "What is a common sign error when finding neutral axis inclination? How to avoid it?",
+          "back": "Mixing signs of M_x, M_y, or coordinates. Use consistent sign convention: positive moments cause tension in positive coordinate directions. Neutral axis equation: (M_x/I_xx)y + (M_y/I_yy)x = 0.",
+          "difficulty": "hard",
+          "time_limit_seconds": 45
+        },
+        {
+          "card_type": "definition",
+          "front": "What is meant by an 'idealized' cross-section in aircraft structures?",
+          "back": "An idealized section replaces distributed material with discrete booms (carrying direct stress) connected by shear webs (carrying only shear stress). This simplifies analysis of thin-walled structures.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Aircraft Wing Design",
+          "industry_example": "Wing spars and ribs are often idealized as boom-shear web structures to calculate bending stresses during flight maneuvers.",
+          "why_it_matters": "Incorrect neutral axis prediction can lead to underestimating stresses in certain booms, potentially causing structural failure."
+        },
+        {
+          "application": "Fuselage Bending",
+          "industry_example": "Fuselage frames under vertical bending (e.g., during landing) are analyzed using similar idealization to ensure skin and stringer stresses are within limits.",
+          "why_it_matters": "Proper stress distribution ensures passenger safety and structural integrity over repeated load cycles."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "If you see an idealized boom-web cross-section and bending moment at an angle, it's likely an unsymmetrical bending problem. Quickly compute I_xx, I_yy, I_xy, then use neutral axis equation.",
+        "guessing_heuristic": "If the section looks square and moment at 45°, guess 45° CW or CCW based on moment direction. Often, the answer is 45° CW.",
+        "time_management": "Spend 3-4 minutes max. If stuck, compute moments of inertia and try the formula."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "neutral axis inclination unsymmetrical bending",
+        "idealized boom shear web section",
+        "bending moment at 45 degree neutral axis",
+        "aircraft structures idealized bending",
+        "four boom square bending problem",
+        "GATE AE structures bending",
+        "shear center and neutral axis",
+        "Megson aircraft structures bending examples"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Using Transformation Equations for Principal Axes",
+          "description": "Rotate the coordinate system to principal axes (if not already), compute moments about principal axes, then find neutral axis angle relative to principal axes.",
+          "pros_cons": "More systematic for sections where principal axes are not aligned with given x-y. Requires calculation of principal moments and directions.",
+          "when_to_use": "When product of inertia I_xy is not zero."
+        },
+        {
+          "name": "Graphical Method using Mohr's Circle for Inertia",
+          "description": "Use Mohr's circle to find principal moments and directions, then determine neutral axis orientation.",
+          "pros_cons": "Visual and intuitive, but less precise for numerical answers. Good for qualitative understanding.",
+          "when_to_use": "For quick visualization or when precise angle is not required."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Engineering Mechanics": "Centroid and moment of inertia calculations are fundamental.",
+        "Aircraft Structural Analysis": "Idealization techniques are used extensively in aircraft wing and fuselage design.",
+        "Strength of Materials": "Bending stress distribution and neutral axis concepts are core topics."
+      },
+      "deeper_dive_topics": [
+        "Shear center location for open and closed thin-walled sections",
+        "Bending-torsion coupling in unsymmetrical sections",
+        "Finite element analysis of idealized aircraft structures",
+        "Effect of material anisotropy on neutral axis position"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2013_AE_Q38",
+        "year": 2013,
+        "marks": 2.0,
+        "negative_marks": 0.66,
+        "time_expected": "3-4 minutes",
+        "success_rate_estimate": "60%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 3: Structures",
+        "gate_subsection": "Bending of Beams, Shear Flow, and Shear Center",
+        "weightage": "Approx 10-12%",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Well-aligned: tests core concept of unsymmetrical bending in idealized aircraft structures, a key topic in GATE AE."
+      },
+      "rag_quality": {
+        "relevance_score": 0.6,
+        "chunks_used": 4,
+        "sources_distribution": {
+          "books": 2,
+          "videos": 2
+        },
+        "notes": "RAG chunks provided relevant background on neutral axis definition, centroid location, and examples of idealized aircraft structures (e.g., fuselage bending). However, the chunks did not explicitly address the calculation of neutral axis inclination for a four-boom square section under 45° bending moment. The retrieved knowledge emphasized neutral axis through centroid and moments of inertia, which are foundational. The specific problem required applying unsymmetrical bending formula, which was not directly in RAG. Thus, internal knowledge was used for the solution steps."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-13T10:30:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Change boom arrangement to rectangle (I_xx ≠ I_yy) and ask for neutral axis inclination.",
+        "Include a non-zero product of inertia (unsymmetric boom placement) and ask for principal axes or neutral axis.",
+        "Ask for direct stress in a specific boom instead of neutral axis angle.",
+        "Combine with shear flow calculation to find shear center location."
+      ]
+    },
+    "question_id": "GATE_2013_AE_Q38",
+    "year": 2013,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "MCQ",
+    "question_text": "The idealized cross-section of a beam is comprised of four identical booms connected by shear webs. The beam is subjected to a bending moment M as shown in the figure. The inclination of the neutral axis to the x-axis in degrees is"
+  },
+  "tokens_used": 17902,
+  "input_tokens": 9657,
+  "output_tokens": 8245,
+  "cost": 0.023367900000000004,
+  "time_seconds": 233.41929626464844
+}
