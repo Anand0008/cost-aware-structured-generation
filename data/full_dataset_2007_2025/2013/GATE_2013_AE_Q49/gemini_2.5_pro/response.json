@@ -1,0 +1,378 @@
+{
+  "model_name": "gemini_2.5_pro",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "text_only",
+      "combined_type": "numerical_calculation_text_only",
+      "weight_strategy": "NUMERICAL_WEIGHTED",
+      "classification_confidence": 0.9,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "This is a numerical calculation problem that requires knowledge of stall speed and maximum speed in level flight, involving multiple concepts like lift, drag, and aircraft performance. It requires multiple steps to calculate the minimum and maximum speeds, making it a medium difficulty question.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "C",
+        "is_correct": true,
+        "confidence": 1.0,
+        "confidence_type": "single_model",
+        "reasoning": "The problem asks for the minimum and maximum speeds of an airplane in level flight at sea-level. \n\n**1. Minimum Speed (Stall Speed):**\nIn steady, unaccelerated level flight, the lift ($L$) must equal the weight ($W$). The minimum speed an aircraft can fly at is its stall speed ($V_{stall}$), which occurs when the lift coefficient ($C_L$) reaches its maximum value ($C_{Lmax}$). The lift equation is:\n$L = 0.5 \\rho_\\infty V^2 S C_L$\nFor level flight, $L = W$. So, $W = 0.5 \\rho_\\infty V_{stall}^2 S C_{Lmax}$.\nRearranging for $V_{stall}$:\n$V_{stall} = \\sqrt{\\frac{2W}{\\rho_\\infty S C_{Lmax}}}$\nGiven:\n$W = 30 \\text{ kN} = 30000 \\text{ N}$\n$\\rho_\\infty = 1.22 \\text{ kg/m}^3$\n$S = 30 \\text{ m}^2$\n$C_{Lmax} = 1.4$\nSubstituting these values:\n$V_{stall} = \\sqrt{\\frac{2 \\times 30000}{1.22 \\times 30 \\times 1.4}} = \\sqrt{\\frac{60000}{51.24}} \\approx \\sqrt{1170.96} \\approx 34.22 \\text{ m/s}$\n\n**2. Maximum Speed:**\nFor maximum speed in level flight, the thrust available ($T_0$) must equal the drag ($D$).\n$T_0 = D$\nThe drag equation is:\n$D = 0.5 \\rho_\\infty V^2 S C_D$\nThe drag coefficient is given by the drag polar: $C_D = C_{D0} + K C_L^2$, where $C_{D0} = 0.015$ and $K = 0.024$.\nIn level flight, $L = W$, so we can express $C_L$ in terms of $V$:\n$C_L = \\frac{W}{0.5 \\rho_\\infty V^2 S} = \\frac{2W}{\\rho_\\infty V^2 S}$\nSubstitute $C_L$ into the drag polar:\n$C_D = C_{D0} + K \\left(\\frac{2W}{\\rho_\\infty V^2 S}\\right)^2 = C_{D0} + \\frac{4 K W^2}{(\\rho_\\infty S)^2 V^4}$\nNow substitute this $C_D$ into the drag equation:\n$D = 0.5 \\rho_\\infty V^2 S \\left(C_{D0} + \\frac{4 K W^2}{(\\rho_\\infty S)^2 V^4}\\right)$\n$D = 0.5 \\rho_\\infty S C_{D0} V^2 + \\frac{2 K W^2}{\\rho_\\infty S V^2}$\nSet $T_0 = D$:\n$T_0 = (0.5 \\rho_\\infty S C_{D0}) V^2 + \\frac{2 K W^2}{\\rho_\\infty S V^2}$\nLet's calculate the coefficients:\n$A = 0.5 \\rho_\\infty S C_{D0} = 0.5 \\times 1.22 \\times 30 \\times 0.015 = 0.2745$\n$B = \\frac{2 K W^2}{\\rho_\\infty S} = \\frac{2 \\times 0.024 \\times (30000)^2}{1.22 \\times 30} = \\frac{0.048 \\times 900,000,000}{36.6} \\approx 1,180,327.87$\nSo the equation becomes:\n$4000 = 0.2745 V^2 + \\frac{1,180,327.87}{V^2}$\nMultiply by $V^2$ to get a quadratic equation in $V^2$ (let $X = V^2$):\n$0.2745 (V^2)^2 - 4000 (V^2) + 1,180,327.87 = 0$\n$0.2745 X^2 - 4000 X + 1,180,327.87 = 0$\nUsing the quadratic formula $X = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$:\n$X = \\frac{4000 \\pm \\sqrt{(-4000)^2 - 4 \\times 0.2745 \\times 1,180,327.87}}{2 \\times 0.2745}$\n$X = \\frac{4000 \\pm \\sqrt{16,000,000 - 1,296,000.003}}{0.549}$\n$X = \\frac{4000 \\pm \\sqrt{14,703,999.997}}{0.549} \\approx \\frac{4000 \\pm 3834.58}{0.549}$\nTwo solutions for $X = V^2$:\n$X_1 = \\frac{4000 + 3834.58}{0.549} = \\frac{7834.58}{0.549} \\approx 14270.64 \\text{ m}^2/s^2$\n$V_{max} = \\sqrt{14270.64} \\approx 119.46 \\text{ m/s}$\n$X_2 = \\frac{4000 - 3834.58}{0.549} = \\frac{165.42}{0.549} \\approx 301.31 \\text{ m}^2/s^2$\n$V_{min, T=D} = \\sqrt{301.31} \\approx 17.36 \\text{ m/s}$\n\n**3. Final Minimum and Maximum Speeds:**\nThe minimum speed for level flight is the higher of the stall speed ($V_{stall}$) and the lower speed obtained from the thrust-equals-drag equation ($V_{min, T=D}$). This is because an aircraft cannot fly below its stall speed, even if it has enough thrust.\nMinimum speed = $\\max(V_{stall}, V_{min, T=D}) = \\max(34.22 \\text{ m/s}, 17.36 \\text{ m/s}) = 34.22 \\text{ m/s}$.\nThe maximum speed is the higher speed obtained from the thrust-equals-drag equation:\nMaximum speed = $119.46 \\text{ m/s}$.\n\nThus, the minimum and maximum speeds are $34.22 \\text{ m/s}$ and $119.46 \\text{ m/s}$ respectively, which corresponds to Option C."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Step 1: Understand the conditions for minimum and maximum speeds in level flight. The minimum speed is limited by the aircraft's stall speed, which occurs at the maximum lift coefficient ($C_{Lmax}$). The maximum speed is achieved when the available thrust equals the drag.",
+          "Step 2: Calculate the stall speed ($V_{stall}$). In level flight, lift equals weight ($L=W$). Using the lift equation $L = 0.5 \\rho_\\infty V^2 S C_L$, substitute $L=W$ and $C_L=C_{Lmax}$ to solve for $V_{stall}$.",
+          "Step 3: Set up the equation for maximum speed. For maximum speed, thrust available ($T_0$) must equal drag ($D$). Express drag using the drag equation $D = 0.5 \\rho_\\infty V^2 S C_D$ and the given drag polar $C_D = C_{D0} + K C_L^2$.",
+          "Step 4: Substitute the lift coefficient ($C_L$) in terms of velocity ($V$) into the drag polar. Since $L=W$ in level flight, $C_L = \\frac{W}{0.5 \\rho_\\infty V^2 S}$. This will express $C_D$ solely as a function of $V$.",
+          "Step 5: Substitute the expression for $C_D(V)$ into the drag equation to get $D(V)$. Then, set $T_0 = D(V)$. This will result in a quartic equation in $V$, which can be simplified into a quadratic equation in $V^2$.",
+          "Step 6: Solve the quadratic equation for $V^2$ to find two possible values for $V^2$. Take the square root of these values to find two velocities. These represent the speeds where thrust available equals drag.",
+          "Step 7: Determine the final minimum and maximum speeds. The actual minimum speed for level flight is the higher value between the calculated stall speed and the lower speed obtained from the thrust-equals-drag equilibrium. The maximum speed is the higher speed obtained from the thrust-equals-drag equilibrium.",
+          "Step 8: Match the calculated minimum and maximum speeds with the given options."
+        ],
+        "formulas_used": [
+          "$L = W = 0.5 \\rho_\\infty V^2 S C_L$",
+          "$V_{stall} = \\sqrt{\\frac{2W}{\\rho_\\infty S C_{Lmax}}}$",
+          "$D = 0.5 \\rho_\\infty V^2 S C_D$",
+          "$C_D = C_{D0} + K C_L^2$",
+          "$T_0 = (0.5 \\rho_\\infty S C_{D0}) V^2 + \\frac{2 K W^2}{\\rho_\\infty S V^2}$",
+          "$a X^2 + b X + c = 0 \\implies X = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$"
+        ],
+        "estimated_time_minutes": 5
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Flight Mechanics",
+          "confidence": 1.0
+        },
+        "topic": {
+          "name": "Aircraft Performance",
+          "syllabus_ref": "GATE AE Section 3: Flight Mechanics -> Airplane Performance"
+        },
+        "concepts": [
+          {
+            "name": "Stall Speed",
+            "importance": "primary"
+          },
+          {
+            "name": "Maximum Speed",
+            "importance": "primary"
+          },
+          {
+            "name": "Level Flight Performance",
+            "importance": "primary"
+          },
+          {
+            "name": "Thrust-Drag Equilibrium",
+            "importance": "secondary"
+          },
+          {
+            "name": "Drag Polar",
+            "importance": "secondary"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Basic Aerodynamics (Lift and Drag equations)",
+          "Forces in Level Flight (L=W, T=D)",
+          "Understanding of Drag Polar ($C_D$ vs $C_L$)",
+          "Solving Quadratic Equations"
+        ],
+        "helpful": [
+          "Knowledge of aircraft performance curves (Thrust Required vs. Velocity)"
+        ],
+        "dependency_tree": {
+          "Aircraft Performance (Min/Max Speed)": [
+            "requires: Lift and Drag Equations",
+            "requires: Drag Polar Model",
+            "requires: Equilibrium Flight Conditions (L=W, T=D)",
+            "enables: Performance Envelope Analysis",
+            "enables: Range and Endurance Calculations"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Medium",
+        "score": 6,
+        "complexity_breakdown": {
+          "conceptual": 6,
+          "mathematical": 7,
+          "problem_solving": 6
+        },
+        "estimated_solve_time_seconds": 300,
+        "expected_accuracy_percent": 60,
+        "difficulty_factors": [
+          "Requires solving a quadratic equation for $V^2$, which can be algebraically intensive.",
+          "Students must correctly identify the minimum speed as the higher of the stall speed and the lower thrust-drag intersection speed.",
+          "Careful unit handling (kN to N) is necessary."
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Introduction to Flight",
+          "author": "John D. Anderson Jr.",
+          "chapter_number": "6",
+          "chapter_title": "Elements of Airplane Performance",
+          "section": null,
+          "page_range": null,
+          "complexity": "intermediate",
+          "relevance_score": 0.8,
+          "source": "rag_retrieval",
+          "text_snippet": "The power required to sustain flight changes with altitude due to variations in air density... Maximum Velocity (Vmax): Typically, Vmax is determined by the high-speed intersection of the power available and power required curves... Minimum Velocity (Vmin): Vmin is usually dictated by either the stalling speed or the low-speed intersection of the power curves."
+        },
+        {
+          "source_type": "book",
+          "book": "Introduction to Flight",
+          "author": "John D. Anderson Jr.",
+          "chapter_number": "3",
+          "chapter_title": "Aircraft Performance: Steady Flight and Point Performance",
+          "section": null,
+          "page_range": null,
+          "complexity": "intermediate",
+          "relevance_score": 0.7,
+          "source": "model_consensus",
+          "text_snippet": null
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. A.K. Ghosh",
+          "timestamp_start": "00:00:00",
+          "timestamp_end": "00:01:11",
+          "video_url": null,
+          "book_reference": "Anderson, J.D.",
+          "topic_covered": "Minimum Thrust Required and CL/CD Maximum",
+          "relevance_score": 0.6,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. A.K. Ghosh",
+          "timestamp_start": "00:15:12",
+          "timestamp_end": "00:26:56",
+          "video_url": null,
+          "book_reference": "Anderson, J.D.",
+          "topic_covered": "Trim Condition in Cruise at Minimum Thrust Required",
+          "relevance_score": 0.6,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Direct Formula Application and Algebraic Solution",
+        "total_steps": 8,
+        "solution_path": "Stall Speed Calculation -> Thrust-Drag Equilibrium Equation Setup -> Quadratic Solution for V^2 -> Comparison and Selection of Min/Max Speeds.",
+        "key_insights": [
+          "The minimum speed for level flight is the higher of the stall speed and the minimum speed at which thrust equals drag.",
+          "The thrust-equals-drag equation for a parabolic drag polar results in a quartic equation in velocity, which can be solved as a quadratic in $V^2$."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$L = W = 0.5 \\rho_\\infty V^2 S C_L$",
+          "name": "Lift Equation for Level Flight",
+          "conditions": "Steady, unaccelerated level flight",
+          "type": "equation",
+          "relevance": "Core formula for calculating stall speed and relating $C_L$ to $V$."
+        },
+        {
+          "formula": "$V_{stall} = \\sqrt{\\frac{2W}{\\rho_\\infty S C_{Lmax}}}$",
+          "name": "Stall Speed Formula",
+          "conditions": "Level flight, $C_L = C_{Lmax}$",
+          "type": "equation",
+          "relevance": "Directly used to calculate the minimum speed."
+        },
+        {
+          "formula": "$D = 0.5 \\rho_\\infty V^2 S C_D$",
+          "name": "Drag Equation",
+          "conditions": "Any flight condition",
+          "type": "equation",
+          "relevance": "Used to express drag in terms of velocity for maximum speed calculation."
+        },
+        {
+          "formula": "$C_D = C_{D0} + K C_L^2$",
+          "name": "Parabolic Drag Polar",
+          "conditions": "Typical for subsonic aircraft, where $C_{D0}$ is parasite drag and $K C_L^2$ is induced drag.",
+          "type": "equation",
+          "relevance": "Defines the relationship between drag and lift coefficients."
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Aircraft flight envelope determination during design and certification.",
+          "Pilot operating handbooks (POH) specify minimum and maximum operating speeds for various configurations."
+        ],
+        "specific_systems": [
+          "Commercial airliners (e.g., Boeing 737, Airbus A320) have strict stall speed limits for takeoff and landing, and maximum operating speeds ($V_{MO}/M_{MO}$) for cruise."
+        ],
+        "practical_relevance": "Understanding these speed limits is critical for flight safety, performance optimization (e.g., fuel efficiency), and mission planning. Exceeding maximum speed can lead to structural failure, while falling below minimum speed leads to stall and loss of control."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Confusing minimum speed for sustained level flight with the absolute minimum speed from the thrust-drag curve.",
+          "why_students_make_it": "Students might directly take the lower root of the $T_0 = D$ equation without considering the stall speed limit. The aircraft cannot fly below its stall speed, regardless of whether thrust equals drag at that speed.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Always calculate stall speed first. The minimum speed for level flight is $\\max(V_{stall}, V_{min, T=D})$.",
+          "consequence": "Incorrect minimum speed, leading to a wrong answer for linked questions or performance analysis."
+        },
+        {
+          "mistake": "Algebraic errors when solving the quartic equation for velocity.",
+          "why_students_make_it": "The equation $T_0 = A V^2 + B/V^2$ involves $V^2$ in the denominator, which can lead to mistakes when rearranging into a quadratic in $V^2$. Errors in calculating $A$, $B$, or using the quadratic formula are also common.",
+          "type": "Calculation",
+          "severity": "Medium",
+          "frequency": "common",
+          "how_to_avoid": "Double-check each step of algebraic manipulation. Clearly define $X = V^2$ to simplify the quadratic equation. Use a calculator carefully for square roots and divisions.",
+          "consequence": "Incorrect values for maximum and minimum speeds."
+        },
+        {
+          "mistake": "Incorrect units or unit conversions.",
+          "why_students_make_it": "Weight is given in kN, which must be converted to N. Density is in kg/m$^3$, area in m$^2$, velocity in m/s. Inconsistent units will lead to incorrect results.",
+          "type": "Units",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Always write down units with each value and ensure consistency throughout the calculation. Convert all values to SI units (N, kg, m, s) at the beginning.",
+          "consequence": "Magnitude errors in the final answer."
+        }
+      ],
+      "mnemonics_memory_aids": [],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "What is the formula for stall speed ($V_{stall}$) in level flight?",
+          "back": "$V_{stall} = \\sqrt{\\frac{2W}{\\rho S C_{Lmax}}}$",
+          "difficulty": "easy"
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "How is the maximum speed of an aircraft in level flight determined?",
+          "back": "The maximum speed is determined by the intersection of the thrust available curve and the drag (thrust required) curve, where thrust available equals drag. This usually involves solving a quadratic equation in $V^2$ derived from the drag polar.",
+          "difficulty": "medium"
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "What is the critical consideration when determining the *minimum* speed for level flight?",
+          "back": "The minimum speed for level flight is the *higher* of the stall speed ($V_{stall}$) and the minimum speed at which the available thrust equals the required thrust (from the $T_A = D$ equation). An aircraft cannot fly below its stall speed.",
+          "difficulty": "hard"
+        },
+        {
+          "card_type": "application",
+          "front": "Given $C_D = C_{D0} + K C_L^2$, how do you express drag ($D$) as a function of velocity ($V$) for level flight?",
+          "back": "First, express $C_L$ in terms of $V$: $C_L = \\frac{2W}{\\rho S V^2}$. Then substitute this into the drag polar: $C_D = C_{D0} + K (\\frac{2W}{\\rho S V^2})^2$. Finally, substitute $C_D$ into the drag equation: $D = 0.5 \\rho S V^2 C_D = 0.5 \\rho S V^2 C_{D0} + \\frac{2 K W^2}{\\rho S V^2}$.",
+          "difficulty": "medium"
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Flight Envelope Design",
+          "industry_example": "Aircraft designers must ensure that the operational flight envelope (range of speeds and altitudes) is safe and meets performance requirements. The minimum and maximum speeds are fundamental limits of this envelope.",
+          "why_it_matters": "Incorrectly calculating these limits can lead to unsafe aircraft operation, potential for stalls at low speeds, or structural damage at high speeds."
+        },
+        {
+          "application": "Pilot Training and Operations",
+          "industry_example": "Pilots are trained extensively on stall recognition and recovery, and they adhere to strict speed limits (e.g., V-speeds like $V_S$, $V_{NE}$) to ensure safe flight.",
+          "why_it_matters": "Knowing these speeds is crucial for safe takeoff, landing, and cruise, preventing accidents due to exceeding aerodynamic or structural limits."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "This is a standard aircraft performance problem. Start by calculating stall speed, then set Thrust Available = Drag. If the algebra seems too complex, quickly check if the stall speed matches one of the options, as it's often the minimum speed.",
+        "guessing_heuristic": "If you calculate the stall speed and it matches one of the options for the minimum speed, and you are short on time, you might guess based on that. However, the maximum speed calculation is also crucial for confirmation.",
+        "time_management": "Allocate about 4-5 minutes. The stall speed calculation is quick. The maximum speed calculation requires careful algebraic manipulation and solving a quadratic, which takes more time."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "aircraft performance level flight",
+        "stall speed calculation",
+        "maximum speed aircraft",
+        "thrust available drag required",
+        "drag polar equation",
+        "flight envelope",
+        "V-speeds"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Graphical Method (Thrust Required vs. Thrust Available)",
+          "description": "Plot the thrust required curve ($T_R = D(V)$) and the thrust available curve ($T_A(V)$) on the same graph. The intersections of these two curves give the minimum and maximum speeds for level flight. The stall speed would be marked separately as a lower limit.",
+          "pros_cons": "Pros: Provides a visual understanding of the flight envelope and how thrust and drag interact. Less prone to algebraic errors if plotted accurately. Cons: Can be time-consuming in an exam setting without computational tools; accuracy depends on scale and plotting precision.",
+          "when_to_use": "Useful for conceptual understanding, design phases, or when computational tools are available. Not practical for quick exam calculations unless a pre-drawn graph is provided."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Aerodynamics": "Fundamental understanding of lift, drag, and drag polar is essential.",
+        "Aircraft Design": "These calculations are integral to determining the performance characteristics and flight envelope of a new aircraft design.",
+        "Control Systems": "Flight control systems must operate within these speed limits to maintain stability and control."
+      },
+      "deeper_dive_topics": [
+        "Effect of altitude on minimum and maximum speeds (density effects on thrust available and thrust required).",
+        "Performance envelope for different aircraft configurations (flaps, landing gear).",
+        "Specific excess power (SEP) and its relation to climb rate and maneuverability."
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2013_AE_Q49",
+        "year": 2013,
+        "marks": 2.0,
+        "negative_marks": 0.66,
+        "time_expected": "4-5 minutes",
+        "success_rate_estimate": "60%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 3: Flight Mechanics",
+        "gate_subsection": "Airplane Performance",
+        "weightage": "Typically 10-15% of Flight Mechanics section",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "This question perfectly aligns with the core concepts of airplane performance, specifically level flight speed limits."
+      },
+      "rag_quality": {
+        "relevance_score": 0.6,
+        "chunks_used": 4,
+        "sources_distribution": {
+          "books": 2,
+          "videos": 2
+        },
+        "notes": "RAG chunks provided general context on aircraft performance, including discussions on maximum/minimum velocities and the relationship between thrust/power required and available (CHUNK 2, CHUNK 6). CHUNK 3 also discussed minimum thrust required. However, none of the RAG chunks provided the direct algebraic derivation for solving for maximum speed from the thrust-drag equilibrium equation for a parabolic drag polar, which required internal knowledge."
+      },
+      "model_meta": {
+        "timestamp": "2024-07-29T12:00:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Calculate the minimum power required for level flight at sea-level.",
+        "Determine the maximum rate of climb at sea-level.",
+        "Analyze the effect of altitude on the minimum and maximum speeds.",
+        "Calculate the range or endurance at the speed for minimum thrust required."
+      ]
+    },
+    "question_id": "GATE_2013_AE_Q49",
+    "year": 2013,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "MCQ_LINKED",
+    "question_text": "Minimum and maximum speeds of the airplane in level flight condition at sea-level in m/s are respectively"
+  },
+  "tokens_used": 17683,
+  "input_tokens": 10789,
+  "output_tokens": 6894,
+  "cost": 0.00575475,
+  "time_seconds": 62.59609079360962
+}
