@@ -1,0 +1,395 @@
+{
+  "model_name": "deepseek_r1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "conceptual_application",
+      "media_type": "text_only",
+      "combined_type": "conceptual_application_text_only",
+      "weight_strategy": "APPLICATION_WEIGHTED",
+      "classification_confidence": 0.9,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "This question requires applying the von Mises yield criterion to a specific scenario (evacuated vessel under external pressure). It involves understanding stress states and material yielding, and the edge case of an evacuated vessel makes it slightly more complex. Requires integrating concepts of material science and structural mechanics.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": true,
+        "multi_step_reasoning": false,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "C",
+        "is_correct": true,
+        "confidence": 0.9,
+        "confidence_type": "single_model",
+        "reasoning": "For a thin-walled spherical vessel, the hoop stresses are equal and given by σ = pR/(2t), where p is gauge pressure (positive for internal, negative for external). Under von Mises criterion with σ1 = σ2 = σ and σ3 ≈ 0, the equivalent stress σ_v = |σ|. Yielding occurs when σ_v = σ_Y. Thus, for internal pressure p_Y, σ = p_Y R/(2t) = σ_Y, so p_Y = 2t σ_Y / R. For external pressure, σ is compressive but same magnitude, so the external pressure causing yield is p_ext = 2t σ_Y / R = p_Y. Therefore, yielding occurs at about the same pressure magnitude."
+      },
+      "explanation": {
+        "question_nature": "Application",
+        "step_by_step": [
+          "Step 1: Recall stress in thin-walled spherical vessel. For a spherical vessel with inner radius R and wall thickness t, under uniform pressure p, the hoop stress (membrane stress) is σ = pR/(2t). This is valid for both internal pressure (p positive, tensile stress) and external pressure (p negative, compressive stress).",
+          "Step 2: Identify the stress state. For a thin-walled sphere, the radial stress is negligible compared to hoop stress, so we have a biaxial stress state with σ1 = σ2 = σ (hoop stresses in two perpendicular directions), and σ3 ≈ 0 (radial stress).",
+          "Step 3: Apply von Mises yield criterion. The von Mises equivalent stress for principal stresses is σ_v = √(0.5[(σ1-σ2)^2 + (σ2-σ3)^2 + (σ3-σ1)^2]). Substituting σ1 = σ2 = σ, σ3=0, we get σ_v = √(0.5[0^2 + σ^2 + (-σ)^2]) = √(0.5 * 2σ^2) = √(σ^2) = |σ|.",
+          "Step 4: Set yielding condition. Yielding occurs when σ_v = σ_Y, where σ_Y is the yield strength in tension/compression (given as 500 MPa). So |σ| = σ_Y.",
+          "Step 5: Relate stress to pressure. From Step 1, σ = pR/(2t). For internal pressure at yield, p_Y, we have p_Y R/(2t) = σ_Y, so p_Y = 2t σ_Y / R.",
+          "Step 6: For external pressure, p_ext is negative, but stress σ = p_ext R/(2t) is compressive. The magnitude |σ| = |p_ext| R/(2t). Setting |σ| = σ_Y gives |p_ext| = 2t σ_Y / R = p_Y. Hence, the external pressure magnitude for yielding is approximately equal to p_Y."
+        ],
+        "formulas_used": [
+          "$\\sigma = \\frac{pR}{2t}$",
+          "$\\sigma_v = \\sqrt{ \\frac{1}{2} \\left[ (\\sigma_1 - \\sigma_2)^2 + (\\sigma_2 - \\sigma_3)^2 + (\\sigma_3 - \\sigma_1)^2 \\right] }$",
+          "$\\sigma_v = |\\sigma|$ for σ1=σ2=σ, σ3=0",
+          "$|\\sigma| = \\sigma_Y$"
+        ],
+        "estimated_time_minutes": 3
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Structures",
+          "confidence": 1.0
+        },
+        "topic": {
+          "name": "Theories of Failure / Yield Criteria",
+          "syllabus_ref": "GATE AE Syllabus: Section 4 - Structures, Subsection: Failure Theories"
+        },
+        "concepts": [
+          {
+            "name": "Von Mises Yield Criterion",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Thin-Walled Pressure Vessel Stress",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Spherical Vessel Symmetry",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Plane Stress Assumption",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Von Mises yield criterion formula and meaning",
+          "Stress calculation for thin-walled spherical pressure vessels",
+          "Principal stresses and plane stress concept"
+        ],
+        "helpful": [
+          "Understanding of tensile vs compressive yielding",
+          "Elastic stability concepts (for context on buckling)"
+        ],
+        "dependency_tree": {
+          "Main Concept: Yielding under External Pressure in Spherical Vessel": [
+            "requires: Stress in spherical vessel under pressure",
+            "requires: Von Mises criterion application",
+            "enables: Design of pressure vessels for aerospace applications",
+            "enables: Comparison with other failure theories like Tresca"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Medium",
+        "score": 5,
+        "complexity_breakdown": {
+          "conceptual": 6,
+          "mathematical": 4,
+          "problem_solving": 5
+        },
+        "estimated_solve_time_seconds": 180,
+        "expected_accuracy_percent": 70,
+        "difficulty_factors": [
+          "Requires recognizing that von Mises stress reduces to |σ| for equal biaxial stress",
+          "Must recall correct stress formula for spherical vessel",
+          "Needs careful handling of pressure sign (internal vs external)"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Mechanics of Materials",
+          "author": "Beer & Johnston",
+          "chapter_number": "8",
+          "chapter_title": "Theories of Failure",
+          "section": "Von Mises Criterion",
+          "page_range": "Not specified",
+          "complexity": "intermediate",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval",
+          "text_snippet": "The Von Mises yield criterion, also known as the maximum distortion energy criterion, posits that yielding initiates when the distortional strain energy density equals that in a uniaxial tensile test."
+        },
+        {
+          "source_type": "book",
+          "book": "Mechanics of Materials",
+          "author": "Beer & Johnston",
+          "chapter_number": "7",
+          "chapter_title": "Transformation of Stress and Strain",
+          "section": "Thin-Walled Pressure Vessels",
+          "page_range": "Not specified",
+          "complexity": "introductory",
+          "relevance_score": 0.8,
+          "source": "model_consensus",
+          "text_snippet": "For spherical pressure vessels, the hoop stress is given by σ = pR/(2t), where p is internal pressure, R is radius, t is thickness."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. Nachiketa Tiwari",
+          "timestamp_start": "00:00:13",
+          "timestamp_end": "00:04:06",
+          "video_url": "Not specified",
+          "book_reference": "Beer & Johnston, 'Mechanics of Materials'",
+          "topic_covered": "Von Mises Yield Criterion",
+          "relevance_score": 0.8,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. S.P. Harsha",
+          "timestamp_start": "00:40:59",
+          "timestamp_end": "00:47:35",
+          "video_url": "https://www.youtube.com/watch?v=pt5WcNPzlyY",
+          "book_reference": "Beer & Johnston",
+          "topic_covered": "Von Mises-Hencky theory of failure",
+          "relevance_score": 0.8,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Direct Formula Application with Symmetry Simplification",
+        "total_steps": 6,
+        "solution_path": "Stress Calculation → Von Mises Application → Pressure Comparison",
+        "key_insights": [
+          "For spherical vessel, hoop stresses are equal, leading to simple von Mises stress expression.",
+          "Von Mises criterion depends on stress differences, so sign of stress (tension vs compression) does not affect the magnitude for equal biaxial stress."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$\\sigma = \\frac{p R}{2 t}$",
+          "name": "Hoop Stress in Thin-Walled Spherical Vessel",
+          "conditions": "Thin wall (t << R), uniform pressure p",
+          "type": "equation",
+          "relevance": "Relates applied pressure to membrane stress in the vessel wall."
+        },
+        {
+          "formula": "$\\sigma_v = \\sqrt{ \\frac{1}{2} \\left[ (\\sigma_1 - \\sigma_2)^2 + (\\sigma_2 - \\sigma_3)^2 + (\\sigma_3 - \\sigma_1)^2 \\right] }$",
+          "name": "Von Mises Equivalent Stress",
+          "conditions": "General 3D stress state, principal stresses σ1, σ2, σ3",
+          "type": "equation",
+          "relevance": "Core formula for von Mises yield criterion."
+        },
+        {
+          "formula": "$\\sigma_v = |\\sigma|$",
+          "name": "Simplified Von Mises for Equal Biaxial Stress",
+          "conditions": "When σ1 = σ2 = σ and σ3 = 0",
+          "type": "equation",
+          "relevance": "Simplification applicable to spherical vessel under pressure."
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Spherical fuel tanks in spacecraft and aircraft",
+          "Pressure vessels in rocket propulsion systems"
+        ],
+        "specific_systems": [
+          "LH2 (liquid hydrogen) tanks in rockets",
+          "Cabin pressure vessels in aircraft"
+        ],
+        "practical_relevance": "Understanding yielding under external pressure is crucial for designing vessels that must withstand vacuum or external loading, such as in space applications."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Assuming that external pressure causes buckling before yielding, and thus selecting 'D. never occurs'.",
+          "why_students_make_it": "Students often recall that thin shells under external pressure are prone to elastic buckling, and may overlook the problem statement's assumption: 'assuming elastic stability until yield'.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Carefully read the problem statement. It explicitly states 'assuming elastic stability until yield', meaning buckling is not considered here; only yielding is.",
+          "consequence": "Would lead to incorrect answer D."
+        },
+        {
+          "mistake": "Using the wrong stress formula for spherical vessel, e.g., using cylindrical vessel formula σ = pR/t.",
+          "why_students_make_it": "Confusion between spherical and cylindrical pressure vessel formulas.",
+          "type": "Formula Recall",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Memorize that for sphere, σ = pR/(2t); for cylinder, hoop stress σ = pR/t. Use mnemonic: 'Sphere has half the stress of cylinder for same pressure'.",
+          "consequence": "Incorrect pressure calculation, possibly leading to wrong answer."
+        },
+        {
+          "mistake": "Incorrect application of von Mises criterion by not simplifying for equal biaxial stress, leading to complex calculations.",
+          "why_students_make_it": "Students might plug stresses into full von Mises formula without recognizing symmetry, wasting time.",
+          "type": "Application",
+          "severity": "Low",
+          "frequency": "occasional",
+          "how_to_avoid": "Always check stress state symmetry. For σ1=σ2, σ3=0, von Mises stress simplifies to |σ|.",
+          "consequence": "Time loss but correct answer if calculated properly."
+        },
+        {
+          "mistake": "Considering sign of stress in von Mises criterion, thinking compressive yield pressure might be different.",
+          "why_students_make_it": "Von Mises criterion is based on distortion energy, which depends on shear stresses, so sign of normal stress doesn't affect magnitude. But students might think tensile and compressive yielding are different.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "common",
+          "how_to_avoid": "Recall that von Mises criterion uses squares of differences, so stress signs cancel out; only magnitudes matter for yielding in ductile materials with symmetric yield strength in tension and compression.",
+          "consequence": "Might think answer is A or B (half or double) instead of C."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "SPHERE: Same Pressure Holds Equal Radial Extents",
+          "concept": "For spherical vessel, internal and external yield pressures are approximately equal for von Mises criterion.",
+          "effectiveness": "medium",
+          "context": "When comparing internal vs external pressure yielding"
+        },
+        {
+          "mnemonic": "VON MISES: Very Often Negates Sign Effects in Spheres",
+          "concept": "Von Mises criterion gives same yield pressure magnitude for internal and external pressure in spherical vessels due to stress symmetry.",
+          "effectiveness": "high",
+          "context": "Application to symmetric stress states"
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "What is the hoop stress formula for a thin-walled spherical pressure vessel under pressure p?",
+          "back": "$\\sigma = \\frac{p R}{2 t}$, where R is inner radius, t is wall thickness.",
+          "difficulty": "easy",
+          "time_limit_seconds": 15
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "For a spherical vessel with σ1=σ2=σ and σ3=0, what is the von Mises equivalent stress?",
+          "back": "$\\sigma_v = |\\sigma|$. Because the formula simplifies to √(σ^2) = |σ|.",
+          "difficulty": "medium",
+          "time_limit_seconds": 20
+        },
+        {
+          "card_type": "application",
+          "front": "Under what condition does the problem assume yielding occurs for external pressure?",
+          "back": "Assuming elastic stability until yield, meaning buckling is not considered; only material yielding via von Mises criterion.",
+          "difficulty": "easy",
+          "time_limit_seconds": 15
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "Why might students incorrectly think external yield pressure is different from internal?",
+          "back": "They might confuse with buckling or think compressive yielding is different, but von Mises depends on stress magnitude, not sign, for symmetric yield strength.",
+          "difficulty": "medium",
+          "time_limit_seconds": 30
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Design of spacecraft fuel tanks",
+          "industry_example": "Liquid oxygen tanks in rockets must withstand both internal pressure during fueling and external pressure in vacuum of space.",
+          "why_it_matters": "If yielding occurs, the tank could rupture or deform permanently, leading to mission failure."
+        },
+        {
+          "application": "Pressure vessels in aircraft",
+          "industry_example": "Cabin pressure vessels in commercial aircraft experience internal pressure during flight and external pressure during ground operations.",
+          "why_it_matters": "Safety requires that yielding does not occur under expected pressure cycles."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "Quick check: If you recall spherical stress formula and von Mises simplification, this is a 2-minute problem.",
+        "guessing_heuristic": "For linked questions, often answers are consistent. Since previous part likely had p_Y calculation, and sphere symmetry suggests same magnitude, guess C.",
+        "time_management": "Spend no more than 3 minutes on this; it's straightforward application."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "von Mises yield criterion spherical vessel",
+        "thin-walled sphere external pressure yielding",
+        "pressure vessel design von Mises",
+        "equal biaxial stress von Mises",
+        "spherical tank yield pressure",
+        "internal vs external pressure yielding",
+        "GATE aerospace structures questions",
+        "theories of failure applications"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Tresca Criterion Comparison",
+          "description": "Apply Tresca (maximum shear stress) criterion instead of von Mises. For spherical vessel with σ1=σ2=σ, σ3=0, maximum shear stress is τ_max = |σ|/2. Yielding when τ_max = σ_Y/2, so |σ| = σ_Y, same result. Thus, for this case, both criteria predict same yield pressure.",
+          "pros_cons": "Pros: Simpler linear criterion. Cons: For other stress states, Tresca is more conservative. Here, it gives same answer.",
+          "when_to_use": "When quick check is needed; for spherical symmetry, both criteria often agree."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Mechanics of Materials": "Direct application of stress transformation and failure theories.",
+        "Pressure Vessel Design": "Practical engineering design principles for containers under pressure.",
+        "Aerospace Structures": "Relevant to fuel tanks and pressurized compartments in aircraft and spacecraft."
+      },
+      "deeper_dive_topics": [
+        "Elastic buckling of spherical shells under external pressure",
+        "Thick-walled sphere analysis using Lame's equations",
+        "Yield criteria for anisotropic materials",
+        "Cyclic loading and fatigue in pressure vessels"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2012_AE_Q55",
+        "year": 2012,
+        "marks": 2.0,
+        "negative_marks": 0.0,
+        "time_expected": "2-3 minutes",
+        "success_rate_estimate": "70%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 4: Structures",
+        "gate_subsection": "Failure Theories",
+        "weightage": "Approximately 5-10% in Structures section",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Well-aligned with core topics of yield criteria and pressure vessel design."
+      },
+      "rag_quality": {
+        "relevance_score": 0.6,
+        "chunks_used": 3,
+        "sources_distribution": {
+          "books": 1,
+          "videos": 2
+        },
+        "notes": "RAG provided good coverage of von Mises yield criterion (chunks 1,3,4) from video lectures and books, which is directly relevant. However, it lacked specific information on stress in spherical pressure vessels, so internal knowledge from mechanics of materials was used for that part. Chunks 2,5,6 were on gas dynamics and Tresca criterion, less relevant."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-13T10:30:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Cylindrical vessel under internal and external pressure with von Mises criterion",
+        "Effect of wall thickness variation on yield pressure",
+        "Combined loading (pressure + axial load) on spherical vessel",
+        "Comparison with Tresca criterion for different stress states"
+      ]
+    },
+    "question_id": "GATE_2012_AE_Q55",
+    "year": 2012,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "MCQ_LINKED",
+    "question_text": "If the vessel is evacuated (internal pressure = 0) and subjected to external pressure, yielding according to the von Mises yield criterion (assuming elastic stability until yield)"
+  },
+  "tokens_used": 21473,
+  "input_tokens": 9678,
+  "output_tokens": 11795,
+  "cost": 0.03115395,
+  "time_seconds": 375.00237369537354
+}
