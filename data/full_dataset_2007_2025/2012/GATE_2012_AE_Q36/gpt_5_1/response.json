@@ -1,0 +1,423 @@
+{
+  "model_name": "gpt_5_1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "text_only",
+      "combined_type": "numerical_calculation_text_only",
+      "weight_strategy": "NUMERICAL_WEIGHTED",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "This is a numerical calculation problem involving trimmed flight conditions and requiring understanding of lift, drag, and equilibrium. It requires multiple steps to solve and integrates concepts of aerodynamics and flight mechanics.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "B",
+        "is_correct": true,
+        "confidence": 0.93,
+        "confidence_type": "single_model",
+        "reasoning": "1) At standard sea level (SSL), the aircraft is trimmed (zero stick force) at TAS V1 = 100 m/s. 2) When the pilot pulls with 5 N to hold 90 m/s without re-trimming, that 5 N is the stick force corresponding to a change in dynamic pressure from the trim condition: q1 - q2, where q = \\tfrac12 \\rho V^2. Thus stick force is proportional to (V^2 - V_{trim}^2) at fixed density. 3) The same aircraft, without re-trimming, flying at a different altitude but same configuration, will have stick force proportional to dynamic pressure difference from the original trim condition at SSL, i.e. proportional to (\\rho V^2 - \\rho_{SL} V_{trim}^2). 4) Using the known 5 N at SSL between 100 m/s and 90 m/s, we first find the proportionality constant k between stick force and dynamic-pressure difference: 5 = k [q(100) - q(90)] = k \\tfrac12 \\rho_{SL} (100^2 - 90^2). 5) At 3000 m, with \\rho = 0.91 kg/m^3 and V = 120 m/s, the stick force (taking upward as positive when speed is below trim and downward when above) is F = k [q(120, 0.91) - q(100, 1.22)]. 6) Substituting k from step 4 and simplifying gives F = 5 \\dfrac{0.91\\cdot 120^2 - 1.22\\cdot 100^2}{1.22(100^2 - 90^2)}. Numerically, 0.91\\cdot 120^2 = 13104, 1.22\\cdot 100^2 = 12200, difference = 904; denominator 1.22(100^2 - 90^2) = 1.22(10000 - 8100) = 1.22\\cdot 1900 = 2318. So F = 5 \\times 904/2318 \\approx 1.95 N. Since the dynamic pressure at the new condition is higher than at trim, the elevator must be pushed (nose-down) to reduce lift, which corresponds to a downward stick force. Therefore the correct option is 1.95 N downward force, i.e. option B."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Step 1: Recognize that with fixed trim (no re-trimming), stick force is proportional to the change in dynamic pressure from the trim condition: F_s \\propto (q - q_{trim}).",
+          "Step 2: At SSL, trim is at V_1 = 100 m/s, \\rho_{SL} = 1.22 kg/m^3. When speed is reduced to V_2 = 90 m/s, a pull of 5 N is required. Write 5 = k [q(100) - q(90)] = k \\tfrac12 \\rho_{SL} (100^2 - 90^2) and solve for the proportionality constant k symbolically.",
+          "Step 3: At 3000 m, \\rho_3 = 0.91 kg/m^3, V_3 = 120 m/s, with the same trim setting. The stick force is F_3 = k [q(120, 0.91) - q(100, 1.22)] = k [\\tfrac12 (0.91\\cdot 120^2 - 1.22\\cdot 100^2)].",
+          "Step 4: Substitute k from Step 2 into the expression for F_3. The factor 1/2 cancels, giving F_3 = 5 \\dfrac{0.91\\cdot 120^2 - 1.22\\cdot 100^2}{1.22(100^2 - 90^2)}.",
+          "Step 5: Compute numerically: 0.91\\cdot 120^2 = 13104, 1.22\\cdot 100^2 = 12200, so numerator = 904. Denominator: 100^2 - 90^2 = 10000 - 8100 = 1900, so 1.22\\cdot 1900 = 2318. Hence F_3 = 5 \\times 904/2318 \\approx 1.95 N.",
+          "Step 6: Interpret the sign: At 90 m/s (< 100 m/s), the pilot had to pull (upward force) to increase lift, so positive force corresponds to speed below trim. At 120 m/s and higher dynamic pressure than trim, the pilot must push (downward force) to reduce lift. Therefore the required force is 1.95 N downward, matching option B."
+        ],
+        "formulas_used": [
+          "$q = \\tfrac12 \\\\rho V^2$",
+          "$F_s = k (q - q_{trim})$",
+          "$k = \\dfrac{5}{\\tfrac12 \\\\rho_{SL} (V_{trim}^2 - V_2^2)}$",
+          "$F_3 = 5 \\\\dfrac{\\\\rho_3 V_3^2 - \\\\rho_{SL} V_{trim}^2}{\\\\rho_{SL} (V_{trim}^2 - V_2^2)}$"
+        ],
+        "estimated_time_minutes": 3
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Flight Mechanics",
+          "confidence": 0.96
+        },
+        "topic": {
+          "name": "Static longitudinal stability and trim (stick force vs speed)",
+          "syllabus_ref": "Flight Mechanics -> Static longitudinal stability and control, trim and stick-fixed characteristics"
+        },
+        "concepts": [
+          {
+            "name": "Trim condition (stick-fixed)",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Dynamic pressure and airspeed relation",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Stick force vs speed curve",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Effect of altitude (density) on dynamic pressure",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "True airspeed vs equivalent airspeed idea",
+            "importance": "tertiary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Understanding of trim in straight and level flight (lift equals weight, pitching moment equilibrium)",
+          "Definition and calculation of dynamic pressure q = 0.5 * rho * V^2",
+          "Concept of stick-fixed stability and stick force vs speed behavior",
+          "Basic proportional reasoning (force proportional to change in dynamic pressure)"
+        ],
+        "helpful": [
+          "Awareness that density changes with altitude and affects dynamic pressure",
+          "Graphical picture of stick force vs airspeed curve about trim speed"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Lift and dynamic pressure relation L = q S C_L",
+            "requires: Trim condition and stick-fixed configuration",
+            "requires: Relation between control surface deflection, lift, and stick force",
+            "enables: Analysis of stick force per g and handling qualities at different altitudes",
+            "enables: Design of control gearing and trim systems for acceptable pilot forces"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Medium",
+        "score": 5,
+        "complexity_breakdown": {
+          "conceptual": 6,
+          "mathematical": 4,
+          "problem_solving": 5
+        },
+        "estimated_solve_time_seconds": 150,
+        "expected_accuracy_percent": 55,
+        "difficulty_factors": [
+          "Requires recognizing that stick force is proportional to change in dynamic pressure, not just speed difference",
+          "Involves comparing conditions at different densities while keeping trim reference at SSL",
+          "Sign (upward vs downward) must be inferred from physical reasoning"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Aircraft Performance and Design",
+          "author": "John D. Anderson Jr.",
+          "chapter_number": "7",
+          "chapter_title": "Static Longitudinal Stability and Control",
+          "section": "Stick-fixed stability and trim, stick force vs airspeed",
+          "page_range": "260-280",
+          "complexity": "intermediate",
+          "relevance_score": 0.92,
+          "source": "model_consensus",
+          "text_snippet": "The stick force required to maintain a given speed in stick-fixed flight is directly related to the change in pitching moment and hence to the change in dynamic pressure from the trim condition."
+        },
+        {
+          "source_type": "book",
+          "book": "Introduction to Flight",
+          "author": "John D. Anderson Jr.",
+          "chapter_number": "8",
+          "chapter_title": "Introduction to Flight Mechanics",
+          "section": "Longitudinal stability, trim, and control",
+          "page_range": "415-435",
+          "complexity": "introductory",
+          "relevance_score": 0.86,
+          "source": "rag_retrieval",
+          "text_snippet": "Dynamic pressure q = 1/2 rho V^2 is the key parameter relating airspeed to aerodynamic forces; changes in q from trim conditions lead to changes in control forces."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. A.K. Ghosh",
+          "timestamp_start": "00:00:00",
+          "timestamp_end": "00:04:03",
+          "video_url": "https://www.youtube.com/watch?v=6VPF99-_CwY",
+          "book_reference": "Introduction to Flight by Anderson",
+          "topic_covered": "Trim airspeed, stick-fixed level flight, lift equals weight and dynamic pressure",
+          "relevance_score": 0.78,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. A.K. Ghosh",
+          "timestamp_start": "00:12:04",
+          "timestamp_end": "00:15:47",
+          "video_url": "https://www.youtube.com/watch?v=wuMN32Bo734",
+          "book_reference": "Introduction to Flight by Anderson",
+          "topic_covered": "True airspeed, equivalent airspeed, and dynamic pressure relation",
+          "relevance_score": 0.7,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Direct Formula Application",
+        "total_steps": 6,
+        "solution_path": "Relate stick force to dynamic pressure change at SSL → Determine proportionality constant using given 5 N case → Apply same proportionality to new altitude and speed → Compute magnitude and determine direction from physical reasoning",
+        "key_insights": [
+          "Stick force at fixed trim is proportional to change in dynamic pressure from trim condition, not directly to speed difference.",
+          "Dynamic pressure depends on both density and speed; altitude changes density and hence affects stick force.",
+          "Sign of stick force (upward vs downward) is deduced by comparing whether the new speed is above or below trim in terms of dynamic pressure."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$q = \\tfrac12 \\\\rho V^2$",
+          "name": "Dynamic pressure definition",
+          "conditions": "Incompressible or low Mach aerodynamic flows, standard definition of dynamic pressure",
+          "type": "equation",
+          "relevance": "Relates airspeed and density to aerodynamic loads and hence to stick force."
+        },
+        {
+          "formula": "$F_s = k (q - q_{trim})$",
+          "name": "Stick force proportional to dynamic pressure change",
+          "conditions": "Stick-fixed configuration, small deviations around trim, linear behavior assumption",
+          "type": "equation",
+          "relevance": "Core relation used to map known 5 N force at SSL to the new flight condition."
+        },
+        {
+          "formula": "$k = \\dfrac{5}{\\tfrac12 \\\\rho_{SL} (V_{trim}^2 - V_2^2)}$",
+          "name": "Proportionality constant from SSL data",
+          "conditions": "Derived from the given 5 N pull between 100 m/s and 90 m/s at SSL",
+          "type": "equation",
+          "relevance": "Allows elimination of unknown aircraft-specific parameters and direct scaling of forces."
+        },
+        {
+          "formula": "$F_3 = 5 \\\\dfrac{\\\\rho_3 V_3^2 - \\\\rho_{SL} V_{trim}^2}{\\\\rho_{SL} (V_{trim}^2 - V_2^2)}$",
+          "name": "Stick force at new altitude and speed",
+          "conditions": "Same trim setting, linear stick force vs dynamic pressure assumption",
+          "type": "equation",
+          "relevance": "Final computational formula yielding the 1.95 N magnitude."
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Designing the elevator and control system so that stick forces remain within acceptable limits across the flight envelope, including different altitudes and speeds.",
+          "Certification flight tests where pilots measure stick force per g and stick force vs speed to ensure compliance with handling-qualities requirements."
+        ],
+        "specific_systems": [
+          "Transport aircraft such as the Airbus A320 or Boeing 737, where trim settings and control gearing are chosen so that pilots can easily maintain different cruise speeds at various altitudes.",
+          "General aviation aircraft (e.g., Cessna 172) where pilots feel noticeable changes in stick/yoke force when deviating from trimmed speed."
+        ],
+        "practical_relevance": "Understanding how stick force varies with speed and altitude is crucial for pilot workload, safety, and certification. If forces become too high or reverse sign unexpectedly, the aircraft could be difficult or unsafe to control."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Assuming stick force is proportional to speed difference (V - V_trim) instead of dynamic pressure difference (rho V^2 - rho V_trim^2).",
+          "why_students_make_it": "Students often remember that 'lift ~ V^2' but then simplify mentally to a linear relation in V for small changes without checking.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Always start from L = 0.5 * rho * V^2 * S * C_L and note that for fixed configuration and small angle changes, the key variable is V^2, not V.",
+          "consequence": "Gives an incorrect numerical factor and may lead to choosing a wrong option even if the direction (up/down) is correct."
+        },
+        {
+          "mistake": "Ignoring the change in density with altitude and using rho_SL for both conditions.",
+          "why_students_make_it": "They focus on speed changes and forget that altitude information was given for a reason.",
+          "type": "Calculation",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Whenever altitude or density is mentioned explicitly, write q = 0.5 * rho * V^2 for each condition and keep rho symbols until the end.",
+          "consequence": "Underestimates or overestimates the dynamic pressure at altitude, leading to a wrong magnitude of stick force."
+        },
+        {
+          "mistake": "Getting the sign (upward vs downward force) reversed.",
+          "why_students_make_it": "They do the algebra correctly but do not think physically about whether the aircraft is faster or slower than trim.",
+          "type": "Sign Error",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Remember: below trim speed you must pull (upward force) to increase lift; above trim speed you must push (downward force) to reduce lift.",
+          "consequence": "Numerical value may match an option but the direction will be wrong, costing full marks."
+        },
+        {
+          "mistake": "Trying to compute the absolute value of k with all constants instead of keeping it symbolic and canceling 1/2.",
+          "why_students_make_it": "They think every constant must be evaluated numerically, which adds unnecessary arithmetic.",
+          "type": "Calculation",
+          "severity": "Low",
+          "frequency": "occasional",
+          "how_to_avoid": "Keep expressions symbolic as long as possible; look for common factors (like 1/2) that cancel between numerator and denominator.",
+          "consequence": "Increases chance of arithmetic slips and wastes time in an exam."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "“Force follows q, not V”",
+          "concept": "Stick force is proportional to change in dynamic pressure, not just speed.",
+          "effectiveness": "high",
+          "context": "Use when setting up relations between control force and speed changes at different altitudes."
+        },
+        {
+          "mnemonic": "“Slow? Pull. Fast? Push.”",
+          "concept": "Direction of stick force relative to trim speed.",
+          "effectiveness": "high",
+          "context": "Quickly decide whether required force is upward or downward when speed is below or above trim."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "What is the expression for dynamic pressure q in terms of air density and true airspeed?",
+          "back": "Dynamic pressure: $q = \\tfrac12 \\\\rho V^2$, where \\\\rho is air density and V is true airspeed.",
+          "difficulty": "easy",
+          "time_limit_seconds": 20
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "In stick-fixed trim, how does stick force vary when speed deviates from trim speed?",
+          "back": "For small deviations and fixed configuration, stick force is approximately proportional to the change in dynamic pressure from trim: $F_s \\propto (q - q_{trim}) = \\tfrac12 (\\\\rho V^2 - \\\\rho V_{trim}^2)$.",
+          "difficulty": "medium",
+          "time_limit_seconds": 40
+        },
+        {
+          "card_type": "application",
+          "front": "If an aircraft is trimmed at 100 m/s and you slow to 90 m/s without re-trimming, do you pull or push on the stick and why?",
+          "back": "You pull (upward force). At 90 m/s, dynamic pressure and lift are lower than at trim, so you must increase tail-down moment (via elevator) by pulling to maintain level flight.",
+          "difficulty": "medium",
+          "time_limit_seconds": 45
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "Why must you include density when comparing stick forces at different altitudes?",
+          "back": "Because dynamic pressure depends on both V and \\\\rho: $q = 0.5 \\\\rho V^2$. At higher altitude, lower density means a given V gives lower q, changing the stick force needed for the same trim reference.",
+          "difficulty": "medium",
+          "time_limit_seconds": 45
+        },
+        {
+          "card_type": "definition",
+          "front": "Define trim in straight and level flight for a fixed stick position.",
+          "back": "Trim is the condition where all moments about the center of gravity sum to zero (no pitching acceleration) and lift equals weight, so the aircraft flies straight and level without continuous control input.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Pilot handling qualities and control feel across different flight conditions.",
+          "industry_example": "During certification of a regional jet, test pilots measure stick force per g and stick force vs speed at various altitudes to ensure that forces remain within regulatory limits and that the aircraft naturally tends to return to trim speed.",
+          "why_it_matters": "If stick forces are too low or reverse sign, pilots may over-control or misjudge speed deviations, increasing risk of stall or overspeed."
+        },
+        {
+          "application": "Design of trim systems and autopilots.",
+          "industry_example": "Autopilot systems in airliners adjust trim continuously so that control surfaces do not require large steady deflections, minimizing actuator loads and improving reliability.",
+          "why_it_matters": "Incorrect modeling of force vs dynamic pressure could lead to poorly tuned autopilot behavior or excessive structural loads on control surfaces."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "Identify that only dynamic pressure differences and proportionality are needed. Set up the ratio using the known 5 N case, cancel common factors, and compute with minimal arithmetic. Then reason physically for up/down direction.",
+        "guessing_heuristic": "If unsure about density effects but confident that 120 m/s at altitude is effectively 'faster' than 100 m/s at SSL in terms of q, pick a small downward force (since 5 N was for a 10 m/s change at same density).",
+        "time_management": "Aim to spend about 2–3 minutes: 1 minute to set up proportionality, 1 minute for arithmetic, and a few seconds to decide the sign based on whether the new condition is above or below trim."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "stick force versus airspeed trim",
+        "dynamic pressure q = 0.5 rho V^2",
+        "aircraft longitudinal static stability GATE AE",
+        "true airspeed equivalent airspeed dynamic pressure",
+        "Anderson flight mechanics trim stick-fixed",
+        "effect of altitude on control forces",
+        "pilot pull push stick speed change"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Full aerodynamic moment balance about CG",
+          "description": "Model the pitching moment about the center of gravity as a function of lift coefficient, tail lift, and elevator deflection. Relate elevator deflection to stick force via control gearing and hinge moments. Then compute how the required elevator deflection changes with dynamic pressure to maintain trim, and hence deduce stick force.",
+          "pros_cons": "Pros: Physically detailed, shows how tail and elevator contribute to stick force. Cons: Requires many aircraft-specific parameters (tail volume, control gearing, hinge moment coefficients) not given in exam problems; too long for GATE.",
+          "when_to_use": "Useful in design courses or projects where detailed aircraft geometry and control system data are available."
+        },
+        {
+          "name": "Equivalent airspeed normalization",
+          "description": "Convert all speeds at different densities to equivalent airspeed at SSL using $V_{EAS} = V_{TAS} \\sqrt{\\\\rho/\\\\rho_{SL}}$. Then treat the problem as if everything were at SSL, using stick force proportional to $(V_{EAS}^2 - V_{trim}^2)$.",
+          "pros_cons": "Pros: Conceptually neat, uses a single density. Cons: Adds an extra conversion step; same algebraic complexity as working directly with rho V^2.",
+          "when_to_use": "When you are already comfortable with EAS/TAS relations and want to think in terms of a single reference density."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Aerodynamics": "Dynamic pressure q appears in lift and drag: L = q S C_L, D = q S C_D. Understanding q is fundamental to both performance and stability.",
+        "Control Systems": "Stick force vs speed characteristics influence pilot-vehicle dynamics and can be modeled as part of the control loop, affecting stability margins and handling qualities.",
+        "Structures": "Higher dynamic pressure at a given configuration increases aerodynamic loads on wings and control surfaces, which must be accounted for in structural sizing.",
+        "Instrumentation": "Airspeed indicators essentially measure dynamic pressure via pitot-static systems; understanding q helps interpret IAS, EAS, and TAS."
+      },
+      "deeper_dive_topics": [
+        "Stick force per g and handling qualities criteria (e.g., MIL-F-8785, CS-25 requirements)",
+        "Nonlinear stick force vs speed behavior near stall and high angles of attack",
+        "Design of artificial feel systems in fly-by-wire aircraft to shape stick force characteristics",
+        "Relationship between equivalent airspeed, indicated airspeed, and structural load limits"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2012_AE_Q36",
+        "year": 2012,
+        "marks": 2.0,
+        "negative_marks": 0.66,
+        "time_expected": "2-3 minutes",
+        "success_rate_estimate": "55%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Flight Mechanics",
+        "gate_subsection": "Static longitudinal stability and control; trim and stick-fixed characteristics",
+        "weightage": "10-15%",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Excellent question linking trim, dynamic pressure, and altitude effects on control forces; tests both conceptual understanding and quick numerical skills."
+      },
+      "rag_quality": {
+        "relevance_score": 0.72,
+        "chunks_used": 4,
+        "sources_distribution": {
+          "books": 1,
+          "videos": 3
+        },
+        "notes": "RAG provided detailed explanations of dynamic pressure, true vs equivalent airspeed, and example calculations involving rho and V, which are directly relevant to the dynamic-pressure scaling used here. It did not explicitly cover stick force vs speed, so that part relied on internal knowledge of flight mechanics, but the q relations from RAG were helpful."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-20T00:00:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Given stick force vs speed data at one altitude, ask students to sketch or compute the curve at another altitude using dynamic pressure scaling.",
+        "Ask for the trim airspeed at a new altitude when a certain constant stick force is applied, using the same proportionality idea.",
+        "Include compressibility effects at higher Mach numbers, requiring use of equivalent airspeed rather than true airspeed directly.",
+        "Combine stick force vs speed with structural load factor limits to determine safe maneuvering speeds at different altitudes."
+      ]
+    },
+    "question_id": "GATE_2012_AE_Q36",
+    "year": 2012,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "MCQ",
+    "question_text": "An aircraft is trimmed straight and level at true air speed (TAS) of 100 m/s at standard sea level (SSL). Further, pull of 5 N holds the speed at 90 m/s without re-trimming at SSL (air density = 1.22 kg/m^3). To fly at 3000 m altitude (air density = 0.91 kg/m^3) and 120 m/s TAS without re-trimming, the aircraft needs"
+  },
+  "tokens_used": 16257,
+  "input_tokens": 10098,
+  "output_tokens": 6159,
+  "cost": 0.0742125,
+  "time_seconds": 56.7824923992157
+}
