@@ -1,0 +1,380 @@
+{
+  "model_name": "gpt_5_1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "text_only",
+      "combined_type": "numerical_calculation_text_only",
+      "weight_strategy": "NUMERICAL_WEIGHTED",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "This is a numerical calculation problem involving ramjet engine principles. It requires multiple steps to calculate the exhaust velocity, integrating concepts of stagnation temperature, Mach number, and gas dynamics. The difficulty is medium-hard due to the multi-step nature and concept integration.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "1880 m/s (range 1880-1881 m/s)",
+        "is_correct": true,
+        "confidence": 0.98,
+        "confidence_type": "single_model",
+        "reasoning": "For an ideal ramjet with equal inlet and exit static pressures and equal inlet and exit Mach numbers, the ideal relation from ramjet cycle analysis is \\(c_j = c_i \\sqrt{T_4/T_1}\\). The flight Mach number is 4 at ambient temperature 100 K. First, compute the inlet speed: \\(a_1 = \\sqrt{\\gamma R T_1} = \\sqrt{1.4 \\times 287 \\times 100} \\approx 200.5\\,\\text{m/s}\\). Hence \\(c_i = M_1 a_1 = 4 \\times 200.5 \\approx 802\\,\\text{m/s}\\). With combustor stagnation temperature \\(T_4 = 2310\\,\\text{K}\\) and inlet static temperature \\(T_1 = 100\\,\\text{K}\\), the ideal exit speed is \\(c_j = 802\\,\\sqrt{2310/100} \\approx 802 \\times 4.806 \\approx 3855\\,\\text{m/s}\\) if we misinterpret \\(T_4\\) as static. However, for the ideal ramjet relation, \\(T_4\\) is the stagnation temperature after heat addition and \\(T_1\\) is the stagnation temperature before heat addition. So we must first find inlet stagnation temperature: \\(T_{01} = T_1 \\left(1 + \\frac{\\gamma-1}{2} M_1^2\\right) = 100 \\times (1 + 0.2 \\times 16) = 100 \\times 4.2 = 420\\,\\text{K}\\). Then \\(T_{04} = 2310\\,\\text{K}\\). The ideal relation becomes \\(c_j = c_i \\sqrt{T_{04}/T_{01}} = 802 \\times \\sqrt{2310/420} = 802 \\times \\sqrt{5.5} \\approx 802 \\times 2.345 \\approx 1880\\,\\text{m/s}\\). This matches the official key range 1880–1881 m/s. The derivation is consistent with standard ramjet cycle analysis as given in gas turbine/ramjet textbooks and the RAG formulas."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Identify that this is an ideal ramjet with equal inlet and exit Mach numbers and equal inlet and exit static pressures, so the ideal relation cj = ci \\sqrt{T04/T01} applies, where T01 and T04 are stagnation temperatures before and after combustion.",
+          "Compute the inlet stagnation temperature: T01 = T1 \\left(1 + \\frac{\\gamma-1}{2} M_1^2\\right) with T1 = 100 K, M1 = 4, \\gamma = 1.4.",
+          "Calculate the inlet speed: a1 = \\sqrt{\\gamma R T1}, then ci = M1 a1.",
+          "Use the ideal ramjet velocity ratio: cj = ci \\sqrt{T04/T01}, with T04 = 2310 K and T01 from Step 2.",
+          "Evaluate the numerical value of cj and round to the nearest m/s."
+        ],
+        "formulas_used": [
+          "$a_1 = \\sqrt{\\gamma R T_1}$",
+          "$c_i = M_1 a_1$",
+          "$T_{01} = T_1 \\left(1 + \\frac{\\gamma - 1}{2} M_1^2 \\right)$",
+          "$c_j = c_i \\sqrt{\\frac{T_{04}}{T_{01}}}$"
+        ],
+        "estimated_time_minutes": 3
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Propulsion",
+          "confidence": 1.0
+        },
+        "topic": {
+          "name": "Ramjet and air-breathing engine performance",
+          "syllabus_ref": "Section 6: Propulsion -> Air breathing engines: ramjet, turbojet, turbofan, turboprop"
+        },
+        "concepts": [
+          {
+            "name": "Ideal ramjet cycle",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Stagnation temperature in compressible flow",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Speed of sound and Mach number relation",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Isentropic relations for compressible flow",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Jet exhaust velocity and thrust generation",
+            "importance": "tertiary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Definition of Mach number and speed of sound in a perfect gas",
+          "Concept of stagnation (total) temperature in compressible flow",
+          "Basic ramjet engine cycle and ideal assumptions",
+          "Square-root scaling of velocity with temperature for ideal gas flows"
+        ],
+        "helpful": [
+          "Isentropic flow relations for compressible flows",
+          "Understanding of air-breathing propulsion performance parameters"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Definition of stagnation temperature and Mach number",
+            "requires: Ideal ramjet cycle assumptions (equal inlet and exit Mach and pressure)",
+            "enables: Calculation of ideal exhaust velocity from temperature ratios",
+            "enables: Advanced ramjet performance analysis (specific thrust, efficiency)"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Easy",
+        "score": 3,
+        "complexity_breakdown": {
+          "conceptual": 3,
+          "mathematical": 3,
+          "problem_solving": 3
+        },
+        "estimated_solve_time_seconds": 120,
+        "expected_accuracy_percent": 80,
+        "difficulty_factors": [
+          "Requires recalling the specific ideal ramjet relation cj = ci sqrt(T04/T01) rather than using a generic nozzle formula",
+          "Students may confuse static and stagnation temperatures, leading to wrong ratios"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Gas Turbines",
+          "author": "V. Ganesan",
+          "chapter_number": "7",
+          "chapter_title": "Jet Propulsion Cycles and Their Analysis",
+          "section": "Ramjet engine performance and ideal cycle relations",
+          "page_range": "",
+          "complexity": "intermediate",
+          "relevance_score": 0.95,
+          "source": "rag_retrieval",
+          "text_snippet": "In an ideal ramjet, the inlet and exit Mach numbers are equal and the inlet and exit pressures are equal. The ideal exit velocity is given by $c_j = c_i \\sqrt{T_4/T_1}$, where $T_4$ and $T_1$ are the stagnation temperatures before and after heat addition."
+        },
+        {
+          "source_type": "book",
+          "book": "Gas Dynamics",
+          "author": "E. Rathakrishnan",
+          "chapter_number": "4",
+          "chapter_title": "Steady One-Dimensional Flow",
+          "section": "Worked examples on ramjet performance",
+          "page_range": "",
+          "complexity": "intermediate",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval",
+          "text_snippet": "Worked examples show how to compute stagnation properties at the diffuser and combustor, and then determine nozzle exit velocity for an ideal ramjet by using stagnation temperature rise and isentropic relations."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Dr. P.A. Ramakrishna",
+          "timestamp_start": "00:17:41",
+          "timestamp_end": "00:23:35",
+          "video_url": "https://www.youtube.com/watch?v=AMadcKOW6j8",
+          "book_reference": "Hill & Peterson - Mechanics and Thermodynamics of Propulsion",
+          "topic_covered": "Air breathing engines – Ramjet & Scramjet, stagnation temperature and ramjet operation",
+          "relevance_score": 0.8,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Direct Formula Application",
+        "total_steps": 5,
+        "solution_path": "Identify ideal ramjet relation \\rightarrow Compute inlet stagnation temperature \\rightarrow Compute inlet speed from Mach and speed of sound \\rightarrow Apply temperature ratio to get exit speed \\rightarrow Numerical evaluation",
+        "key_insights": [
+          "The given 2310 K is a stagnation (combustor) temperature, not a static temperature.",
+          "For an ideal ramjet with equal inlet and exit Mach numbers and pressures, the velocity scales with the square root of the stagnation temperature ratio."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$a = \\sqrt{\\gamma R T}$",
+          "name": "Speed of sound in a perfect gas",
+          "conditions": "Applies for calorically perfect gas with constant \\gamma and R.",
+          "type": "equation",
+          "relevance": "Used to convert Mach number and static temperature into actual flight speed."
+        },
+        {
+          "formula": "$T_0 = T \\left(1 + \\frac{\\gamma - 1}{2} M^2 \\right)$",
+          "name": "Stagnation temperature relation",
+          "conditions": "Applies for adiabatic, no-work, steady flow of a perfect gas.",
+          "type": "equation",
+          "relevance": "Used to compute inlet stagnation temperature from given Mach number and static temperature."
+        },
+        {
+          "formula": "$c_j = c_i \\sqrt{\\frac{T_{04}}{T_{01}}}$",
+          "name": "Ideal ramjet exit velocity relation",
+          "conditions": "Ideal ramjet with equal inlet and exit Mach numbers and equal inlet and exit static pressures.",
+          "type": "equation",
+          "relevance": "Core formula to find exhaust speed from stagnation temperature ratio."
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Conceptual design of high-speed cruise missiles and hypersonic test vehicles that may use ramjet or scramjet propulsion, where estimating exhaust velocity from combustor temperature is essential."
+        ],
+        "specific_systems": [
+          "Conceptual ramjet-powered cruise missiles designed for sustained supersonic/hypersonic flight."
+        ],
+        "practical_relevance": "Accurate estimation of exhaust velocity is critical for predicting thrust, range, and performance of ramjet-powered vehicles; overestimating or underestimating it leads to incorrect sizing of fuel, structure, and mission capability."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Using the static ambient temperature T1 = 100 K directly in the ratio cj = ci \\sqrt{T4/T1} instead of using stagnation temperatures T04/T01.",
+          "why_students_make_it": "They overlook that the given 2310 K is a stagnation (combustor) temperature and mix static and stagnation quantities.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Always label temperatures as static (T) or stagnation (T0) and ensure ratios are between the same type of quantity.",
+          "consequence": "Leads to a grossly incorrect exhaust velocity, often about twice the correct value."
+        },
+        {
+          "mistake": "Forgetting to compute inlet stagnation temperature T01 from Mach 4 and using T01 = T1.",
+          "why_students_make_it": "They rush and assume low-speed conditions where T0 \\approx T.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "common",
+          "how_to_avoid": "At high Mach numbers (M > 0.3), always compute T0 from T and M using the compressible flow relation.",
+          "consequence": "Underestimates the denominator in T04/T01, giving an incorrect velocity ratio."
+        },
+        {
+          "mistake": "Numerical slip in computing speed of sound or square roots (e.g., miscalculating \\sqrt{\\gamma R T}).",
+          "why_students_make_it": "Calculator errors or skipping intermediate checks.",
+          "type": "Calculation",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Do quick order-of-magnitude checks: at 300 K, a \\approx 340 m/s; scale roughly with \\sqrt{T}.",
+          "consequence": "Final answer off by 10–20%, possibly outside the accepted range."
+        },
+        {
+          "mistake": "Using rocket nozzle formula Ve = \\sqrt{2 c_p (T_c - T_e)} instead of the simpler ramjet relation.",
+          "why_students_make_it": "Confusion between rocket and ramjet propulsion formulas.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Remember that in ideal ramjets with equal inlet and exit Mach and pressure, velocity scales with \\sqrt{T0 ratio}, not directly with \\Delta T.",
+          "consequence": "Leads to more complex calculations and likely wrong assumptions about exit temperature."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "“Ramjet Ratio: Jet over Inlet equals Root of T0 over T0”",
+          "concept": "Remembering cj = ci \\sqrt{T04/T01} for ideal ramjet",
+          "effectiveness": "medium",
+          "context": "Use when recalling the ideal ramjet exit velocity relation in exam problems."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "What is the relation between stagnation and static temperature for a perfect gas in adiabatic flow with Mach number M?",
+          "back": "$T_0 = T \\left(1 + \\frac{\\gamma - 1}{2} M^2 \\right)$",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "formula_recall",
+          "front": "For an ideal ramjet with equal inlet and exit Mach and pressure, how is cj related to ci and stagnation temperatures?",
+          "back": "$c_j = c_i \\sqrt{\\dfrac{T_{04}}{T_{01}}}$",
+          "difficulty": "medium",
+          "time_limit_seconds": 45
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "In a ramjet, is the combustor temperature typically given as static or stagnation temperature?",
+          "back": "It is typically given as stagnation (total) temperature because the flow is nearly stagnant in the combustor.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "application",
+          "front": "Given M = 4, T = 100 K, \\gamma = 1.4, what is the inlet stagnation temperature T0?",
+          "back": "Use $T_0 = T (1 + 0.2 M^2) = 100 (1 + 0.2 \\times 16) = 100 \\times 4.2 = 420\\,\\text{K}.$",
+          "difficulty": "medium",
+          "time_limit_seconds": 60
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "What must be consistent when forming temperature ratios in compressible flow problems?",
+          "back": "Always compare like with like: static with static, or stagnation with stagnation. Do not mix T with T0 in a single ratio unless explicitly derived.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Preliminary sizing of ramjet-powered cruise missiles and high-speed aircraft",
+          "industry_example": "In conceptual design of a Mach 4 cruise missile, engineers estimate exhaust velocity from combustor stagnation temperature to compute thrust and range.",
+          "why_it_matters": "Incorrect exhaust velocity leads to wrong thrust estimates, which can cause underperformance or overdesign, affecting cost, safety, and mission success."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "Identify it as a direct ramjet formula problem: compute T01 from M and T, find ci from M and a, then apply cj = ci sqrt(T04/T01). Minimal algebra, mostly calculator work.",
+        "guessing_heuristic": "If stuck, remember that heating increases velocity by roughly the square root of the stagnation temperature ratio; expect cj to be a few times the flight speed, not orders of magnitude larger.",
+        "time_management": "Allocate about 2 minutes: 1 minute for computing T01 and ci, 1 minute for applying the ratio and checking units."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "ideal ramjet cycle exhaust velocity",
+        "ramjet stagnation temperature relation",
+        "cj = ci sqrt(T4/T1) ramjet",
+        "stagnation temperature compressible flow",
+        "Mach number speed of sound gamma 1.4",
+        "Ganesan gas turbines ramjet performance",
+        "Rathakrishnan gas dynamics ramjet example"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Full energy balance with isentropic nozzle",
+          "description": "Start from stagnation temperature T04 and assume an isentropic nozzle expansion to a chosen exit Mach number (equal to inlet Mach for ideal ramjet). Use $T_e = T_{04} / (1 + \\frac{\\gamma-1}{2} M_e^2)$ and then compute $c_j = M_e \\sqrt{\\gamma R T_e}$. Compare with inlet conditions to verify the simpler ratio.",
+          "pros_cons": "Pros: Reinforces understanding of isentropic relations and nozzle physics. Cons: Longer and more error-prone than using the compact ramjet relation.",
+          "when_to_use": "Useful for deeper understanding or when the ideal ramjet assumptions (equal inlet and exit Mach) are relaxed."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Thermodynamics": "Uses the concept of stagnation (total) temperature and adiabatic flow energy conservation.",
+        "Gas Dynamics": "Relies on compressible flow relations between Mach number, static, and stagnation properties.",
+        "Flight Mechanics": "Exhaust velocity directly influences thrust and hence performance parameters like climb rate and range."
+      },
+      "deeper_dive_topics": [
+        "Non-ideal ramjet performance including pressure losses and combustion inefficiency",
+        "Scramjet operation and the role of stagnation temperature at hypersonic Mach numbers",
+        "Thermal limits and material constraints due to high combustor stagnation temperatures"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2014_AE_Q45",
+        "year": 2014,
+        "marks": 2.0,
+        "negative_marks": 0.0,
+        "time_expected": "2-3 minutes",
+        "success_rate_estimate": "80%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 6: Propulsion",
+        "gate_subsection": "Air breathing engines: ramjet and scramjet, performance parameters",
+        "weightage": "10-15%",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "The question nicely tests core ramjet performance relations and compressible-flow stagnation concepts with minimal algebra, appropriate for a 2-mark numerical."
+      },
+      "rag_quality": {
+        "relevance_score": 0.8,
+        "chunks_used": 3,
+        "sources_distribution": {
+          "books": 2,
+          "videos": 1
+        },
+        "notes": "RAG provided examples and formulas for ramjet performance and stagnation relations (Ganesan, Rathakrishnan) and a video on ramjet/scramjet fundamentals. These directly support the use of the ideal ramjet velocity relation and stagnation temperature concepts. Some RAG content on rockets and scramjets was less directly relevant but reinforced nozzle and stagnation ideas."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-21T00:00:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Ask for specific thrust and fuel-air ratio of the same ramjet given a heating value and mass flow rate.",
+        "Modify the problem to include diffuser and nozzle losses and ask for the actual exhaust velocity.",
+        "Extend to a scramjet case where combustion occurs at supersonic Mach number and ask for combustor static temperature.",
+        "Include ambient pressure and ask for thrust per unit mass flow using cj and flight speed."
+      ]
+    },
+    "question_id": "GATE_2014_AE_Q45",
+    "year": 2014,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "NAT",
+    "question_text": "A cruise missile with an ideal ramjet engine is flying at Mach 4.0 at an altitude where the ambient temperature is 100K. Consider ratio of specific heats gamma = 1.4 and specific gas constant R = 287J/kgK. If the stagnation temperature in the combustion chamber is equal to 2310K, the speed of the exhaust gases (in m/s) is _____________."
+  },
+  "tokens_used": 14645,
+  "input_tokens": 9694,
+  "output_tokens": 4951,
+  "cost": 0.0616275,
+  "time_seconds": 54.14492130279541
+}
