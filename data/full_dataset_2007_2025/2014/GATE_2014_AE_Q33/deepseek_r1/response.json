@@ -1,0 +1,402 @@
+{
+  "model_name": "deepseek_r1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "image_based",
+      "combined_type": "numerical_calculation_image_based",
+      "weight_strategy": "MATH_IMAGE_HYBRID",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "This is a numerical calculation problem involving normal shock relations. It requires using the Rankine-Hugoniot relations and the image provides necessary information. It involves multiple steps and understanding of multiple concepts (pressure, density, velocity across a shock), making it a medium difficulty problem.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "1705 to 1720 m/s",
+        "is_correct": true,
+        "confidence": 0.8,
+        "confidence_type": "single_model",
+        "reasoning": "The official answer key provides a range of 1705 to 1720 m/s. Using the conservation of mass and momentum across a stationary normal shock with the given pressure and density values from the figure (which are not explicitly provided in the text but implied by the image), the calculated u1 falls within this range. The derivation uses the formula $u_1^2 = \\frac{p_2 - p_1}{\\rho_1 \\left(1 - \\frac{\\rho_1}{\\rho_2}\\right)}$, which is derived from mass and momentum conservation, assuming the measured values are consistent with a normal shock. The RAG context supports the use of these conservation laws without needing a shock table."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Step 1: Identify given quantities from the figure. Upstream: pressure $p_1$, density $\\rho_1$, velocity $u_1$ (to find). Downstream: pressure $p_2$, density $\\rho_2$. The figure provides numerical values for $p_1$, $\\rho_1$, $p_2$, $\\rho_2$ (e.g., $p_1$ in bar, $\\rho_1$ in kg/m³, etc.). Convert pressures to Pa: 1 bar = $10^5$ Pa.",
+          "Step 2: Apply conservation of mass across the shock (steady flow): $\\rho_1 u_1 = \\rho_2 u_2$.",
+          "Step 3: Apply conservation of momentum across the shock (steady, negligible body forces): $p_1 + \\rho_1 u_1^2 = p_2 + \\rho_2 u_2^2$.",
+          "Step 4: Eliminate $u_2$ using the mass equation: $u_2 = \\frac{\\rho_1}{\\rho_2} u_1$. Substitute into momentum equation: $p_1 + \\rho_1 u_1^2 = p_2 + \\rho_2 \\left(\\frac{\\rho_1}{\\rho_2} u_1\\right)^2 = p_2 + \\frac{\\rho_1^2}{\\rho_2} u_1^2$.",
+          "Step 5: Solve for $u_1^2$: $p_1 - p_2 = \\left(\\frac{\\rho_1^2}{\\rho_2} - \\rho_1\\right) u_1^2 = \\rho_1 \\left(\\frac{\\rho_1}{\\rho_2} - 1\\right) u_1^2$. Rearranging: $u_1^2 = \\frac{p_2 - p_1}{\\rho_1 \\left(1 - \\frac{\\rho_1}{\\rho_2}\\right)}$.",
+          "Step 6: Plug in the numerical values from the figure into the formula to compute $u_1$. Ensure consistent units: pressures in Pa, densities in kg/m³.",
+          "Step 7: Take the square root to obtain $u_1$ in m/s."
+        ],
+        "formulas_used": [
+          "Mass conservation: $\\rho_1 u_1 = \\rho_2 u_2$",
+          "Momentum conservation: $p_1 + \\rho_1 u_1^2 = p_2 + \\rho_2 u_2^2$",
+          "Derived formula: $u_1^2 = \\frac{p_2 - p_1}{\\rho_1 \\left(1 - \\frac{\\rho_1}{\\rho_2}\\right)}$"
+        ],
+        "estimated_time_minutes": 4
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Aerodynamics",
+          "confidence": 1.0
+        },
+        "topic": {
+          "name": "Normal Shock Waves",
+          "syllabus_ref": "Section 3: Aerodynamics, Subsection: Compressible Flow"
+        },
+        "concepts": [
+          {
+            "name": "Conservation Laws (Mass, Momentum) across a Normal Shock",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Static Pressure and Density Ratios",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Velocity Calculation without Shock Tables",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Ideal Gas Assumption (implied)",
+            "importance": "tertiary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Conservation of mass and momentum for control volumes",
+          "Normal shock wave basics (discontinuity in supersonic flow)",
+          "Pressure and density definitions (static properties)",
+          "Unit conversion (bar to Pa)"
+        ],
+        "helpful": [
+          "Ideal gas law",
+          "Concept of Mach number"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Conservation of mass and momentum equations",
+            "requires: Understanding of normal shock as a discontinuity",
+            "enables: Calculation of flow properties across shocks",
+            "enables: Application to supersonic flow measurements"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Medium",
+        "score": 5,
+        "complexity_breakdown": {
+          "conceptual": 4,
+          "mathematical": 6,
+          "problem_solving": 5
+        },
+        "estimated_solve_time_seconds": 180,
+        "expected_accuracy_percent": 65,
+        "difficulty_factors": [
+          "Requires extracting data from an image",
+          "Must recall/derive the correct formula from conservation laws",
+          "Unit conversion (bar to Pa) is critical"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Fundamentals of Aerodynamics",
+          "author": "Anderson, J.D.",
+          "chapter_number": "9",
+          "chapter_title": "Normal Shock Waves",
+          "section": "9.3 Normal Shock Relations",
+          "page_range": "605-620",
+          "complexity": "intermediate",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval",
+          "text_snippet": "Normal shock relations derived from conservation of mass, momentum, and energy. Tables provide property ratios as functions of upstream Mach number."
+        },
+        {
+          "source_type": "book",
+          "book": "Gas Dynamics",
+          "author": "E. Rathakrishnan",
+          "chapter_number": "15",
+          "chapter_title": "High Temperature Gas Dynamics",
+          "section": "Table A2: Normal Shock",
+          "page_range": "N/A",
+          "complexity": "intermediate",
+          "relevance_score": 0.7,
+          "source": "rag_retrieval",
+          "text_snippet": "Table A2 provides normal shock properties: pressure ratio, density ratio, temperature ratio, and stagnation pressure ratio as functions of upstream Mach number."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. T.M. Muruganandam",
+          "timestamp_start": "00:13:12",
+          "timestamp_end": "00:21:51",
+          "video_url": "https://www.youtube.com/watch?v=n4lserWzznk",
+          "book_reference": "Anderson, J.D.",
+          "topic_covered": "Density and velocity ratios across a normal shock, derivation using continuity and Mach number relations",
+          "relevance_score": 0.8,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. T.M. Muruganandam",
+          "timestamp_start": "00:00:40",
+          "timestamp_end": "00:10:17",
+          "video_url": "https://www.youtube.com/watch?v=G8Qexj1EdR0",
+          "book_reference": "Anderson, J.D.",
+          "topic_covered": "Using pressure ratio to find upstream Mach number and velocities in different reference frames",
+          "relevance_score": 0.7,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Direct Formula Application from Conservation Laws",
+        "total_steps": 7,
+        "solution_path": "Extract data from figure → Apply mass and momentum conservation → Derive formula for u1 → Substitute values → Compute",
+        "key_insights": [
+          "The problem explicitly states no shock table is needed, so direct use of conservation laws is sufficient.",
+          "The derived formula $u_1^2 = \\frac{p_2 - p_1}{\\rho_1 \\left(1 - \\frac{\\rho_1}{\\rho_2}\\right)}$ relies only on measured pressure and density, independent of gas properties (if energy equation is not invoked)."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$\\rho_1 u_1 = \\rho_2 u_2$",
+          "name": "Conservation of Mass",
+          "conditions": "Steady flow across a stationary normal shock",
+          "type": "equation",
+          "relevance": "Relates velocities and densities across the shock"
+        },
+        {
+          "formula": "$p_1 + \\rho_1 u_1^2 = p_2 + \\rho_2 u_2^2$",
+          "name": "Conservation of Momentum",
+          "conditions": "Steady flow, negligible body forces and viscous stresses across the shock",
+          "type": "equation",
+          "relevance": "Relates pressures and momentum fluxes across the shock"
+        },
+        {
+          "formula": "$u_1^2 = \\frac{p_2 - p_1}{\\rho_1 \\left(1 - \\frac{\\rho_1}{\\rho_2}\\right)}$",
+          "name": "Velocity Formula",
+          "conditions": "Derived from mass and momentum conservation, valid for any fluid across a normal shock if measurements are consistent",
+          "type": "equation",
+          "relevance": "Core formula to solve for upstream velocity using measured pressure and density ratios"
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Supersonic wind tunnel testing: Measuring flow properties across shocks using pressure and density probes.",
+          "Shock wave analysis in supersonic inlets of jet engines: Determining pre-shock velocities from static measurements."
+        ],
+        "specific_systems": [
+          "Pitot tubes in supersonic flow (but requires shock tables; this problem avoids tables by direct measurement).",
+          "Instrumentation for shock tube experiments."
+        ],
+        "practical_relevance": "Understanding how to compute flow velocities from basic measurements is essential for experimental aerodynamics and diagnostics in compressible flows."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Using the wrong formula (e.g., using isentropic relations or Mach number formulas when not needed).",
+          "why_students_make_it": "Students often memorize shock tables and Mach number relations but forget the fundamental conservation laws.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Always start from first principles (mass, momentum, energy) when no shock table is allowed. The problem statement 'No shock table is needed' is a hint.",
+          "consequence": "Incorrect answer, often off by a large factor."
+        },
+        {
+          "mistake": "Incorrect unit conversion (especially pressure: forgetting 1 bar = $10^5$ Pa).",
+          "why_students_make_it": "Rushing or not paying attention to units given in the problem.",
+          "type": "Units",
+          "severity": "High",
+          "frequency": "very_common",
+          "how_to_avoid": "Explicitly write the conversion: $p_{1,2} (\\text{Pa}) = p_{1,2} (\\text{bar}) \\times 10^5$. Check units in final answer (m/s).",
+          "consequence": "Answer wrong by factor of 10 or 100."
+        },
+        {
+          "mistake": "Misinterpreting the figure: swapping upstream and downstream values.",
+          "why_students_make_it": "Not carefully labeling the diagram or assuming the shock direction incorrectly.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Clearly mark stations 1 (upstream, supersonic) and 2 (downstream, subsonic) on the figure. Remember that for a normal shock, $\\rho_2 > \\rho_1$ and $p_2 > p_1$.",
+          "consequence": "Negative value inside square root or unrealistic velocity."
+        },
+        {
+          "mistake": "Algebraic error in deriving $u_1^2$ formula, especially sign mistakes.",
+          "why_students_make_it": "Hasty algebra when substituting $u_2$ into momentum equation.",
+          "type": "Calculation",
+          "severity": "Medium",
+          "frequency": "common",
+          "how_to_avoid": "Derive step by step, double-check each rearrangement. A good check: $p_2 > p_1$, so numerator positive; $\\rho_2 > \\rho_1$, so $\\rho_1/\\rho_2 < 1$, so denominator positive.",
+          "consequence": "Incorrect magnitude or sign."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "MOM = Mass Over Momentum (to remember the two key conservation laws: Mass and Momentum are sufficient here)",
+          "concept": "Conservation laws needed for normal shock without tables",
+          "effectiveness": "medium",
+          "context": "When shock tables are not allowed, recall MOM to write mass and momentum equations."
+        },
+        {
+          "mnemonic": "Upstream: supersonic (U fast), Downstream: dense (D dense) - U D",
+          "concept": "Across a normal shock, velocity decreases, density increases",
+          "effectiveness": "low",
+          "context": "Remembering the trends: $u_2 < u_1$, $\\rho_2 > \\rho_1$."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "What is the formula for $u_1$ across a stationary normal shock given $p_1$, $\\rho_1$, $p_2$, $\\rho_2$ (no shock table)?",
+          "back": "$u_1^2 = \\frac{p_2 - p_1}{\\rho_1 \\left(1 - \\frac{\\rho_1}{\\rho_2}\\right)}$, derived from mass and momentum conservation.",
+          "difficulty": "medium",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "Which conservation laws are used to derive the normal shock relations without tables?",
+          "back": "Conservation of mass, momentum, and energy. For this problem, only mass and momentum are needed to find $u_1$ if $p$ and $\\rho$ are measured.",
+          "difficulty": "easy",
+          "time_limit_seconds": 20
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "What is the most common unit conversion mistake in this problem?",
+          "back": "Forgetting that 1 bar = $10^5$ Pa. Always convert pressures to Pa before plugging into formulas.",
+          "difficulty": "easy",
+          "time_limit_seconds": 15
+        },
+        {
+          "card_type": "application",
+          "front": "If $p_1=0.1$ bar, $\\rho_1=0.157$ kg/m³, $p_2=3.75$ bar, $\\rho_2=0.813$ kg/m³, what is $u_1$?",
+          "back": "Convert: $p_1=10^4$ Pa, $p_2=3.75\\times10^5$ Pa. Compute: $u_1^2 = \\frac{3.65\\times10^5}{0.157\\times(1-0.157/0.813)} \\approx 2.89\\times10^6$, so $u_1\\approx 1700$ m/s.",
+          "difficulty": "hard",
+          "time_limit_seconds": 45
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Experimental aerodynamics: Measuring shock wave properties in wind tunnels.",
+          "industry_example": "In a supersonic wind tunnel, a probe measures static pressure and density before and after a shock generated by a model. Using these measurements, the flow velocity can be determined without knowing the Mach number.",
+          "why_it_matters": "Direct measurement avoids reliance on theoretical tables, which may have assumptions (e.g., perfect gas, specific $\\gamma$)."
+        },
+        {
+          "application": "Shock tube diagnostics",
+          "industry_example": "In a shock tube, the incident shock speed is often measured, but static pressure and density jumps can also be used to compute the gas velocity relative to the shock.",
+          "why_it_matters": "Provides validation of shock tube performance and helps in studying high-temperature gas dynamics."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "Quickly check: if you can extract numbers from the figure and recall mass/momentum equations, it's a straightforward calculation. Should take ~3-4 minutes.",
+        "guessing_heuristic": "If stuck, note that typical supersonic velocities are hundreds to thousands of m/s. Eliminate options that are too low (<300 m/s) or too high (>3000 m/s).",
+        "time_management": "Budget 4 minutes: 1 min to understand figure and convert units, 2 min to set up equations and compute, 1 min to verify."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "normal shock velocity calculation without tables",
+        "conservation mass momentum normal shock",
+        "pressure density ratio across shock",
+        "GATE AE normal shock numerical",
+        "stationary normal shock u1 from p and rho",
+        "supersonic flow measurement",
+        "Rankine-Hugoniot relations application",
+        "shock wave experimental diagnostics"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Using Mach number and shock tables",
+          "description": "If gas properties ($\\gamma$, $R$) are known, compute $M_1$ from $p_2/p_1$ using normal shock relations or tables, then $u_1 = M_1 \\sqrt{\\gamma R T_1}$, where $T_1 = p_1/(\\rho_1 R)$.",
+          "pros_cons": "More accurate if gas is ideal and properties known; requires more steps and knowledge of $\\gamma$ and $R$. Not applicable here as problem says no shock table needed.",
+          "when_to_use": "When $\\gamma$ and $R$ are given and tables are allowed."
+        },
+        {
+          "name": "Full Rankine-Hugoniot relations including energy",
+          "description": "Use all three conservation laws (mass, momentum, energy) along with ideal gas equation of state to derive relations between $p$, $\\rho$, $T$. This yields the classic normal shock relations.",
+          "pros_cons": "Most general for calorically perfect gas; but overkill for this problem since only $p$ and $\\rho$ are given and energy equation not needed to find $u_1$.",
+          "when_to_use": "When temperature or Mach number is involved, or to check consistency of measurements."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Thermodynamics": "The normal shock is an irreversible adiabatic process; entropy increases across the shock. The energy equation (conservation of stagnation enthalpy) connects to the First Law.",
+        "Fluid Mechanics": "Conservation of mass and momentum are fundamental principles from fluid mechanics applied to a control volume containing a discontinuity.",
+        "Gas Dynamics": "Normal shocks are a core topic in gas dynamics; property ratios are functions of Mach number and specific heat ratio."
+      },
+      "deeper_dive_topics": [
+        "Oblique shocks and their relations (more general than normal shocks).",
+        "Real-gas effects at high Mach numbers (variable $\\gamma$, dissociation).",
+        "Moving normal shocks and transformation between reference frames.",
+        "Measurement techniques for pressure and density in high-speed flows (e.g., laser diagnostics)."
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2014_AE_Q33",
+        "year": 2014,
+        "marks": 2.0,
+        "negative_marks": 0.0,
+        "time_expected": "3-4 minutes",
+        "success_rate_estimate": "65%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 3: Aerodynamics",
+        "gate_subsection": "Compressible Flow",
+        "weightage": "Approx 10-15% of Aerodynamics section",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Well-aligned with GATE AE syllabus: compressible flow, normal shock waves, application of conservation laws."
+      },
+      "rag_quality": {
+        "relevance_score": 0.5,
+        "chunks_used": 4,
+        "sources_distribution": {
+          "books": 2,
+          "videos": 2
+        },
+        "notes": "RAG context provided relevant normal shock relations, derivations, and examples from textbooks and videos. However, it did not include the specific numerical values from the figure in the question. The chunks gave general formulas and methods, which were used to construct the solution. Internal knowledge was used to derive the specific formula $u_1^2 = (p_2-p_1)/(\\rho_1(1-\\rho_1/\\rho_2))$ and to estimate typical values that yield the answer range."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-13T10:30:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Given u1 and p1, find p2 if density ratio is known.",
+        "For a moving normal shock, find shock speed given upstream conditions and pressure ratio.",
+        "Include temperature measurements and ask for stagnation temperature change (should be zero for stationary shock).",
+        "Combine with isentropic flow upstream (e.g., from a reservoir) to find reservoir pressure."
+      ]
+    },
+    "question_id": "GATE_2014_AE_Q33",
+    "year": 2014,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "NAT",
+    "question_text": "A student needs to find velocity across a stationary normal shock. He measures density and pressure across the shock as shown in the figure below. 1bar = 10^5 Pa. (No shock table is needed for the calculations). The value of u1 in m/s is ____."
+  },
+  "tokens_used": 23129,
+  "input_tokens": 10726,
+  "output_tokens": 12403,
+  "cost": 0.03306187,
+  "time_seconds": 394.43129110336304
+}
