@@ -1,0 +1,433 @@
+{
+  "model_name": "gpt_5_1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "mathematical_derivation",
+      "media_type": "text_only",
+      "combined_type": "mathematical_derivation_text_only",
+      "weight_strategy": "MATH_WEIGHTED",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "The question requires solving a second-order differential equation with boundary conditions, which involves finding the general solution and applying the boundary conditions to determine the constants. This is a multi-step process and requires a good understanding of differential equations.",
+      "difficulty_score": 7,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": false,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "A",
+        "is_correct": true,
+        "confidence": 0.98,
+        "confidence_type": "single_model",
+        "reasoning": "Rewrite the ODE:\n\n\\(-9\\dfrac{d^2u}{dx^2} + u = 5x \\Rightarrow u'' - \\dfrac{1}{9}u = -\\dfrac{5}{9}x\\).\n\n1) Solve the homogeneous equation \\(u_h'' - \\dfrac{1}{9}u_h = 0\\). Characteristic equation: \\(r^2 - \\dfrac{1}{9} = 0 \\Rightarrow r = \\pm \\dfrac{1}{3}\\). So\n\\(u_h(x) = C_1 e^{x/3} + C_2 e^{-x/3}\\).\n\n2) Find a particular solution for the RHS \\(-\\dfrac{5}{9}x\\). Try a linear form \\(u_p = ax + b\\). Then \\(u_p'' = 0\\), substitute:\n\\(0 - \\dfrac{1}{9}(ax + b) = -\\dfrac{5}{9}x\\) \\(\\Rightarrow -ax - b = -5x\\).\nMatching coefficients: \\(a = 5\\), \\(b = 0\\). So \\(u_p = 5x\\).\n\nGeneral solution: \\(u(x) = C_1 e^{x/3} + C_2 e^{-x/3} + 5x\\).\n\n3) Apply boundary conditions.\nBC1: \\(u(0) = 0\\):\n\\(C_1 + C_2 + 0 = 0 \\Rightarrow C_2 = -C_1\\).\nSo \\(u(x) = C_1(e^{x/3} - e^{-x/3}) + 5x\\).\n\nBC2: \\(\\dfrac{du}{dx}\\big|_{x=3} = 0\\).\nCompute derivative:\n\\(u'(x) = C_1\\left(\\tfrac{1}{3}e^{x/3} + \\left(-\\tfrac{1}{3}\\right)(-e^{-x/3})\\right) + 5 = C_1\\tfrac{1}{3}(e^{x/3} + e^{-x/3}) + 5\\).\nAt \\(x=3\\):\n\\(0 = u'(3) = C_1\\tfrac{1}{3}(e + e^{-1}) + 5\\).\nThus\n\\(C_1\\tfrac{1}{3}(e + e^{-1}) = -5\\Rightarrow C_1 = -\\dfrac{15}{e + e^{-1}}\\).\nSimplify denominator: \\(e + e^{-1} = \\dfrac{e^2 + 1}{e}\\Rightarrow C_1 = -15\\dfrac{e}{e^2 + 1}\\).\n\nTherefore\n\\(u(x) = -15\\dfrac{e}{1+e^2}(e^{x/3} - e^{-x/3}) + 5x = \\dfrac{15e}{1+e^2}(e^{-x/3} - e^{x/3}) + 5x\\).\n\nThis matches option A exactly. Options B, C, and D either have the wrong sign combination of exponentials or incorrect particular solution (polynomial instead of linear)."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Rewrite the ODE in standard form: divide by -9 to get $u'' - \\tfrac{1}{9}u = -\\tfrac{5}{9}x$.",
+          "Solve the homogeneous equation $u_h'' - \\tfrac{1}{9}u_h = 0$ to get $u_h = C_1 e^{x/3} + C_2 e^{-x/3}$.",
+          "Assume a particular solution of the form $u_p = ax + b$ for the linear RHS, substitute, and find $u_p = 5x$.",
+          "Form the general solution $u = C_1 e^{x/3} + C_2 e^{-x/3} + 5x$.",
+          "Apply boundary condition $u(0)=0$ to relate $C_1$ and $C_2$ and obtain $C_2 = -C_1$.",
+          "Compute $u'(x)$, apply $u'(3)=0$, and solve for $C_1$ as $C_1 = -15e/(1+e^2)$.",
+          "Substitute $C_1$ back to get $u(x) = \\dfrac{15e}{1+e^2}(e^{-x/3} - e^{x/3}) + 5x$ and match with option A."
+        ],
+        "formulas_used": [
+          "$u'' - \\frac{1}{9}u = -\\frac{5}{9}x$",
+          "$r^2 - \\frac{1}{9} = 0$",
+          "$u_h(x) = C_1 e^{x/3} + C_2 e^{-x/3}$",
+          "$u_p = ax + b$",
+          "$u(x) = u_h(x) + u_p(x)$",
+          "$u'(x) = C_1\\tfrac{1}{3}(e^{x/3} + e^{-x/3}) + 5$"
+        ],
+        "estimated_time_minutes": 3
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Structures",
+          "confidence": 0.7
+        },
+        "topic": {
+          "name": "Boundary value problems for ODEs (1D structural/thermal models)",
+          "syllabus_ref": "Section 1 Engineering Mathematics -> Differential equations, boundary value problems"
+        },
+        "concepts": [
+          {
+            "name": "Second-order linear ODE with constant coefficients",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Boundary value problems and boundary conditions",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Method of undetermined coefficients for particular solution",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Exponential solutions and characteristic equation",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Application of derivative boundary condition",
+            "importance": "tertiary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Solving homogeneous linear ODEs with constant coefficients",
+          "Finding particular solutions using method of undetermined coefficients",
+          "Applying boundary conditions to determine integration constants",
+          "Differentiation of exponential functions",
+          "Algebraic manipulation and simplification of expressions"
+        ],
+        "helpful": [
+          "Physical meaning of boundary conditions in beams or heat conduction",
+          "Recognizing when to choose polynomial vs exponential trial solutions"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Solving homogeneous linear ODEs with constant coefficients",
+            "requires: Method of undetermined coefficients for non-homogeneous terms",
+            "enables: Solving 1D beam-column or heat conduction boundary value problems",
+            "enables: Understanding eigenvalue problems and Green's function methods"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Easy",
+        "score": 3,
+        "complexity_breakdown": {
+          "conceptual": 3,
+          "mathematical": 4,
+          "problem_solving": 3
+        },
+        "estimated_solve_time_seconds": 150,
+        "expected_accuracy_percent": 80,
+        "difficulty_factors": [
+          "Requires careful handling of signs when dividing by -9",
+          "Derivative boundary condition at x=3 can cause algebra slips",
+          "Need to simplify $e + e^{-1}$ correctly to match option form"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Advanced Engineering Mathematics",
+          "author": "Erwin Kreyszig",
+          "chapter_number": "2",
+          "chapter_title": "Second-Order Linear Differential Equations",
+          "section": "2.5 Boundary-Value Problems",
+          "page_range": "",
+          "complexity": "introductory",
+          "relevance_score": 0.95,
+          "source": "model_consensus",
+          "text_snippet": ""
+        },
+        {
+          "source_type": "book",
+          "book": "Higher Engineering Mathematics",
+          "author": "B.S. Grewal",
+          "chapter_number": "11",
+          "chapter_title": "Linear Differential Equations of Second Order",
+          "section": "Boundary value problems",
+          "page_range": "",
+          "complexity": "introductory",
+          "relevance_score": 0.9,
+          "source": "model_consensus",
+          "text_snippet": ""
+        },
+        {
+          "source_type": "book",
+          "book": "Aircraft Structures for Engineering Students",
+          "author": "T.H.G. Megson",
+          "chapter_number": "8",
+          "chapter_title": "Columns",
+          "section": "",
+          "page_range": "",
+          "complexity": "intermediate",
+          "relevance_score": 0.6,
+          "source": "rag_retrieval",
+          "text_snippet": "The derivation clearly shows that the axial load P introduces the $\\lambda^2 v$ term, which changes the governing equation from a simple integration problem (for basic beams) to a second-order differential equation."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. P.N. Agrawal and Prof. D.N. Pandey",
+          "timestamp_start": "00:10:00",
+          "timestamp_end": "00:15:25",
+          "video_url": "",
+          "book_reference": "Erwin Kreyszig - Advanced Engineering Mathematics",
+          "topic_covered": "Introduction to boundary value problems for second-order ODEs",
+          "relevance_score": 0.7,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. P.N. Agrawal and Prof. D.N. Pandey",
+          "timestamp_start": "00:25:12",
+          "timestamp_end": "00:31:46",
+          "video_url": "https://www.youtube.com/watch?v=vHoT1PvD0Jc",
+          "book_reference": "Erwin Kreyszig - Advanced Engineering Mathematics",
+          "topic_covered": "Sturm-Liouville problems and eigenvalue-type boundary conditions",
+          "relevance_score": 0.5,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "First Principles Derivation",
+        "total_steps": 7,
+        "solution_path": "Standardize ODE \\u2192 Solve homogeneous part \\u2192 Find particular solution \\u2192 Apply boundary conditions \\u2192 Match with options",
+        "key_insights": [
+          "Recognize that a linear RHS suggests a polynomial particular solution of degree 1",
+          "Use the first boundary condition to reduce constants to a single parameter before using the derivative condition",
+          "Algebraic simplification of $e + e^{-1}$ is needed to see the match with the given option"
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$r^2 - \\frac{1}{9} = 0$",
+          "name": "Characteristic equation for homogeneous ODE",
+          "conditions": "Applies to linear ODE $u'' - \\frac{1}{9}u = 0$ with constant coefficients",
+          "type": "equation",
+          "relevance": "Used to find the exponential form of the homogeneous solution"
+        },
+        {
+          "formula": "$u(x) = C_1 e^{x/3} + C_2 e^{-x/3} + 5x$",
+          "name": "General solution of non-homogeneous ODE",
+          "conditions": "After finding homogeneous and particular solutions",
+          "type": "equation",
+          "relevance": "Central expression to which boundary conditions are applied"
+        },
+        {
+          "formula": "$u'(x) = C_1\\frac{1}{3}(e^{x/3} + e^{-x/3}) + 5$",
+          "name": "Derivative of general solution",
+          "conditions": "Needed for derivative boundary condition at $x=3$",
+          "type": "equation",
+          "relevance": "Allows enforcing $u'(3)=0$ to determine the constant"
+        },
+        {
+          "formula": "$e + e^{-1} = \\frac{e^2 + 1}{e}$",
+          "name": "Algebraic identity for exponentials",
+          "conditions": "Used to simplify constant $C_1$",
+          "type": "equation",
+          "relevance": "Necessary to express the constant in the same form as the options"
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Deflection of a beam or column under distributed loading with mixed displacement and slope boundary conditions",
+          "Steady one-dimensional heat conduction in a fin with specified temperature at one end and insulated condition at the other"
+        ],
+        "specific_systems": [
+          "Aircraft wing stringer modeled as a 1D beam with one end clamped in displacement and the other end with zero bending moment (slope condition)",
+          "Cooling fins on avionics heat sinks with base temperature fixed and tip insulated"
+        ],
+        "practical_relevance": "Being able to solve such boundary value problems is essential for predicting structural deflections and temperature distributions, which directly affect safety margins and performance in aerospace components."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Forgetting to divide the entire equation by -9 correctly, leading to a wrong sign in front of the $u$ term.",
+          "why_students_make_it": "They rush and only divide the second-derivative term, overlooking the other terms.",
+          "type": "Calculation",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Write an explicit intermediate step: $-9u'' + u = 5x \\Rightarrow u'' - \\tfrac{1}{9}u = -\\tfrac{5}{9}x$ and check each term.",
+          "consequence": "Leads to a different characteristic equation and completely wrong homogeneous solution."
+        },
+        {
+          "mistake": "Choosing an exponential particular solution instead of a polynomial for the linear RHS $5x$.",
+          "why_students_make_it": "They associate exponentials with the homogeneous solution and carry that habit into the particular part.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Remember: for polynomial RHS of degree $n$, try a polynomial of degree $n$ for the particular solution (unless it overlaps with homogeneous).",
+          "consequence": "Extra algebra and usually no solution or inconsistent equations for coefficients."
+        },
+        {
+          "mistake": "Differentiating $C_2 e^{-x/3}$ incorrectly, missing the negative sign or factor $1/3$.",
+          "why_students_make_it": "Sign and factor errors are common under time pressure.",
+          "type": "Sign Error",
+          "severity": "Medium",
+          "frequency": "common",
+          "how_to_avoid": "Differentiate symbolically: $\\frac{d}{dx}e^{-x/3} = -\\tfrac{1}{3}e^{-x/3}$; write this separately before multiplying by constants.",
+          "consequence": "Wrong expression for $u'(x)$, so the derivative boundary condition gives an incorrect constant."
+        },
+        {
+          "mistake": "Not simplifying $e + e^{-1}$ properly, so the final expression does not look like any option and causes confusion.",
+          "why_students_make_it": "They stop one step before simplification and think the answer is mismatched.",
+          "type": "Calculation",
+          "severity": "Low",
+          "frequency": "occasional",
+          "how_to_avoid": "Practice simplifying expressions like $e + e^{-1}$ and compare structurally with options (look for common factors like $e$).",
+          "consequence": "May incorrectly reject the correct option or waste time redoing algebra."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "RHS polynomial of degree n \\u2192 Try polynomial of degree n",
+          "concept": "Choosing the form of particular solution in method of undetermined coefficients",
+          "effectiveness": "high",
+          "context": "When deciding trial functions for non-homogeneous linear ODEs with constant coefficients"
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "What is the general solution of $u'' - au = 0$ where $a>0$ is constant?",
+          "back": "$u(x) = C_1 e^{\\sqrt{a}x} + C_2 e^{-\\sqrt{a}x}$",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "For a non-homogeneous ODE with RHS $5x$, what trial form should you choose for the particular solution?",
+          "back": "A linear polynomial: $u_p = ax + b$ (unless this duplicates a homogeneous solution).",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "application",
+          "front": "Given $u(x) = C_1 e^{x/3} + C_2 e^{-x/3} + 5x$ and $u(0)=0$, what relation holds between $C_1$ and $C_2$?",
+          "back": "Substitute $x=0$: $C_1 + C_2 = 0 \\Rightarrow C_2 = -C_1$.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "What is $\\dfrac{d}{dx}(e^{-x/3})$?",
+          "back": "$\\dfrac{d}{dx}(e^{-x/3}) = -\\tfrac{1}{3}e^{-x/3}$ (note both the minus sign and the $1/3$ factor).",
+          "difficulty": "easy",
+          "time_limit_seconds": 20
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "In a boundary value problem, how do boundary conditions differ from initial conditions?",
+          "back": "Boundary conditions are specified at different points in the domain (e.g., $x=0$ and $x=L$), while initial conditions are all given at a single point (e.g., $t=0$).",
+          "difficulty": "medium",
+          "time_limit_seconds": 45
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Steady temperature distribution in a 1D fin with base at fixed temperature and insulated tip",
+          "industry_example": "Electronics cooling fins in avionics: base attached to a hot component (fixed temperature), tip often approximated as insulated (zero heat flux, analogous to derivative boundary condition).",
+          "why_it_matters": "Incorrect modeling of boundary conditions leads to wrong temperature predictions and potential overheating or overdesign."
+        },
+        {
+          "application": "Deflection of a slender beam with one end fixed in displacement and the other with zero slope or moment",
+          "industry_example": "Aircraft internal stiffeners or stringers modeled as beams with mixed boundary conditions to predict buckling and deflection.",
+          "why_it_matters": "Accurate deflection prediction is crucial for structural integrity and avoiding resonance or failure."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "Scan and see it is a standard second-order linear ODE with simple polynomial RHS and two boundary conditions; if you are comfortable with such ODEs, this is a quick scoring question.",
+        "guessing_heuristic": "If stuck, note that the particular solution must be linear in $x$ (so eliminate options with cubic terms) and the homogeneous part should be exponential, not trigonometric, because the characteristic roots are real.",
+        "time_management": "Aim to finish within 2-3 minutes: 1 minute to solve homogeneous and particular, 1 minute to apply BCs, and 0.5 minute to match with options."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "second order linear ODE boundary value problem",
+        "method of undetermined coefficients polynomial RHS",
+        "GATE AE boundary value ODE example",
+        "homogeneous and particular solution exponential",
+        "mixed boundary conditions u(0)=0 du/dx(3)=0",
+        "engineering mathematics Kreyszig boundary value problems",
+        "beam deflection differential equation solution"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Green's function approach",
+          "description": "Construct the Green's function for the operator $L[u] = -9u'' + u$ with boundary conditions $u(0)=0$, $u'(3)=0$, then represent the solution as an integral of the Green's function times the source term $5x$.",
+          "pros_cons": "Pros: Generalizes well to more complex forcing and is conceptually powerful. Cons: Overkill for a simple constant-coefficient ODE; more algebra and time-consuming in an exam.",
+          "when_to_use": "Useful in advanced courses or research when dealing with arbitrary forcing functions or when superposition of multiple load cases is needed."
+        },
+        {
+          "name": "Numerical shooting method",
+          "description": "Convert the boundary value problem to an initial value problem by guessing the missing initial slope, integrate numerically, and adjust the guess until the boundary condition at $x=3$ is satisfied.",
+          "pros_cons": "Pros: Works for nonlinear or variable-coefficient ODEs where analytic solutions are hard. Cons: Requires numerical tools and iteration; not suitable for a closed-form exam question.",
+          "when_to_use": "When the ODE is too complex for analytic methods, especially in practical engineering simulations."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Flight Mechanics": "Similar second-order ODEs appear in small-perturbation longitudinal and lateral dynamics, where boundary or initial conditions define motion.",
+        "Structures": "Beam bending and column buckling problems lead to boundary value ODEs with similar solution techniques.",
+        "Heat Transfer": "Steady 1D conduction with internal generation or fins leads to linear ODEs with boundary conditions at two ends.",
+        "Control Systems": "Characteristic equations and exponential solutions are analogous to solving homogeneous parts of state-space systems."
+      },
+      "deeper_dive_topics": [
+        "Green's functions for one-dimensional boundary value problems",
+        "Sturm-Liouville theory and eigenfunction expansions",
+        "Finite difference methods for boundary value problems",
+        "Shooting and finite element methods for structural ODEs"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2014_AE_Q29",
+        "year": 2014,
+        "marks": 2.0,
+        "negative_marks": 0.66,
+        "time_expected": "2-3 minutes",
+        "success_rate_estimate": "80%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 1: Engineering Mathematics",
+        "gate_subsection": "Differential equations: solution of ordinary differential equations, boundary value problems",
+        "weightage": "10-15%",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Good representative question for testing basic boundary value problem solving with constant coefficients and simple forcing."
+      },
+      "rag_quality": {
+        "relevance_score": 0.55,
+        "chunks_used": 3,
+        "sources_distribution": {
+          "books": 1,
+          "videos": 2
+        },
+        "notes": "RAG provided general background on boundary value problems, Sturm-Liouville problems, and beam-column ODEs, which conceptually align with this question but did not give the exact equation. Core solution steps (homogeneous + particular + BCs) were derived from internal knowledge."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-21T00:00:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Modify the RHS to $5x^2$ and ask for the new solution, testing choice of quadratic particular solution.",
+        "Change boundary conditions to $u(0)=0$ and $u(3)=1$ and ask for the constants, emphasizing displacement-type BCs.",
+        "Ask for the maximum value of $u(x)$ in the interval (0,3) for the given solution, combining calculus with ODEs.",
+        "Pose the same ODE but ask students to set up the Green's function for the operator with given boundary conditions."
+      ]
+    },
+    "question_id": "GATE_2014_AE_Q29",
+    "year": 2014,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "MCQ",
+    "question_text": "Solution to the boundary-value problem -9 d^2u/dx^2 + u = 5x, 0 < x < 3 with u(0) = 0, du/dx at x=3 = 0 is"
+  },
+  "tokens_used": 18266,
+  "input_tokens": 12380,
+  "output_tokens": 5886,
+  "cost": 0.074335,
+  "time_seconds": 46.6554388999939
+}
