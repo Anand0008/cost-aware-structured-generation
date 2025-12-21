@@ -1,0 +1,390 @@
+{
+  "model_name": "deepseek_r1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "image_based",
+      "combined_type": "numerical_calculation_image_based",
+      "weight_strategy": "MATH_IMAGE_HYBRID",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "This is a numerical calculation problem that requires combining concepts of spring stiffness, beam bending, and natural frequency. It involves multiple steps to calculate the equivalent stiffness and then the natural frequency, making it a medium-hard problem.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "B",
+        "is_correct": true,
+        "confidence": 0.98,
+        "confidence_type": "single_model",
+        "reasoning": "The system consists of a mass attached to a spring, which is attached to a cantilever beam. The beam and spring act as two stiffnesses in series. Using the cantilever beam stiffness formula $k_{beam} = \\frac{3EI}{L^3}$ and series combination $\\frac{1}{k_{eq}} = \\frac{1}{k_{spring}} + \\frac{1}{k_{beam}}$, the natural frequency $\\omega_n = \\sqrt{k_{eq}/m}$ computes to approximately 20.36 rad/s, matching option B."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Step 1: Identify system components and configuration from the image. A mass m = 1 kg hangs from a spring (k_spring = 500 N/m) attached to the free end of a massless cantilever beam (length L = 0.6 m, flexural rigidity EI, with E = 210 GPa, I = 8.33e-10 m^4).",
+          "Step 2: Compute the equivalent stiffness of the cantilever beam at its free end using the formula for a point load: $k_{beam} = \\frac{3EI}{L^3}$.",
+          "Step 3: Calculate numerical values: $EI = (210 \\times 10^9) \\times (8.33 \\times 10^{-10}) = 174.93 \\, \\text{N·m}^2$, $L^3 = 0.216 \\, \\text{m}^3$, so $k_{beam} = \\frac{3 \\times 174.93}{0.216} \\approx 2429.58 \\, \\text{N/m}$.",
+          "Step 4: Since the beam and spring are in series (force same, deflections add), the equivalent stiffness is given by: $\\frac{1}{k_{eq}} = \\frac{1}{k_{spring}} + \\frac{1}{k_{beam}}$. Thus, $k_{eq} = \\left(\\frac{1}{500} + \\frac{1}{2429.58}\\right)^{-1} \\approx 414.66 \\, \\text{N/m}$.",
+          "Step 5: Compute the fundamental natural angular frequency: $\\omega_n = \\sqrt{\\frac{k_{eq}}{m}} = \\sqrt{414.66} \\approx 20.36 \\, \\text{rad/s}$."
+        ],
+        "formulas_used": [
+          "$k_{beam} = \\frac{3EI}{L^3}$",
+          "$\\frac{1}{k_{eq}} = \\frac{1}{k_1} + \\frac{1}{k_2}$ (series springs)",
+          "$\\omega_n = \\sqrt{\\frac{k_{eq}}{m}}$"
+        ],
+        "estimated_time_minutes": 3
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Structures",
+          "confidence": 0.95
+        },
+        "topic": {
+          "name": "Vibration of Beams",
+          "syllabus_ref": "Section 4: Structures -> Vibration"
+        },
+        "concepts": [
+          {
+            "name": "Equivalent stiffness of cantilever beam",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Series combination of springs",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Natural frequency of SDOF system",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Beam deflection theory",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Beam deflection formulas (cantilever with end load)",
+          "Spring stiffness and series/parallel combinations",
+          "Natural frequency of single-degree-of-freedom (SDOF) spring-mass system"
+        ],
+        "helpful": [
+          "Flexural rigidity (EI)",
+          "Young's modulus and area moment of inertia"
+        ],
+        "dependency_tree": {
+          "Main Concept: Natural frequency of combined spring-beam system": [
+            "requires: Beam stiffness calculation from strength of materials",
+            "requires: Series stiffness combination rule",
+            "requires: SDOF natural frequency formula",
+            "enables: Vibration analysis of real structures with distributed and discrete stiffness"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Medium",
+        "score": 5,
+        "complexity_breakdown": {
+          "conceptual": 5,
+          "mathematical": 4,
+          "problem_solving": 6
+        },
+        "estimated_solve_time_seconds": 180,
+        "expected_accuracy_percent": 60,
+        "difficulty_factors": [
+          "Requires recognizing series combination of beam and spring stiffness",
+          "Need to recall correct beam stiffness formula (cantilever assumption from image)",
+          "Numerical computation with powers of 10"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Aircraft Structures for Engineering Students",
+          "author": "T.H.G. Megson",
+          "chapter_title": "Structural Vibration",
+          "section": "Rayleigh's method and beam vibration",
+          "relevance_score": 0.7,
+          "source": "rag_retrieval",
+          "text_snippet": "Derivation of natural frequency for cantilever beam using energy methods; mentions formula $\\omega = 1.1584 \\sqrt{EI/(mL^3)}$ for beam with tip mass (different configuration)."
+        },
+        {
+          "source_type": "book",
+          "book": "Strength of Materials",
+          "author": "Timoshenko",
+          "chapter_title": "Deflection of Beams",
+          "section": "Cantilever beams",
+          "relevance_score": 0.9,
+          "source": "model_consensus",
+          "text_snippet": "Deflection formula for cantilever with end load: $\\delta = PL^3/(3EI)$, leading to stiffness $k = 3EI/L^3$."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. S.K. Dwivedy and Prof. Rajiv Tiwari",
+          "timestamp_start": "00:35:40",
+          "timestamp_end": "00:38:02",
+          "video_url": "https://www.youtube.com/watch?v=kjIuR7Kr8Hg",
+          "book_reference": "Timoshenko, 'Strength of Materials'",
+          "topic_covered": "Natural frequency of cantilever beam with end mass",
+          "relevance_score": 0.8,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Direct Formula Application with Series Combination",
+        "total_steps": 5,
+        "solution_path": "Beam Stiffness → Series Equivalent Stiffness → Natural Frequency",
+        "key_insights": [
+          "The massless beam acts as a spring with stiffness $3EI/L^3$.",
+          "Beam and given spring are in series because the mass displacement is sum of spring extension and beam tip deflection.",
+          "Always check boundary conditions (cantilever is typical for such problems)."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$k_{beam} = \\frac{3EI}{L^3}$",
+          "name": "Cantilever beam stiffness (transverse)",
+          "conditions": "For a massless cantilever beam with point load at free end, small deflections, linear elastic material.",
+          "type": "equation",
+          "relevance": "Core formula for beam stiffness in this problem."
+        },
+        {
+          "formula": "$\\frac{1}{k_{eq}} = \\frac{1}{k_1} + \\frac{1}{k_2}$",
+          "name": "Series spring combination",
+          "conditions": "Springs connected end-to-end, same force through each.",
+          "type": "equation",
+          "relevance": "To find total stiffness of beam and spring in series."
+        },
+        {
+          "formula": "$\\omega_n = \\sqrt{\\frac{k_{eq}}{m}}$",
+          "name": "Natural frequency of SDOF system",
+          "conditions": "Undamped, single mass, linear spring.",
+          "type": "equation",
+          "relevance": "Final calculation of natural frequency."
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Vibration analysis of aircraft wings with store attachments (mass on a pylon)",
+          "Design of flexible robot arms with end-effector mass"
+        ],
+        "specific_systems": [
+          "Helicopter rotor blade with concentrated mass (e.g., blade tip weights)",
+          "Satellite antenna boom with deployed instrument"
+        ],
+        "practical_relevance": "Predicting natural frequencies is crucial to avoid resonance with external excitation (e.g., engine vibrations) which can lead to catastrophic failure."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Treating the beam and spring as parallel stiffnesses (adding directly) instead of series.",
+          "why_students_make_it": "Misinterpreting the physical configuration from the image or not considering that deflections add.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Draw free-body diagram: the force through spring and beam is same, but total displacement of mass is sum of spring stretch and beam tip deflection. Hence series.",
+          "consequence": "Overestimates stiffness, leading to higher natural frequency (e.g., ~22.36 rad/s, option C)."
+        },
+        {
+          "mistake": "Using wrong beam stiffness formula (e.g., for simply supported or fixed-fixed beam).",
+          "why_students_make_it": "Not recognizing cantilever boundary conditions from the image or lack of practice.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "occasional",
+          "how_to_avoid": "Memorize common beam stiffness formulas and associate with boundary conditions. For cantilever with end load, $k = 3EI/L^3$ is standard.",
+          "consequence": "Incorrect stiffness, possibly getting option A or D."
+        },
+        {
+          "mistake": "Unit inconsistency: not converting E to Pa (using GPa directly without 10^9) or miscalculating powers of 10 in I.",
+          "why_students_make_it": "Rushing through numerical computation.",
+          "type": "Calculation",
+          "severity": "Medium",
+          "frequency": "common",
+          "how_to_avoid": "Write all units explicitly: E = 210 × 10^9 Pa, I = 8.33 × 10^{-10} m^4. Use scientific notation for multiplication.",
+          "consequence": "Answer off by orders of magnitude, possibly getting very small values (option A or D)."
+        },
+        {
+          "mistake": "Forgetting to take square root in natural frequency formula ($\\omega_n = k/m$ instead of $\\sqrt{k/m}$).",
+          "why_students_make_it": "Formula recall error under exam pressure.",
+          "type": "Formula",
+          "severity": "High",
+          "frequency": "rare",
+          "how_to_avoid": "Remember units: natural frequency in rad/s, stiffness in N/m, mass in kg, so $\\sqrt{N/(m·kg)} = \\sqrt{1/s^2} = 1/s$.",
+          "consequence": "Very high frequency (e.g., 414.66 rad/s)."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "Cantilever Stiffness: \"3EI over L-cubed\" (say as '3 E I over L cubed')",
+          "concept": "Stiffness of cantilever beam with end load",
+          "effectiveness": "high",
+          "context": "When you see a fixed-free beam with a point load at free end."
+        },
+        {
+          "mnemonic": "Series Springs: \"Reciprocals add\" (like resistors in parallel)",
+          "concept": "Equivalent stiffness of springs in series",
+          "effectiveness": "medium",
+          "context": "When two springs/elastic elements are connected such that force is same and displacements add."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "What is the stiffness (force per unit deflection) at the free end of a massless cantilever beam of length L, flexural rigidity EI?",
+          "back": "$k = \\frac{3EI}{L^3}$",
+          "difficulty": "easy",
+          "time_limit_seconds": 20
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "How do you combine stiffnesses of two elastic elements (e.g., spring and beam) when they are in series?",
+          "back": "The equivalent stiffness $k_{eq}$ is given by $\\frac{1}{k_{eq}} = \\frac{1}{k_1} + \\frac{1}{k_2}$. The force is the same, deflections add.",
+          "difficulty": "medium",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "In the given problem, why are the beam and spring in series, not parallel?",
+          "back": "Because the mass displacement is the sum of the spring extension and the beam tip deflection, and the force transmitted through both is the same (force on mass = spring force = beam tip force).",
+          "difficulty": "medium",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "numerical_calculation",
+          "front": "Given E=210 GPa, I=8.33e-10 m^4, L=0.6 m, compute beam stiffness k_beam.",
+          "back": "$EI = 174.93 \\, \\text{N·m}^2$, $L^3=0.216 \\, \\text{m}^3$, so $k_{beam} = \\frac{3 \\times 174.93}{0.216} \\approx 2429.58 \\, \\text{N/m}$.",
+          "difficulty": "medium",
+          "time_limit_seconds": 45
+        },
+        {
+          "card_type": "application",
+          "front": "What is the natural frequency (rad/s) of a 1 kg mass attached to an equivalent stiffness of 414.66 N/m?",
+          "back": "$\\omega_n = \\sqrt{414.66/1} \\approx 20.36 \\, \\text{rad/s}$.",
+          "difficulty": "easy",
+          "time_limit_seconds": 20
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Aircraft wing vibration analysis",
+          "industry_example": "A wing can be modeled as a cantilever beam, and an engine pod attached via pylon (spring-like) adds mass. The fundamental frequency must be kept away from rotor frequencies.",
+          "why_it_matters": "Avoid resonance to prevent fatigue failure and ensure passenger comfort."
+        },
+        {
+          "application": "Precision instrument mounting",
+          "industry_example": "A sensitive microscope mounted on a flexible table (spring) which is on a floor that vibrates (beam-like). The combined stiffness affects isolation frequency.",
+          "why_it_matters": "To isolate vibrations for accurate measurements."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "Quickly identify: cantilever beam stiffness + series combination → straightforward calculation. If you know formulas, it's a 2-3 minute problem.",
+        "guessing_heuristic": "If unsure, note that options include 20.36 and 22.36; 22.36 is close to sqrt(500)=22.36, which would be if beam were rigid (only spring). So if you mistakenly neglect beam, you get C. Since beam adds flexibility, frequency should be lower than 22.36, so guess B.",
+        "time_management": "Budget 3 minutes; if stuck, compute k_beam and see if it's larger than k_spring, then equivalent stiffness will be less than k_spring, so ω_n < sqrt(500/1)=22.36, eliminate C and D (3.56 too low). Between A and B, B is plausible."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "cantilever beam stiffness formula",
+        "series spring stiffness combination",
+        "natural frequency SDOF spring mass system",
+        "beam vibration with end mass",
+        "equivalent stiffness of beam and spring",
+        "GATE Aerospace Structures vibration",
+        "flexural rigidity EI calculation",
+        "Rayleigh's method cantilever beam"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Energy method (Rayleigh's quotient)",
+          "description": "Assume a deflection shape for the beam-spring-mass system, compute maximum potential and kinetic energies, equate to find natural frequency.",
+          "pros_cons": "More general, can account for beam mass if not negligible; but more complex and requires good guess for mode shape.",
+          "when_to_use": "When beam mass is significant or for higher accuracy."
+        },
+        {
+          "name": "Finite element analysis",
+          "description": "Model beam as multiple elements, spring as discrete element, solve eigenvalue problem.",
+          "pros_cons": "Highly accurate for complex geometries; but overkill for this simple problem and not feasible in exam.",
+          "when_to_use": "In design phase for real structures."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Strength of Materials": "Beam deflection and stiffness formulas are core topics in strength of materials.",
+        "Dynamics": "Single-degree-of-freedom vibration is a fundamental concept in dynamics.",
+        "Aircraft Structures": "Vibration analysis is crucial for aeroelasticity and structural integrity of wings and control surfaces."
+      },
+      "deeper_dive_topics": [
+        "Effect of beam mass on natural frequency (using Rayleigh's method with assumed mode shape)",
+        "Damped vibration and resonance amplification",
+        "Continuous system vibration (infinite degrees of freedom) versus lumped mass approximation",
+        "Aeroelastic flutter involving interaction of structural vibration with aerodynamic forces"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2014_AE_Q43",
+        "year": 2014,
+        "marks": 2.0,
+        "negative_marks": 0.66,
+        "time_expected": "2-3 minutes",
+        "success_rate_estimate": "60%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 4: Structures",
+        "gate_subsection": "Vibration",
+        "weightage": "~8-10%",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Well-aligned with syllabus topic 'Vibration of beams' and application to combined stiffness systems."
+      },
+      "rag_quality": {
+        "relevance_score": 0.8,
+        "chunks_used": 4,
+        "sources_distribution": {
+          "books": 1,
+          "videos": 3
+        },
+        "notes": "RAG provided highly relevant content on cantilever beam stiffness and natural frequency formulas (Chunks 1, 4, 5) and a video reference explaining the same. Chunk 2 discussed Rayleigh's method for cantilever beam, which is an alternative approach but not directly needed. Chunk 6 was about helical springs, not directly relevant. Overall, RAG supported the solution well, though the series combination concept was not explicitly covered; internal knowledge was used for that."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-13T10:30:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Change beam boundary conditions (simply supported, fixed-fixed) and ask for natural frequency.",
+        "Include mass of the beam and use Rayleigh's method to approximate fundamental frequency.",
+        "Add damping and ask for damping ratio or frequency of damped vibration.",
+        "Combine spring in parallel with beam (e.g., spring attached alongside beam)."
+      ]
+    },
+    "question_id": "GATE_2014_AE_Q43",
+    "year": 2014,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "MCQ",
+    "question_text": "1kg mass is hanging from a spring of stiffness 500N/m attached to a massless, symmetric beam of length 0.6m, moment of inertia about the bending axis I = 8.33 x 10^-10 m^4 and Young's modulus E=210GPa as shown in the figure. The fundamental natural frequency (in rad/s) of the system is"
+  },
+  "tokens_used": 16748,
+  "input_tokens": 10144,
+  "output_tokens": 6604,
+  "cost": 0.020041959999999998,
+  "time_seconds": 205.38358855247498
+}
