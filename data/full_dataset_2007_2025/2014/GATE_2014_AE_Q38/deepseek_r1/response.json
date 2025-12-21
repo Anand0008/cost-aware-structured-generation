@@ -1,0 +1,399 @@
+{
+  "model_name": "deepseek_r1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "image_based",
+      "combined_type": "numerical_calculation_image_based",
+      "weight_strategy": "MATH_IMAGE_HYBRID",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "This is a numerical calculation problem involving beam bending. It requires understanding of bending stress, Young's modulus, and applying appropriate formulas to calculate the slope. The image is necessary to understand the geometry of the beam and loading. It involves multiple steps to solve, including calculating the moment of inertia and applying beam deflection formulas.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "0.125 rad (or 0.12 to 0.13 as per answer key)",
+        "is_correct": true,
+        "confidence": 0.95,
+        "confidence_type": "single_model",
+        "reasoning": "The beam is simply supported between supports with a central load. The slope at the support for a simply supported beam with a central concentrated load is given by $\\theta = \\frac{PL^2}{16EI}$. Since the overhangs are unloaded, the slope is constant along them, so the slope at tip S equals the slope at the adjacent support. Using L=1.2 m, P=50 N, E=200 GPa, and I calculated from the cross-section (10 mm x 6 mm, with the 6 mm dimension as depth for bending about the neutral axis), we get I = (10e-3)*(6e-3)^3/12 = 1.8e-10 m^4. Plugging in yields $\\theta = \\frac{50 * (1.2)^2}{16 * 200 \\times 10^9 * 1.8 \\times 10^{-10}} = 0.125$ rad, which matches the answer key range (0.12 to 0.13)."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Step 1: Understand the beam configuration. Total length 1.8 m, simply supported span L = 1.2 m, overhang of 0.3 m on each side. Load P = 50 N at the center of the beam (which is also the center of the supported span).",
+          "Step 2: Recognize that the unloaded overhangs remain straight. Therefore, the slope at the free tip S equals the slope at the adjacent support (left support).",
+          "Step 3: Recall the formula for slope at the support of a simply supported beam with a central concentrated load: $\\theta_{support} = \\frac{PL^2}{16EI}$, where P is load, L is span between supports, E is Young's modulus, I is area moment of inertia.",
+          "Step 4: Calculate the moment of inertia I for the rectangular cross-section (10 mm x 6 mm). Assuming bending in the plane of the load, the depth (vertical dimension) is 6 mm = 0.006 m, and width is 10 mm = 0.01 m. Then, $I = \\frac{b h^3}{12} = \\frac{0.01 \\times (0.006)^3}{12} = 1.8 \\times 10^{-10}$ m^4.",
+          "Step 5: Plug in values: P = 50 N, L = 1.2 m, E = 200 GPa = 200 × 10^9 Pa, I = 1.8 × 10^{-10} m^4.",
+          "Step 6: Compute: $\\theta = \\frac{50 \\times (1.2)^2}{16 \\times 200 \\times 10^9 \\times 1.8 \\times 10^{-10}} = \\frac{72}{576} = 0.125$ rad."
+        ],
+        "formulas_used": [
+          "$\\theta = \\frac{PL^2}{16EI}$ (Slope at support for simply supported beam with central point load)",
+          "$I = \\frac{b h^3}{12}$ (Moment of inertia for rectangular cross-section)"
+        ],
+        "estimated_time_minutes": 5
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Structures",
+          "confidence": 0.98
+        },
+        "topic": {
+          "name": "Beam Deflection and Slope",
+          "syllabus_ref": "Section 4: Structures - Deflection of Beams"
+        },
+        "concepts": [
+          {
+            "name": "Slope of beams",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Simply supported beam with concentrated load",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Moment of inertia",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Overhang effect",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Understanding of beam supports (simply supported, overhang)",
+          "Formula for slope of simply supported beam with central load",
+          "Calculation of moment of inertia for rectangular cross-section"
+        ],
+        "helpful": [
+          "Moment-area method for beam deflection",
+          "Superposition principle for beams"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Statics to find reactions",
+            "requires: Bending moment diagram for simply supported beam",
+            "requires: Relationship between moment, curvature, slope, and deflection",
+            "enables: Analysis of more complex beam configurations"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Medium",
+        "score": 6,
+        "complexity_breakdown": {
+          "conceptual": 5,
+          "mathematical": 7,
+          "problem_solving": 6
+        },
+        "estimated_solve_time_seconds": 180,
+        "expected_accuracy_percent": 65,
+        "difficulty_factors": [
+          "Need to interpret beam geometry from image/description",
+          "Must correctly identify which dimension is depth for moment of inertia",
+          "Understanding that unloaded overhang has constant slope"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Mechanics of Materials",
+          "author": "Beer & Johnston",
+          "chapter_number": "6",
+          "chapter_title": "Deflection of Beams",
+          "section": "Deflection Formulas for Simply Supported Beams",
+          "page_range": "Approx. 400-420",
+          "complexity": "introductory",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval",
+          "text_snippet": "For a simply supported beam of length L with a concentrated load W at its center, the slope at the supports is given by $\\theta_{max} = \\frac{WL^2}{16EI}$."
+        },
+        {
+          "source_type": "book",
+          "book": "Mechanics of Materials",
+          "author": "Timoshenko",
+          "chapter_number": "7",
+          "chapter_title": "Deflection of Beams",
+          "section": "Methods for Deflection Calculation",
+          "page_range": "Approx. 200-220",
+          "complexity": "intermediate",
+          "relevance_score": 0.8,
+          "source": "model_consensus",
+          "text_snippet": "Slope formulas for various beam configurations, including simply supported beams with concentrated and distributed loads."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. Nachiketa Tiwari",
+          "timestamp_start": "00:05:58",
+          "timestamp_end": "00:08:32",
+          "video_url": "https://www.youtube.com/watch?v=uNu3hatDzo8",
+          "book_reference": "Beer & Johnston",
+          "topic_covered": "Slope at support of a simply supported beam with concentrated load",
+          "relevance_score": 0.85,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. S.P. Harsha",
+          "timestamp_start": "00:07:48",
+          "timestamp_end": "00:17:39",
+          "video_url": "https://www.youtube.com/watch?v=Fiow5dsizqI",
+          "book_reference": "Beer & Johnston",
+          "topic_covered": "Example: Simply supported beam with mid-span point load using direct integration",
+          "relevance_score": 0.8,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Direct Formula Application with Geometric Interpretation",
+        "total_steps": 6,
+        "solution_path": "Geometry Interpretation → Slope Formula → Inertia Calculation → Numerical Computation",
+        "key_insights": [
+          "Unloaded overhangs have constant slope, so slope at tip equals slope at adjacent support.",
+          "The central load on the simply supported span is the only load causing bending."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$\\theta = \\frac{PL^2}{16EI}$",
+          "name": "Slope at support for simply supported beam with central point load",
+          "conditions": "Linearly elastic material, small deformations, prismatic beam (constant EI)",
+          "type": "equation",
+          "relevance": "Core formula for calculating the slope at the support"
+        },
+        {
+          "formula": "$I = \\frac{b h^3}{12}$",
+          "name": "Area moment of inertia for rectangular cross-section",
+          "conditions": "Neutral axis through centroid, perpendicular to bending plane",
+          "type": "equation",
+          "relevance": "Needed to compute bending stiffness EI"
+        },
+        {
+          "formula": "$M = \\frac{PL}{4}$",
+          "name": "Maximum bending moment at center for simply supported beam with central load",
+          "conditions": "Same as above",
+          "type": "equation",
+          "relevance": "Contextual understanding of bending moment, though not directly used here"
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Design of aircraft wing spars with overhanging sections",
+          "Bridge decks with cantilevered sidewalks"
+        ],
+        "specific_systems": [
+          "Small UAV wing structure",
+          "Support beams in aircraft landing gear mechanisms"
+        ],
+        "practical_relevance": "Calculating slopes is crucial for ensuring aerodynamic surfaces remain within deformation limits and for clearance checks in mechanical systems."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Using total beam length (1.8 m) instead of supported span (1.2 m) in the slope formula",
+          "why_students_make_it": "Confusion between overall length and effective bending length",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Clearly identify the region between the simple supports where bending occurs due to the load.",
+          "consequence": "Answer off by factor (1.8/1.2)^2 = 2.25, giving ~0.281 rad instead of 0.125 rad"
+        },
+        {
+          "mistake": "Incorrect moment of inertia calculation: using width as depth or vice versa",
+          "why_students_make_it": "Not visualizing which dimension resists bending (the one perpendicular to load)",
+          "type": "Calculation",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Remember: for vertical load, the vertical dimension (height) is 'h' in $I = bh^3/12$. Sketch the cross-section.",
+          "consequence": "If 10 mm is taken as height, I = 5e-10 m^4, slope becomes 0.045 rad, outside answer range"
+        },
+        {
+          "mistake": "Forgetting that the overhang is unloaded and assuming it affects the slope calculation",
+          "why_students_make_it": "Overcomplicating the problem, thinking overhang adds bending",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Recognize that only the loaded span contributes to bending moment; unloaded overhangs simply rotate rigidly.",
+          "consequence": "May try to use superposition unnecessarily, wasting time"
+        },
+        {
+          "mistake": "Unit inconsistency: not converting mm to m, GPa to Pa",
+          "why_students_make_it": "Rushing through calculation, neglecting SI unit coherence",
+          "type": "Units",
+          "severity": "High",
+          "frequency": "very_common",
+          "how_to_avoid": "Convert all dimensions to meters (m), force to N, E to Pa (N/m^2) before plugging into formula.",
+          "consequence": "Answer off by orders of magnitude (e.g., 10^3 or 10^6 times wrong)"
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "SSCL-16: Simply Supported Central Load slope formula has 16 in denominator: $\\theta = PL^2/(16EI)$",
+          "concept": "Remembering the formula for slope at support",
+          "effectiveness": "high",
+          "context": "When solving for simply supported beam with central point load"
+        },
+        {
+          "mnemonic": "Bending Height: For vertical bending, the vertical side is the height (h) in $I = bh^3/12$.",
+          "concept": "Correct orientation for moment of inertia",
+          "effectiveness": "medium",
+          "context": "Rectangular cross-section under vertical load"
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "What is the slope at the support of a simply supported beam of span L with a central point load P?",
+          "back": "$\\theta = \\frac{PL^2}{16EI}$, where E is Young's modulus and I is moment of inertia.",
+          "difficulty": "easy",
+          "time_limit_seconds": 20
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "For an unloaded overhang on a beam, how is the slope at the free end related to the slope at the adjacent support?",
+          "back": "They are equal. The overhang remains straight (constant slope) because no bending moment acts on it (if unloaded).",
+          "difficulty": "medium",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "What is a common mistake in calculating moment of inertia for a 10mm x 6mm rectangular beam under vertical load?",
+          "back": "Using 10mm as height instead of 6mm. The dimension perpendicular to the load (vertical) is the height h. So h = 6 mm, b = 10 mm.",
+          "difficulty": "medium",
+          "time_limit_seconds": 25
+        },
+        {
+          "card_type": "application",
+          "front": "Given P=50 N, L=1.2 m, E=200 GPa, I=1.8e-10 m^4, compute slope using $\\theta = PL^2/(16EI)$.",
+          "back": "$\\theta = \\frac{50 * 1.44}{16 * 200e9 * 1.8e-10} = \\frac{72}{576} = 0.125$ rad.",
+          "difficulty": "hard",
+          "time_limit_seconds": 45
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Aircraft wing design",
+          "industry_example": "Wing spars often have overhangs (like wingtips). Calculating slope ensures that ailerons and wingtips do not deflect excessively under load, maintaining aerodynamic efficiency.",
+          "why_it_matters": "Excessive slope can change angle of attack locally, affecting lift and control."
+        },
+        {
+          "application": "Bridge deck cantilevers",
+          "industry_example": "Footpath overhangs on bridges. The slope at the edge must be limited for pedestrian comfort and safety.",
+          "why_it_matters": "Large slopes can cause tripping hazards or visual discomfort."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "Quickly identify: simply supported span with central load → direct formula. Check overhangs are unloaded → slope constant. Calculate I carefully. Should take 3-4 minutes.",
+        "guessing_heuristic": "If unsure about I, note that answer range is 0.12-0.13; compute with both orientations; only one will fall in range.",
+        "time_management": "Budget 4-5 minutes max; if stuck, guess 0.125 and move on."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "simply supported beam slope formula",
+        "central concentrated load beam deflection",
+        "moment of inertia rectangular beam",
+        "beam overhang slope calculation",
+        "GATE Aerospace structures beam deflection",
+        "Young's modulus calculation",
+        "slope at free end of cantilever",
+        "beam bending problems"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Moment-Area Method",
+          "description": "Compute the area of the M/EI diagram between supports to find the change in slope. For this symmetric case, the slope at support is half the total area of the M/EI diagram between supports.",
+          "pros_cons": "More fundamental, works for variable EI; but longer calculation.",
+          "when_to_use": "When the formula is not remembered or for non-prismatic beams."
+        },
+        {
+          "name": "Superposition",
+          "description": "Treat the beam as a simply supported beam (span 1.2 m) plus two cantilever beams (overhangs) with end moments from reactions. Since overhangs are unloaded, only the simply supported part contributes.",
+          "pros_cons": "Systematic but overkill for this problem.",
+          "when_to_use": "For beams with multiple loads on overhangs."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "subject_name_1": "Aircraft Structures: Similar analysis for wing spars and fuselage frames.",
+        "subject_name_2": "Mechanical Design: Shaft deflection and slope calculations for machinery."
+      },
+      "deeper_dive_topics": [
+        "Shear deformation effects on slope (Timoshenko beam theory)",
+        "Influence of boundary conditions (e.g., semi-rigid supports)",
+        "Deflection and slope for asymmetric loading on beams with overhangs",
+        "Energy methods (Castigliano's theorem) for slope calculation"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2014_AE_Q38",
+        "year": 2014,
+        "marks": 2.0,
+        "negative_marks": 0.0,
+        "time_expected": "4-5 minutes",
+        "success_rate_estimate": "65%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 4: Structures",
+        "gate_subsection": "Deflection of Beams",
+        "weightage": "Approx 5-7% in Structures",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Well-aligned with core beam deflection concepts; tests application of formula and understanding of beam geometry."
+      },
+      "rag_quality": {
+        "relevance_score": 0.7,
+        "chunks_used": 4,
+        "sources_distribution": {
+          "books": 2,
+          "videos": 2
+        },
+        "notes": "RAG chunks provided formulas for slope and deflection of simply supported beams with central loads, which are directly applicable. However, they did not specifically address beams with overhangs. The key insight about unloaded overhangs having constant slope came from internal knowledge. Overall, RAG was helpful for the core formula."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-13T10:30:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Same beam but with load on the overhang",
+        "Different cross-section (e.g., I-beam) to calculate I",
+        "Multiple loads on the beam",
+        "Calculate deflection at center instead of slope at tip",
+        "Effect of material change (composite beam with varying E)"
+      ]
+    },
+    "question_id": "GATE_2014_AE_Q38",
+    "year": 2014,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "NAT",
+    "question_text": "A 1.8m long steel beam of rectangular cross section (10mm x 6mm) is simply supported with a length of 1.2m between the supports and an overhang of 0.3m on either side. Young's modulus for the material of the beam is 200GPa. For a 50N load applied at the center of the beam, magnitude of the slope of the beam at tip S is _______."
+  },
+  "tokens_used": 23458,
+  "input_tokens": 11475,
+  "output_tokens": 11983,
+  "cost": 0.03255402,
+  "time_seconds": 379.5726294517517
+}
