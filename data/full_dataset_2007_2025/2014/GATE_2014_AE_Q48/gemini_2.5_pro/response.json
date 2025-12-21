@@ -1,0 +1,202 @@
+{
+  "model_name": "gemini_2.5_pro",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "text_only",
+      "combined_type": "numerical_calculation_text_only",
+      "weight_strategy": "NUMERICAL_WEIGHTED",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "This is a numerical calculation problem involving rocket propulsion concepts like specific impulse, mass ratio, and payload ratio. It requires multiple steps to calculate the terminal velocity, including applying the Tsiolkovsky rocket equation twice and accounting for structural coefficient and payload ratio. The problem also requires recognizing that gravity and drag are neglected, which is a form of approximation.",
+      "difficulty_score": 7,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": true
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "6050 to 6250 m/s",
+        "is_correct": true,
+        "confidence": 0.98,
+        "confidence_type": "single_model",
+        "reasoning": "The problem requires calculating the terminal velocity of a two-stage rocket, neglecting drag and gravity effects. This implies the use of the ideal Tsiolkovsky rocket equation. The key steps involve correctly distributing the total mass and payload between the two stages using the given structural coefficient and the condition that both stages have the same 'payload ratio'.\n\n1.  **Interpret Payload Ratio for Optimal Staging:** The condition 'both stages with same payload ratio' for a two-stage rocket with identical specific impulse and structural coefficient implies an optimal staging configuration. This means the initial mass of the second stage ($M_{i2}$) is the geometric mean of the total initial mass ($M_{i1}$) and the final payload mass ($M_L$).\n    $M_{i2} = \\sqrt{M_{i1} M_L}$\n    Given $M_{i1} = 16000$ kg and $M_L = 1000$ kg:\n    $M_{i2} = \\sqrt{16000 \\times 1000} = \\sqrt{16 \\times 10^6} = 4000$ kg.\n\n2.  **Determine Propellant and Structural Masses for Each Stage:**\n    *   The total mass of Stage 1 (propellant + structure) is the difference between the initial mass of the rocket and the initial mass of the second stage:\n        $M_{p1} + M_{s1} = M_{i1} - M_{i2} = 16000 - 4000 = 12000$ kg.\n    *   The total mass of Stage 2 (propellant + structure) is the difference between the initial mass of the second stage and the final payload mass:\n        $M_{p2} + M_{s2} = M_{i2} - M_L = 4000 - 1000 = 3000$ kg.\n    *   The structural coefficient $\\epsilon = 0.14$ is defined as $M_s / (M_s + M_p)$. This can be rearranged to find $M_s$ in terms of $M_p$: $M_s = \\frac{\\epsilon}{1-\\epsilon} M_p$.\n        $M_s = \\frac{0.14}{1-0.14} M_p = \\frac{0.14}{0.86} M_p \\approx 0.16279 M_p$.\n    *   **For Stage 1:**\n        $M_{s1} + M_{p1} = 12000 \\implies 0.16279 M_{p1} + M_{p1} = 12000 \\implies 1.16279 M_{p1} = 12000$\n        $M_{p1} = \\frac{12000}{1.16279} \\approx 10320.0$ kg\n        $M_{s1} = 12000 - 10320.0 = 1680.0$ kg\n    *   **For Stage 2:**\n        $M_{s2} + M_{p2} = 3000 \\implies 0.16279 M_{p2} + M_{p2} = 3000 \\implies 1.16279 M_{p2} = 3000$\n        $M_{p2} = \\frac{3000}{1.16279} \\approx 2580.0$ kg\n        $M_{s2} = 3000 - 2580.0 = 420.0$ kg\n\n3.  **Calculate Mass Ratios ($R$) for Each Stage:**\n    The mass ratio for a stage is $R = M_{initial} / M_{final}$.\n    *   **For Stage 1:**\n        $M_{initial,1} = M_{i1} = 16000$ kg.\n        $M_{final,1} = M_{initial,1} - M_{p1} = 16000 - 10320 = 5680$ kg.\n        $R_1 = \\frac{16000}{5680} = \\frac{200}{71} \\approx 2.8169$.\n    *   **For Stage 2:**\n        $M_{initial,2} = M_{i2} = 4000$ kg.\n        $M_{final,2} = M_{initial,2} - M_{p2} = 4000 - 2580 = 1420$ kg.\n        $R_2 = \\frac{4000}{1420} = \\frac{200}{71} \\approx 2.8169$.\n    (Note: $R_1 = R_2$, which is characteristic of optimal staging under these conditions).\n\n4.  **Apply Tsiolkovsky Rocket Equation for Each Stage:**\n    The ideal exhaust velocity $V_e = I_{sp} g_0 = 300 \\text{ s} \\times 9.8 \\text{ m/s}^2 = 2940$ m/s.\n    The velocity change for each stage is $\\Delta V = V_e \\ln(R)$.\n    *   $\\Delta V_1 = 2940 \\times \\ln(200/71) \\approx 2940 \\times 1.03570085 \\approx 3044.57$ m/s.\n    *   $\\Delta V_2 = 2940 \\times \\ln(200/71) \\approx 2940 \\times 1.03570085 \\approx 3044.57$ m/s.\n\n5.  **Calculate Total Terminal Velocity:**\n    The total terminal velocity is the sum of the velocity changes from each stage:\n    $\\Delta V_{total} = \\Delta V_1 + \\Delta V_2 = 3044.57 + 3044.57 = 6089.14$ m/s.\n\nThis calculated value of $6089.14$ m/s falls within the specified range of $6050$ to $6250$ m/s."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "**Step 1: Identify Given Data and Assumptions.** Note the initial mass ($M_0 = 16000$ kg), payload mass ($M_L = 1000$ kg), specific impulse ($I_{sp} = 300$ s), structural coefficient ($\\epsilon = 0.14$), and gravitational acceleration ($g_0 = 9.8 \\text{ m/s}^2$). Crucially, recognize the 'neglecting drag and gravity effects' assumption, which simplifies the problem to the ideal Tsiolkovsky rocket equation.",
+          "**Step 2: Interpret 'Same Payload Ratio' for Optimal Staging.** For a two-stage rocket with identical specific impulse and structural coefficient, the condition for optimal staging (maximizing total $\\Delta V$) is achieved when the initial mass of the second stage ($M_{i2}$) is the geometric mean of the total initial mass ($M_{i1}$) and the final payload mass ($M_L$). Calculate $M_{i2} = \\sqrt{M_{i1} M_L} = \\sqrt{16000 \\times 1000} = 4000$ kg.",
+          "**Step 3: Determine Total Propellant and Structural Mass for Each Stage.** The total mass of Stage 1 (propellant + structure) is $M_{p1} + M_{s1} = M_{i1} - M_{i2} = 16000 - 4000 = 12000$ kg. The total mass of Stage 2 (propellant + structure) is $M_{p2} + M_{s2} = M_{i2} - M_L = 4000 - 1000 = 3000$ kg.",
+          "**Step 4: Calculate Individual Propellant and Structural Masses.** Use the structural coefficient $\\epsilon = M_s / (M_s + M_p)$ to find the relationship $M_s = \\frac{\\epsilon}{1-\\epsilon} M_p$. With $\\epsilon = 0.14$, $M_s = \\frac{0.14}{0.86} M_p \\approx 0.16279 M_p$. Substitute this into the total mass equations from Step 3 to find:\n    *   For Stage 1: $M_{p1} = 10320$ kg, $M_{s1} = 1680$ kg.\n    *   For Stage 2: $M_{p2} = 2580$ kg, $M_{s2} = 420$ kg.",
+          "**Step 5: Calculate Mass Ratios for Each Stage.** The mass ratio for a stage is $R = M_{initial} / M_{final}$.\n    *   For Stage 1: $M_{initial,1} = 16000$ kg. $M_{final,1} = M_{initial,1} - M_{p1} = 16000 - 10320 = 5680$ kg. So, $R_1 = 16000 / 5680 = 200/71$.\n    *   For Stage 2: $M_{initial,2} = 4000$ kg. $M_{final,2} = M_{initial,2} - M_{p2} = 4000 - 2580 = 1420$ kg. So, $R_2 = 4000 / 1420 = 200/71$.",
+          "**Step 6: Apply Tsiolkovsky Rocket Equation to Each Stage.** Calculate the ideal exhaust velocity $V_e = I_{sp} g_0 = 300 \\times 9.8 = 2940$ m/s. Then, calculate the velocity change for each stage:\n    *   $\\Delta V_1 = V_e \\ln(R_1) = 2940 \\times \\ln(200/71) \\approx 3044.57$ m/s.\n    *   $\\Delta V_2 = V_e \\ln(R_2) = 2940 \\times \\ln(200/71) \\approx 3044.57$ m/s.",
+          "**Step 7: Calculate Total Terminal Velocity.** The total terminal velocity is the sum of the velocity changes from each stage: $\\Delta V_{total} = \\Delta V_1 + \\Delta V_2 = 3044.57 + 3044.57 = 6089.14$ m/s."
+        ],
+        "formulas_used": [
+          "$M_{i2} = \\sqrt{M_{i1} M_L}$",
+          "$\\epsilon = \\frac{M_s}{M_s + M_p}$",
+          "$M_s = \\frac{\\epsilon}{1-\\epsilon} M_p$",
+          "$R = \\frac{M_{initial}}{M_{final}}$",
+          "$\\Delta V = I_{sp} g_0 \\ln(R)$",
+          "$\\Delta V_{total} = \\sum \\Delta V_i$"
+        ],
+        "estimated_time_minutes": 4
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Propulsion",
+          "confidence": 1.0
+        },
+        "topic": {
+          "name": "Rocket Performance",
+          "syllabus_ref": "Section 6: Propulsion -> Rocket Propulsion"
+        },
+        "concepts": [
+          {
+            "name": "Tsiolkovsky Rocket Equation",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Multi-stage Rocket Performance",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Optimal Staging",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Structural Coefficient",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Mass Ratio",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Tsiolkovsky Rocket Equation",
+          "Understanding of Specific Impulse",
+          "Basic Algebra and Logarithms",
+          "Concept of Mass Ratio"
+        ],
+        "helpful": [
+          "Optimal Staging Principles",
+          "Variable Mass Systems"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Tsiolkovsky Rocket Equation",
+            "requires: Mass Ratio concept",
+            "requires: Structural Coefficient definition",
+            "enables: Advanced mission planning",
+            "enables: Rocket design optimization"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Hard",
+        "score": 8,
+        "complexity_breakdown": {
+          "conceptual": 8,
+          "mathematical": 7,
+          "problem_solving": 8
+        },
+        "estimated_solve_time_seconds": 240,
+        "expected_accuracy_percent": 40,
+        "difficulty_factors": [
+          "Correct interpretation of 'same payload ratio' for optimal staging, leading to the geometric mean relationship for intermediate stage mass.",
+          "Accurate calculation and distribution of structural and propellant masses using the structural coefficient.",
+          "Careful tracking of initial and final masses for each stage in the Tsiolkovsky equation.",
+          "Multiple calculation steps increase the potential for arithmetic errors."
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Introduction to Flight",
+          "author": "John D. Anderson Jr.",
+          "chapter_number": "9",
+          "chapter_title": "Propulsion",
+          "section": "9.11",
+          "complexity": "intermediate",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval",
+          "text_snippet": "Worked Example: Comparing Single and Double Stage Rockets... V_{b,single} = g_0 * I_{sp} * ln(M_i / M_f)... V_{b,double} = V_{b1} + V_{b2}"
+        },
+        {
+          "source_type": "book",
+          "book": "Rocket Propulsion Elements",
+          "author": "Sutton-Biblarz",
+          "chapter_number": "4",
+          "chapter_title": "FLIGHT PERFORMANCE",
+          "section": "4.1",
+          "complexity": "intermediate",
+          "relevance_score": 0.8,
+          "source": "rag_retrieval",
+          "text_snippet": "This section introduces the foundational analysis of rocket-propelled vehicle performance by examining the most idealized scenario: flight in outer space. By neglecting the effects of both gravitational forces and atmospheric drag..."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. Manoranjan Sinha",
+          "timestamp_start": "00:32:01",
+          "timestamp_end": "00:34:08",
+          "topic_covered": "IDEAL VELOCITY CHANGE (TSIOLKOVSKY ROCKET EQUATION) AND MASS RATIO",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video"
+        }
+      ]
+    },
+    "question_id": "GATE_2014_AE_Q48",
+    "year": 2014,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "NAT",
+    "question_text": "A stationary two stage rocket with initial mass of 16000kg, carrying a payload of 1000kg, is fired in a vertical trajectory from the surface of the earth. Both the stages of the rocket have same specific impulse, Isp, of 300s and same structural coefficient of 0.14. The acceleration due to gravity is 9.8m/s^2. Neglecting drag and gravity effects and considering both the stages with same payload ratio, the terminal velocity attained by the payload in m/s is __________________.",
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2014_AE_Q48",
+        "year": 2014,
+        "marks": 2.0
+      },
+      "syllabus_mapping": {
+        "gate_section": "General"
+      },
+      "rag_quality": {
+        "relevance_score": 0.5,
+        "notes": "Auto-generated",
+        "sources_distribution": {}
+      },
+      "model_meta": {
+        "timestamp": "2025-12-21T12:59:41.543080",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": []
+    }
+  },
+  "tokens_used": 13790,
+  "input_tokens": 9716,
+  "output_tokens": 4074,
+  "cost": 0.0039018000000000004,
+  "time_seconds": 59.893176317214966
+}
