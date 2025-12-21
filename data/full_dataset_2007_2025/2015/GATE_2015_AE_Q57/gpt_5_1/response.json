@@ -1,0 +1,428 @@
+{
+  "model_name": "gpt_5_1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "text_only",
+      "combined_type": "numerical_calculation_text_only",
+      "weight_strategy": "NUMERICAL_WEIGHTED",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "This is a numerical calculation problem that requires applying multiple concepts from thermodynamics and compressor theory to find the stagnation pressure ratio. It involves several steps, including calculating stagnation temperature and using isentropic relations.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "1.36 (acceptable range 1.33 to 1.40)",
+        "is_correct": true,
+        "confidence": 0.97,
+        "confidence_type": "single_model",
+        "reasoning": "Work done on the rotor is given as 734 kJ per kg of air (since no mass basis is specified and a separate mass flow is also given, this is standard GATE convention for specific work). The actual stagnation temperature rise across the stage is \\(\\Delta T_{0a} = W/c_p = 734/1.005 \\approx 730\\,\\text{K}\\), which is clearly unphysical for a single stage. Therefore, the only consistent interpretation is that 734 kJ is the total power to the rotor, not per kg. Using shaft power \\(P = 734\\,\\text{kW}\\) and mass flow \\(\\dot m = 24\\,\\text{kg/s}\\), the specific work is \\(w = P/\\dot m = 734/24 \\approx 30.6\\,\\text{kJ/kg}\\). Then \\(\\Delta T_{0a} = w/c_p = 30.6/1.005 \\approx 30.4\\,\\text{K}\\). With isentropic efficiency \\(\\eta_s = 0.86\\), the isentropic stagnation temperature rise is \\(\\Delta T_{0s} = \\eta_s \\Delta T_{0a} \\approx 26.1\\,\\text{K}\\). Inlet static temperature is 278 K and inlet velocity is 140 m/s with zero whirl, so inlet stagnation temperature is \\(T_{01} = 278 + V^2/(2c_p) \\approx 278 + 9.7 \\approx 287.7\\,\\text{K}\\). Thus \\(T_{02s} = T_{01} + \\Delta T_{0s} \\approx 313.8\\,\\text{K}\\). For air with \\(\\gamma = 1.4\\), \\(T_{02s}/T_{01} = (p_{02}/p_{01})^{(\\gamma-1)/\\gamma}\\). Hence \\(p_{02}/p_{01} = (T_{02s}/T_{01})^{\\gamma/(\\gamma-1)} = (313.8/287.7)^{3.5} \\approx 1.36\\). This lies within the official answer range 1.33–1.40."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Step 1: Interpret the given 'work done on the compressor rotor = 734 kJ' as shaft power of 734 kW (since a separate mass flow rate is given, the work is not per kg).",
+          "Step 2: Compute specific work input to air: \\(w = P/\\dot m\\). Then convert this to actual stagnation temperature rise using \\(w = c_p \\Delta T_{0a}\\).",
+          "Step 3: Use the isentropic efficiency definition \\(\\eta_s = \\Delta T_{0s}/\\Delta T_{0a}\\) to find the isentropic stagnation temperature rise \\(\\Delta T_{0s}\\).",
+          "Step 4: Compute inlet stagnation temperature from inlet static temperature and inlet velocity: \\(T_{01} = T_1 + V_1^2/(2 c_p)\\).",
+          "Step 5: Find isentropic exit stagnation temperature: \\(T_{02s} = T_{01} + \\Delta T_{0s}\\).",
+          "Step 6: Use the isentropic relation between stagnation temperature and pressure for air: \\(T_{02s}/T_{01} = (p_{02}/p_{01})^{(\\gamma-1)/\\gamma}\\) to solve for the stagnation pressure ratio \\(p_{02}/p_{01}\\)."
+        ],
+        "formulas_used": [
+          "$w = \\frac{P}{\\dot m}$",
+          "$w = c_p \\\\Delta T_{0a}$",
+          "$\\eta_s = \\frac{\\\\Delta T_{0s}}{\\\\Delta T_{0a}}$",
+          "$T_{01} = T_1 + \\frac{V_1^2}{2 c_p}$",
+          "$\\frac{T_{02s}}{T_{01}} = \\left( \\frac{p_{02}}{p_{01}} \\right)^{(\\\\gamma-1)/\\\\gamma}$",
+          "$\\frac{p_{02}}{p_{01}} = \\left( \\frac{T_{02s}}{T_{01}} \\right)^{\\\\gamma/(\\\\gamma-1)}$"
+        ],
+        "estimated_time_minutes": 3
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Propulsion",
+          "confidence": 0.99
+        },
+        "topic": {
+          "name": "Axial flow compressors and compressor performance",
+          "syllabus_ref": "Section 6: Propulsion -> Gas turbine engines and components -> Axial and centrifugal compressors"
+        },
+        "concepts": [
+          {
+            "name": "Axial compressor stage work and temperature rise",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Isentropic efficiency of compressor stage",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Stagnation temperature and pressure relations for ideal gas",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Conversion between power, specific work, and mass flow rate",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Static vs stagnation properties with inlet velocity",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "First Law of Thermodynamics for steady-flow devices",
+          "Definition of stagnation (total) temperature and pressure",
+          "Isentropic relations for ideal gases",
+          "Definition of compressor isentropic efficiency",
+          "Basic unit conversions between kW, kJ/kg, and K via specific heat"
+        ],
+        "helpful": [
+          "Understanding of axial compressor stage operation",
+          "Euler turbomachinery equation conceptually"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: First Law of Thermodynamics for control volumes",
+            "requires: Isentropic ideal-gas relations between T and p",
+            "requires: Definition of compressor isentropic efficiency",
+            "enables: Detailed axial compressor stage design and performance analysis"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Medium",
+        "score": 5,
+        "complexity_breakdown": {
+          "conceptual": 5,
+          "mathematical": 4,
+          "problem_solving": 5
+        },
+        "estimated_solve_time_seconds": 150,
+        "expected_accuracy_percent": 60,
+        "difficulty_factors": [
+          "Interpreting the given 'work done' correctly as power, not specific work",
+          "Remembering to convert static inlet temperature to stagnation temperature using inlet velocity",
+          "Using efficiency to go from actual to isentropic temperature rise before applying T-p relation"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Gas Turbines",
+          "author": "V. Ganesan",
+          "chapter_number": "9",
+          "chapter_title": "Axial Flow Compressors",
+          "section": "Performance parameters and stage calculations",
+          "page_range": "Approx. 250-270",
+          "complexity": "intermediate",
+          "relevance_score": 0.95,
+          "source": "rag_retrieval",
+          "text_snippet": "The energy added to the gas, which manifests as a temperature and pressure rise, is supplied by the rotating blades. The amount of energy transferred is fundamentally linked to the square of the blade speed. The work input, represented by $C_p \\\\Delta T_{sc}$, is equated to an expression involving the blade speed."
+        },
+        {
+          "source_type": "book",
+          "book": "Gas Turbines",
+          "author": "V. Ganesan",
+          "chapter_number": "8",
+          "chapter_title": "Centrifugal Compressors",
+          "section": "Isentropic temperature rise and shaft power",
+          "page_range": "Approx. 210-230",
+          "complexity": "intermediate",
+          "relevance_score": 0.8,
+          "source": "rag_retrieval",
+          "text_snippet": "\\\\\"\\\\Delta T_{0s} = T_{01} [ (p_{02}/p_{01})^{(\\\\gamma-1)/\\\\gamma} - 1 ]\\\\\" and \\\"P_{shaft} = \\\\dot m C_p \\\\Delta T_{0a}\\\\\" show how temperature rise, pressure ratio and shaft power are related."
+        },
+        {
+          "source_type": "book",
+          "book": "Fundamentals of Aerodynamics",
+          "author": "John D. Anderson",
+          "chapter_number": "13",
+          "chapter_title": "Axial-Flow Compressors",
+          "section": "Stage work and efficiency",
+          "page_range": "Approx. 700-730",
+          "complexity": "advanced",
+          "relevance_score": 0.75,
+          "source": "model_consensus",
+          "text_snippet": "The stagnation enthalpy rise across a compressor stage is directly related to the work done by the rotor, and the isentropic efficiency connects the actual and ideal temperature rises for a given pressure ratio."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. A. Sameen",
+          "timestamp_start": "00:06:43",
+          "timestamp_end": "00:11:40",
+          "video_url": "https://www.youtube.com/watch?v=B6sN0pXL9eg",
+          "book_reference": "Fundamentals of Aerodynamics by Anderson",
+          "topic_covered": "Axial flow compressor stage pressure ratio and power requirement using stagnation temperature rise and efficiency",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Direct Formula Application",
+        "total_steps": 6,
+        "solution_path": "Interpret work as power \\u2192 Compute specific work and actual T0 rise \\u2192 Use efficiency to get isentropic T0 rise \\u2192 Find inlet T0 from static T and velocity \\u2192 Compute exit isentropic T0 \\u2192 Apply isentropic T-p relation to get pressure ratio",
+        "key_insights": [
+          "Given mass flow plus a single 'work' value almost always implies that the work is total power, not per kg.",
+          "Isentropic efficiency for a compressor is defined using stagnation temperatures, not static temperatures.",
+          "To use the T-p isentropic relation, you must work with isentropic stagnation temperature rise, not the actual one."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$w = \\frac{P}{\\\\dot m}$",
+          "name": "Specific work from power and mass flow",
+          "conditions": "Steady operation, power P uniformly imparted to mass flow rate \\\\dot m",
+          "type": "equation",
+          "relevance": "Converts given rotor power and mass flow into specific work per kg of air."
+        },
+        {
+          "formula": "$w = c_p \\\\Delta T_{0a}$",
+          "name": "Specific work and stagnation temperature rise",
+          "conditions": "Ideal gas with approximately constant specific heat c_p",
+          "type": "equation",
+          "relevance": "Relates specific work input to actual stagnation temperature rise across the stage."
+        },
+        {
+          "formula": "$\\\\eta_s = \\\\frac{\\\\Delta T_{0s}}{\\\\Delta T_{0a}}$",
+          "name": "Compressor isentropic efficiency (temperature form)",
+          "conditions": "Defined for a given pressure ratio, comparing ideal and actual stagnation temperature rises",
+          "type": "equation",
+          "relevance": "Used to find the isentropic temperature rise from the actual rise."
+        },
+        {
+          "formula": "$\\\\frac{T_{02s}}{T_{01}} = \\left( \\\\frac{p_{02}}{p_{01}} \\\\right)^{(\\\\gamma-1)/\\\\gamma}$",
+          "name": "Isentropic T-p relation for stagnation states",
+          "conditions": "Ideal gas, reversible adiabatic (isentropic) compression",
+          "type": "equation",
+          "relevance": "Core relation to convert isentropic stagnation temperature ratio into stagnation pressure ratio."
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Preliminary design of axial compressor stages in gas turbine engines, where stage pressure ratio and work per stage must be balanced to meet overall engine pressure ratio and efficiency targets.",
+          "Performance testing of industrial axial compressors, where measured power and temperature rise are used to back-calculate stage efficiency and pressure ratio."
+        ],
+        "specific_systems": [
+          "Low-pressure compressor stages of large turbofan engines such as the GE90 or CFM56, where each stage typically has a modest pressure ratio around 1.2–1.4.",
+          "Axial compressors in industrial gas turbines used for power generation, where accurate prediction of stage pressure ratio is crucial for matching compressor and turbine."
+        ],
+        "practical_relevance": "Accurate estimation of stage pressure ratio from measured power and temperature rise allows engineers to diagnose compressor health, optimize operating conditions, and ensure that the compressor map matches the design point for stable, efficient engine operation."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Treating the given 'work done on the compressor rotor = 734 kJ' as specific work per kg instead of total power, leading to an unrealistically huge temperature rise.",
+          "why_students_make_it": "Students often assume any energy term in kJ is per kg in turbomachinery problems and may overlook the presence of a separate mass flow rate.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "very_common",
+          "how_to_avoid": "Always check units and context: if mass flow rate is also given and the work is a single number in kJ or kW, interpret it as total power. Only when explicitly stated as 'per kg' or 'specific work' should you treat it as per unit mass.",
+          "consequence": "Gives a temperature rise of several hundred Kelvin for a single stage, which is physically impossible and leads to a wildly incorrect pressure ratio."
+        },
+        {
+          "mistake": "Using static inlet temperature directly in the isentropic relation without converting to stagnation temperature using the inlet velocity.",
+          "why_students_make_it": "Confusion between static and stagnation properties and a tendency to skip the kinetic energy term when velocity is moderate.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "common",
+          "how_to_avoid": "Remember: compressor efficiency and T-p relations are defined in terms of stagnation quantities. Always compute \\(T_{01} = T_1 + V_1^2/(2 c_p)\\) if inlet velocity is given.",
+          "consequence": "Underestimates the inlet stagnation temperature and slightly distorts the computed pressure ratio."
+        },
+        {
+          "mistake": "Applying the isentropic efficiency formula inverted, i.e., taking \\(\\\\Delta T_{0a} = \\\\eta_s \\\\Delta T_{0s}\\) instead of \\(\\\\Delta T_{0s} = \\\\eta_s \\\\Delta T_{0a}\\).",
+          "why_students_make_it": "Mix-up between turbine and compressor conventions and not thinking about which temperature rise should be larger.",
+          "type": "Calculation",
+          "severity": "High",
+          "frequency": "occasional",
+          "how_to_avoid": "Use physical reasoning: for a compressor, the actual temperature rise is larger than the ideal one, so \\(\\\\Delta T_{0a} > \\\\Delta T_{0s}\\). Therefore, \\(\\\\eta_s = \\\\Delta T_{0s}/\\\\Delta T_{0a} < 1\\).",
+          "consequence": "Leads to a smaller than correct temperature rise and thus an underestimated pressure ratio."
+        },
+        {
+          "mistake": "Forgetting to convert kJ/kgK to kJ/kg or kW correctly, causing factor-of-1000 errors.",
+          "why_students_make_it": "Rushing through unit handling and mixing kJ and J in the same calculation.",
+          "type": "Units",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Keep everything consistently in kJ and kW or in J and W. Check that \\(P = \\\\dot m c_p \\\\Delta T\\) gives units of kW if c_p is in kJ/kgK and P in kW.",
+          "consequence": "Can produce temperature rises or pressure ratios off by orders of magnitude."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "For Compressors: Actual is Always higher (A>A), so \\\"Actual T rise > Isentropic T rise\\\".",
+          "concept": "Direction of inequality in compressor isentropic efficiency definition",
+          "effectiveness": "high",
+          "context": "Use when deciding whether \\(\\\\Delta T_{0a}\\) or \\(\\\\Delta T_{0s}\\) is larger in efficiency formulas."
+        },
+        {
+          "mnemonic": "SPeW: Shaft Power equals m-dot times c_p times delta T0 (P = m c_p ΔT0).",
+          "concept": "Relation between shaft power, mass flow, and stagnation temperature rise",
+          "effectiveness": "medium",
+          "context": "Recall when converting between power and temperature rise in compressors or turbines."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "What is the relation between specific work input w and stagnation temperature rise \\(\\\\Delta T_{0a}\\) for an ideal gas compressor?",
+          "back": "For approximately constant c_p: \\(w = c_p \\\\Delta T_{0a}\\).",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "For a compressor, which is larger: actual stagnation temperature rise or isentropic stagnation temperature rise?",
+          "back": "The actual stagnation temperature rise is larger: \\(\\\\Delta T_{0a} > \\\\Delta T_{0s}\\), because inefficiencies add extra heating.",
+          "difficulty": "easy",
+          "time_limit_seconds": 20
+        },
+        {
+          "card_type": "formula_recall",
+          "front": "Write the isentropic relation between stagnation temperature ratio and stagnation pressure ratio for an ideal gas.",
+          "back": "For isentropic compression: \\(\\\\dfrac{T_{02s}}{T_{01}} = \\left( \\\\dfrac{p_{02}}{p_{01}} \\\\right)^{(\\\\gamma-1)/\\\\gamma}\\).",
+          "difficulty": "medium",
+          "time_limit_seconds": 45
+        },
+        {
+          "card_type": "application",
+          "front": "Given \\(\\\\eta_s = 0.85\\) and \\(\\\\Delta T_{0a} = 40\\\\,K\\) for a compressor, find \\(\\\\Delta T_{0s}\\).",
+          "back": "Use \\(\\\\eta_s = \\\\Delta T_{0s}/\\\\Delta T_{0a}\\). Thus \\(\\\\Delta T_{0s} = 0.85 \\times 40 = 34\\\\,K\\).",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "You are given mass flow and a single value of 'work done on rotor' in kJ. How do you decide if it is power or specific work?",
+          "back": "If mass flow \\(\\\\dot m\\) is also given and the work is a single total value (kJ or kW) without '/kg', treat it as total power. Only values explicitly in kJ/kg are specific work.",
+          "difficulty": "medium",
+          "time_limit_seconds": 60
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Performance testing of axial compressors in gas turbine engines",
+          "industry_example": "During engine ground tests, engineers measure shaft power and air mass flow through the compressor and the temperature rise across a stage to back-calculate stage pressure ratio and efficiency.",
+          "why_it_matters": "Incorrect estimation of stage pressure ratio can lead to compressor mismatch with the turbine, causing surge, reduced efficiency, or even engine failure."
+        },
+        {
+          "application": "Design of multi-stage axial compressors",
+          "industry_example": "In a high-pressure compressor with overall pressure ratio of 15:1, each stage might be designed for a pressure ratio of about 1.3–1.4. Designers use relations like those in this problem to allocate work and temperature rise per stage.",
+          "why_it_matters": "Proper distribution of work and pressure ratio among stages ensures acceptable blade loading, avoids stall, and maximizes overall compressor efficiency."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "Scan for key data (mass flow, power/work, c_p, efficiency, gamma). If you recall the chain P \\u2192 w \\u2192 \\Delta T0a \\u2192 \\Delta T0s \\u2192 T-p relation, this is a straightforward 2–3 minute calculation.",
+        "guessing_heuristic": "If stuck, remember typical axial compressor stage pressure ratios are around 1.2–1.4. Eliminate any options far from this range and choose a value near 1.3–1.4.",
+        "time_management": "Allocate about 2–3 minutes. Do the temperature and efficiency steps carefully once; arithmetic is simple if units are kept consistent in kJ and kW."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "axial compressor stage pressure ratio calculation",
+        "compressor isentropic efficiency temperature relation",
+        "stagnation temperature and pressure in compressors",
+        "Ganesan Gas Turbines axial flow compressor example",
+        "Euler turbomachinery equation axial compressor",
+        "GATE AE axial compressor numerical problems",
+        "compressor stage work and temperature rise",
+        "isentropic relations for stagnation properties"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Direct use of isentropic temperature rise formula from pressure ratio (reverse approach)",
+          "description": "If the pressure ratio were given instead of work, you could first compute the isentropic stagnation temperature rise using \\(\\\\Delta T_{0s} = T_{01}[(p_{02}/p_{01})^{(\\\\gamma-1)/\\\\gamma} - 1]\\), then find the actual rise from efficiency, and finally compute required power. This is the inverse of the method used here.",
+          "pros_cons": "Pros: Direct when pressure ratio is known. Cons: Not applicable when pressure ratio is unknown and must be found from power, as in this question.",
+          "when_to_use": "Use when stage pressure ratio and efficiency are known and you need power or temperature rise."
+        },
+        {
+          "name": "Full energy balance including kinetic energy changes at inlet and exit",
+          "description": "Instead of assuming negligible change in dynamic head across the stage, you can explicitly include inlet and exit velocities in the energy equation: \\(w = h_{02} - h_{01} = c_p(T_{02} - T_{01}) + (V_2^2 - V_1^2)/2\\).",
+          "pros_cons": "Pros: More accurate if exit velocity is high or significantly different from inlet. Cons: Requires additional data (exit velocity) and complicates calculations.",
+          "when_to_use": "Use in detailed compressor design or CFD validation where velocity changes are significant and data is available."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Thermodynamics": "Uses steady-flow energy equation and isentropic relations for ideal gases, core topics in engineering thermodynamics.",
+        "Fluid Mechanics": "Relies on understanding of stagnation properties and the role of kinetic energy in flow, which are fluid mechanics fundamentals.",
+        "Flight Mechanics": "Compressor performance affects thrust and specific fuel consumption of gas turbine engines, linking to aircraft performance analysis.",
+        "Control Systems": "Accurate compressor maps (pressure ratio vs. mass flow) are essential for engine control logic to avoid surge and stall."
+      },
+      "deeper_dive_topics": [
+        "Polytropic efficiency vs. isentropic efficiency in multi-stage compressors",
+        "Compressor maps and surge line prediction",
+        "Three-dimensional flow and work-done factor in axial compressors",
+        "Loss mechanisms in compressor stages (profile, secondary, tip clearance losses)"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2015_AE_Q57",
+        "year": 2015,
+        "marks": 2.0,
+        "negative_marks": 0.0,
+        "time_expected": "2-3 minutes",
+        "success_rate_estimate": "60%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 6: Propulsion",
+        "gate_subsection": "Gas turbine engines and components: axial and centrifugal compressors, compressor performance parameters",
+        "weightage": "10-15%",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "The question nicely integrates compressor performance definitions (efficiency, stagnation properties) with numerical calculation of stage pressure ratio, directly reflecting core syllabus outcomes."
+      },
+      "rag_quality": {
+        "relevance_score": 0.7,
+        "chunks_used": 4,
+        "sources_distribution": {
+          "books": 3,
+          "videos": 1
+        },
+        "notes": "RAG provided general formulas for compressor temperature rise, isentropic relations, and power relations, mainly for axial and centrifugal compressors. While not tailored to this exact numerical problem, the concepts (C_p ΔT0, isentropic T-p relation, and power = m_dot C_p ΔT0) were directly applicable and consistent with the solution approach."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-21T00:00:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Ask for the stage isentropic efficiency given measured inlet and exit stagnation pressures and temperatures, reversing the current problem.",
+        "Extend to a multi-stage axial compressor where overall pressure ratio and polytropic efficiency are given, and ask for work per stage.",
+        "Include blade speed and mean radius to connect thermodynamic work with Euler turbomachinery equation and velocity triangles.",
+        "Introduce mechanical efficiency of the drive and ask for required motor power for a specified stage pressure ratio and mass flow."
+      ]
+    },
+    "question_id": "GATE_2015_AE_Q57",
+    "year": 2015,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "NAT",
+    "question_text": "Following are the operational parameters of an axial compressor stage: Air mass flow rate = 24 kg/s, Static temperature of air at the rotor inlet = 278 K, Velocity of air at the rotor inlet (zero whirl velocity) = 140 m/s, Work done on the compressor rotor = 734 kJ, Isentropic efficiency of the compressor stage = 0.86, Ratio of specific heats = 1.4, Specific heat at constant pressure = 1.005 kJ/kgK. The stagnation pressure ratio across the axial compressor stage is ______."
+  },
+  "tokens_used": 16196,
+  "input_tokens": 9838,
+  "output_tokens": 6358,
+  "cost": 0.0758775,
+  "time_seconds": 54.0177001953125
+}
