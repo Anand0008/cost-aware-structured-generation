@@ -1,0 +1,369 @@
+{
+  "model_name": "gemini_2.5_pro",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "conceptual_application",
+      "media_type": "image_based",
+      "combined_type": "conceptual_application_image_based",
+      "weight_strategy": "VISION_WEIGHTED",
+      "classification_confidence": 0.9,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "The question requires applying the concepts of Airy's stress function, bi-harmonic equation, and boundary conditions to a specific problem. It involves understanding stress distributions and requires multiple steps to determine the constants. The image is necessary to understand the geometry and boundary conditions.",
+      "difficulty_score": 7,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "D",
+        "is_correct": true,
+        "confidence": 1.0,
+        "confidence_type": "single_model",
+        "reasoning": "The problem requires finding the constants `C_1, C_2, C_3, C_4` for the given Airy's stress function `$\\phi = C_1 x y + C_2 x y^3 + C_3 x^2 y^2 + C_4 x^3 y$` such that it satisfies the bi-harmonic equation and the specified boundary conditions.\n\n**Step 1: Derive stress components from $\\phi$**\n$\\sigma_x = \\frac{\\partial^2 \\phi}{\\partial y^2} = 6 C_2 x y + 2 C_3 x^2$\n$\\sigma_y = \\frac{\\partial^2 \\phi}{\\partial x^2} = 2 C_3 y^2 + 6 C_4 x y$\n$\\tau_{xy} = -\\frac{\\partial^2 \\phi}{\\partial x \\partial y} = -(C_1 + 3 C_2 y^2 + 4 C_3 x y + 3 C_4 x^2)$\n\n**Step 2: Apply the Bi-harmonic equation (compatibility condition)**\n$\\nabla^4 \\phi = \\frac{\\partial^4 \\phi}{\\partial x^4} + 2 \\frac{\\partial^4 \\phi}{\\partial x^2 \\partial y^2} + \\frac{\\partial^4 \\phi}{\\partial y^4} = 0$\n\nCalculating the terms:\n$\\frac{\\partial^4 \\phi}{\\partial x^4} = \\frac{\\partial^2}{\\partial x^2} (2 C_3 y^2 + 6 C_4 x y) = \\frac{\\partial}{\\partial x} (6 C_4 y) = 0$\n$\\frac{\\partial^4 \\phi}{\\partial y^4} = \\frac{\\partial^2}{\\partial y^2} (6 C_2 x y + 2 C_3 x^2) = \\frac{\\partial}{\\partial y} (6 C_2 x) = 0$\n$2 \\frac{\\partial^4 \\phi}{\\partial x^2 \\partial y^2} = 2 \\frac{\\partial^2}{\\partial x^2} (6 C_2 x y) = 2 \\frac{\\partial}{\\partial x} (6 C_2 y) = 0$ (This is incorrect, let's re-evaluate $2 \\frac{\\partial^4 \\phi}{\\partial x^2 \\partial y^2}$ from $\\sigma_y$)\n\nLet's re-calculate $2 \\frac{\\partial^4 \\phi}{\\partial x^2 \\partial y^2}$ more carefully:\n$\\frac{\\partial^2 \\phi}{\\partial x^2} = 2 C_3 y^2 + 6 C_4 x y$\n$\\frac{\\partial^3 \\phi}{\\partial x^2 \\partial y} = 4 C_3 y + 6 C_4 x$\n$\\frac{\\partial^4 \\phi}{\\partial x^2 \\partial y^2} = 4 C_3$\n\nSo, the bi-harmonic equation becomes: $0 + 2(4 C_3) + 0 = 8 C_3 = 0$. This implies $C_3 = 0$.\n\nWith $C_3 = 0$, the stress components simplify to:\n$\\sigma_x = 6 C_2 x y$\n$\\sigma_y = 6 C_4 x y$\n$\\tau_{xy} = -(C_1 + 3 C_2 y^2 + 3 C_4 x^2)$\n\n**Step 3: Apply traction-free boundary conditions on top and bottom surfaces ($y = \\pm d$)**\n*   $\\sigma_y = 0$ at $y = \\pm d$:\n    $6 C_4 x (\\pm d) = 0$. For this to hold for all $x$, we must have $C_4 = 0$.\n\n*   $\\tau_{xy} = 0$ at $y = \\pm d$:\n    $-(C_1 + 3 C_2 (\\pm d)^2 + 3 C_4 x^2) = 0$\n    Since $C_4 = 0$, this simplifies to $-(C_1 + 3 C_2 d^2) = 0$, so $C_1 = -3 C_2 d^2$.\n\nSo far, we have: $C_3 = 0$, $C_4 = 0$, and $C_1 = -3 C_2 d^2$.\n\n**Step 4: Apply shear traction boundary condition at the right edge ($x=L$)**\nFrom the image, the shear traction at the right edge is $\\tau_{xy} = -\\lambda[1-(y/d)^2]$.\n\nSubstitute $C_3 = 0$ and $C_4 = 0$ into the shear stress expression:\n$\\tau_{xy} = -(C_1 + 3 C_2 y^2)$\n\nNow, substitute $C_1 = -3 C_2 d^2$:\n$\\tau_{xy} = -(-3 C_2 d^2 + 3 C_2 y^2)$\n$\\tau_{xy} = -3 C_2 (y^2 - d^2)$\n$\\tau_{xy} = 3 C_2 (d^2 - y^2)$\n$\\tau_{xy} = 3 C_2 d^2 (1 - y^2/d^2)$\n\nComparing this with the given boundary condition $\\tau_{xy} = -\\lambda[1-(y/d)^2]$:\n$3 C_2 d^2 (1 - y^2/d^2) = -\\lambda (1 - y^2/d^2)$\nThis implies $3 C_2 d^2 = -\\lambda$, so $C_2 = -\\frac{\\lambda}{3d^2}$.\n\nFinally, calculate $C_1$ using $C_1 = -3 C_2 d^2$:\n$C_1 = -3 \\left(-\\frac{\\lambda}{3d^2}\\right) d^2 = \\lambda$.\n\n**Step 5: Consolidate the constants**\n$C_1 = \\lambda$\n$C_2 = -\\frac{\\lambda}{3d^2}$\n$C_3 = 0$\n$C_4 = 0$\n\nThis set of constants matches option D."
+      },
+      "explanation": {
+        "question_nature": "Application",
+        "step_by_step": [
+          "Step 1: Write down the general expressions for the stress components ($\\sigma_x$, $\\sigma_y$, $\\tau_{xy}$) by taking the appropriate partial derivatives of the given Airy's stress function $\\phi(x,y)$.",
+          "Step 2: Apply the bi-harmonic equation ($\\nabla^4 \\phi = 0$) to the stress function. This equation ensures that the resulting strain field is compatible. Solve for any constants that must be zero to satisfy this condition.",
+          "Step 3: Apply the traction-free boundary conditions on the top and bottom surfaces of the beam ($y = \\pm d$). This means that the normal stress $\\sigma_y$ and shear stress $\\tau_{xy}$ must be zero at these surfaces. Use these conditions to establish relationships between the remaining constants.",
+          "Step 4: Apply the specified shear traction boundary condition at the right edge of the beam ($x=L$). Substitute the simplified stress expressions (from previous steps) into this boundary condition and solve for the remaining unknown constants in terms of $\\lambda$ and $d$.",
+          "Step 5: Consolidate all determined constants and compare them with the given options to identify the correct choice."
+        ],
+        "formulas_used": [
+          "$\\sigma_x = \\frac{\\partial^2 \\phi}{\\partial y^2}$",
+          "$\\sigma_y = \\frac{\\partial^2 \\phi}{\\partial x^2}$",
+          "$\\tau_{xy} = -\\frac{\\partial^2 \\phi}{\\partial x \\partial y}$",
+          "$\\nabla^4 \\phi = \\frac{\\partial^4 \\phi}{\\partial x^4} + 2 \\frac{\\partial^4 \\phi}{\\partial x^2 \\partial y^2} + \\frac{\\partial^4 \\phi}{\\partial y^4} = 0$"
+        ],
+        "estimated_time_minutes": 5
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Structures",
+          "confidence": 0.98
+        },
+        "topic": {
+          "name": "Theory of Elasticity",
+          "syllabus_ref": "GATE AE Section 3: Structures -> Theory of Elasticity"
+        },
+        "concepts": [
+          {
+            "name": "Airy's Stress Function",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Biharmonic Equation (Compatibility)",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Boundary Conditions in Elasticity",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Plane Stress/Strain",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Cantilever Beam",
+            "importance": "tertiary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Partial Differentiation",
+          "Basic concepts of stress and strain",
+          "Equilibrium equations in elasticity",
+          "Understanding of boundary conditions in mechanics"
+        ],
+        "helpful": [
+          "Elementary beam theory (for intuition on stress distribution)"
+        ],
+        "dependency_tree": {
+          "Airy's Stress Function Application": [
+            "requires: Partial Differentiation",
+            "requires: Biharmonic Equation",
+            "requires: Stress-Strain Relationships",
+            "enables: Advanced Structural Analysis",
+            "enables: Finite Element Method Validation"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Medium",
+        "score": 6,
+        "complexity_breakdown": {
+          "conceptual": 7,
+          "mathematical": 7,
+          "problem_solving": 6
+        },
+        "estimated_solve_time_seconds": 300,
+        "expected_accuracy_percent": 55,
+        "difficulty_factors": [
+          "Requires careful and accurate partial differentiation multiple times.",
+          "Involves solving a system of equations derived from multiple boundary conditions.",
+          "Understanding the role of the bi-harmonic equation is crucial."
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Aircraft Structures for Engineering Students",
+          "author": "T.H.G. Megson",
+          "chapter_number": "2",
+          "chapter_title": "Two-dimensional problems in elasticity",
+          "section": "§2",
+          "complexity": "intermediate",
+          "relevance_score": 0.95,
+          "source": "rag_retrieval",
+          "text_snippet": "The problems in this section serve as a practical application of the theoretical concepts of 2D elasticity. The core technique explored is the Airy stress function, a powerful mathematical tool that simplifies the solution of such problems by consolidating the governing equations."
+        },
+        {
+          "source_type": "book",
+          "book": "Aircraft Structures for Engineering Students",
+          "author": "T.H.G. Megson",
+          "chapter_number": "2",
+          "section": "P.2.2",
+          "complexity": "intermediate",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval",
+          "text_snippet": "P.2.2: Cantilever Beam with Tip Load: This problem connects the advanced Airy stress function method to elementary beam theory. A polynomial expression for φ is proposed for a cantilever with an end-point force. The task is to show this function accurately represents the known stress distribution from simple beam theory..."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. Anup Ghosh",
+          "timestamp_start": "00:11:05",
+          "timestamp_end": "00:22:29",
+          "topic_covered": "Semi-Inverse Method of Solution for Beam Bending Stress Analysis (involving Airy's function)",
+          "relevance_score": 0.85,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "First Principles Derivation",
+        "total_steps": 5,
+        "solution_path": "Stress Derivation -> Compatibility -> Boundary Conditions (Top/Bottom) -> Boundary Conditions (End) -> Constant Determination",
+        "key_insights": [
+          "The bi-harmonic equation is a fundamental compatibility condition that must be satisfied by any admissible Airy's stress function.",
+          "Traction-free surfaces imply zero normal and shear stresses on those boundaries.",
+          "Systematic application of all boundary conditions is essential to uniquely determine the constants."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$\\sigma_x = \\frac{\\partial^2 \\phi}{\\partial y^2}$",
+          "name": "Normal Stress (x-direction) from Airy's Function",
+          "conditions": "Valid for 2D elasticity problems using Airy's stress function.",
+          "type": "equation",
+          "relevance": "Core formula for deriving stress components."
+        },
+        {
+          "formula": "$\\sigma_y = \\frac{\\partial^2 \\phi}{\\partial x^2}$",
+          "name": "Normal Stress (y-direction) from Airy's Function",
+          "conditions": "Valid for 2D elasticity problems using Airy's stress function.",
+          "type": "equation",
+          "relevance": "Core formula for deriving stress components, crucial for $\\sigma_y=0$ boundary condition."
+        },
+        {
+          "formula": "$\\tau_{xy} = -\\frac{\\partial^2 \\phi}{\\partial x \\partial y}$",
+          "name": "Shear Stress from Airy's Function",
+          "conditions": "Valid for 2D elasticity problems using Airy's stress function.",
+          "type": "equation",
+          "relevance": "Core formula for deriving shear stress, crucial for $\\tau_{xy}=0$ and parabolic shear boundary conditions."
+        },
+        {
+          "formula": "$\\frac{\\partial^4 \\phi}{\\partial x^4} + 2 \\frac{\\partial^4 \\phi}{\\partial x^2 \\partial y^2} + \\frac{\\partial^4 \\phi}{\\partial y^4} = 0$",
+          "name": "Biharmonic Equation",
+          "conditions": "Applies to 2D elasticity problems with zero body forces, ensuring strain compatibility.",
+          "type": "principle",
+          "relevance": "Fundamental principle for an admissible Airy's stress function, used to constrain constants."
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Design of aircraft wing spars and fuselage frames where stress distributions under complex loads need accurate determination.",
+          "Analysis of stress concentrations around cutouts or discontinuities in structural panels."
+        ],
+        "specific_systems": [
+          "Aircraft fuselage panels",
+          "Wing box structures",
+          "Turbine blade roots"
+        ],
+        "practical_relevance": "Accurate analytical solutions from elasticity theory are vital for validating numerical methods (like FEA) and for preliminary design, ensuring structural integrity, predicting fatigue life, and optimizing material usage in aerospace components."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Algebraic errors during multiple partial differentiations.",
+          "why_students_make_it": "Carelessness, rushing through calculations, or losing track of variables during successive derivatives.",
+          "type": "Calculation",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Practice partial differentiation, double-check each derivative step, and write down intermediate steps clearly. Use a systematic approach for each term.",
+          "consequence": "Leads to incorrect stress expressions and ultimately wrong constants, making the solution invalid."
+        },
+        {
+          "mistake": "Incorrectly applying the bi-harmonic equation, e.g., using $\\nabla^2 \\phi = 0$ instead of $\\nabla^4 \\phi = 0$.",
+          "why_students_make_it": "Lack of conceptual clarity regarding the compatibility condition for Airy's stress function.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "occasional",
+          "how_to_avoid": "Clearly understand that $\\nabla^4 \\phi = 0$ is the compatibility equation for 2D elasticity with zero body forces. Memorize the correct form and its purpose.",
+          "consequence": "Misses a crucial constraint on the constants, leading to an inadmissible stress function and incorrect results."
+        },
+        {
+          "mistake": "Missing or misinterpreting boundary conditions, especially the traction-free surfaces or the sign of the applied shear traction.",
+          "why_students_make_it": "Overlooking details in the problem statement or diagram, or not systematically listing all conditions.",
+          "type": "Application",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Always read the problem statement and analyze the image carefully. List all boundary conditions explicitly before starting the derivation. Pay close attention to signs and coordinate system conventions.",
+          "consequence": "Results in an incorrect system of equations for the constants, leading to a wrong answer."
+        },
+        {
+          "mistake": "Sign errors in the shear stress formula $\\tau_{xy} = -\\frac{\\partial^2 \\phi}{\\partial x \\partial y}$.",
+          "why_students_make_it": "Forgetting the negative sign in the definition of $\\tau_{xy}$ from Airy's function.",
+          "type": "Sign Error",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Memorize the definitions of stress components from Airy's function accurately, paying special attention to the negative sign for shear stress.",
+          "consequence": "Leads to an incorrect sign for the constants, even if the magnitude is correct."
+        }
+      ],
+      "mnemonics_memory_aids": [],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "What are the stress components ($\\sigma_x$, $\\sigma_y$, $\\tau_{xy}$) derived from an Airy's stress function $\\phi(x,y)$?",
+          "back": "$\\sigma_x = \\frac{\\partial^2 \\phi}{\\partial y^2}$, $\\sigma_y = \\frac{\\partial^2 \\phi}{\\partial x^2}$, $\\tau_{xy} = -\\frac{\\partial^2 \\phi}{\\partial x \\partial y}$",
+          "difficulty": "easy"
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "What is the bi-harmonic equation for an Airy's stress function in 2D elasticity (without body forces), and what does it ensure?",
+          "back": "$\\nabla^4 \\phi = \\frac{\\partial^4 \\phi}{\\partial x^4} + 2 \\frac{\\partial^4 \\phi}{\\partial x^2 \\partial y^2} + \\frac{\\partial^4 \\phi}{\\partial y^4} = 0$. It ensures compatibility of strains (i.e., a continuous and physically possible deformation).",
+          "difficulty": "medium"
+        },
+        {
+          "card_type": "application",
+          "front": "For a cantilever beam with depth $2d$, what are the traction-free boundary conditions on the top and bottom surfaces ($y = \\pm d$)?",
+          "back": "$\\sigma_y(y=\\pm d) = 0$ and $\\tau_{xy}(y=\\pm d) = 0$.",
+          "difficulty": "medium"
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "What is a critical step to avoid errors when solving for constants in an Airy's stress function problem?",
+          "back": "Systematically apply ALL boundary conditions (including compatibility) one by one, and double-check each partial derivative and algebraic manipulation.",
+          "difficulty": "hard"
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Structural analysis and design of aerospace components.",
+          "industry_example": "Engineers use elasticity solutions to understand stress distributions in aircraft wing skins or fuselage panels under various flight loads, especially near stress concentration features like cutouts or joints. This helps in predicting fatigue life and preventing structural failure.",
+          "why_it_matters": "Incorrect stress analysis can lead to catastrophic structural failures, compromising aircraft safety and operational lifespan. Accurate solutions ensure reliable and safe aircraft operation."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "Quickly identify the Airy's function and the required derivatives. If the polynomial is simple, proceed. If it looks overly complex, verify if all terms are necessary or if there's a trick. For this problem, the derivatives are manageable.",
+        "guessing_heuristic": "If stuck, check options that set $C_3=0$ and $C_4=0$ first, as these often simplify due to the bi-harmonic equation and $\\sigma_y=0$ boundary condition. Then, check the relationship between $C_1$ and $C_2$.",
+        "time_management": "Allocate 3-5 minutes. If algebraic errors are persistent, move on and revisit if time permits, as these problems can be time-consuming if not done carefully."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "Airy's stress function biharmonic equation solution",
+        "2D elasticity boundary value problems",
+        "Cantilever beam shear stress distribution elasticity",
+        "Plane stress formulation Airy function",
+        "Stress analysis using polynomial stress functions"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Semi-Inverse Method",
+          "description": "This method involves assuming a form for some stress components (or the Airy's stress function) based on elementary beam theory or observed behavior, and then rigorously deriving the full stress field by satisfying equilibrium equations, the compatibility condition, and all specific stress boundary conditions.",
+          "pros_cons": "Pros: Provides exact analytical solutions for certain problems. Cons: Requires a 'smart guess' for the initial form, which can be challenging for complex problems. Can be mathematically intensive.",
+          "when_to_use": "When an exact analytical solution is desired for a 2D elasticity problem, and a reasonable form for the stress function can be hypothesized or is suggested by the problem's nature (e.g., beam bending)."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Mathematics": "Partial differential equations, vector calculus (for derivatives and operators like $\\nabla^4$), and solving systems of linear equations (for constants).",
+        "Solid Mechanics": "Fundamental concepts of stress, strain, Hooke's Law, and elementary beam theory (which Airy's function often refines or validates).",
+        "Finite Element Analysis (FEA)": "Analytical solutions derived from elasticity theory (like those using Airy's function) serve as crucial benchmarks for validating numerical FEA models, especially for simpler geometries and loading conditions."
+      },
+      "deeper_dive_topics": [
+        "General solutions for Airy's stress function using Fourier series or complex variable methods for more complex geometries or loading conditions.",
+        "Analysis of stress concentrations around holes or geometric discontinuities using Airy's function.",
+        "Thermal stresses and the modified bi-harmonic equation (e.g., $\\nabla^2(\\nabla^2\\phi + E\\alpha T) = 0$).",
+        "Anisotropic elasticity and the application of generalized Airy's stress functions."
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2014_AE_Q42",
+        "year": 2014,
+        "marks": 2.0,
+        "negative_marks": 0.66,
+        "time_expected": "3-5 minutes",
+        "success_rate_estimate": "55%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 3: Structures",
+        "gate_subsection": "Theory of Elasticity",
+        "weightage": "2-4%",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "This question is well-aligned with the core concepts of 2D elasticity and Airy's stress function, which are fundamental to structural analysis in aerospace engineering."
+      },
+      "rag_quality": {
+        "relevance_score": 0.9,
+        "chunks_used": 6,
+        "sources_distribution": {
+          "books": 5,
+          "videos": 1
+        },
+        "notes": "RAG chunks provided excellent context on Airy's stress function, its definition, how to derive stresses, the bi-harmonic equation, and its application to cantilever beams. The retrieved content included worked examples (P.2.2) and problem types (P.2.5) that are directly relevant to the methodology required to solve this question. The information on the semi-inverse method (Chunk 1) also provided a broader context for this type of problem."
+      },
+      "model_meta": {
+        "timestamp": "2024-07-30T12:00:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Given an Airy's function, determine the loading conditions (normal and shear tractions) that it represents on all boundaries of a given domain.",
+        "For a different loading condition (e.g., uniformly distributed load or pure bending moment), propose a suitable form for Airy's function and determine the constants.",
+        "Verify if a given stress function satisfies only the bi-harmonic equation, without considering boundary conditions.",
+        "Problems involving thermal stresses, requiring the use of the modified bi-harmonic equation.",
+        "Determine the displacement field from a given Airy's stress function and material properties."
+      ]
+    },
+    "question_id": "GATE_2014_AE_Q42",
+    "year": 2014,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "MCQ",
+    "question_text": "A cantilevered beam is subjected to a parabolic distribution of shear traction at the right edge while the top and bottom surfaces are traction free. To solve this problem, following Airy's stress function is proposed: phi = C_1 x y + C_2 x y^3 + C_3 x^2 y^2 + C_4 x^3 y. This is an admissible Airy's function that would satisfy the bi-harmonic equation as well as the boundary conditions if and only if"
+  },
+  "tokens_used": 17861,
+  "input_tokens": 11249,
+  "output_tokens": 6612,
+  "cost": 0.0056545499999999995,
+  "time_seconds": 48.96522259712219
+}
