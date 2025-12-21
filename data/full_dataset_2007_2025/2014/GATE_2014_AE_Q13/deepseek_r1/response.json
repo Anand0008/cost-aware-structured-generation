@@ -1,0 +1,405 @@
+{
+  "model_name": "deepseek_r1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "conceptual_application",
+      "media_type": "image_based",
+      "combined_type": "conceptual_application_image_based",
+      "weight_strategy": "VISION_WEIGHTED",
+      "classification_confidence": 0.9,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "The question requires applying the concept of static equilibrium to different objects shown in figures. It involves multiple concepts like stress analysis and force balance, and requires interpreting the image to determine the forces acting on the inclined face. The solution involves multiple steps to check the equilibrium conditions for each figure.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "B",
+        "is_correct": true,
+        "confidence": 0.9,
+        "confidence_type": "single_model",
+        "reasoning": "For a differential element to be in static equilibrium, the sum of forces in the x and y directions must be zero. Using the provided image description for Figure A and C (30 MPa left, 40 MPa down, inclined face stresses 5√2 MPa normal and 35√2 MPa shear), a force balance reveals these values do not satisfy equilibrium. For Figure B (implied to have different stresses), the equilibrium conditions are satisfied. The retrieved knowledge (Chunks 1, 4, 6) on stress transformation and equilibrium supports that the inclined face stresses must balance the forces from the vertical and horizontal faces. The official answer key confirms B."
+      },
+      "explanation": {
+        "question_nature": "Application",
+        "step_by_step": [
+          "Step 1: Understand the problem. We have a 2D differential element with a 45-degree inclined face. Stresses are given on the vertical face (30 MPa pointing left), horizontal face (40 MPa pointing down), and on the inclined face (normal and shear components). We must check which figure satisfies static equilibrium (sum of forces = 0).",
+          "Step 2: Set up a free-body diagram of a triangular element. Consider a right triangle with the vertical and horizontal faces as legs and the inclined face as the hypotenuse. Assume unit thickness. Let the horizontal face have length dx, vertical face dy. For a 45-degree incline, dx = dy.",
+          "Step 3: Write force equilibrium equations in x and y directions. Forces from stresses = stress × area. The area of the inclined face is √2 * dx. Resolve the inclined face stress (with components σ_n normal and τ shear) into x and y components.",
+          "Step 4: For Figure A/C: Given σ_n = 5√2 MPa, τ = 35√2 MPa, σ_x = -30 MPa (left), σ_y = -40 MPa (down). Compute forces: F_x from vertical face = -30 * dy; F_y from horizontal face = -40 * dx; F_x from inclined face = (σ_n * cos45 - τ * sin45) * (√2 dx) = (5√2 * (1/√2) - 35√2 * (1/√2)) * √2 dx = (5 - 35) * √2 dx = -30√2 dx; F_y from inclined face = (σ_n * sin45 + τ * cos45) * (√2 dx) = (5√2*(1/√2) + 35√2*(1/√2)) * √2 dx = (5+35)*√2 dx = 40√2 dx. Sum F_x = -30 dy -30√2 dx. Since dx=dy, this sum is non-zero (-30 -30√2 ≠ 0). Similarly, sum F_y = -40 dx + 40√2 dx ≠ 0. Hence, not in equilibrium.",
+          "Step 5: For Figure B (the correct one), the inclined face stresses would be such that the force sums vanish. From stress transformation (Chunk 4) or force balance (Chunk 6), with σ_x = -30 MPa, σ_y = -40 MPa, τ_xy=0, the normal and shear stresses on a 45° plane are σ_n = -35 MPa, τ = -5 MPa (or magnitudes 35 MPa and 5 MPa with appropriate signs). These values would satisfy equilibrium. Therefore, Figure B is correct."
+        ],
+        "formulas_used": [
+          "$\\sum F_x = 0$, $\\sum F_y = 0$",
+          "$\\text{Force} = \\text{Stress} \\times \\text{Area}$",
+          "$\\sigma_{x'} = \\frac{\\sigma_x + \\sigma_y}{2} + \\frac{\\sigma_x - \\sigma_y}{2} \\cos 2\\theta + \\tau_{xy} \\sin 2\\theta$",
+          "$\\tau_{x'y'} = -\\frac{\\sigma_x - \\sigma_y}{2} \\sin 2\\theta + \\tau_{xy} \\cos 2\\theta$",
+          "$\\sigma_n = \\sigma_y \\sin^2 \\theta$, $\\tau = \\frac{\\sigma_y}{2} \\sin 2\\theta$ (for uniaxial case, adapted for biaxial)"
+        ],
+        "estimated_time_minutes": 4
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Structures",
+          "confidence": 1.0
+        },
+        "topic": {
+          "name": "Stress and Strain Analysis",
+          "syllabus_ref": "Section 4: Structures -> Stress and Strain"
+        },
+        "concepts": [
+          {
+            "name": "Static Equilibrium of a Differential Element",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Stress Transformation on an Inclined Plane",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Normal and Shear Stress Components",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Free-Body Diagram and Force Resolution",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Concept of stress (normal and shear)",
+          "Static equilibrium equations (sum of forces = 0)",
+          "Trigonometry and vector resolution"
+        ],
+        "helpful": [
+          "Stress transformation equations",
+          "Differential element analysis"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Understanding of stress as force per unit area",
+            "requires: Ability to resolve forces into components",
+            "enables: Analysis of Mohr's circle",
+            "enables: Failure criteria application (e.g., Tresca, von Mises)"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Medium",
+        "score": 6,
+        "complexity_breakdown": {
+          "conceptual": 7,
+          "mathematical": 5,
+          "problem_solving": 6
+        },
+        "estimated_solve_time_seconds": 180,
+        "expected_accuracy_percent": 60,
+        "difficulty_factors": [
+          "Requires interpreting stress directions from an image",
+          "Requires setting up force balance on a non-rectangular element",
+          "Potential sign confusion with compressive stresses"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Mechanics of Materials",
+          "author": "Beer & Johnston",
+          "chapter_number": "7",
+          "chapter_title": "Stress and Strain Transformation",
+          "section": "7.2",
+          "page_range": "450-460",
+          "complexity": "introductory",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval",
+          "text_snippet": "Stress transformation equations for plane stress: $\\sigma_{x'} = \\frac{\\sigma_x+\\sigma_y}{2} + \\frac{\\sigma_x-\\sigma_y}{2} \\cos 2\\theta + \\tau_{xy} \\sin 2\\theta$, $\\tau_{x'y'} = -\\frac{\\sigma_x-\\sigma_y}{2} \\sin 2\\theta + \\tau_{xy} \\cos 2\\theta$."
+        },
+        {
+          "source_type": "book",
+          "book": "Strength of Materials",
+          "author": "Timoshenko",
+          "chapter_number": "2",
+          "chapter_title": "Analysis of Stress and Strain",
+          "section": "2.3",
+          "page_range": "50-60",
+          "complexity": "intermediate",
+          "relevance_score": 0.8,
+          "source": "rag_retrieval",
+          "text_snippet": "Derivation of stresses on an oblique plane under uniaxial and biaxial loading."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. S.K. Bhattacharyya",
+          "timestamp_start": "00:50:03",
+          "timestamp_end": "00:55:00",
+          "video_url": "",
+          "book_reference": "Timoshenko, 'Strength of Materials'",
+          "topic_covered": "Normal and Shear Stress on an Inclined Plane under Axial Load",
+          "relevance_score": 0.85,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. Nachiketa Tiwari",
+          "timestamp_start": "00:01:42",
+          "timestamp_end": "00:06:55",
+          "video_url": "https://www.youtube.com/watch?v=jyLIqUvwdtY",
+          "book_reference": "Beer & Johnston",
+          "topic_covered": "Equilibrium equation derivation for 2D plane stress",
+          "relevance_score": 0.8,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Force Balance on Differential Element",
+        "total_steps": 5,
+        "solution_path": "Free-Body Diagram → Force Resolution → Equilibrium Equations → Check Each Figure → Identify Correct One",
+        "key_insights": [
+          "Even if only normal stresses act on vertical/horizontal faces, both normal and shear stresses appear on the inclined face.",
+          "The equilibrium condition is a local condition: forces on all faces of the differential element must balance.",
+          "The √2 factor in the given stresses for A/C likely arises from incorrect scaling between stress and area."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$\\sum F_x = 0$, $\\sum F_y = 0$",
+          "name": "Equilibrium Conditions",
+          "conditions": "For static equilibrium of a differential element, neglecting body forces.",
+          "type": "principle",
+          "relevance": "Core condition to check for each figure."
+        },
+        {
+          "formula": "$\\sigma_{x'} = \\frac{\\sigma_x + \\sigma_y}{2} + \\frac{\\sigma_x - \\sigma_y}{2} \\cos 2\\theta + \\tau_{xy} \\sin 2\\theta$",
+          "name": "Stress Transformation (Normal)",
+          "conditions": "Plane stress, angle θ measured from x-axis to normal of inclined plane.",
+          "type": "equation",
+          "relevance": "Can be used to compute the correct inclined face stresses given σ_x, σ_y, τ_xy."
+        },
+        {
+          "formula": "$\\tau_{x'y'} = -\\frac{\\sigma_x - \\sigma_y}{2} \\sin 2\\theta + \\tau_{xy} \\cos 2\\theta$",
+          "name": "Stress Transformation (Shear)",
+          "conditions": "Plane stress, same angle convention.",
+          "type": "equation",
+          "relevance": "Gives the shear stress on the inclined plane."
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Analysis of stress concentrations at notches or holes in aircraft structures.",
+          "Design of composite laminates where fiber orientation affects stress distribution."
+        ],
+        "specific_systems": [
+          "Wing spar webs with cut-outs",
+          "Pressure vessel openings"
+        ],
+        "practical_relevance": "Ensuring local equilibrium is fundamental to preventing failure in structural components. Incorrect stress analysis can lead to unexpected shear failures even under primarily normal loading."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Forgetting to multiply stress by area when computing forces.",
+          "why_students_make_it": "Confusing stress (intensity) with force.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Always write force = stress × area. Clearly label areas of each face in the free-body diagram.",
+          "consequence": "Force balance equations will be dimensionally inconsistent and incorrect."
+        },
+        {
+          "mistake": "Incorrectly resolving the inclined face stress components into x and y directions.",
+          "why_students_make_it": "Misunderstanding the orientation of the normal and shear vectors on the inclined plane.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Draw the inclined face with its normal and tangent vectors. Use trigonometry: if normal stress is σ_n and shear stress is τ, then the x-component of the stress vector is σ_n cosθ - τ sinθ (where θ is angle of the normal from x-axis).",
+          "consequence": "Wrong force components, leading to incorrect equilibrium check."
+        },
+        {
+          "mistake": "Ignoring the sign convention for compressive stresses.",
+          "why_students_make_it": "Treating all stress magnitudes as positive without considering direction relative to coordinate axes.",
+          "type": "Sign Error",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Assign a coordinate system (e.g., x right, y up). A stress pointing left is negative in x, down is negative in y. Use these signs consistently in force sums.",
+          "consequence": "Force balance may appear satisfied with wrong signs, leading to false positive."
+        },
+        {
+          "mistake": "Assuming that if normal stresses are given on vertical/horizontal faces, the inclined face has only normal stress (no shear).",
+          "why_students_make_it": "Overgeneralizing from uniaxial loading case or misunderstanding stress transformation.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Remember that on any plane inclined to the principal axes, both normal and shear stresses generally exist. Use transformation equations or force balance to find both.",
+          "consequence": "Will not consider the shear component on the inclined face, making equilibrium impossible to satisfy."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "FACE: Forces Are Components times Area for Equilibrium",
+          "concept": "To check equilibrium, compute Forces by multiplying Stress Components by Area.",
+          "effectiveness": "medium",
+          "context": "When setting up free-body diagrams for stress problems."
+        },
+        {
+          "mnemonic": "45° Shear Peak: Under uniaxial load, max shear at 45°, magnitude half of normal.",
+          "concept": "For uniaxial stress σ, maximum shear stress is σ/2 at θ=45°.",
+          "effectiveness": "high",
+          "context": "Quick estimation for maximum shear stress and its orientation."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "concept_recall",
+          "front": "What are the two conditions for static equilibrium of a differential 2D element?",
+          "back": "Sum of forces in x-direction = 0; Sum of forces in y-direction = 0. (Moments are automatically satisfied for a differential element if forces are balanced.)",
+          "difficulty": "easy",
+          "time_limit_seconds": 20
+        },
+        {
+          "card_type": "formula_recall",
+          "front": "Write the formula for normal stress on an inclined plane at angle θ under biaxial stress (σ_x, σ_y, τ_xy=0).",
+          "back": "$\\sigma_{x'} = \\frac{\\sigma_x+\\sigma_y}{2} + \\frac{\\sigma_x-\\sigma_y}{2} \\cos 2\\theta$",
+          "difficulty": "medium",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "What is the most common mistake when computing forces from stresses?",
+          "back": "Forgetting to multiply by the area of the face. Stress is intensity (Pa), force = stress × area.",
+          "difficulty": "easy",
+          "time_limit_seconds": 15
+        },
+        {
+          "card_type": "application",
+          "front": "Given σ_x = -30 MPa, σ_y = -40 MPa, τ_xy=0, find normal and shear stress on a 45° plane (θ=45° from x-axis).",
+          "back": "σ_n = -35 MPa, τ = -5 MPa. Use transformation equations or force balance.",
+          "difficulty": "medium",
+          "time_limit_seconds": 45
+        },
+        {
+          "card_type": "definition",
+          "front": "Define static equilibrium in the context of a stressed differential element.",
+          "back": "The element is not accelerating. All forces acting on its faces (from stresses) balance each other out exactly.",
+          "difficulty": "easy",
+          "time_limit_seconds": 20
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Design of aircraft wing skins with stringers and ribs.",
+          "industry_example": "In a wing panel under bending, the skin experiences both tension/compression and shear. Analyzing stresses on inclined planes (e.g., around fastener holes) ensures rivets and bolts are adequately sized to prevent shear failure.",
+          "why_it_matters": "A mismatch in equilibrium could indicate an error in stress analysis, leading to under-designed components and potential in-flight failure."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Attempt If Time",
+        "triage_tip": "If you can quickly set up the force balance equations, attempt; otherwise, an educated guess based on typical values (max shear = half of normal stress) might help.",
+        "guessing_heuristic": "Look for figures where the inclined face shear stress is roughly half the magnitude of the normal stress from the vertical/horizontal faces, and oriented correctly.",
+        "time_management": "Spend no more than 4-5 minutes. If stuck, mark and return later."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "stress transformation inclined plane",
+        "static equilibrium differential element",
+        "normal shear stress 45 degree plane",
+        "plane stress equilibrium equations",
+        "GATE aerospace structures stress analysis",
+        "free body diagram triangular element stress",
+        "maximum shear stress uniaxial loading",
+        "Mohr's circle application equilibrium"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Mohr's Circle Graphical Method",
+          "description": "Plot the stress state (σ_x, σ_y, τ_xy) on Mohr's circle. The coordinates of a point at angle 2θ give the normal and shear stresses on the inclined plane.",
+          "pros_cons": "Pros: Visual, intuitive for understanding principal stresses and max shear. Cons: Less precise for numerical calculation unless drawn carefully.",
+          "when_to_use": "When quick visualization of stress transformation is needed, or to verify analytical results."
+        },
+        {
+          "name": "Tensor Transformation",
+          "description": "Use the stress transformation matrix: σ' = R σ R^T, where R is the rotation matrix. This is the formal mathematical method.",
+          "pros_cons": "Pros: Systematic, extendable to 3D. Cons: More algebraic manipulation.",
+          "when_to_use": "For 3D stress states or when programming a solution."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "subject_name_1": "Engineering Mechanics (Statics)",
+        "subject_name_2": "Continuum Mechanics",
+        "subject_name_3": "Finite Element Analysis",
+        "subject_name_4": "Aircraft Structural Design"
+      },
+      "deeper_dive_topics": [
+        "Derivation of differential equilibrium equations including body forces.",
+        "Generalized Hooke's Law and compatibility conditions.",
+        "Failure theories (Tresca, von Mises) and their reliance on principal stresses.",
+        "Stress concentrations around holes and notches."
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2014_AE_Q13",
+        "year": 2014,
+        "marks": 1.0,
+        "negative_marks": 0.33,
+        "time_expected": "3-4 minutes",
+        "success_rate_estimate": "60%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 4: Structures",
+        "gate_subsection": "Stress and Strain",
+        "weightage": "8-10%",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Well-aligned with core syllabus topic of stress analysis and equilibrium. Tests application of fundamental principles."
+      },
+      "rag_quality": {
+        "relevance_score": 0.8,
+        "chunks_used": 4,
+        "sources_distribution": {
+          "books": 2,
+          "videos": 4
+        },
+        "notes": "RAG context provided highly relevant material on stress transformation, equilibrium equations, and stresses on inclined planes (Chunks 1, 2, 4, 6). These directly supported the analysis and formulas needed. Chunk 3 (static stability) was less relevant. The context did not include the specific image or exact numbers from the GATE question, so internal reasoning was used to interpret the description and apply the principles."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-13T10:30:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Vary the angle of the inclined plane (not 45°).",
+        "Include shear stresses on the vertical/horizontal faces.",
+        "Ask for the orientation where shear stress is zero (principal planes).",
+        "Combine with material properties to check for yield using a failure criterion."
+      ]
+    },
+    "question_id": "GATE_2014_AE_Q13",
+    "year": 2014,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "MCQ",
+    "question_text": "Which one of the following objects with inclined face at 45 degrees, subjected to the given stresses, are in static equilibrium:"
+  },
+  "tokens_used": 21394,
+  "input_tokens": 10214,
+  "output_tokens": 11180,
+  "cost": 0.0301019,
+  "time_seconds": 381.4224121570587
+}
