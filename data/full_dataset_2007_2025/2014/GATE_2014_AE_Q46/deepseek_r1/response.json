@@ -1,0 +1,384 @@
+{
+  "model_name": "deepseek_r1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "text_only",
+      "combined_type": "numerical_calculation_text_only",
+      "weight_strategy": "NUMERICAL_WEIGHTED",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "This is a numerical calculation problem involving gas turbine thermodynamics. It requires applying multiple concepts (total temperature, total pressure, isentropic relations, turbine efficiency) and multiple steps to arrive at the solution. The multi-concept integration and the difficulty score warrant using GPT-5.1.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "1.19 bar (accepts 1.10 to 1.25 per key)",
+        "is_correct": true,
+        "confidence": 0.92,
+        "confidence_type": "single_model",
+        "reasoning": "The calculation involves finding the stagnation temperature at turbine exit from given static temperature and velocity, using the total-to-total turbine efficiency to find the isentropic exit stagnation temperature, and finally applying the isentropic pressure-temperature relation. The computed value (≈1.19 bar) falls within the official answer range (1.10-1.25 bar)."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Step 1: Identify given data and goal. We need the stagnation pressure in the nozzle (P05). The nozzle is isentropic, so P05 is constant throughout the nozzle and equals the stagnation pressure at the turbine exit.",
+          "Step 2: Find the stagnation temperature at turbine exit (T05) from the static temperature (T5) and velocity (V5) using the definition of stagnation enthalpy (or temperature for ideal gas with constant Cp). Formula: $T_{05} = T_5 + \\frac{V_5^2}{2 C_p}$.",
+          "Step 3: Apply the total-to-total turbine efficiency definition: $\\eta_t = \\frac{T_{04} - T_{05}}{T_{04} - T_{05s}}$. Solve for the isentropic exit stagnation temperature $T_{05s}$.",
+          "Step 4: Relate $T_{05s}$ to pressures via the isentropic relation for the turbine expansion: $\\frac{T_{05s}}{T_{04}} = \\left(\\frac{P_{05}}{P_{04}}\\right)^{(\\gamma-1)/\\gamma}$. Solve for $P_{05}$.",
+          "Step 5: Perform numerical computation with consistent units (Cp in J/kg·K, pressures in bar)."
+        ],
+        "formulas_used": [
+          "$T_{0} = T + \\frac{V^2}{2 C_p}$",
+          "$\\eta_t = \\frac{T_{04} - T_{05}}{T_{04} - T_{05s}}$",
+          "$\\frac{T_{05s}}{T_{04}} = \\left(\\frac{P_{05}}{P_{04}}\\right)^{(\\gamma-1)/\\gamma}$"
+        ],
+        "estimated_time_minutes": 4
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Propulsion",
+          "confidence": 0.99
+        },
+        "topic": {
+          "name": "Gas Turbine Performance",
+          "syllabus_ref": "Section 6: Propulsion -> Gas Turbine Engines -> Cycle Analysis & Performance"
+        },
+        "concepts": [
+          {
+            "name": "Stagnation Properties",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Turbine Efficiency (Total-to-Total)",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Isentropic Flow Relations",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Nozzle Isentropic Flow",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Definition of stagnation temperature and enthalpy",
+          "Concept of isentropic efficiency for a turbine",
+          "Isentropic pressure-temperature relation for ideal gas",
+          "Steady flow energy equation"
+        ],
+        "helpful": [
+          "Station numbering in gas turbine engines (e.g., 04 = turbine inlet, 05 = turbine exit/nozzle inlet)",
+          "Unit conversion (kJ to J, bar to Pa)"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Definition of stagnation temperature",
+            "requires: Turbine efficiency definition",
+            "requires: Isentropic relations",
+            "enables: Nozzle thrust calculation",
+            "enables: Overall engine cycle analysis"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Medium",
+        "score": 6,
+        "complexity_breakdown": {
+          "conceptual": 5,
+          "mathematical": 7,
+          "problem_solving": 6
+        },
+        "estimated_solve_time_seconds": 180,
+        "expected_accuracy_percent": 60,
+        "difficulty_factors": [
+          "Multi-step calculation requiring careful sequencing",
+          "Need to correctly interpret 'stagnation pressure in the nozzle' as P05",
+          "Must convert Cp to consistent SI units (J/kgK)"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Gas Turbine Theory",
+          "author": "H.I.H. Saravanamuttoo, G.F.C. Rogers, H. Cohen",
+          "chapter_number": "2",
+          "chapter_title": "Cycle Calculations",
+          "section": "Turbine efficiency and temperature drop",
+          "complexity": "intermediate",
+          "relevance_score": 0.9,
+          "source": "model_consensus",
+          "text_snippet": "The total-to-total turbine efficiency relates the actual temperature drop to the isentropic drop, and the exit stagnation pressure is found via the isentropic relation."
+        },
+        {
+          "source_type": "book",
+          "book": "Fundamentals of Propulsion",
+          "author": "V. Ganesan",
+          "chapter_number": "7",
+          "chapter_title": "Jet Propulsion Cycles and Their Analysis",
+          "section": "Turbine and Nozzle Analysis",
+          "complexity": "intermediate",
+          "relevance_score": 0.7,
+          "source": "rag_retrieval",
+          "text_snippet": "Chunk 3 provides formulas for nozzle exit velocity and temperature relations, which are related but not directly applicable to the turbine efficiency step."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Dr. D.P. Mishra",
+          "timestamp_start": "00:11:30",
+          "timestamp_end": "00:17:20",
+          "topic_covered": "Nozzle exit velocity determination using stagnation properties",
+          "relevance_score": 0.5,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. Bhaskar Roy and Prof. A. M. Pradeep",
+          "timestamp_start": "00:20:25",
+          "timestamp_end": "00:21:50",
+          "topic_covered": "Ideal diffuser and stagnation conditions",
+          "relevance_score": 0.4,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Thermodynamic Analysis via Efficiency and Isentropic Relations",
+        "total_steps": 5,
+        "solution_path": "Recover T05 from T5 & V5 → Use η_t to find T05s → Use isentropic relation between T05s/T04 and P05/P04 → Solve for P05",
+        "key_insights": [
+          "The 'nozzle stagnation pressure' is the stagnation pressure at the nozzle inlet (P05), which remains constant if the nozzle is isentropic.",
+          "Turbine efficiency links the actual process to an ideal isentropic one, allowing us to find the ideal temperature drop needed for the pressure calculation."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$T_{0} = T + \\frac{V^2}{2 C_p}$",
+          "name": "Stagnation Temperature from Static",
+          "conditions": "Adiabatic, constant Cp, ideal gas",
+          "type": "equation",
+          "relevance": "Core to find T05 from given T5 and V5"
+        },
+        {
+          "formula": "$\\eta_t = \\frac{T_{04} - T_{05}}{T_{04} - T_{05s}}$",
+          "name": "Total-to-Total Turbine Efficiency",
+          "conditions": "Adiabatic turbine, constant Cp",
+          "type": "equation",
+          "relevance": "Links actual and isentropic temperature drops to find T05s"
+        },
+        {
+          "formula": "$\\frac{T_{05s}}{T_{04}} = \\left(\\frac{P_{05}}{P_{04}}\\right)^{(\\gamma-1)/\\gamma}$",
+          "name": "Isentropic Pressure-Temperature Relation",
+          "conditions": "Isentropic, ideal gas, constant γ",
+          "type": "equation",
+          "relevance": "Core to find P05 from temperature ratio"
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Performance analysis of auxiliary power units (APUs) where turbine exit conditions are measured to monitor health.",
+          "Design of power turbines in industrial gas generators."
+        ],
+        "specific_systems": [
+          "GE T700 turboshaft engine (helicopter)"
+        ],
+        "practical_relevance": "Accurate determination of stagnation pressure at turbine exit is critical for predicting nozzle performance and overall engine thrust."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Using static temperature T5 directly in the turbine efficiency equation instead of stagnation temperature T05.",
+          "why_students_make_it": "Forgetting that efficiency is defined using stagnation (total) temperatures.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Always check the definition: 'total-to-total' efficiency uses stagnation temperatures at inlet and exit. Calculate T05 first.",
+          "consequence": "Results in incorrect T05s and wrong pressure."
+        },
+        {
+          "mistake": "Using Cp in kJ/kgK without converting to J/kgK in the kinetic energy term (V^2/(2Cp)).",
+          "why_students_make_it": "Unit inconsistency is a typical oversight in time-pressured exams.",
+          "type": "Units",
+          "severity": "High",
+          "frequency": "very_common",
+          "how_to_avoid": "Convert Cp to J/kgK immediately when velocity is in m/s (1 kJ/kgK = 1000 J/kgK).",
+          "consequence": "T05 will be off by ~1000x, leading to drastically wrong answer."
+        },
+        {
+          "mistake": "Misinterpreting 'stagnation pressure in the nozzle' as the exit static pressure or the inlet stagnation pressure P04.",
+          "why_students_make_it": "Ambiguous phrasing; not recalling that for an isentropic nozzle, stagnation pressure is constant and equals the inlet stagnation pressure.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Remember: For an isentropic adiabatic nozzle, P0 = constant. So nozzle stagnation pressure = stagnation pressure at nozzle inlet (turbine exit).",
+          "consequence": "Might answer 10 bar (P04) or atmospheric pressure."
+        },
+        {
+          "mistake": "Incorrectly applying the exponent in the isentropic relation, e.g., using γ/(γ-1) instead of (γ-1)/γ.",
+          "why_students_make_it": "Confusion between the relation for temperature ratio and pressure ratio.",
+          "type": "Formula Recall",
+          "severity": "Medium",
+          "frequency": "common",
+          "how_to_avoid": "Memorize: For isentropic process, $\\frac{T_2}{T_1} = \\left(\\frac{P_2}{P_1}\\right)^{(\\gamma-1)/\\gamma}$. Derive from $P v^{\\gamma} = constant$ and ideal gas law.",
+          "consequence": "Pressure ratio will be raised to the wrong power, leading to incorrect P05."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "SEE: Stagnation Includes Kinetic Energy. (To remember T0 = T + V^2/(2Cp))",
+          "concept": "Definition of stagnation temperature",
+          "effectiveness": "medium",
+          "context": "Whenever given static temperature and velocity"
+        },
+        {
+          "mnemonic": "Efficiency: Actual over Isentropic Drop (for work-producing devices like turbines, η = Actual drop / Isentropic drop).",
+          "concept": "Turbine efficiency definition",
+          "effectiveness": "high",
+          "context": "Remembering numerator and denominator for η_t"
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "Write the formula for stagnation temperature T0 in terms of static T, velocity V, and Cp.",
+          "back": "$T_0 = T + \\frac{V^2}{2 C_p}$ (ensure Cp in J/kg·K).",
+          "difficulty": "easy",
+          "time_limit_seconds": 20
+        },
+        {
+          "card_type": "definition",
+          "front": "Define total-to-total efficiency for a turbine.",
+          "back": "$\\eta_t = \\frac{T_{04} - T_{05}}{T_{04} - T_{05s}}$, where T04 and T05 are actual stagnation temperatures, T05s is the isentropic exit stagnation temperature.",
+          "difficulty": "medium",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "What is the most common unit mistake when calculating T0 from V and Cp? How to avoid it?",
+          "back": "Using Cp in kJ/kg·K without converting to J/kg·K. Always convert Cp to J/kg·K (multiply by 1000) when V is in m/s.",
+          "difficulty": "easy",
+          "time_limit_seconds": 25
+        },
+        {
+          "card_type": "application",
+          "front": "Given T04, P04, η_t, T5, V5, γ, Cp. Outline the steps to find P05.",
+          "back": "1. Compute T05 = T5 + V5^2/(2Cp). 2. Use η_t to find T05s from η_t = (T04-T05)/(T04-T05s). 3. Use isentropic relation: T05s/T04 = (P05/P04)^((γ-1)/γ) to solve for P05.",
+          "difficulty": "hard",
+          "time_limit_seconds": 60
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Engine Health Monitoring",
+          "industry_example": "In flight data recorders, turbine exit temperatures and pressures are inferred from limited measurements to assess turbine degradation over time.",
+          "why_it_matters": "A drop in turbine efficiency or incorrect stagnation pressure indicates wear, affecting fuel economy and safety."
+        },
+        {
+          "application": "Nozzle Design",
+          "industry_example": "The stagnation pressure at the nozzle inlet (P05) determines the expansion ratio and whether the nozzle is over- or under-expanded, crucial for thrust optimization.",
+          "why_it_matters": "Incorrect P05 estimation leads to poor nozzle design, resulting in thrust loss or structural issues due to shock waves."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "This is a standard 2-mark numerical. If you know the formulas for stagnation temperature and turbine efficiency, it's a straightforward plug-and-chug. Allocate ~3 minutes.",
+        "guessing_heuristic": "If stuck, note that P05 must be less than P04 (10 bar) and greater than ambient (~0.2-1 bar). A reasonable guess might be 1-2 bar.",
+        "time_management": "Practice similar problems to reduce calculation time. Have unit conversions (Cp) done mentally."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "total-to-total turbine efficiency calculation",
+        "stagnation temperature from static temperature and velocity",
+        "isentropic pressure temperature relation gamma 1.33",
+        "gas turbine nozzle stagnation pressure",
+        "GATE propulsion numerical problems",
+        "turbine exit stagnation pressure",
+        "how to find P05 given T5 and V5"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Using Enthalpy Directly",
+          "description": "Instead of temperatures, work with enthalpies h = Cp*T. The steps are identical but might be more fundamental from the energy equation.",
+          "pros_cons": "Pros: More general for variable Cp. Cons: Slightly more cumbersome for constant Cp.",
+          "when_to_use": "When Cp is variable or when explicitly dealing with enthalpy tables."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Thermodynamics": "First Law for open systems (steady flow energy equation), isentropic processes for ideal gases.",
+        "Gas Dynamics": "Concepts of stagnation properties and their relation to static properties in flowing streams."
+      },
+      "deeper_dive_topics": [
+        "Polytropic efficiency vs. isentropic (stage) efficiency for turbines.",
+        "Effect of cooling flows on turbine efficiency and exit conditions.",
+        "Non-isentropic nozzle: How nozzle efficiency affects thrust and exit velocity."
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2014_AE_Q46",
+        "year": 2014,
+        "marks": 2.0,
+        "negative_marks": 0.0,
+        "time_expected": "3-4 minutes",
+        "success_rate_estimate": "60%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 6: Propulsion",
+        "gate_subsection": "Gas Turbine Engines: Cycle Analysis & Performance",
+        "weightage": "~8-10%",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Well-aligned with core propulsion syllabus testing application of efficiency concepts and isentropic relations."
+      },
+      "rag_quality": {
+        "relevance_score": 0.45,
+        "chunks_used": 2,
+        "sources_distribution": {
+          "books": 1,
+          "videos": 1
+        },
+        "notes": "RAG context primarily covered nozzle exit velocity and diffuser stagnation conditions, which are related but not directly applicable to the turbine efficiency and pressure calculation required. Chunks 3 and 4 provided general nozzle formulas but did not address turbine efficiency. Therefore, the solution relied heavily on internal knowledge of propulsion thermodynamics."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-13T10:30:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Change the component: Find compressor exit stagnation pressure given compressor efficiency and exit static conditions.",
+        "Introduce a converging-diverging nozzle: Find exit Mach number given P05 and ambient pressure.",
+        "Combine with combustor: Calculate fuel-air ratio to achieve given T04, then find P05."
+      ]
+    },
+    "question_id": "GATE_2014_AE_Q46",
+    "year": 2014,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "NAT",
+    "question_text": "A gas turbine engine is operating under the following conditions: Stagnation temperature at turbine inlet 1350 K; Stagnation pressure at the turbine inlet 10 bar; Static temperature at turbine exit 800 K; Velocity at turbine exit 200 m/s; Total-to-total efficiency of turbine 0.96; gamma (ratio of specific heats) 1.33; CP(specific heat at constant pressure) 1.147 kJ/kgK. The stagnation pressure (in bar) in the nozzle (considering isentropic nozzle) is equal to _______."
+  },
+  "tokens_used": 16166,
+  "input_tokens": 10082,
+  "output_tokens": 6084,
+  "cost": 0.01886906,
+  "time_seconds": 190.45944690704346
+}
