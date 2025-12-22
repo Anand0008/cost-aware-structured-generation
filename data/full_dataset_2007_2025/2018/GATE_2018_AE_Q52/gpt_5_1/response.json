@@ -1,0 +1,431 @@
+{
+  "model_name": "gpt_5_1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "text_only",
+      "combined_type": "numerical_calculation_text_only",
+      "weight_strategy": "NUMERICAL_WEIGHTED",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "The question requires applying the equilibrium equations (from stress analysis) to solve for the unknown coefficient A. It involves multiple steps of partial differentiation and substitution, making it a medium-hard numerical calculation problem that integrates concepts from elasticity. Since the difficulty score is 6, use_gpt51 is set to true.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "-6.0",
+        "is_correct": true,
+        "confidence": 1.0,
+        "confidence_type": "single_model",
+        "reasoning": "For a 2D body under plane stress with no body forces, the equilibrium equations are: \\n1) $\\frac{\\partial \\sigma_{xx}}{\\partial x} + \\frac{\\partial \\tau_{xy}}{\\partial y} = 0$ \\n2) $\\frac{\\partial \\tau_{xy}}{\\partial x} + \\frac{\\partial \\sigma_{yy}}{\\partial y} = 0$.\\nGiven $\\sigma_{xx} = A x^2$, $\\sigma_{yy} = 12 x^2 - 6 y^2$, $\\tau_{xy} = 12 x y$. Compute derivatives: \\n$\\frac{\\partial \\sigma_{xx}}{\\partial x} = 2 A x$, $\\frac{\\partial \\tau_{xy}}{\\partial y} = 12 x$. Substituting into the first equilibrium equation: $2 A x + 12 x = 0$. For all $x$, factor $x$: $x (2 A + 12) = 0 \\Rightarrow 2 A + 12 = 0 \\Rightarrow A = -6$. The second equilibrium equation is automatically satisfied: $\\frac{\\partial \\tau_{xy}}{\\partial x} = 12 y$, $\\frac{\\partial \\sigma_{yy}}{\\partial y} = -12 y$, so $12 y - 12 y = 0$. Thus $A = -6.0$ is the unique value ensuring equilibrium, matching the official key."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Identify that the body is under plane stress with no body forces, so the 2D equilibrium equations in x and y directions must be satisfied everywhere.",
+          "Write the equilibrium equations without body forces: $\\frac{\\partial \\sigma_{xx}}{\\partial x} + \\frac{\\partial \\tau_{xy}}{\\partial y} = 0$ and $\\frac{\\partial \\tau_{xy}}{\\partial x} + \\frac{\\partial \\sigma_{yy}}{\\partial y} = 0$.",
+          "Compute the needed derivatives from the given stress field: $\\sigma_{xx} = A x^2$, $\\sigma_{yy} = 12 x^2 - 6 y^2$, $\\tau_{xy} = 12 x y$.",
+          "Calculate $\\frac{\\partial \\sigma_{xx}}{\\partial x} = 2 A x$ and $\\frac{\\partial \\tau_{xy}}{\\partial y} = 12 x$, then substitute into the first equilibrium equation to get $2 A x + 12 x = 0$.",
+          "Factor out $x$ (valid for all points, so the coefficient must vanish): $x (2 A + 12) = 0 \\Rightarrow 2 A + 12 = 0$, hence solve for $A$ to obtain $A = -6$.",
+          "Optionally verify the second equilibrium equation: $\\frac{\\partial \\tau_{xy}}{\\partial x} = 12 y$, $\\frac{\\partial \\sigma_{yy}}{\\partial y} = -12 y$, so $12 y - 12 y = 0$, confirming equilibrium in the y-direction is already satisfied."
+        ],
+        "formulas_used": [
+          "$\\frac{\\partial \\sigma_{xx}}{\\partial x} + \\frac{\\partial \\tau_{xy}}{\\partial y} + X = 0$",
+          "$\\frac{\\partial \\tau_{xy}}{\\partial x} + \\frac{\\partial \\sigma_{yy}}{\\partial y} + Y = 0$",
+          "$\\tau_{xy} = \\tau_{yx}$",
+          "$\\frac{\\partial}{\\partial x}(A x^2) = 2 A x$",
+          "$\\frac{\\partial}{\\partial y}(12 x y) = 12 x$"
+        ],
+        "estimated_time_minutes": 2
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Structures",
+          "confidence": 1.0
+        },
+        "topic": {
+          "name": "Plane stress and 2D elasticity equilibrium equations",
+          "syllabus_ref": "Solid Mechanics and Structures -> Stress and Strain, Equilibrium Equations, Plane Stress"
+        },
+        "concepts": [
+          {
+            "name": "Plane stress equilibrium equations in Cartesian coordinates",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Stress components and partial derivatives",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Absence of body forces in equilibrium equations",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Polynomial stress fields in elasticity",
+            "importance": "tertiary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Concept of stress components in 2D: normal stresses and shear stress",
+          "Static equilibrium of a differential element in continuum mechanics",
+          "Plane stress assumption and reduction of 3D equilibrium equations to 2D",
+          "Basic partial differentiation with respect to x and y"
+        ],
+        "helpful": [
+          "Understanding of body forces and when they can be neglected",
+          "Familiarity with stress functions and polynomial stress fields in elasticity"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Concept of stress components in 2D (\\sigma_{xx}, \\sigma_{yy}, \\tau_{xy})",
+            "requires: Static equilibrium equations for a continuum element",
+            "enables: Verification of admissible stress fields in elasticity problems",
+            "enables: Use of Airy stress functions and advanced 2D elasticity solutions"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Easy",
+        "score": 3,
+        "complexity_breakdown": {
+          "conceptual": 3,
+          "mathematical": 3,
+          "problem_solving": 3
+        },
+        "estimated_solve_time_seconds": 90,
+        "expected_accuracy_percent": 80,
+        "difficulty_factors": [
+          "Requires recalling the correct form of 2D equilibrium equations without body forces",
+          "Involves careful partial differentiation and algebraic simplification",
+          "Students may forget that the condition must hold for all x, leading to solving the coefficient equation"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Aircraft Structures for Engineering Students",
+          "author": "T.H.G. Megson",
+          "chapter_number": "1",
+          "chapter_title": "Basic Elasticity",
+          "section": "Plane Stress Equilibrium Equations",
+          "page_range": "early section on equations of equilibrium",
+          "complexity": "introductory",
+          "relevance_score": 0.95,
+          "source": "rag_retrieval",
+          "text_snippet": "Plane Stress Equilibrium Equations: $\\frac{\\partial \\sigma_x}{\\partial x} + \\frac{\\partial \\tau_{xy}}{\\partial y} + X = 0$, $\\frac{\\partial \\sigma_y}{\\partial y} + \\frac{\\partial \\tau_{yx}}{\\partial x} + Y = 0$."
+        },
+        {
+          "source_type": "book",
+          "book": "Theory of Elasticity",
+          "author": "Timoshenko and Goodier",
+          "chapter_number": "2",
+          "chapter_title": "Fundamentals of Elasticity",
+          "section": "Equations of Equilibrium in Two Dimensions",
+          "page_range": "",
+          "complexity": "intermediate",
+          "relevance_score": 0.9,
+          "source": "model_consensus",
+          "text_snippet": ""
+        },
+        {
+          "source_type": "book",
+          "book": "Mechanics of Materials",
+          "author": "Beer and Johnston",
+          "chapter_number": "10",
+          "chapter_title": "Plane Stress and Plane Strain",
+          "section": "Equations of Equilibrium",
+          "page_range": "",
+          "complexity": "introductory",
+          "relevance_score": 0.85,
+          "source": "model_consensus",
+          "text_snippet": ""
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. S.K. Bhattacharyya",
+          "timestamp_start": "00:03:03",
+          "timestamp_end": "00:04:08",
+          "video_url": "https://www.youtube.com/watch?v=iJTHPgYAqvQ",
+          "book_reference": "Beer & Johnston / Timoshenko",
+          "topic_covered": "Derivation and explanation of 2D Cartesian equilibrium equations for stressed bodies",
+          "relevance_score": 0.95,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. Anup Ghosh",
+          "timestamp_start": "00:16:03",
+          "timestamp_end": "00:20:00",
+          "video_url": "",
+          "book_reference": "Timoshenko",
+          "topic_covered": "Plane stress formulation and reduced equilibrium equations",
+          "relevance_score": 0.85,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Direct Formula Application",
+        "total_steps": 6,
+        "solution_path": "Write 2D equilibrium equations without body forces \\u2192 Compute partial derivatives of given stress field \\u2192 Apply first equilibrium equation \\u2192 Solve for A \\u2192 Optionally verify second equation",
+        "key_insights": [
+          "Equilibrium equations must hold at every point, so polynomial coefficients (like 2A+12) must vanish, not just at specific x or y.",
+          "Body forces are absent, simplifying the equilibrium equations to sums of stress derivatives equal to zero.",
+          "The given stress field is constructed so that the y-direction equilibrium is already satisfied; only the x-direction equation determines A."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$\\frac{\\partial \\sigma_{xx}}{\\partial x} + \\frac{\\partial \\tau_{xy}}{\\partial y} + X = 0$",
+          "name": "2D equilibrium equation in x-direction",
+          "conditions": "Plane stress or plane strain in Cartesian coordinates with body force component X per unit volume",
+          "type": "equation",
+          "relevance": "Core equilibrium condition used to determine the unknown coefficient A."
+        },
+        {
+          "formula": "$\\frac{\\partial \\tau_{xy}}{\\partial x} + \\frac{\\partial \\sigma_{yy}}{\\partial y} + Y = 0$",
+          "name": "2D equilibrium equation in y-direction",
+          "conditions": "Plane stress or plane strain in Cartesian coordinates with body force component Y per unit volume",
+          "type": "equation",
+          "relevance": "Used to check that the given stress field already satisfies equilibrium in the y-direction."
+        },
+        {
+          "formula": "$\\tau_{xy} = \\tau_{yx}$",
+          "name": "Complementary shear stresses",
+          "conditions": "Static equilibrium of moments on an infinitesimal element",
+          "type": "principle",
+          "relevance": "Justifies using a single shear component \\tau_{xy} in the 2D equilibrium equations."
+        },
+        {
+          "formula": "$\\frac{\\partial}{\\partial x}(A x^2) = 2 A x$",
+          "name": "Derivative of quadratic stress field",
+          "conditions": "A is constant, x is spatial coordinate",
+          "type": "equation",
+          "relevance": "Needed to substitute into the equilibrium equation and solve for A."
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Stress analysis of thin aircraft skin panels under in-plane loads, where plane stress assumptions and equilibrium equations are used to verify admissible stress distributions.",
+          "Design of flat structural components like wing ribs or fuselage frames, where polynomial stress fields are used in analytical elasticity solutions."
+        ],
+        "specific_systems": [
+          "Aircraft fuselage skin around cut-outs (windows, doors) where 2D stress fields must satisfy equilibrium and boundary conditions.",
+          "Wing panels in high-speed aircraft, modeled as thin plates under plane stress for preliminary design."
+        ],
+        "practical_relevance": "Ensuring that an assumed or computed stress field satisfies equilibrium is crucial in structural design and finite element verification; otherwise, the model can predict non-physical stresses leading to unsafe designs."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Using the wrong form of the equilibrium equations, such as including \\frac{\\partial \\sigma_{yy}}{\\partial x} in the x-direction equation or mixing up derivatives.",
+          "why_students_make_it": "Students may recall the 3D form vaguely or confuse the roles of normal and shear stresses in each direction.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Memorize and derive once: in x-direction, derivatives are of \\sigma_{xx} with respect to x and \\tau_{xy} with respect to y; in y-direction, derivatives are of \\tau_{xy} with respect to x and \\sigma_{yy} with respect to y.",
+          "consequence": "Leads to an incorrect algebraic equation for A and a completely wrong numerical answer."
+        },
+        {
+          "mistake": "Forgetting that body forces are absent and still adding X or Y terms, or incorrectly setting them to non-zero values.",
+          "why_students_make_it": "Habit from general equilibrium equations where body forces are often present.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Underline 'absence of body forces' in the question and explicitly write X = 0, Y = 0 before writing the equations.",
+          "consequence": "Unnecessary extra terms complicate the algebra and may lead to wrong conditions for A."
+        },
+        {
+          "mistake": "Not recognizing that the equilibrium equation must hold for all x and y, and trying to solve using a particular point (e.g., x = 1, y = 0) instead of equating the coefficient to zero.",
+          "why_students_make_it": "Over-reliance on plugging in numbers rather than thinking in terms of functions.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Remember that stress fields in elasticity are continuous functions; equilibrium is a differential condition that must be satisfied at every point, so polynomial coefficients must vanish.",
+          "consequence": "May still get A = -6 by chance at one point, but the reasoning is flawed and can fail in more complex problems."
+        },
+        {
+          "mistake": "Differentiation errors, such as writing \\frac{\\partial}{\\partial x}(A x^2) = A x or \\frac{\\partial}{\\partial y}(12 x y) = 12 y instead of 12 x.",
+          "why_students_make_it": "Rushing through simple calculus steps under time pressure.",
+          "type": "Calculation",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Slow down for 5 seconds to check each derivative; treat x and y as independent variables and remember which is constant in each partial derivative.",
+          "consequence": "Directly changes the equilibrium equation and leads to an incorrect value of A."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "In x, normal-x and shear-y; in y, shear-x and normal-y.",
+          "concept": "Remembering which stress derivatives appear in each 2D equilibrium equation.",
+          "effectiveness": "high",
+          "context": "Use when writing the plane stress equilibrium equations from memory."
+        },
+        {
+          "mnemonic": "No body force, no extra term.",
+          "concept": "Dropping X and Y in equilibrium equations when body forces are absent.",
+          "effectiveness": "medium",
+          "context": "Before writing equilibrium equations, quickly recall this phrase to avoid adding unnecessary terms."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "Write the 2D equilibrium equations in plane stress (no body forces) in Cartesian coordinates.",
+          "back": "$\\frac{\\partial \\sigma_{xx}}{\\partial x} + \\frac{\\partial \\tau_{xy}}{\\partial y} = 0$, $\\frac{\\partial \\tau_{xy}}{\\partial x} + \\frac{\\partial \\sigma_{yy}}{\\partial y} = 0$.",
+          "difficulty": "medium",
+          "time_limit_seconds": 45
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "What does it mean physically when the equilibrium equations are satisfied for a stress field?",
+          "back": "It means that for every infinitesimal element, the internal stress resultants balance so there is no net force in any direction (static equilibrium, no acceleration).",
+          "difficulty": "easy",
+          "time_limit_seconds": 45
+        },
+        {
+          "card_type": "application",
+          "front": "Given $\\sigma_{xx} = A x^2$ and $\\tau_{xy} = 12 x y$, find $\\frac{\\partial \\sigma_{xx}}{\\partial x}$ and $\\frac{\\partial \\tau_{xy}}{\\partial y}$.",
+          "back": "$\\frac{\\partial \\sigma_{xx}}{\\partial x} = 2 A x$, $\\frac{\\partial \\tau_{xy}}{\\partial y} = 12 x$.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "In 2D equilibrium, which stresses appear in the x-direction equation?",
+          "back": "Only $\\sigma_{xx}$ (derivative w.r.t x) and $\\tau_{xy}$ (derivative w.r.t y), plus body force X if present.",
+          "difficulty": "medium",
+          "time_limit_seconds": 40
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "Under plane stress, which stress components are assumed zero?",
+          "back": "$\\sigma_{zz} = 0$, $\\tau_{xz} = 0$, $\\tau_{yz} = 0$; only $\\sigma_{xx}$, $\\sigma_{yy}$, and $\\tau_{xy}$ are non-zero.",
+          "difficulty": "easy",
+          "time_limit_seconds": 45
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Stress analysis of thin aircraft panels under in-plane loads (tension, compression, shear).",
+          "industry_example": "Designing an aircraft wing skin panel where the in-plane stress distribution is approximated by polynomials and must satisfy equilibrium to ensure realistic load paths.",
+          "why_it_matters": "If the assumed stress field does not satisfy equilibrium, the design may underestimate peak stresses, leading to fatigue cracks or structural failure in service."
+        },
+        {
+          "application": "Verification of finite element (FE) results in structural analysis.",
+          "industry_example": "In aerospace FE models, engineers sometimes post-process stress fields to check if numerical stresses approximately satisfy equilibrium equations, especially near stress concentrations.",
+          "why_it_matters": "Large equilibrium residuals can indicate mesh issues or modeling errors, which, if ignored, may cause unsafe designs or certification problems."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "Recognize it as a short 2D equilibrium check: write two simple equations, differentiate polynomials, and solve a linear equation for A. If you recall the equilibrium formulas, it is a quick scoring question.",
+        "guessing_heuristic": "If stuck, note that A is likely of similar magnitude to other coefficients (like -6 in \\sigma_{yy}), and negative to balance positive derivatives; but rely on this only as a last resort.",
+        "time_management": "Allocate about 1.5–2 minutes: 30–40 seconds to recall/write equilibrium equations, 30–40 seconds for derivatives, and the rest to solve for A and quickly re-check algebra."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "plane stress equilibrium equations",
+        "2D elasticity equations of equilibrium",
+        "Megson aircraft structures plane stress",
+        "Timoshenko equations of equilibrium in two dimensions",
+        "complementary shear stresses tau_xy tau_yx",
+        "stress field polynomial equilibrium check",
+        "GATE AE plane stress numerical problem"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Derivation from force balance on an infinitesimal element",
+          "description": "Instead of recalling the equilibrium equations, re-derive them quickly by drawing a small rectangular element, showing normal and shear stresses on each face, writing the sum of forces in x and y directions, and taking the limit as element size tends to zero to obtain the differential equations.",
+          "pros_cons": "Pros: Deepens understanding and reduces reliance on memorization; helps avoid sign and index mistakes. Cons: Slower and more algebraic, not ideal under exam time pressure for simple questions.",
+          "when_to_use": "Useful during preparation or if you forget the exact form of the equilibrium equations in an exam and need to reconstruct them."
+        },
+        {
+          "name": "Use of Airy stress function (conceptual check)",
+          "description": "Recognize that the given stress field could be derived from an Airy stress function \\u03c6(x,y) such that \\sigma_{xx} = \\frac{\\partial^2 \\phi}{\\partial y^2}, \\sigma_{yy} = \\frac{\\partial^2 \\phi}{\\partial x^2}, \\tau_{xy} = -\\frac{\\partial^2 \\phi}{\\partial x \\partial y}. Then equilibrium is automatically satisfied. One could attempt to find \\phi and infer A from consistency.",
+          "pros_cons": "Pros: Connects to advanced elasticity methods and shows why certain polynomial stress fields are chosen. Cons: Overkill for this problem and more complex algebra.",
+          "when_to_use": "More appropriate in advanced elasticity courses or when studying Airy stress functions, not in a timed GATE exam for this specific question."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Engineering Mathematics": "Uses partial derivatives and polynomial functions of several variables, reinforcing multivariable calculus skills.",
+        "Solid Mechanics": "Builds on 3D stress concepts and static equilibrium of bodies, connecting to topics like Mohr's circle and principal stresses.",
+        "Finite Element Methods": "Equilibrium equations are the continuous counterparts of FE equilibrium; understanding them helps interpret stiffness matrices and residuals.",
+        "Aerospace Structures": "Plane stress analysis is central to thin-walled structures like wings and fuselage skins, linking to buckling and fatigue analysis."
+      },
+      "deeper_dive_topics": [
+        "Airy stress function formulation for plane stress and plane strain problems",
+        "Compatibility equations in terms of stresses for plane stress and plane strain",
+        "Difference between plane stress and plane strain in thick vs thin structures",
+        "Use of polynomial stress fields in closed-form elasticity solutions (e.g., bending of plates, stress around holes)"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2018_AE_Q52",
+        "year": 2018,
+        "marks": 2.0,
+        "negative_marks": 0.0,
+        "time_expected": "1.5-2.0 minutes",
+        "success_rate_estimate": "75-85%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Solid Mechanics and Structures",
+        "gate_subsection": "Stress and Strain; Equations of Equilibrium; Plane Stress and Plane Strain",
+        "weightage": "10-15%",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "The question directly tests fundamental 2D equilibrium equations under plane stress, which are core to aerospace structural analysis. It is well-aligned with the GATE AE structures syllabus and appropriate for a 2-mark NAT."
+      },
+      "rag_quality": {
+        "relevance_score": 0.9,
+        "chunks_used": 4,
+        "sources_distribution": {
+          "books": 2,
+          "videos": 2
+        },
+        "notes": "RAG provided clear statements of the 2D equilibrium equations for plane stress (Megson, Prof. Bhattacharyya, Prof. Ghosh) and context on plane stress conditions. This directly supports the derivation and application of the equilibrium equations used to solve for A. No additional external information was needed beyond these standard formulas."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-22T00:00:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Given a different polynomial stress field in plane stress, ask students to determine constants ensuring both equilibrium and boundary conditions on a specified edge.",
+        "Extend to include uniform body forces X and Y and ask for the modified value of A that satisfies equilibrium.",
+        "Ask to check both equilibrium and compatibility for a given stress field and determine whether it is a fully admissible solution.",
+        "Pose a conceptual question comparing when to use plane stress vs plane strain for different aerospace structural components."
+      ]
+    },
+    "question_id": "GATE_2018_AE_Q52",
+    "year": 2018,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "NAT",
+    "question_text": "The components of stress in a body under plane stress condition, in the absence of body forces, is given by: sigma_xx = Ax^2; sigma_yy = 12x^2 - 6y^2 and sigma_xy = 12xy. The coefficient, A, such that the body is under equilibrium is _____ (accurate to one decimal place)."
+  },
+  "tokens_used": 15055,
+  "input_tokens": 9078,
+  "output_tokens": 5977,
+  "cost": 0.0711175,
+  "time_seconds": 68.2528305053711
+}
