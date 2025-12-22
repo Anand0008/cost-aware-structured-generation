@@ -1,0 +1,345 @@
+{
+  "model_name": "deepseek_r1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "text_only",
+      "combined_type": "numerical_calculation_text_only",
+      "weight_strategy": "NUMERICAL_WEIGHTED",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "This is a numerical calculation problem that requires understanding of static stability, neutral point, and aerodynamic coefficients. It involves multiple steps to find the neutral point location, integrating concepts of aerodynamics and stability.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "-0.80",
+        "is_correct": true,
+        "confidence": 0.95,
+        "confidence_type": "single_model",
+        "reasoning": "The standard static stability relationship is $\\frac{\\partial C_{m,cg}}{\\partial \\alpha} = C_{L_\\alpha} \\left( \\frac{x_{cg} - x_{np}}{\\bar{c}} \\right)$. Given $\\frac{\\partial C_{m,cg}}{\\partial \\alpha} = -4$, $C_{L_\\alpha} = 5 \\, \\text{rad}^{-1}$, and $\\bar{c} = 1 \\, \\text{m}$, solving yields $\\frac{x_{cg} - x_{np}}{1} = \\frac{-4}{5} = -0.8$. Thus, $x_{np} - x_{cg} = 0.8 \\, \\text{m}$. The question asks for location of neutral point from CG, positive towards nose. If NP is aft of CG, the vector from CG to NP is negative (since positive is towards nose). Therefore, the distance is $-0.8 \\, \\text{m}$, which lies within the answer key range of -0.81 to -0.79."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Step 1: Identify the given parameters. $C_{L_\\alpha} = \\frac{dC_L}{d\\alpha} = 5$ per radian. The pitching moment coefficient about the center of gravity is $C_{m,cg} = 0.05 - 4\\alpha$. Therefore, $\\frac{dC_{m,cg}}{d\\alpha} = -4$. The mean aerodynamic chord $\\bar{c} = 1$ m.",
+          "Step 2: Recall the fundamental longitudinal static stability relationship. For an aircraft, the change in pitching moment coefficient with angle of attack is proportional to the distance between the center of gravity (CG) and the neutral point (NP): $$\\frac{\\partial C_{m,cg}}{\\partial \\alpha} = C_{L_\\alpha} \\left( \\frac{x_{cg} - x_{np}}{\\bar{c}} \\right)$$ where $x_{cg}$ and $x_{np}$ are measured from a fixed reference (e.g., leading edge) positive aft. The term $(x_{cg} - x_{np})/\\bar{c}$ is the dimensionless CG position relative to NP.",
+          "Step 3: Insert the known values into the equation. $$-4 = 5 \\times \\left( \\frac{x_{cg} - x_{np}}{1} \\right)$$ Thus, $$x_{cg} - x_{np} = -\\frac{4}{5} = -0.8$$",
+          "Step 4: Interpret the physical meaning. $x_{cg} - x_{np} = -0.8$ means $x_{np} - x_{cg} = 0.8$ m. Since $x$ increases aft, a positive $x_{np} - x_{cg}$ indicates the NP is located 0.8 m aft (behind) the CG.",
+          "Step 5: Apply the sign convention specified in the question. The location of the neutral point from the center of gravity is asked with 'positive towards the nose'. The vector from CG to NP is $x_{np} - x_{cg}$ in the coordinate system where positive is aft. To express this as a distance with positive towards nose, we take the negative: $$\\text{Distance (CG to NP, positive towards nose)} = -(x_{np} - x_{cg}) = x_{cg} - x_{np}$$ Hence, the distance is $x_{cg} - x_{np} = -0.8$ m.",
+          "Step 6: Report the answer. The location is $-0.80$ m (accurate to two decimal places)."
+        ],
+        "formulas_used": [
+          "$C_{m,cg} = C_{m,0} + \\frac{\\partial C_{m,cg}}{\\partial \\alpha} \\alpha$",
+          "$\\frac{\\partial C_{m,cg}}{\\partial \\alpha} = C_{L_\\alpha} \\left( \\frac{x_{cg} - x_{np}}{\\bar{c}} \\right)$"
+        ],
+        "estimated_time_minutes": 3
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Flight Mechanics",
+          "confidence": 0.98
+        },
+        "topic": {
+          "name": "Longitudinal Static Stability",
+          "syllabus_ref": "Section 4: Flight Mechanics -> Stability and control -> Static stability"
+        },
+        "concepts": [
+          {
+            "name": "Neutral Point",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Pitching Moment Coefficient",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Lift Curve Slope",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Center of Gravity",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Definition of pitching moment coefficient and its derivative",
+          "Concept of neutral point and its relation to static stability",
+          "Basic algebra and sign conventions"
+        ],
+        "helpful": [
+          "Aerodynamic center and its relation to neutral point for simple configurations",
+          "Dimensional analysis and non-dimensional distances"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Understanding of pitching moment coefficient as function of angle of attack",
+            "requires: Knowledge that neutral point is where dC_m/dα = 0",
+            "enables: Calculation of static margin",
+            "enables: Design of aircraft for desired stability"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Medium",
+        "score": 5,
+        "complexity_breakdown": {
+          "conceptual": 4,
+          "mathematical": 3,
+          "problem_solving": 6
+        },
+        "estimated_solve_time_seconds": 120,
+        "expected_accuracy_percent": 65,
+        "difficulty_factors": [
+          "Sign convention interpretation can be tricky",
+          "Direct formula application but requires careful rearrangement"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Introduction to Flight",
+          "author": "John D. Anderson Jr.",
+          "chapter_number": "7",
+          "chapter_title": "Principles of Stability and Control",
+          "section": "7.9",
+          "page_range": "Not specified",
+          "complexity": "introductory",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval",
+          "text_snippet": "The neutral point (h_n) is the location along the aircraft's longitudinal axis where, if the center of gravity (cg) were positioned, the aircraft would have neutral static stability. This implies that the pitching moment coefficient (C_M,cg) does not change with variations in the angle of attack (α), hence ∂C_M,cg/∂α = 0."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. A.K. Ghosh",
+          "timestamp_start": "00:05:01",
+          "timestamp_end": "00:06:25",
+          "video_url": "https://www.youtube.com/watch?v=D9id8Yj7Ios",
+          "book_reference": "Perkins & Hage",
+          "topic_covered": "Neutral Point Concept and Unit Conversions",
+          "relevance_score": 0.8,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Direct Formula Application",
+        "total_steps": 6,
+        "solution_path": "Extract derivatives → Apply stability equation → Solve for distance → Apply sign convention",
+        "key_insights": [
+          "The slope of the C_m,cg vs α curve is directly related to the distance between CG and NP.",
+          "The sign convention for 'positive towards the nose' must be applied carefully to the computed difference."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$\\frac{\\partial C_{m,cg}}{\\partial \\alpha} = C_{L_\\alpha} \\left( \\frac{x_{cg} - x_{np}}{\\bar{c}} \\right)$",
+          "name": "Longitudinal Static Stability Equation",
+          "conditions": "Linear aerodynamics, small angles, constant lift curve slope",
+          "type": "equation",
+          "relevance": "Core relationship linking moment derivative, lift slope, and CG-NP distance."
+        },
+        {
+          "formula": "$C_{m,cg} = C_{m,0} + \\frac{\\partial C_{m,cg}}{\\partial \\alpha} \\alpha$",
+          "name": "Linear Pitching Moment Model",
+          "conditions": "Linear range of angle of attack",
+          "type": "equation",
+          "relevance": "Given in the problem; allows extraction of derivative."
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Determining the neutral point is crucial during aircraft design to ensure the center of gravity remains ahead of it for inherent stability.",
+          "Flight testing: The neutral point can be estimated from flight data by measuring pitching moment variations with CG shifts."
+        ],
+        "specific_systems": [
+          "Conventional aircraft like Cessna 172 require careful balance between stability and controllability by managing CG relative to NP."
+        ],
+        "practical_relevance": "Knowing the neutral point allows designers to set allowable CG ranges and determine static margin, which directly impacts handling qualities and safety."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Using the incorrect sign in the stability equation, e.g., writing $\\frac{\\partial C_{m,cg}}{\\partial \\alpha} = C_{L_\\alpha} \\left( \\frac{x_{np} - x_{cg}}{\\bar{c}} \\right)$",
+          "why_students_make_it": "Confusion over whether NP ahead or behind CG increases stability; misremembering the formula.",
+          "type": "Sign Error",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Memorize: Stable aircraft have CG ahead of NP, so $x_{cg} < x_{np}$. Since $\\frac{\\partial C_{m,cg}}{\\partial \\alpha} < 0$ for stability, the correct formula must yield a negative value when $x_{cg} < x_{np}$. Verify with a known stable condition.",
+          "consequence": "Answer sign flips, leading to +0.8 instead of -0.8."
+        },
+        {
+          "mistake": "Misinterpreting the phrase 'location from the center of gravity' and the sign convention 'positive towards the nose'.",
+          "why_students_make_it": "Not carefully reading the question; confusion between position vector and distance.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "common",
+          "how_to_avoid": "Always define a coordinate system. Typically, x increases aft from a reference. The vector from CG to NP is $x_{np} - x_{cg}$. If positive direction is towards nose, then the distance is $-(x_{np} - x_{cg}) = x_{cg} - x_{np}$. Draw a diagram.",
+          "consequence": "Incorrect sign in final answer."
+        },
+        {
+          "mistake": "Forgetting to use the mean aerodynamic chord in non-dimensionalization, i.e., using $x_{cg} - x_{np}$ directly without dividing by $\\bar{c}$.",
+          "why_students_make_it": "Overlooking that the stability equation uses dimensionless distances; seeing $\\bar{c}=1$ m might lead to skipping division.",
+          "type": "Calculation",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Always write the equation with $\\bar{c}$ explicitly. Even if $\\bar{c}=1$, include it symbolically to maintain dimensional consistency.",
+          "consequence": "Numerical answer remains correct if $\\bar{c}=1$, but the method is flawed for general cases."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "CG Ahead, Stable Flight (CGASF): Center of Gravity Ahead of Neutral Point gives Static Stability.",
+          "concept": "Stability condition: CG ahead of NP",
+          "effectiveness": "high",
+          "context": "Remembering the relative positions for stability."
+        },
+        {
+          "mnemonic": "Slope Negative, Stable Aircraft: dC_m/dα < 0 means stable.",
+          "concept": "Sign of pitching moment derivative indicates stability",
+          "effectiveness": "medium",
+          "context": "Interpreting C_m vs α graph."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "What is the relationship between dC_m,cg/dα, C_L_α, CG, and NP?",
+          "back": "$\\frac{\\partial C_{m,cg}}{\\partial \\alpha} = C_{L_\\alpha} \\left( \\frac{x_{cg} - x_{np}}{\\bar{c}} \\right)$. For stability (dC_m,cg/dα < 0), we need $x_{cg} < x_{np}$ (CG ahead of NP).",
+          "difficulty": "medium",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "Define the neutral point.",
+          "back": "The neutral point is the longitudinal location of the center of gravity for which the aircraft is neutrally stable, i.e., $\\frac{\\partial C_{m,cg}}{\\partial \\alpha} = 0$. It is a fixed point for a given configuration.",
+          "difficulty": "easy",
+          "time_limit_seconds": 20
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "What is a common sign error when computing NP location from CG?",
+          "back": "Mixing up the order in the formula: using (x_np - x_cg) instead of (x_cg - x_np). Remember: stable aircraft have CG ahead of NP, so x_cg - x_np is negative, and dC_m/dα is negative.",
+          "difficulty": "hard",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "application",
+          "front": "Given C_m,cg = 0.05 - 4α, C_L_α = 5 rad⁻¹, c̄ = 1 m, find NP location from CG (positive towards nose).",
+          "back": "dC_m,cg/dα = -4. Use formula: -4 = 5*( (x_cg - x_np)/1 ) → x_cg - x_np = -0.8 → distance (CG to NP, positive towards nose) = x_cg - x_np = -0.8 m.",
+          "difficulty": "medium",
+          "time_limit_seconds": 45
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Aircraft design and certification",
+          "industry_example": "During the design of the Airbus A320, the neutral point was determined to establish the forward and aft CG limits for safe operation. The static margin (distance between CG and NP) is a key parameter affecting pilot workload and handling.",
+          "why_it_matters": "If the CG moves behind the neutral point, the aircraft becomes statically unstable, requiring constant control input (like in fighter aircraft) and possibly leading to loss of control if not managed."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "Quickly identify the given derivatives and apply the stability formula. This is a straightforward 2-mark calculation if you know the formula.",
+        "guessing_heuristic": "If unsure, note that for a stable aircraft, NP is usually behind CG, so the distance from CG to NP (positive towards nose) should be negative. Eliminate positive options.",
+        "time_management": "Spend no more than 3 minutes. Write the formula, plug numbers, and carefully apply sign convention."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "neutral point calculation",
+        "longitudinal static stability equation",
+        "pitching moment coefficient derivative",
+        "center of gravity vs neutral point",
+        "static margin formula",
+        "aircraft stability dCm/dalpha",
+        "GATE AE flight mechanics stability",
+        "how to find neutral point from Cm alpha"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Using moment coefficient about aerodynamic center",
+          "description": "For a simple wing, NP coincides with aerodynamic center (AC). The pitching moment about CG is $C_{m,cg} = C_{m,ac} + C_L (x_{ac} - x_{cg})/\\bar{c}$. Differentiating gives $dC_{m,cg}/dC_L = (x_{ac} - x_{cg})/\\bar{c}$. Setting this to zero gives NP at AC. For a full aircraft, the AC is replaced by the NP of the whole configuration.",
+          "pros_cons": "Pros: Direct for flying wings. Cons: For tailed aircraft, more complex due to tail contributions.",
+          "when_to_use": "When dealing with a flying wing or when tail effects are negligible."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Aerodynamics": "Lift curve slope $C_{L_\\alpha}$ is derived from thin airfoil theory and panel methods.",
+        "Control Systems": "Static stability is a prerequisite for dynamic stability; unstable aircraft require feedback control (fly-by-wire)."
+      },
+      "deeper_dive_topics": [
+        "Influence of tail volume ratio and downwash on neutral point location",
+        "Relaxed static stability and its benefits for performance",
+        "Methods to measure neutral point in flight testing",
+        "Effect of Mach number and compressibility on neutral point shift"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2018_AE_Q41",
+        "year": 2018,
+        "marks": 2.0,
+        "negative_marks": 0.0,
+        "time_expected": "2-3 minutes",
+        "success_rate_estimate": "65%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 4: Flight Mechanics",
+        "gate_subsection": "Stability and Control",
+        "weightage": "Approximately 10-15% of Flight Mechanics",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Well-aligned with core static stability concepts; typical numerical problem."
+      },
+      "rag_quality": {
+        "relevance_score": 0.85,
+        "chunks_used": 4,
+        "sources_distribution": {
+          "books": 2,
+          "videos": 2
+        },
+        "notes": "RAG provided excellent background on neutral point definition, stability equations, and sign conventions. Chunks 1, 2, 3, 5, 6 directly discuss neutral point and the relationship between dC_m/dα and CG-NP distance. The retrieved knowledge confirmed the formula used and provided contextual understanding. However, the specific formula with C_L_α was not explicitly stated in the chunks but is a standard derivation from the provided equations."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-13T10:30:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Varying the lift curve slope or moment derivative to find required CG position for a given static margin.",
+        "Including tail contributions explicitly to compute neutral point for a given tail volume ratio.",
+        "Asking for static margin given CG location and NP.",
+        "Effect of fuel burn on CG shift and stability."
+      ]
+    },
+    "question_id": "GATE_2018_AE_Q41",
+    "year": 2018,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "NAT",
+    "question_text": "A statically-stable aircraft has a C_L_alpha = 5 (where the angle of attack, alpha, is measured in radians). The coefficient of moment of the aircraft about the center of gravity is given as C_m,cg = 0.05 - 4 alpha. The mean aerodynamic chord of the aircraft wing is 1 m. The location (positive towards the nose) of the neutral point of the aircraft from the center of gravity is ______ (in m, accurate to two decimal places)."
+  },
+  "tokens_used": 19605,
+  "input_tokens": 9862,
+  "output_tokens": 9743,
+  "cost": 0.02676127,
+  "time_seconds": 275.17986369132996
+}
