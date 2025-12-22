@@ -1,0 +1,389 @@
+{
+  "model_name": "deepseek_r1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "text_only",
+      "combined_type": "numerical_calculation_text_only",
+      "weight_strategy": "NUMERICAL_WEIGHTED",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "This is a numerical calculation problem involving hydrostatic force. It requires integrating pressure over the area and accounting for both atmospheric pressure and water pressure, making it a multi-step problem with multiple concepts (fluid mechanics, pressure, force). The difficulty is medium-hard due to the integration and multiple steps.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "9.81 kN",
+        "is_correct": true,
+        "confidence": 1.0,
+        "confidence_type": "single_model",
+        "reasoning": "The net hydrostatic force is the force due to water gauge pressure only, as atmospheric pressure cancels on both sides of the tank wall. The gauge pressure distribution is linear from 0 at the water surface to $\\rho g h$ at the bottom over a wetted height of 1 m and width 2 m. The force equals the average pressure times area: $F = (\\frac{1}{2} \\rho g h) \\times (w \\cdot h) = \\frac{1}{2} \\times 1000 \\times 9.81 \\times 1 \\times (2 \\times 1) = 9810 \\, \\text{N} = 9.81 \\, \\text{kN}$. This matches the answer key range 9.80 to 9.81."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Step 1: Understand the setup. A cubical tank (side 2 m) open at top, filled with water to height 1 m. Density $\\rho = 1000 \\, \\text{kg/m}^3$, $g=9.81 \\, \\text{m/s}^2$, atmospheric pressure $p_{\\text{atm}}=100 \\, \\text{kPa}$. Need net hydrostatic force on one side face.",
+          "Step 2: Recognize that atmospheric pressure acts on both sides of the tank wall (inside and outside), so its net contribution is zero. Thus, use gauge pressure (pressure above atmospheric) for the water.",
+          "Step 3: Determine pressure distribution. On the wetted portion (bottom 1 m of the side face), gauge pressure at a depth $y$ below water surface is $p = \\rho g y$, where $y$ is measured downward from the surface. Alternatively, set coordinate $y'$ from bottom: at bottom $y'=0$, surface $y'=1 \\, \\text{m}$, then depth $= 1 - y'$.",
+          "Step 4: Compute force via integration. The side face has width $w=2 \\, \\text{m}$. Force $F = \\int_{0}^{1} p \\, dA = w \\int_{0}^{1} \\rho g (1-y') \\, dy' = 2 \\rho g \\int_{0}^{1} (1-y') \\, dy'$.",
+          "Step 5: Evaluate integral: $\\int_{0}^{1} (1-y') \\, dy' = \\left[ y' - \\frac{y'^2}{2} \\right]_{0}^{1} = 1 - 0.5 = 0.5$. So $F = 2 \\rho g \\times 0.5 = \\rho g = 1000 \\times 9.81 = 9810 \\, \\text{N}$.",
+          "Step 6: Convert to kN: $9810 \\, \\text{N} = 9.81 \\, \\text{kN}$. Round to two decimal places: 9.81 kN."
+        ],
+        "formulas_used": [
+          "$p = p_{\\text{atm}} + \\rho g h$ (absolute pressure)",
+          "$p_{\\text{gauge}} = \\rho g h$ (hydrostatic gauge pressure)",
+          "$F = \\int p \\, dA$ (force on submerged surface)",
+          "$F = \\bar{p} \\times A = \\left(\\frac{1}{2} \\rho g h\\right) \\times (w \\cdot h)$ for vertical rectangular surface"
+        ],
+        "estimated_time_minutes": 2
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Fluid Mechanics",
+          "confidence": 0.95
+        },
+        "topic": {
+          "name": "Fluid Statics / Hydrostatics",
+          "syllabus_ref": "Section 3: Fluid Mechanics and Aerodynamics -> Basic Concepts and Properties of Fluids"
+        },
+        "concepts": [
+          {
+            "name": "Hydrostatic Pressure",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Force on a Submerged Plane Surface",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Gauge vs Absolute Pressure",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Integration in Fluid Mechanics",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Hydrostatic pressure variation: $p = \\rho g h$",
+          "Integration of linear functions",
+          "Concept of gauge pressure and atmospheric pressure cancellation"
+        ],
+        "helpful": [
+          "Center of pressure location",
+          "Force on inclined planes"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Understanding of pressure as force per unit area",
+            "requires: Knowledge that pressure increases linearly with depth in a static fluid",
+            "enables: Calculation of forces on dams, tanks, and submerged structures",
+            "enables: Analysis of pressure vessels and buoyancy"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Easy",
+        "score": 2,
+        "complexity_breakdown": {
+          "conceptual": 2,
+          "mathematical": 2,
+          "problem_solving": 2
+        },
+        "estimated_solve_time_seconds": 120,
+        "expected_accuracy_percent": 80,
+        "difficulty_factors": [
+          "Recognizing atmospheric pressure cancellation is key",
+          "Straightforward integration or average pressure formula"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Fluid Mechanics",
+          "author": "Frank M. White",
+          "chapter_number": "2",
+          "chapter_title": "Pressure Distribution in a Fluid",
+          "section": "2.5 Hydrostatic Forces on Plane Surfaces",
+          "complexity": "intermediate",
+          "relevance_score": 0.9,
+          "source": "model_consensus",
+          "text_snippet": "The resultant force on a plane surface is the integral of pressure over the area. For a vertical rectangular surface, the force equals the average pressure times the area."
+        },
+        {
+          "source_type": "book",
+          "book": "Engineering Fluid Mechanics",
+          "author": "Crowe, Elger, Williams, Roberson",
+          "chapter_number": "3",
+          "chapter_title": "Fluid Statics",
+          "section": "3.3 Forces on Plane Surfaces (Submerged)",
+          "complexity": "introductory",
+          "relevance_score": 0.85,
+          "source": "model_consensus",
+          "text_snippet": "The magnitude of the resultant force on a plane surface is given by $F = p_c A$, where $p_c$ is the pressure at the centroid. For a vertical rectangle, $p_c = \\rho g h_c$."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. S.K. Bhattacharyya",
+          "timestamp_start": "00:43:15",
+          "timestamp_end": "00:48:54",
+          "video_url": "https://www.youtube.com/watch?v=U7CPRj1T5n8",
+          "book_reference": "Shames, I.H.",
+          "topic_covered": "Hydrostatic pressure and stress in cylindrical tanks",
+          "relevance_score": 0.5,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Direct Formula Application / Integration",
+        "total_steps": 6,
+        "solution_path": "Atmospheric cancellation → Gauge pressure distribution → Integrate over wetted area → Compute numerical value",
+        "key_insights": [
+          "Atmospheric pressure acts on both sides of the tank wall, so net force is due to water gauge pressure only.",
+          "For a vertical rectangular surface with linear pressure distribution, force = average pressure × area = $\\frac{1}{2} \\rho g h \\times (w \\cdot h)$."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$p = \\rho g h$",
+          "name": "Hydrostatic Pressure (gauge)",
+          "conditions": "Incompressible fluid, constant density, gravity g acting vertically",
+          "type": "equation",
+          "relevance": "Core pressure-depth relationship"
+        },
+        {
+          "formula": "$F = \\frac{1}{2} \\rho g h^2 w$",
+          "name": "Force on Vertical Rectangular Plane",
+          "conditions": "Width w, height h, one edge at free surface, gauge pressure",
+          "type": "equation",
+          "relevance": "Direct formula for this problem geometry"
+        },
+        {
+          "formula": "$F = \\int_A p \\, dA$",
+          "name": "Resultant Hydrostatic Force",
+          "conditions": "General submerged plane surface",
+          "type": "principle",
+          "relevance": "Fundamental definition"
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Design of water storage tanks and reservoirs",
+          "Structural analysis of dam walls",
+          "Pressure vessel design in aerospace (propellant tanks)"
+        ],
+        "specific_systems": [
+          "Overhead water tanks in buildings",
+          "Swimming pool walls",
+          "Liquid rocket propellant tanks"
+        ],
+        "practical_relevance": "Accurate force calculation ensures structural integrity and safety of fluid-containing structures."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Using absolute pressure instead of gauge pressure, leading to force ~400 kN instead of 9.81 kN.",
+          "why_students_make_it": "Forgetting that atmospheric pressure acts on both sides of the wall, or misinterpreting 'due to air and water' as including atmospheric pressure contribution.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Always ask: Is the other side of the surface exposed to atmosphere? If yes, use gauge pressure. In open tanks, atmospheric pressure cancels.",
+          "consequence": "Answer off by a factor of ~40 (since atmospheric pressure is ~100 kPa vs water pressure ~10 kPa)."
+        },
+        {
+          "mistake": "Integrating pressure over the full side height (2 m) instead of only the wetted portion (1 m).",
+          "why_students_make_it": "Not carefully noting the fill height; assuming tank is full.",
+          "type": "Calculation",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Draw a sketch: mark water level. The pressure is zero above water (gauge).",
+          "consequence": "Force becomes 19.62 kN (double the correct answer)."
+        },
+        {
+          "mistake": "Unit errors: not converting Pa to kN, or mixing mm with m.",
+          "why_students_make_it": "Inattention to units, especially when pressure is in kPa and force in kN.",
+          "type": "Units",
+          "severity": "Medium",
+          "frequency": "common",
+          "how_to_avoid": "Carry units throughout calculation: $\\rho g h$ gives Pa, multiply by area in m² gives N, then divide by 1000 for kN.",
+          "consequence": "Answer off by factors of 1000."
+        },
+        {
+          "mistake": "Using wrong formula: $F = \\rho g h A$ (using pressure at bottom only) instead of average pressure.",
+          "why_students_make_it": "Confusing resultant force with pressure at a point.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Remember: force on a plane surface with linearly varying pressure equals average pressure × area. For triangle distribution, average = half of max.",
+          "consequence": "Force becomes 19.62 kN (double)."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "Gauge is Net: For open tanks, gauge pressure gives net force (atmospheric cancels).",
+          "concept": "Atmospheric pressure cancellation",
+          "effectiveness": "high",
+          "context": "Whenever calculating force on a wall exposed to atmosphere on both sides."
+        },
+        {
+          "mnemonic": "Half-Max Average: For triangular pressure distribution on a vertical rectangle, average pressure = half of max pressure.",
+          "concept": "Average pressure for linear distribution",
+          "effectiveness": "medium",
+          "context": "Quick force calculation without integration."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "What is the formula for hydrostatic gauge pressure at depth h in a liquid of density ρ?",
+          "back": "$p = \\rho g h$",
+          "difficulty": "easy",
+          "time_limit_seconds": 15
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "Why do we use gauge pressure (not absolute) to compute net hydrostatic force on a tank wall open to atmosphere?",
+          "back": "Atmospheric pressure acts equally on both sides of the wall, so its net contribution is zero. Only the excess pressure (gauge) due to the liquid contributes.",
+          "difficulty": "medium",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "application",
+          "front": "A vertical rectangular wall of width 3 m is submerged in water with height 2 m. Water surface is at top edge. What is the net hydrostatic force (gauge)?",
+          "back": "$F = \\frac{1}{2} \\rho g h^2 w = 0.5 \\times 1000 \\times 9.81 \\times 2^2 \\times 3 = 58860 \\, \\text{N} = 58.86 \\, \\text{kN}$.",
+          "difficulty": "medium",
+          "time_limit_seconds": 45
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "Common mistake: If a tank is open, should you include atmospheric pressure in force calculation?",
+          "back": "No. Use gauge pressure only. Atmospheric pressure cancels out if the outside is also at atmospheric pressure.",
+          "difficulty": "easy",
+          "time_limit_seconds": 20
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Design of water storage tanks",
+          "industry_example": "Overhead concrete water tanks in buildings must withstand hydrostatic force on walls. Engineers calculate forces to determine wall thickness and reinforcement.",
+          "why_it_matters": "Underestimation leads to cracking or collapse; overestimation increases cost."
+        },
+        {
+          "application": "Aircraft water/waste tanks",
+          "industry_example": "Onboard water tanks in aircraft experience varying forces during maneuvers. Force calculations ensure structural integrity under acceleration.",
+          "why_it_matters": "Safety and reliability in aerospace systems."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "Quick 2-minute problem: use formula $F = \\frac{1}{2} \\rho g h^2 \\times \\text{width}$. Check units (kN).",
+        "guessing_heuristic": "If unsure, note that atmospheric pressure ~100 kPa, water pressure ~10 kPa per meter depth, so net force likely ~10 kN range, not 100+ kN.",
+        "time_management": "Budget 2-3 minutes; if stuck, skip integration and use average pressure method."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "hydrostatic force on vertical plane",
+        "force on submerged rectangular surface",
+        "gauge pressure atmospheric cancellation",
+        "open tank hydrostatic force",
+        "fluid statics problems",
+        "center of pressure calculation",
+        "dam force calculation",
+        "hydrostatic force integration"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Average Pressure Method",
+          "description": "For linear pressure distribution, average pressure = (pressure at top + pressure at bottom)/2. Then force = average pressure × area.",
+          "pros_cons": "Pros: Quick, no integration. Cons: Only valid for linear distribution and when area is rectangular with one edge at free surface.",
+          "when_to_use": "For vertical rectangular surfaces with constant width."
+        },
+        {
+          "name": "Pressure Prism Method",
+          "description": "Visualize force as volume of a pressure prism (3D shape with base as area and height as pressure). Force equals volume of that prism.",
+          "pros_cons": "Pros: Intuitive graphical method. Cons: Requires geometric interpretation.",
+          "when_to_use": "For plane surfaces of any shape, but especially rectangles."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Structures": "Hydrostatic force is a loading condition for tank walls, leading to stress analysis (hoop stress, bending).",
+        "Civil Engineering": "Design of dams, retaining walls, and water tanks uses same principles.",
+        "Aerospace Propulsion": "Propellant tank design considers hydrostatic head to prevent pump cavitation (as in RAG chunks)."
+      },
+      "deeper_dive_topics": [
+        "Center of Pressure: Location where resultant force acts (below centroid for vertical surfaces).",
+        "Forces on Curved Surfaces (e.g., cylindrical tanks): Requires integration of pressure components.",
+        "Effect of Acceleration: Hydrostatics in accelerating frames (e.g., rocket during launch).",
+        "Compressible Fluids: Pressure variation in gases (non-constant density)."
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2018_AE_Q39",
+        "year": 2018,
+        "marks": 2.0,
+        "negative_marks": 0.0,
+        "time_expected": "2-3 minutes",
+        "success_rate_estimate": "80%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 3: Fluid Mechanics and Aerodynamics",
+        "gate_subsection": "Fluid Statics",
+        "weightage": "~5% (Fluid Mechanics portion)",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Well-aligned: tests core hydrostatic force concept with practical geometry."
+      },
+      "rag_quality": {
+        "relevance_score": 0.5,
+        "chunks_used": 2,
+        "sources_distribution": {
+          "books": 1,
+          "videos": 1
+        },
+        "notes": "RAG provided examples of hydrostatic pressure in tanks (Chunks 1,5,6 for cryogenic tanks; Chunks 2,3 for stress in cylindrical tanks) which reinforce the concept of hydrostatic pressure variation with depth. However, none directly address force on a vertical plane surface. Used internal knowledge for force calculation and atmospheric cancellation."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-13T10:30:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Tank with inclined side wall",
+        "Force on a circular hatch or door",
+        "Effect of acceleration (e.g., tank on a moving truck)",
+        "Center of pressure location calculation"
+      ]
+    },
+    "question_id": "GATE_2018_AE_Q39",
+    "year": 2018,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "NAT",
+    "question_text": "Consider a cubical tank of side 2 m with its top open. It is filled with water up to a height of 1 m. Assuming the density of water to be 1000 kg/m^3, g as 9.81 m/s^2 and the atmospheric pressure to be 100 kPa, the net hydrostatic force (in kN) on the side face of the tank due to the air and water is ______ (accurate to two decimal places)."
+  },
+  "tokens_used": 18482,
+  "input_tokens": 10224,
+  "output_tokens": 8258,
+  "cost": 0.023708220000000002,
+  "time_seconds": 201.00361561775208
+}
