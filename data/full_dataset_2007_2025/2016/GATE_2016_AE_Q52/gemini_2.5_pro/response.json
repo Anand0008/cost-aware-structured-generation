@@ -1,0 +1,365 @@
+{
+  "model_name": "gemini_2.5_pro",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "text_only",
+      "combined_type": "numerical_calculation_text_only",
+      "weight_strategy": "NUMERICAL_WEIGHTED",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "The question requires calculating undamped natural frequency and damping ratio from a state-space representation of Dutch roll motion. It involves finding eigenvalues and then relating them to the desired parameters, requiring multiple steps and knowledge of system dynamics and control concepts.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "C",
+        "is_correct": true,
+        "confidence": 0.98,
+        "confidence_type": "single_model",
+        "reasoning": "The given system is in the form $\\dot{X} = AX$, where $X = [\\Delta \\beta; \\Delta r]$ and $A = \\begin{bmatrix} -0.26 & -1 \\ 4.49 & -0.76 \\end{bmatrix}$. To find the dynamic characteristics (natural frequency and damping ratio), we need to determine the eigenvalues of the matrix $A$. The characteristic equation is given by $\\text{det}(A - \\lambda I) = 0$, where $I$ is the identity matrix and $\\lambda$ represents the eigenvalues.\n\n1.  **Form the characteristic matrix:**\n    $A - \\lambda I = \\begin{bmatrix} -0.26 - \\lambda & -1 \\ 4.49 & -0.76 - \\lambda \\end{bmatrix}$\n\n2.  **Calculate the determinant:**\n    $\\text{det}(A - \\lambda I) = (-0.26 - \\lambda)(-0.76 - \\lambda) - (-1)(4.49) = 0$\n    $(0.26 + \\lambda)(0.76 + \\lambda) + 4.49 = 0$\n    $\\lambda^2 + 0.76\\lambda + 0.26\\lambda + (0.26 \\times 0.76) + 4.49 = 0$\n    $\\lambda^2 + 1.02\\lambda + 0.1976 + 4.49 = 0$\n    $\\lambda^2 + 1.02\\lambda + 4.6876 = 0$\n\n3.  **Compare with the standard second-order characteristic equation:**\n    The standard form for a second-order oscillatory system is $s^2 + 2\\zeta\\omega_n s + \\omega_n^2 = 0$, where $\\omega_n$ is the undamped natural frequency and $\\zeta$ is the damping ratio.\n\n    Comparing coefficients:\n    $\\omega_n^2 = 4.6876$\n    $2\\zeta\\omega_n = 1.02$\n\n4.  **Calculate the undamped natural frequency ($\\omega_n$):**\n    $\\omega_n = \\sqrt{4.6876} \\approx 2.165086 \\text{ rad/s}$\n\n5.  **Calculate the damping ratio ($\\zeta$):**\n    $\\zeta = \\frac{1.02}{2\\omega_n} = \\frac{1.02}{2 \\times 2.165086} = \\frac{1.02}{4.330172} \\approx 0.23555$\n\nRounding to three decimal places, $\\omega_n \\approx 2.165 \\text{ rad/s}$ and $\\zeta \\approx 0.235$. This matches option C."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Step 1: Identify the given state-space representation of the Dutch roll motion, which is in the form $\\dot{X} = AX$.",
+          "Step 2: Formulate the characteristic equation of the system by calculating the determinant of $(A - \\lambda I)$, where $A$ is the given matrix, $I$ is the identity matrix, and $\\lambda$ represents the eigenvalues (or roots of the characteristic equation).",
+          "Step 3: Expand the determinant to obtain a quadratic equation in the form $\\lambda^2 + a\\lambda + b = 0$.",
+          "Step 4: Compare this quadratic equation with the standard form of a second-order system's characteristic equation: $s^2 + 2\\zeta\\omega_n s + \\omega_n^2 = 0$.",
+          "Step 5: Equate the constant terms to find the undamped natural frequency ($\\omega_n = \\sqrt{b}$).",
+          "Step 6: Equate the coefficients of the linear terms to find the damping ratio ($\\zeta = \\frac{a}{2\\omega_n}$).",
+          "Step 7: Select the option that matches the calculated values for $\\omega_n$ and $\\zeta$."
+        ],
+        "formulas_used": [
+          "$\\text{det}(A - \\lambda I) = 0$",
+          "$s^2 + 2\\zeta\\omega_n s + \\omega_n^2 = 0$",
+          "$\\omega_n = \\sqrt{\\text{constant term}}$",
+          "$\\zeta = \\frac{\\text{coefficient of s}}{2\\omega_n}$"
+        ],
+        "estimated_time_minutes": 3
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Flight Mechanics",
+          "confidence": 0.98
+        },
+        "topic": {
+          "name": "Lateral-Directional Dynamic Stability",
+          "syllabus_ref": "GATE AE Syllabus: Flight Mechanics -> Static and Dynamic Stability -> Lateral-Directional Stability"
+        },
+        "concepts": [
+          {
+            "name": "Dutch Roll Mode",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Undamped Natural Frequency",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Damping Ratio",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "State-Space Representation",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Eigenvalues",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Linear Algebra (matrix operations, determinants, eigenvalues)",
+          "Dynamic Systems (characteristic equations, second-order system response)",
+          "Basic understanding of aircraft stability modes"
+        ],
+        "helpful": [
+          "Control Systems (transfer functions, root locus concepts)"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Linear Algebra (matrix operations, eigenvalues)",
+            "requires: Dynamic Systems (second-order system characteristics)",
+            "enables: Aircraft Stability Analysis",
+            "enables: Flight Control System Design"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Medium",
+        "score": 6,
+        "complexity_breakdown": {
+          "conceptual": 6,
+          "mathematical": 6
+        },
+        "estimated_solve_time_seconds": 180,
+        "expected_accuracy_percent": 65,
+        "difficulty_factors": [
+          "Requires knowledge of converting a state-space matrix into a characteristic equation.",
+          "Requires accurate calculation of a 2x2 determinant.",
+          "Requires comparison with the standard second-order system equation to extract parameters."
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Flight Stability and Automatic Control",
+          "author": "Nelson, R.C.",
+          "chapter_number": "5",
+          "chapter_title": "Lateral-Directional Dynamic Stability",
+          "section": "5.3 Dutch Roll Mode",
+          "complexity": "intermediate",
+          "relevance_score": 0.95,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "book",
+          "book": "Airplane Performance, Stability and Control",
+          "author": "Perkins & Hage",
+          "chapter_number": "10",
+          "chapter_title": "Lateral Stability",
+          "section": "10.4 Dutch Roll Characteristics",
+          "complexity": "intermediate",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval"
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. A.K. Ghosh",
+          "timestamp_start": "00:20:02",
+          "video_url": "https://www.youtube.com/watch?v=QrU77tY2N58",
+          "topic_covered": "Dutch Roll Mode Approximation, Natural Frequency and Damping Ratio Derivation",
+          "relevance_score": 0.95,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. A.K. Ghosh",
+          "timestamp_start": "00:26:54",
+          "video_url": "https://www.youtube.com/watch?v=7MAtK7AvvQM",
+          "topic_covered": "Dutch Roll Mode Handling Qualities Requirements",
+          "relevance_score": 0.85,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Direct Formula Application & System Analysis",
+        "total_steps": 7,
+        "solution_path": "State-Space Matrix -> Characteristic Equation -> Standard Second-Order Form Comparison -> Parameter Extraction",
+        "key_insights": [
+          "The eigenvalues of the system matrix directly determine the dynamic modes.",
+          "The characteristic equation for a 2x2 matrix is straightforward to derive.",
+          "Comparing the derived characteristic equation with the standard second-order form is key to extracting $\\omega_n$ and $\\zeta$."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$\\text{det}(A - \\lambda I) = 0$",
+          "name": "Characteristic Equation",
+          "conditions": "Used to find eigenvalues of a linear system represented by matrix A.",
+          "type": "equation",
+          "relevance": "Core formula for solving"
+        },
+        {
+          "formula": "$s^2 + 2\\zeta\\omega_n s + \\omega_n^2 = 0$",
+          "name": "Standard Second-Order System Characteristic Equation",
+          "conditions": "Applies to systems exhibiting oscillatory behavior, where $\\zeta$ is damping ratio and $\\omega_n$ is undamped natural frequency.",
+          "type": "equation",
+          "relevance": "Core formula for solving"
+        },
+        {
+          "formula": "$\\omega_n = \\sqrt{\\text{constant term}}$",
+          "name": "Natural Frequency from Characteristic Equation",
+          "conditions": "Derived from the constant term of the standard second-order characteristic equation.",
+          "type": "equation",
+          "relevance": "Core formula for solving"
+        },
+        {
+          "formula": "$\\zeta = \\frac{\\text{coefficient of s}}{2\\omega_n}$",
+          "name": "Damping Ratio from Characteristic Equation",
+          "conditions": "Derived from the coefficient of the 's' term and the natural frequency in the standard second-order characteristic equation.",
+          "type": "equation",
+          "relevance": "Core formula for solving"
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Design of Stability Augmentation Systems (SAS) or Yaw Dampers for aircraft.",
+          "Flight testing and certification of new aircraft types to meet handling qualities standards (e.g., MIL-F-8785C)."
+        ],
+        "specific_systems": [
+          "Commercial airliners (e.g., Boeing 737, Airbus A320) often use yaw dampers to improve Dutch roll damping.",
+          "Fighter jets (e.g., F-16) use advanced flight control systems to manage dynamic modes across the flight envelope."
+        ],
+        "practical_relevance": "Properly damped Dutch roll motion is crucial for pilot comfort, passenger safety, and the ability to maintain stable flight, especially in turbulent conditions. An undamped or lightly damped Dutch roll can lead to pilot-induced oscillations (PIO) or motion sickness."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Incorrectly calculating the determinant of the 2x2 matrix, especially sign errors.",
+          "why_students_make_it": "Carelessness or confusion with the formula for a 2x2 determinant, particularly the negative sign for the off-diagonal product.",
+          "type": "Calculation",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Practice determinant calculations. Double-check signs. Write out the formula explicitly: $ad - bc$.",
+          "consequence": "Leads to an incorrect characteristic equation, resulting in wrong $\\omega_n$ and $\\zeta$."
+        },
+        {
+          "mistake": "Misidentifying coefficients when comparing with the standard second-order equation.",
+          "why_students_make_it": "Forgetting the '2' in $2\\zeta\\omega_n s$ or confusing $\\omega_n^2$ with $\\omega_n$.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Memorize the standard form $s^2 + 2\\zeta\\omega_n s + \\omega_n^2 = 0$ precisely. Write it down before comparing.",
+          "consequence": "Incorrect values for $\\omega_n$ or $\\zeta$, leading to wrong option selection."
+        },
+        {
+          "mistake": "Using the wrong units or forgetting to convert.",
+          "why_students_make_it": "Assuming all given values are in consistent units without checking. While not an issue in this specific problem, it's a general pitfall.",
+          "type": "Units",
+          "severity": "Low",
+          "frequency": "rare",
+          "how_to_avoid": "Always check units of input values and ensure output units are correct (e.g., rad/s for frequency, dimensionless for damping ratio).",
+          "consequence": "Incorrect numerical answer if units were inconsistent."
+        }
+      ],
+      "mnemonics_memory_aids": [],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "What is the characteristic equation for a 2x2 state-space matrix $A = \\begin{bmatrix} a & b \\ c & d \\end{bmatrix}$?",
+          "back": "$\\text{det}(A - \\lambda I) = (a - \\lambda)(d - \\lambda) - bc = 0 \\implies \\lambda^2 - (a+d)\\lambda + (ad-bc) = 0$",
+          "difficulty": "easy"
+        },
+        {
+          "card_type": "formula_recall",
+          "front": "What is the standard form of a second-order system's characteristic equation, and how are $\\omega_n$ and $\\zeta$ defined?",
+          "back": "$s^2 + 2\\zeta\\omega_n s + \\omega_n^2 = 0$. Here, $\\omega_n$ is the undamped natural frequency and $\\zeta$ is the damping ratio.",
+          "difficulty": "easy"
+        },
+        {
+          "card_type": "application",
+          "front": "Given a characteristic equation $s^2 + 1.02s + 4.6876 = 0$, what are $\\omega_n$ and $\\zeta$?",
+          "back": "$\\omega_n = \\sqrt{4.6876} \\approx 2.165 \\text{ rad/s}$. $2\\zeta\\omega_n = 1.02 \\implies \\zeta = \\frac{1.02}{2 \\times 2.165} \\approx 0.235$.",
+          "difficulty": "medium"
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "What is the physical significance of the Dutch Roll mode in aircraft dynamics?",
+          "back": "The Dutch Roll mode is a coupled oscillatory motion in the lateral-directional plane, involving oscillations in yaw, roll, and sideslip angle. It's crucial for handling qualities; if poorly damped, it can cause pilot distraction, motion sickness, and make stable directional control difficult.",
+          "difficulty": "medium"
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Aircraft Handling Qualities Assessment",
+          "industry_example": "During flight testing, engineers measure the Dutch roll damping ratio and natural frequency to ensure they meet certification standards (e.g., MIL-F-8785C). If damping is too low, a yaw damper system is often installed.",
+          "why_it_matters": "Insufficient Dutch roll damping can lead to an uncomfortable, unstable, or even dangerous flight experience, especially for passengers susceptible to motion sickness or pilots trying to maintain precise headings."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "Recognize the state-space matrix form. If you know how to derive the characteristic equation and compare it to the standard second-order form, this is a direct calculation problem.",
+        "guessing_heuristic": "If stuck, look for options where the natural frequency is a reasonable value (typically 1-5 rad/s for Dutch roll) and the damping ratio is positive and less than 1 (for an oscillatory, damped mode).",
+        "time_management": "Allocate 2-3 minutes. The calculation is straightforward if the method is known. Avoid getting bogged down in determinant calculation errors."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "Dutch roll mode eigenvalues",
+        "aircraft lateral-directional stability",
+        "state-space to characteristic equation",
+        "second-order system natural frequency damping ratio",
+        "flight dynamics stability derivatives"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Numerical Eigenvalue Calculation (Software)",
+          "description": "Using software like MATLAB, one can directly compute the eigenvalues of the matrix A. If the eigenvalues are complex conjugates ($\\sigma \\pm i\\omega_d$), then $\\omega_n = \\sqrt{\\sigma^2 + \\omega_d^2}$ and $\\zeta = -\\frac{\\sigma}{\\omega_n}$.",
+          "pros_cons": "Pros: Very fast and accurate for complex matrices. Cons: Not feasible in a pen-and-paper exam like GATE. Requires software access.",
+          "when_to_use": "During design, research, or when dealing with large, complex systems where manual calculation is impractical."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Control Systems": "The analysis of system stability, natural frequency, and damping ratio from characteristic equations is a fundamental concept in control systems engineering. The state-space representation is also a core concept.",
+        "Linear Algebra": "The calculation of eigenvalues and determinants of matrices is a direct application of linear algebra principles.",
+        "Applied Mathematics": "Solving differential equations and analyzing their stability properties is a key area of applied mathematics."
+      },
+      "deeper_dive_topics": [
+        "MIL-F-8785C Handling Qualities Specifications for Dutch Roll",
+        "Effect of Stability Augmentation Systems (SAS) on Dutch Roll Damping",
+        "Coupling between Dutch Roll and Roll Subsidence modes",
+        "Derivation of lateral-directional stability derivatives from aerodynamic coefficients"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2016_AE_Q52",
+        "year": 2016,
+        "marks": 2.0,
+        "negative_marks": 0.66,
+        "time_expected": "2-3 minutes",
+        "success_rate_estimate": "65%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 4: Flight Mechanics",
+        "gate_subsection": "Static and Dynamic Stability",
+        "weightage": "Typically 10-15% of Flight Mechanics section",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "This question directly tests core concepts of dynamic stability, which are essential for aerospace engineers."
+      },
+      "rag_quality": {
+        "relevance_score": 0.95,
+        "chunks_used": 6,
+        "sources_distribution": {
+          "books": 2,
+          "videos": 4
+        },
+        "notes": "RAG chunks provided excellent context on the Dutch Roll mode, its definition, physical intuition, and the formulas for extracting natural frequency and damping ratio from the characteristic equation. This directly supported the problem-solving methodology."
+      },
+      "model_meta": {
+        "timestamp": "2024-06-13T12:00:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Given the same matrix, calculate the time period of the Dutch roll oscillation.",
+        "Ask for the stability of the Dutch roll mode (e.g., stable, unstable, critically damped).",
+        "Provide stability derivatives and ask to form the state-space matrix or characteristic equation.",
+        "Ask how a change in a specific aerodynamic derivative (e.g., $C_{N_{\\beta}}$) would affect the Dutch roll characteristics."
+      ]
+    },
+    "question_id": "GATE_2016_AE_Q52",
+    "year": 2016,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "MCQ",
+    "question_text": "The Dutch roll motion of the aircraft is described by following relationship: [Delta beta_dot; Delta r_dot] = [-0.26 -1; 4.49 -0.76] [Delta beta; Delta r]. The undamped natural frequency (rad/s) and damping ratio for the Dutch roll motion in that order are:"
+  },
+  "tokens_used": 16925,
+  "input_tokens": 11588,
+  "output_tokens": 5337,
+  "cost": 0.004940399999999999,
+  "time_seconds": 32.511616945266724
+}

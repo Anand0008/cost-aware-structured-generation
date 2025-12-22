@@ -1,0 +1,392 @@
+{
+  "model_name": "deepseek_r1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "text_only",
+      "combined_type": "numerical_calculation_text_only",
+      "weight_strategy": "NUMERICAL_WEIGHTED",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "The question requires calculating undamped natural frequency and damping ratio from a state-space representation of Dutch roll motion. It involves finding eigenvalues and then relating them to the desired parameters, requiring multiple steps and knowledge of system dynamics and control concepts.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "C",
+        "is_correct": true,
+        "confidence": 1.0,
+        "confidence_type": "single_model",
+        "reasoning": "The state matrix A = [[-0.26, -1], [4.49, -0.76]] defines a linear time-invariant system. The characteristic equation is found from det(sI - A) = 0, which yields s^2 + 1.02s + 4.6876 = 0. Comparing to the standard second-order form s^2 + 2\\zeta\\omega_n s + \\omega_n^2 = 0 gives \\omega_n^2 = 4.6876 \\Rightarrow \\omega_n \\approx 2.165 \\ \\text{rad/s}, and 2\\zeta\\omega_n = 1.02 \\Rightarrow \\zeta = 1.02/(2*2.165) \\approx 0.235. This matches option C."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Step 1: Identify the given state-space representation: $\\begin{bmatrix} \\Delta \\dot{\\\\beta} \\\\ \\Delta \\dot{r} \\end{bmatrix} = \\begin{bmatrix} -0.26 & -1 \\\\ 4.49 & -0.76 \\end{bmatrix} \\begin{bmatrix} \\Delta \\beta \\\\ \\Delta r \\end{bmatrix}$. This is of the form $\\dot{\\\\mathbf{x}} = A \\mathbf{x}$.",
+          "Step 2: The characteristic equation for the system is found from $\\det(sI - A) = 0$, where $I$ is the 2x2 identity matrix.",
+          "Step 3: Compute $sI - A = \\begin{bmatrix} s+0.26 & 1 \\\\ -4.49 & s+0.76 \\end{bmatrix}$.",
+          "Step 4: Calculate the determinant: $(s+0.26)(s+0.76) - (1)(-4.49) = s^2 + 0.26s + 0.76s + (0.26*0.76) + 4.49 = s^2 + 1.02s + 0.1976 + 4.49 = s^2 + 1.02s + 4.6876 = 0$.",
+          "Step 5: The characteristic equation is $s^2 + 1.02s + 4.6876 = 0$. Compare this to the standard form for a second-order system: $s^2 + 2\\zeta\\omega_n s + \\omega_n^2 = 0$.",
+          "Step 6: By direct comparison, $\\omega_n^2 = 4.6876$, so the undamped natural frequency $\\omega_n = \\sqrt{4.6876} \\approx 2.165 \\ \\text{rad/s}$.",
+          "Step 7: Also, $2\\zeta\\omega_n = 1.02$, therefore the damping ratio $\\zeta = \\frac{1.02}{2 \\cdot 2.165} \\approx 0.235$."
+        ],
+        "formulas_used": [
+          "$\\det(sI - A) = 0$",
+          "$s^2 + 2\\zeta\\omega_n s + \\omega_n^2 = 0$",
+          "$\\omega_n = \\sqrt{\\omega_n^2}$",
+          "$\\zeta = \\frac{\\text{(coefficient of } s)}{2\\omega_n}$"
+        ],
+        "estimated_time_minutes": 4
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Flight Mechanics",
+          "confidence": 1.0
+        },
+        "topic": {
+          "name": "Lateral-Directional Dynamic Stability",
+          "syllabus_ref": "Section 3: Flight Mechanics - Aircraft stability and control, Lateral and directional static and dynamic stability, Modes of lateral-directional oscillations"
+        },
+        "concepts": [
+          {
+            "name": "Dutch Roll Mode",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "State-Space Representation",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Characteristic Equation",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Damping Ratio (\\zeta)",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Undamped Natural Frequency (\\omega_n)",
+            "importance": "primary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Understanding of state-space representation of linear dynamical systems",
+          "How to find the characteristic equation from a state matrix (eigenvalues)",
+          "Standard second-order system parameters (\\zeta, \\omega_n) and their relation to the characteristic polynomial"
+        ],
+        "helpful": [
+          "Physical understanding of Dutch roll motion as a coupled yaw-roll oscillation",
+          "Matrix algebra, specifically determinant calculation for 2x2 matrices"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: State-space formulation for aircraft dynamics",
+            "requires: Concept of eigenvalues and stability modes",
+            "enables: Analyzing handling qualities requirements (e.g., MIL-F-8785C)",
+            "enables: Design of Stability Augmentation Systems (SAS) like yaw dampers"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Medium",
+        "score": 5,
+        "complexity_breakdown": {
+          "conceptual": 6,
+          "mathematical": 4,
+          "problem_solving": 5
+        },
+        "estimated_solve_time_seconds": 180,
+        "expected_accuracy_percent": 65,
+        "difficulty_factors": [
+          "Requires recognizing the state matrix as representing a second-order system (Dutch roll)",
+          "Must correctly compute the determinant to find the characteristic equation",
+          "Potential for arithmetic mistakes in calculating the constant term and solving for parameters"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Flight Stability and Automatic Control",
+          "author": "Nelson, R.C.",
+          "chapter_number": "5",
+          "chapter_title": "Lateral-Directional Dynamic Stability",
+          "section": "5.3 Lateral-Directional Equations of Motion and Modes",
+          "page_range": "~200-220",
+          "complexity": "intermediate",
+          "relevance_score": 0.8,
+          "source": "model_consensus",
+          "text_snippet": "The lateral-directional equations of motion can be expressed in state-space form. The Dutch roll mode is an oscillatory mode whose characteristics (natural frequency and damping) are determined by the eigenvalues of the state matrix."
+        },
+        {
+          "source_type": "book",
+          "book": "Airplane Flight Dynamics and Automatic Flight Controls",
+          "author": "Perkins, C.D. and Hage, R.E.",
+          "chapter_number": "10",
+          "chapter_title": "Lateral Stability and Control",
+          "section": "10.6 Lateral-Directional Dynamic Stability",
+          "page_range": "~450-470",
+          "complexity": "intermediate",
+          "relevance_score": 0.7,
+          "source": "model_consensus",
+          "text_snippet": "The Dutch roll is a coupled oscillation involving sideslip, roll, and yaw. Its dynamics can be approximated by a second-order system."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. A.K. Ghosh",
+          "timestamp_start": "00:20:02",
+          "timestamp_end": "00:23:44",
+          "video_url": "https://www.youtube.com/watch?v=QrU77tY2N58",
+          "book_reference": "Nelson, R.C.",
+          "topic_covered": "Dutch Roll Mode Approximation, deriving natural frequency and damping ratio from equations of motion",
+          "relevance_score": 0.8,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Direct Eigenvalue Analysis via Characteristic Equation",
+        "total_steps": 7,
+        "solution_path": "Extract characteristic equation from state matrix → Compare with standard second-order form → Solve for ω_n and ζ.",
+        "key_insights": [
+          "The given 2x2 matrix directly defines the system dynamics; no need for physical derivatives.",
+          "The characteristic equation's coefficients give ω_n and ζ directly via formulas."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$\\det(sI - A) = 0$",
+          "name": "Characteristic Equation from State Matrix",
+          "conditions": "For a linear time-invariant system $\\dot{\\\\mathbf{x}} = A\\mathbf{x}$",
+          "type": "equation",
+          "relevance": "Core method to find system eigenvalues (poles)"
+        },
+        {
+          "formula": "$s^2 + 2\\zeta\\omega_n s + \\omega_n^2 = 0$",
+          "name": "Standard Second-Order System Form",
+          "conditions": "For underdamped oscillatory modes (0 < ζ < 1)",
+          "type": "equation",
+          "relevance": "Relates characteristic equation coefficients to natural frequency and damping ratio"
+        },
+        {
+          "formula": "$\\omega_n = \\sqrt{\\text{constant term}}$",
+          "name": "Natural Frequency from Characteristic Equation",
+          "conditions": "When characteristic equation is $s^2 + as + b = 0$, then $\\omega_n = \\sqrt{b}$",
+          "type": "formula",
+          "relevance": "Direct calculation step"
+        },
+        {
+          "formula": "$\\zeta = \\frac{a}{2\\omega_n}$",
+          "name": "Damping Ratio from Characteristic Equation",
+          "conditions": "When characteristic equation is $s^2 + as + b = 0$, with $\\omega_n = \\sqrt{b}$",
+          "type": "formula",
+          "relevance": "Direct calculation step"
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Handling qualities analysis for commercial aircraft (e.g., Boeing 737, Airbus A320)",
+          "Design of yaw damper systems in modern fly-by-wire aircraft"
+        ],
+        "specific_systems": [
+          "Stability Augmentation System (SAS) / Yaw Damper in aircraft flight control systems"
+        ],
+        "practical_relevance": "Pilots require adequate Dutch roll damping for comfortable and safe flight. Certification standards (e.g., MIL-F-8785C, FAR/CS-25) specify minimum damping ratios and ω_nζ products. Engineers must analyze the open-loop dynamics (as done here) to determine if an active damper is needed."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Incorrectly computing the determinant of (sI - A), especially the sign of the off-diagonal product.",
+          "why_students_make_it": "Rushing or misapplying the formula for 2x2 determinant: det([[a, b], [c, d]]) = ad - bc. Here, the off-diagonal entries have signs that must be handled carefully.",
+          "type": "Calculation",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Write down sI - A explicitly, then apply the determinant formula step-by-step. Double-check the arithmetic, especially the constant term (0.26*0.76 + 4.49).",
+          "consequence": "Wrong characteristic equation leads to incorrect ω_n and ζ."
+        },
+        {
+          "mistake": "Misidentifying coefficients when comparing to standard form. For example, confusing the 's' coefficient (1.02) with 2ζω_n, but forgetting to divide by 2 to get ζ.",
+          "why_students_make_it": "Mechanical application without understanding: standard form is s^2 + 2ζω_n s + ω_n^2 = 0, so the coefficient of s is 2ζω_n, not ζ alone.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "common",
+          "how_to_avoid": "Always write the standard form next to the derived characteristic equation and label coefficients clearly: 'a = 2ζω_n', 'b = ω_n^2'.",
+          "consequence": "Obtains ζ = 1.02/2.165 ≈ 0.471 (incorrect, option D) instead of 0.235."
+        },
+        {
+          "mistake": "Taking the square root of the wrong term for ω_n. For example, using the coefficient of s (1.02) as ω_n^2.",
+          "why_students_make_it": "Confusing the positions of coefficients in the quadratic.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "occasional",
+          "how_to_avoid": "Remember: For s^2 + as + b = 0, ω_n = sqrt(b), not sqrt(a).",
+          "consequence": "ω_n ≈ 1.01 rad/s, leading to wrong answer."
+        },
+        {
+          "mistake": "Using the matrix elements directly in formulas from approximations (like ω_n = sqrt(N_beta)) without realizing the state matrix already encapsulates the dynamics.",
+          "why_students_make_it": "Mixing up different problem contexts: here, the matrix is given; no need to recall derivative-based approximations.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "rare",
+          "how_to_avoid": "Understand that the problem provides the A matrix. The solution path is purely mathematical (eigenvalues). Do not inject unrelated physical formulas.",
+          "consequence": "Unnecessary complication and potential error."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "SOD: Square root of constant term gives Omega_n, Divide s-coefficient by (2*Omega_n) for Damping.",
+          "concept": "Steps to extract ω_n and ζ from characteristic equation s^2 + as + b = 0.",
+          "effectiveness": "high",
+          "context": "When you have the characteristic equation in standard quadratic form."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "Given a 2x2 state matrix A for a linear system, how do you find the characteristic equation?",
+          "back": "Compute $\\det(sI - A) = 0$. For A = [[a11, a12], [a21, a22]], it is $s^2 - (a11 + a22)s + (a11*a22 - a12*a21) = 0$.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "formula_recall",
+          "front": "For a second-order system characteristic equation $s^2 + as + b = 0$, what are the formulas for $\\omega_n$ and $\\zeta$?",
+          "back": "$\\omega_n = \\sqrt{b}$, $\\zeta = \\frac{a}{2\\omega_n} = \\frac{a}{2\\sqrt{b}}$.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "What is the Dutch roll mode?",
+          "back": "A lightly damped, coupled oscillatory mode in lateral-directional dynamics involving yaw, roll, and sideslip. It's a second-order oscillation.",
+          "difficulty": "medium",
+          "time_limit_seconds": 45
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "What common mistake leads to getting ζ ≈ 0.471 instead of 0.235 in this problem?",
+          "back": "Forgetting that the coefficient 'a' in $s^2 + as + b = 0$ equals $2\\zeta\\omega_n$, not $\\zeta$. So ζ = a/(2ω_n), not a/ω_n.",
+          "difficulty": "medium",
+          "time_limit_seconds": 45
+        },
+        {
+          "card_type": "application",
+          "front": "Why are ω_n and ζ important for Dutch roll in practice?",
+          "back": "Handling qualities specifications (e.g., MIL-F-8785C) set minimum ζ and product ζω_n to ensure oscillations damp quickly, preventing pilot distraction and enabling precise control. If natural damping is insufficient, a yaw damper (SAS) is required.",
+          "difficulty": "hard",
+          "time_limit_seconds": 60
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Aircraft handling qualities certification",
+          "industry_example": "During flight testing of a new regional jet, engineers measure the Dutch roll response to a rudder impulse. They extract ω_n and ζ from data and compare to MIL-F-8785C Level 1 requirements (e.g., ζ ≥ 0.19, ζω_n ≥ 0.08 rad/s for certain classes). If requirements are not met, a yaw damper must be designed and certified.",
+          "why_it_matters": "Poor Dutch roll damping leads to passenger discomfort, pilot workload increase, and potential loss of control in severe cases."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "This is a standard eigenvalue/characteristic equation problem. If you know the method, it's a quick 2-3 minute calculation. Double-check the determinant and the final division by 2.",
+        "guessing_heuristic": "Options A and B have ω_n ~4.68/4.49, which are high; C and D have ω_n ~2.165. Compute the determinant constant term: (-0.26)*(-0.76) - (-1)*(4.49) = 0.1976 + 4.49 = 4.6876. sqrt(4.6876) ≈ 2.165, so ω_n is 2.165. This eliminates A and B. Now, the s coefficient is 1.02. For ζ, if you mistakenly compute 1.02/2.165 ≈ 0.471, you'd pick D. But correct is 1.02/(2*2.165)=0.235. So pick C.",
+        "time_management": "Budget ~3 minutes. If stuck, compute the constant term quickly to guess between high and low ω_n options."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "Dutch roll natural frequency damping ratio calculation",
+        "state-space matrix to characteristic equation",
+        "aircraft lateral directional dynamics eigenvalues",
+        "GATE AE flight mechanics Dutch roll problem",
+        "second order system from state matrix",
+        "how to find damping ratio from state matrix",
+        "MIL-F-8785C Dutch roll requirements",
+        "yaw damper design Dutch roll damping"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Eigenvalue Computation",
+          "description": "Directly compute eigenvalues of matrix A using formula for 2x2 matrices: $\\lambda = \\frac{\\text{tr}(A)}{2} \\pm \\frac{1}{2}\\sqrt{\\text{tr}(A)^2 - 4\\det(A)}$. For complex eigenvalues $\\lambda = -\\zeta\\omega_n \\pm j\\omega_n\\sqrt{1-\\zeta^2}$, then extract ω_n and ζ.",
+          "pros_cons": "More direct for eigenvalues, but extracting ω_n and ζ requires conversion: $\\omega_n = |\\lambda|$, $\\zeta = -\\Re(\\lambda)/\\omega_n$.",
+          "when_to_use": "If you are comfortable with complex numbers and want to bypass the characteristic equation explicitly."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Control Systems": "State-space representation, eigenvalue analysis, and second-order system response are core topics in control theory. This problem is essentially finding poles of a system given its A matrix.",
+        "Linear Algebra": "Computing determinants and eigenvalues of matrices.",
+        "Vibrations": "Analogous to finding natural frequency and damping ratio of a damped harmonic oscillator."
+      },
+      "deeper_dive_topics": [
+        "Full lateral-directional equations of motion (including roll and spiral modes)",
+        "Effects of aircraft design parameters (vertical tail size, wing dihedral) on Dutch roll derivatives",
+        "Stability Augmentation System (SAS) design using feedback control to modify damping",
+        "Handling qualities specifications (MIL-F-8785C, FAA standards) in detail"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2016_AE_Q52",
+        "year": 2016,
+        "marks": 2.0,
+        "negative_marks": 0.66,
+        "time_expected": "3-4 minutes",
+        "success_rate_estimate": "65%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 3: Flight Mechanics",
+        "gate_subsection": "Aircraft stability and control",
+        "weightage": "~8-12%",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Directly tests core concept of dynamic stability modes and mathematical analysis skills. Well-aligned."
+      },
+      "rag_quality": {
+        "relevance_score": 0.5,
+        "chunks_used": 4,
+        "sources_distribution": {
+          "books": 0,
+          "videos": 4
+        },
+        "notes": "RAG chunks (all from video lecture notes) provided excellent background on Dutch roll mode, its physical intuition, and formulas for natural frequency and damping ratio derived from aerodynamic derivatives (e.g., $\\omega_n = \\sqrt{N_\\beta U_1}$). However, the question does not involve these derivative-based formulas; it provides the state matrix directly. Thus, RAG context was helpful for conceptual understanding but not for the specific calculation method required. The solution relied on linear systems theory (characteristic equation from state matrix), which was not covered in the provided RAG chunks."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-13T10:30:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Given aerodynamic derivatives (C_nβ, C_nr, etc.) and aircraft parameters, compute the state matrix and then find ω_n and ζ.",
+        "If the Dutch roll damping ratio is too low, what feedback law (yaw damper) using yaw rate r would increase damping?",
+        "Interpretation of Dutch roll requirements: Given ω_n and ζ, determine if the aircraft meets Level 1 handling qualities.",
+        "Plot the root locus or time response for the given Dutch roll dynamics."
+      ]
+    },
+    "question_id": "GATE_2016_AE_Q52",
+    "year": 2016,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "MCQ",
+    "question_text": "The Dutch roll motion of the aircraft is described by following relationship: [Delta beta_dot; Delta r_dot] = [-0.26 -1; 4.49 -0.76] [Delta beta; Delta r]. The undamped natural frequency (rad/s) and damping ratio for the Dutch roll motion in that order are:"
+  },
+  "tokens_used": 16969,
+  "input_tokens": 10953,
+  "output_tokens": 6016,
+  "cost": 0.019199189999999998,
+  "time_seconds": 205.93447256088257
+}
