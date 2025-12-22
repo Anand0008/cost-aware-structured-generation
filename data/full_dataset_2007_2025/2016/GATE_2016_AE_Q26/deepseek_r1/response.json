@@ -1,0 +1,428 @@
+{
+  "model_name": "deepseek_r1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "text_only",
+      "combined_type": "numerical_calculation_text_only",
+      "weight_strategy": "NUMERICAL_WEIGHTED",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "This is a numerical calculation problem involving thrust calculation for a turbofan engine. It requires understanding of bypass ratio, choked nozzle conditions, and combining the thrust from core and bypass streams, making it a multi-step problem with moderate complexity.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "164.1 Ns/kg (range 162-166)",
+        "is_correct": true,
+        "confidence": 0.9,
+        "confidence_type": "single_model",
+        "reasoning": "The thrust per unit mass flow rate (specific thrust) is computed as F/ṁ_total = [(V_e_core - V0) + β(V_e_bypass - V0)]/(1+β), where exit velocities are sonic (M=1) since nozzles are choked: V_e = √(γ R T_e). Using γ=1.4, R=287 J/kgK, T_core=580 K, T_bypass=295 K, V0=200 m/s, β=6, we get V_e_core≈482.75 m/s, V_e_bypass≈344.29 m/s, numerator≈1148.5 m/s, denominator=7, result≈164.1 Ns/kg. This matches the answer key range 162-166 Ns/kg. The assumption of ideally expanded nozzles (p_e = p_a) is implicit as ambient pressure is not given; pressure thrust terms are neglected. The second range 1147-1150 likely corresponds to the numerator sum, a common mistake."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Step 1: Identify given parameters. Bypass ratio β = 6, flight velocity V0 = 200 m/s. Core nozzle exhaust static temperature T_e_core = 580 K, bypass nozzle T_e_bypass = 295 K. γ = 1.4, R = 287 J/kgK for both streams. Fuel-air ratio negligible.",
+          "Step 2: Recognize that both nozzles are choked convergent nozzles. For choked flow (M=1), exit velocity equals local speed of sound: V_e = √(γ R T_e).",
+          "Step 3: Compute exit velocities. Core: V_e_core = √(1.4 × 287 × 580) ≈ √233044 ≈ 482.75 m/s. Bypass: V_e_bypass = √(1.4 × 287 × 295) ≈ √118531 ≈ 344.29 m/s.",
+          "Step 4: Write thrust equation for unmixed turbofan with separate nozzles, assuming ideally expanded nozzles (p_e = p_a) so pressure thrust is zero. Total thrust F = ṁ_core (V_e_core - V0) + ṁ_bypass (V_e_bypass - V0).",
+          "Step 5: Express mass flows via bypass ratio. β = ṁ_bypass/ṁ_core. Total mass flow ṁ_total = ṁ_core + ṁ_bypass = ṁ_core (1+β).",
+          "Step 6: Compute specific thrust F/ṁ_total = [ (V_e_core - V0) + β (V_e_bypass - V0) ] / (1+β). Substitute values: (482.75 - 200) = 282.75 m/s, (344.29 - 200) = 144.29 m/s. Numerator = 282.75 + 6×144.29 ≈ 1148.5 m/s. Denominator = 1+6 = 7. Specific thrust ≈ 1148.5 / 7 ≈ 164.1 Ns/kg."
+        ],
+        "formulas_used": [
+          "$V_e = \\sqrt{\\gamma R T_e}$ (choked nozzle exit velocity, M=1)",
+          "$F = \\dot{m}_c (V_{e,c} - V_0) + \\dot{m}_b (V_{e,b} - V_0)$ (thrust for unmixed turbofan, ideally expanded)",
+          "$\\beta = \\frac{\\dot{m}_b}{\\dot{m}_c}$ (bypass ratio definition)",
+          "$\\frac{F}{\\dot{m}_{total}} = \\frac{(V_{e,c} - V_0) + \\beta (V_{e,b} - V_0)}{1+\\beta}$ (specific thrust)"
+        ],
+        "estimated_time_minutes": 3
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Propulsion",
+          "confidence": 1.0
+        },
+        "topic": {
+          "name": "Turbofan Engine Performance",
+          "syllabus_ref": "Section 6: Propulsion -> Turbofan Engines"
+        },
+        "concepts": [
+          {
+            "name": "Specific Thrust",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Choked Nozzle",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Bypass Ratio",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Exit Velocity Calculation",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Ideal Expansion Assumption",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Thrust equation for jet engines (momentum thrust)",
+          "Speed of sound relation: a = √(γRT)",
+          "Bypass ratio definition and mass flow partitioning",
+          "Ideal gas law and properties"
+        ],
+        "helpful": [
+          "Convergent nozzle choking condition",
+          "Pressure thrust concept",
+          "Turbofan engine architecture"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Thrust equation for separate streams",
+            "requires: Choked flow gives M=1 at exit",
+            "requires: Mass flow relation from bypass ratio",
+            "enables: Performance comparison of turbofans",
+            "enables: TSFC calculation"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Medium",
+        "score": 6,
+        "complexity_breakdown": {
+          "conceptual": 5,
+          "mathematical": 7,
+          "problem_solving": 6
+        },
+        "estimated_solve_time_seconds": 180,
+        "expected_accuracy_percent": 65,
+        "difficulty_factors": [
+          "Requires combining multiple concepts: choked nozzle, bypass ratio, thrust equation",
+          "Assumption of ideal expansion (p_e = p_a) is not explicitly stated but needed",
+          "Careful calculation of square roots and algebraic combination"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Mechanics and Thermodynamics of Propulsion",
+          "author": "Hill & Peterson",
+          "chapter_number": "11",
+          "chapter_title": "Turbofan Engines",
+          "section": "Thrust equations for separate exhaust streams",
+          "page_range": "",
+          "complexity": "intermediate",
+          "relevance_score": 0.8,
+          "source": "model_consensus",
+          "text_snippet": ""
+        },
+        {
+          "source_type": "book",
+          "book": "Gas Turbines",
+          "author": "V. Ganesan",
+          "chapter_number": "7",
+          "chapter_title": "Jet Propulsion Cycles and Their Analysis",
+          "section": "",
+          "page_range": "",
+          "complexity": "intermediate",
+          "relevance_score": 0.6,
+          "source": "rag_retrieval",
+          "text_snippet": ""
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. Bhaskar Roy and Prof. A. M. Pradeep",
+          "timestamp_start": "00:50:31",
+          "timestamp_end": "00:52:02",
+          "video_url": "https://www.youtube.com/watch?v=6DRDhtaT-FU",
+          "book_reference": "Hill & Peterson",
+          "topic_covered": "Total thrust calculation for turbofan with separate nozzles",
+          "relevance_score": 0.7,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Dr. P.A. Ramakrishna",
+          "timestamp_start": "00:39:52",
+          "timestamp_end": "00:42:21",
+          "video_url": "",
+          "book_reference": "Hill & Peterson",
+          "topic_covered": "Turbofan thrust equation",
+          "relevance_score": 0.7,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Direct Formula Application",
+        "total_steps": 6,
+        "solution_path": "Compute exit velocities → Apply thrust equation for each stream → Combine using bypass ratio → Divide by total mass flow",
+        "key_insights": [
+          "Choked nozzle implies exit Mach number = 1, so V_e = √(γ R T_e) directly from static temperature.",
+          "Without ambient pressure given, assume nozzles are ideally expanded (p_e = p_a), neglecting pressure thrust.",
+          "Specific thrust is thrust per unit total mass flow, not per core mass flow; must divide by (1+β)."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$V_e = \\sqrt{\\gamma R T_e}$",
+          "name": "Choked Nozzle Exit Velocity",
+          "conditions": "For convergent nozzle with M=1 at exit, static temperature T_e known",
+          "type": "equation",
+          "relevance": "Core formula to find exit velocities of both streams"
+        },
+        {
+          "formula": "$F = \\dot{m}_c (V_{e,c} - V_0) + \\dot{m}_b (V_{e,b} - V_0)$",
+          "name": "Unmixed Turbofan Thrust (Ideal Expansion)",
+          "conditions": "Negligible fuel flow, p_e = p_a for both nozzles",
+          "type": "equation",
+          "relevance": "Total thrust as sum of core and bypass momentum thrust"
+        },
+        {
+          "formula": "$\\beta = \\frac{\\dot{m}_b}{\\dot{m}_c}$",
+          "name": "Bypass Ratio",
+          "conditions": "",
+          "type": "definition",
+          "relevance": "Relates bypass and core mass flows"
+        },
+        {
+          "formula": "$\\frac{F}{\\dot{m}_{total}} = \\frac{(V_{e,c} - V_0) + \\beta (V_{e,b} - V_0)}{1+\\beta}$",
+          "name": "Specific Thrust",
+          "conditions": "ṁ_total = ṁ_c (1+β), ideally expanded nozzles",
+          "type": "equation",
+          "relevance": "Final expression for the required quantity"
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "High-bypass turbofans like CFM56 (powering Airbus A320, Boeing 737) use similar principles for thrust calculation.",
+          "Engine performance decks compute specific thrust to compare efficiency across designs."
+        ],
+        "specific_systems": [
+          "GE90 (Boeing 777)",
+          "Trent 1000 (Boeing 787)"
+        ],
+        "practical_relevance": "Specific thrust is a key parameter for engine selection; lower specific thrust (with high bypass) generally improves fuel efficiency for subsonic aircraft."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Forgetting to divide by (1+β) and reporting the numerator sum (~1148 Ns/kg) as the answer.",
+          "why_students_make_it": "Confusing thrust per unit core mass flow with thrust per unit total mass flow.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Always check units: specific thrust is F/ṁ_total. Write ṁ_total explicitly in terms of ṁ_core and β.",
+          "consequence": "Answer off by factor of 7 (≈1148 instead of 164), likely falling in the second range given in answer key."
+        },
+        {
+          "mistake": "Using total temperature instead of static temperature to compute exit velocity.",
+          "why_students_make_it": "Misremembering the relation for choked flow; thinking T_e is total temperature.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "occasional",
+          "how_to_avoid": "Recall: for choked nozzle, static temperature at exit is T_e = T_t * 2/(γ+1). Given T_e directly, use it. If T_t were given, you would need to compute T_e first.",
+          "consequence": "Velocity becomes incorrectly high, leading to overestimation of thrust."
+        },
+        {
+          "mistake": "Neglecting flight velocity V0 in thrust equation (using V_e alone).",
+          "why_students_make_it": "Overlooking that thrust is based on relative velocity change.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Remember the general thrust equation: F = ṁ (V_e - V0) + A_e(p_e - p_a). Even for static thrust (V0=0), it's fine, but here V0=200 m/s is given.",
+          "consequence": "Overestimates thrust by ~200 m/s times mass flow."
+        },
+        {
+          "mistake": "Incorrectly calculating exit velocity by using γ=1.4 but R in wrong units (e.g., using kJ/kgK without converting).",
+          "why_students_make_it": "Unit inconsistency: R=287 J/kgK, but sometimes students use 0.287 kJ/kgK and forget to multiply by 1000 inside sqrt.",
+          "type": "Calculation",
+          "severity": "Medium",
+          "frequency": "common",
+          "how_to_avoid": "Keep all units consistent: use SI (J, kg, K). Compute γR in J/kgK: 1.4 * 287 = 401.8 J/kgK.",
+          "consequence": "Velocity off by factor √1000 ≈ 31.6, making answer completely wrong."
+        },
+        {
+          "mistake": "Assuming pressure thrust must be included and trying to compute p_e without sufficient data.",
+          "why_students_make_it": "Overcomplicating because nozzles are choked, and thinking p_e ≠ p_a is necessary.",
+          "type": "Problem Solving",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Note that ambient pressure is not given. In such problems, unless specified, assume ideal expansion (p_e = p_a) to make solution determinate.",
+          "consequence": "Stuck or introduce arbitrary assumptions, leading to incorrect answer."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "Choked → Sonic → √(γRT) static",
+          "concept": "For a choked nozzle, exit velocity equals speed of sound computed from static temperature.",
+          "effectiveness": "high",
+          "context": "When given static temperature and told nozzle is choked."
+        },
+        {
+          "mnemonic": "Bypass Ratio β: B for Bypass over Core",
+          "concept": "β = ṁ_bypass/ṁ_core",
+          "effectiveness": "medium",
+          "context": "Remembering definition of bypass ratio."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "What is the exit velocity for a choked convergent nozzle, given exit static temperature T_e, γ, and R?",
+          "back": "$V_e = \\sqrt{\\gamma R T_e}$ (Mach number = 1).",
+          "difficulty": "easy",
+          "time_limit_seconds": 15
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "For an unmixed turbofan with separate nozzles and ideally expanded streams, write the total thrust equation (neglect fuel flow).",
+          "back": "$F = \\dot{m}_c (V_{e,c} - V_0) + \\dot{m}_b (V_{e,b} - V_0)$.",
+          "difficulty": "medium",
+          "time_limit_seconds": 20
+        },
+        {
+          "card_type": "application",
+          "front": "Given β=6, V_e_core=480 m/s, V_e_bypass=340 m/s, V0=200 m/s, compute specific thrust F/ṁ_total.",
+          "back": "Numerator = (480-200) + 6*(340-200) = 280 + 6*140 = 1120 m/s. Denominator = 1+6=7. Specific thrust ≈ 160 Ns/kg.",
+          "difficulty": "medium",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "What is the most common mistake in this problem regarding bypass ratio?",
+          "back": "Forgetting to divide by (1+β) when computing specific thrust, thus reporting the sum (V_e_core - V0) + β(V_e_bypass - V0) instead of that sum divided by (1+β).",
+          "difficulty": "easy",
+          "time_limit_seconds": 20
+        },
+        {
+          "card_type": "definition",
+          "front": "Define specific thrust for a turbofan engine.",
+          "back": "Thrust per unit total mass flow rate (core + bypass air), units Ns/kg or m/s.",
+          "difficulty": "easy",
+          "time_limit_seconds": 15
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Engine performance benchmarking",
+          "industry_example": "CFM56 engine has bypass ratio ~5-6, specific thrust around 300-400 Ns/kg at cruise. This problem's lower specific thrust (164 Ns/kg) is plausible for high bypass ratios at static conditions.",
+          "why_it_matters": "Specific thrust directly impacts fuel efficiency; lower specific thrust (high bypass) reduces fuel consumption but increases engine size and weight."
+        },
+        {
+          "application": "Takeoff thrust calculation",
+          "industry_example": "During takeoff, engines operate at sea-level static or low speed, similar to this problem's condition (V0=200 m/s might be during climb). Thrust per unit mass flow determines required engine size for a given aircraft thrust requirement."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "Straightforward numerical if you recall the formulas. Should take 2-3 minutes. Identify choked nozzle → V_e = √(γRT_e), use thrust equation with bypass ratio.",
+        "guessing_heuristic": "If unsure, compute V_e = √(1.4*287*T) for both, subtract 200, average with weights 1 and 6, divide by 7. Expect answer around 150-170.",
+        "time_management": "Allocate 3 minutes maximum; if stuck, guess within 160-166 range."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "turbofan specific thrust calculation",
+        "choked convergent nozzle exit velocity",
+        "bypass ratio thrust equation",
+        "unmixed turbofan separate nozzles",
+        "static temperature exit velocity choked",
+        "GATE propulsion numerical problems",
+        "ideal expansion assumption thrust",
+        "sonic exit condition Mach 1"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Including Pressure Thrust (if ambient pressure given)",
+          "description": "If p_a is known, compute p_e from isentropic relations using total pressure (if known) or from mass flow relation. Then thrust includes A_e(p_e - p_a) term, which can be expressed as ṁ(RT_e/V_e - p_a/(ρ_e V_e)).",
+          "pros_cons": "More accurate but requires additional data (p_a, p_t, or A_e). Not feasible here due to missing data.",
+          "when_to_use": "When ambient pressure and nozzle total pressure or area are given."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "subject_name_1": "Thermodynamics",
+        "connection_1": "Isentropic flow relations link total and static temperatures/pressures; used here implicitly for choked flow.",
+        "subject_name_2": "Fluid Mechanics",
+        "connection_2": "Choking condition (M=1) in convergent nozzles arises from compressible flow theory."
+      },
+      "deeper_dive_topics": [
+        "Effect of non-ideal expansion: under-expanded and over-expanded nozzles, thrust correction factors.",
+        "Mixed exhaust turbofans: thrust equation for mixed stream and comparison with unmixed.",
+        "Real-gas effects: variable γ and cp with temperature and fuel addition.",
+        "Off-design performance: how specific thrust changes with altitude and Mach number."
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2016_AE_Q26",
+        "year": 2016,
+        "marks": 2.0,
+        "negative_marks": 0.0,
+        "time_expected": "2-3 minutes",
+        "success_rate_estimate": "65%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 6: Propulsion",
+        "gate_subsection": "Turbofan Engines",
+        "weightage": "~10% of propulsion section",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Well-aligned with core turbofan performance analysis. Tests application of fundamental formulas under practical assumptions."
+      },
+      "rag_quality": {
+        "relevance_score": 0.6,
+        "chunks_used": 3,
+        "sources_distribution": {
+          "books": 1,
+          "videos": 2
+        },
+        "notes": "RAG provided general thrust equations for turbofans (chunks 3,4,6) and nozzle performance examples (chunk 2), but did not directly address choked nozzle exit velocity calculation or the specific assumption of ideal expansion. Chunks 1 and 5 were less relevant. Thus, internal knowledge was used for the choked condition formula and ideal expansion assumption. RAG context helped confirm thrust summation approach."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-13T10:30:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Variation with non-ideal expansion: given ambient pressure, compute pressure thrust.",
+        "Effect of fuel-air ratio: include fuel mass in core thrust.",
+        "Mixed exhaust turbofan: given mixing efficiency, find thrust.",
+        "Altitude effect: given ambient conditions at altitude, recompute specific thrust.",
+        "Optimum bypass ratio for minimum TSFC given constraints."
+      ]
+    },
+    "question_id": "GATE_2016_AE_Q26",
+    "year": 2016,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "NAT",
+    "question_text": "An un-mixed turbofan engine with a bypass ratio of 6.0, flies with a velocity of 200 m/s. The core and the bypass nozzles of the engine, that are both convergent nozzles, operate under choked condition and have exhaust static temperatures of 580 K and 295 K, respectively. The specific gas constant and the ratio of specific heats for both the streams are 287 J/kgK and 1.4, respectively. If the fuel-air ratio is negligible, the thrust per unit mass flow rate generated by the engine is _______ Ns/kg."
+  },
+  "tokens_used": 20982,
+  "input_tokens": 11355,
+  "output_tokens": 9627,
+  "cost": 0.02732838,
+  "time_seconds": 276.34451389312744
+}
