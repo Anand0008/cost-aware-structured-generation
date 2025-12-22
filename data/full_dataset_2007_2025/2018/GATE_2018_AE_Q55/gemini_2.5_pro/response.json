@@ -1,0 +1,354 @@
+{
+  "model_name": "gemini_2.5_pro",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "text_only",
+      "combined_type": "numerical_calculation_text_only",
+      "weight_strategy": "NUMERICAL_WEIGHTED",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "This is a numerical calculation problem involving aircraft stability and control. It requires understanding of damping ratio, moment of inertia, and pitching moment derivatives, integrating multiple concepts. The solution involves multiple steps to calculate the damping ratio.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "0.200",
+        "is_correct": true,
+        "confidence": 1.0,
+        "confidence_type": "single_model",
+        "reasoning": "The problem describes a pure pitching motion of an aircraft model about its center of gravity, which can be accurately modeled as a single-degree-of-freedom (1-DOF) damped harmonic oscillator. The governing equation for this motion is derived from the angular equation of motion about the pitch axis ($y$-axis):\n\n$\\sum M_y = I_{yy} \\ddot{\\theta}$\n\nFor small perturbations, the pitching moment $M$ can be linearized as a function of angle of attack ($\\alpha$) and pitch rate ($q$):\n\n$M = M_{\\alpha} \\alpha + M_q q$\n\nGiven that the motion is pure pitch, we can assume $\\theta \\approx \\alpha$ and $q = \\dot{\\theta} = \\dot{\\alpha}$. Substituting these into the equation of motion:\n\n$I_{yy} \\ddot{\\alpha} = M_{\\alpha} \\alpha + M_q \\dot{\\alpha}$\n\nRearranging this into the standard form of a second-order linear ordinary differential equation for a damped harmonic oscillator, $\\ddot{x} + 2 \\zeta \\omega_n \\dot{x} + \\omega_n^2 x = 0$:\n\n$I_{yy} \\ddot{\\alpha} - M_q \\dot{\\alpha} - M_{\\alpha} \\alpha = 0$\n\nDividing by $I_{yy}$:\n\n$\\ddot{\\alpha} - \\frac{M_q}{I_{yy}} \\dot{\\alpha} - \\frac{M_{\\alpha}}{I_{yy}} \\alpha = 0$\n\nComparing this with the standard form, we can identify the coefficients:\n\n$\\omega_n^2 = \\frac{-M_{\\alpha}}{I_{yy}}$\n$2 \\zeta \\omega_n = \\frac{-M_q}{I_{yy}}$\n\nGiven values:\n$I_{yy} = 0.014 \\text{ kg-m}^2$\n$M_{\\alpha} = -0.504 \\text{ N-m/rad}$\n$M_q = -0.0336 \\text{ N-m/(rad/s)}$\n\n1.  **Calculate the undamped natural frequency squared ($\\omega_n^2$):**\n    $\\omega_n^2 = \\frac{-(-0.504 \\text{ N-m/rad})}{0.014 \\text{ kg-m}^2} = \\frac{0.504}{0.014} = 36 \\text{ rad}^2/\\text{s}^2$\n\n2.  **Calculate the undamped natural frequency ($\\omega_n$):**\n    $\\omega_n = \\sqrt{36} = 6 \\text{ rad/s}$\n\n3.  **Calculate the damping term ($2 \\zeta \\omega_n$):**\n    $2 \\zeta \\omega_n = \\frac{-(-0.0336 \\text{ N-m/(rad/s)})}{0.014 \\text{ kg-m}^2} = \\frac{0.0336}{0.014} = 2.4 \\text{ s}^{-1}$\n\n4.  **Solve for the damping ratio ($\\zeta$):**\n    $2 \\zeta (6) = 2.4$\n    $12 \\zeta = 2.4$\n    $\\zeta = \\frac{2.4}{12} = 0.2$\n\nThe damping ratio is $0.200$ (accurate to three decimal places), which falls within the specified range of $0.195$ to $0.205$."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "**Step 1: Understand the System and Governing Equation.** The problem describes a 'pure pitching motion' about the center of gravity, which simplifies the aircraft's longitudinal dynamics to a single-degree-of-freedom (1-DOF) rotational system. This system can be modeled as a damped harmonic oscillator. The rotational equation of motion about the pitch axis ($y$-axis) is $I_{yy} \\ddot{\\theta} = \\sum M_y$.",
+          "**Step 2: Linearize the Pitching Moment.** For small disturbances, the aerodynamic pitching moment ($M$) can be linearly approximated by its derivatives with respect to angle of attack ($\\alpha$) and pitch rate ($q$). Thus, $M = M_{\\alpha} \\alpha + M_q q$. Given pure pitch, we assume $\\theta \\approx \\alpha$ and $q = \\dot{\\theta} = \\dot{\\alpha}$.",
+          "**Step 3: Formulate the Differential Equation.** Substitute the linearized moment into the equation of motion: $I_{yy} \\ddot{\\alpha} = M_{\\alpha} \\alpha + M_q \\dot{\\alpha}$.",
+          "**Step 4: Rearrange to Standard Second-Order ODE Form.** To compare with the standard form $\\ddot{x} + 2 \\zeta \\omega_n \\dot{x} + \\omega_n^2 x = 0$, rearrange the equation:\n$I_{yy} \\ddot{\\alpha} - M_q \\dot{\\alpha} - M_{\\alpha} \\alpha = 0$\nDivide by $I_{yy}$:\n$\\ddot{\\alpha} + \\left(\\frac{-M_q}{I_{yy}}\\right) \\dot{\\alpha} + \\left(\\frac{-M_{\\alpha}}{I_{yy}}\\right) \\alpha = 0$",
+          "**Step 5: Identify Natural Frequency and Damping Term Coefficients.** From the standard form, we equate the coefficients:\n$\\omega_n^2 = \\frac{-M_{\\alpha}}{I_{yy}}$\n$2 \\zeta \\omega_n = \\frac{-M_q}{I_{yy}}$",
+          "**Step 6: Substitute Given Values and Calculate Natural Frequency.** Substitute the given $I_{yy} = 0.014 \\text{ kg-m}^2$ and $M_{\\alpha} = -0.504 \\text{ N-m/rad}$:\n$\\omega_n^2 = \\frac{-(-0.504)}{0.014} = 36 \\text{ rad}^2/\\text{s}^2$\n$\\omega_n = \\sqrt{36} = 6 \\text{ rad/s}$",
+          "**Step 7: Calculate Damping Ratio.** Substitute the given $M_q = -0.0336 \\text{ N-m/(rad/s)}$ and the calculated $\\omega_n = 6 \\text{ rad/s}$:\n$2 \\zeta (6) = \\frac{-(-0.0336)}{0.014} = 2.4 \\text{ s}^{-1}$\n$12 \\zeta = 2.4$\n$\\zeta = \\frac{2.4}{12} = 0.2$",
+          "**Step 8: Final Answer.** The damping ratio is $0.200$."
+        ],
+        "formulas_used": [
+          "$I_{yy} \\ddot{\\alpha} - M_q \\dot{\\alpha} - M_{\\alpha} \\alpha = 0$",
+          "$\\ddot{x} + 2 \\zeta \\omega_n \\dot{x} + \\omega_n^2 x = 0$",
+          "$\\omega_n^2 = \\frac{-M_{\\alpha}}{I_{yy}}$",
+          "$2 \\zeta \\omega_n = \\frac{-M_q}{I_{yy}}$"
+        ],
+        "estimated_time_minutes": 3
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Flight Mechanics",
+          "confidence": 1.0
+        },
+        "topic": {
+          "name": "Longitudinal Dynamic Stability",
+          "syllabus_ref": "Section 4: Flight Mechanics -> Longitudinal and Lateral-Directional Dynamics and Stability"
+        },
+        "concepts": [
+          {
+            "name": "Pure Pitching Motion",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Damping Ratio",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Natural Frequency",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Dimensional Stability Derivatives ($M_{\\alpha}$, $M_q$)",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Second-Order System Analogy",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Newton's Second Law for Rotational Motion",
+          "Linearization of Aerodynamic Moments (Small Disturbance Theory)",
+          "Characteristics of Second-Order Systems (Natural Frequency, Damping Ratio)",
+          "Basic Differential Equations"
+        ],
+        "helpful": [
+          "Mass-Spring-Damper System Analogy",
+          "Understanding of Aerodynamic Stability Derivatives"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Rotational Dynamics ($I_{yy} \\ddot{\\theta} = M$)",
+            "requires: Linearized Aerodynamic Moments ($M = M_{\\alpha} \\alpha + M_q q$)",
+            "requires: Standard Form of Second-Order ODE ($\\ddot{x} + 2 \\zeta \\omega_n \\dot{x} + \\omega_n^2 x = 0$)",
+            "enables: Analysis of Aircraft Dynamic Modes (Short Period, Phugoid)"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Easy",
+        "score": 3,
+        "complexity_breakdown": {
+          "conceptual": 3,
+          "mathematical": 2
+        },
+        "estimated_solve_time_seconds": 180,
+        "expected_accuracy_percent": 80,
+        "difficulty_factors": [
+          "Requires correct identification of coefficients from the differential equation and proper handling of signs."
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Nelson, R.C.",
+          "author": "R.C. Nelson",
+          "chapter_title": "Longitudinal Stability and Control",
+          "specific_concept": "Single-Degree-of-Freedom Pitching Approximation; Dimensional Stability Derivatives (M_alpha, M_Q); Reduction of Equations of Motion",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval",
+          "text_snippet": "For a highly simplified aircraft model, particularly one constrained to only pitch (one degree of freedom) without vertical translation (plunging), specific relationships can be assumed: pitch rate `Q` is approximately equal to the rate of change of angle of attack `alpha_dot`, and pitch acceleration `Q_dot` is approximately `alpha_double_dot`."
+        },
+        {
+          "source_type": "book",
+          "book": "Perkins & Hage",
+          "author": "Perkins & Hage",
+          "chapter_title": "Longitudinal Stability and Control",
+          "specific_concept": "Pitch Damping, Aerodynamic Moment Coefficients, Aircraft Equations of Motion",
+          "relevance_score": 0.8,
+          "source": "rag_retrieval",
+          "text_snippet": "The longitudinal motion (pitching) of an aircraft can be analyzed using concepts from damped oscillatory systems. Aerodynamic derivatives related to pitch rate (`C_MQ`) and the rate of change of angle of attack (`C_M_alpha_dot`) act as crucial damping terms, generating moments that oppose pitching velocity and contributing to the aircraft's pitch stability."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. A.K. Ghosh",
+          "timestamp_start": "00:12:59",
+          "timestamp_end": "00:15:25",
+          "topic_covered": "Simplified Single Degree of Freedom Pitching Equation",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. A.K. Ghosh",
+          "timestamp_start": "00:01:24",
+          "timestamp_end": "00:07:47",
+          "video_url": "https://www.youtube.com/watch?v=Pa4Fcfxq_sc",
+          "topic_covered": "Mass-Spring-Damper Analogy for Aircraft Pitching",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Direct Formula Application and System Analogy",
+        "total_steps": 8,
+        "solution_path": "Model as 1-DOF damped oscillator -> Formulate ODE -> Compare to standard form -> Extract coefficients -> Calculate natural frequency -> Calculate damping ratio.",
+        "key_insights": [
+          "Pure pitching motion simplifies the equations, allowing a direct analogy to a 1-DOF damped harmonic oscillator.",
+          "The signs of $M_{\\alpha}$ and $M_q$ are crucial for correctly identifying the 'spring' and 'damping' terms in the standard ODE form."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$I_{yy} \\ddot{\\alpha} - M_q \\dot{\\alpha} - M_{\\alpha} \\alpha = 0$",
+          "name": "Pure Pitching Equation of Motion",
+          "conditions": "Small perturbations, pure pitching about CG, no external control input, $q = \\dot{\\alpha}$.",
+          "type": "equation",
+          "relevance": "Core equation for solving the problem."
+        },
+        {
+          "formula": "$\\ddot{x} + 2 \\zeta \\omega_n \\dot{x} + \\omega_n^2 x = 0$",
+          "name": "Standard Form of Second-Order Homogeneous ODE",
+          "conditions": "Linear, time-invariant system.",
+          "type": "equation",
+          "relevance": "Used for identifying damping ratio and natural frequency by comparing coefficients."
+        },
+        {
+          "formula": "$\\omega_n^2 = \\frac{-M_{\\alpha}}{I_{yy}}$",
+          "name": "Natural Frequency Squared for Pure Pitch",
+          "conditions": "Derived from the pitching equation, assuming $M_{\\alpha}$ is negative for static stability.",
+          "type": "equation",
+          "relevance": "Essential for calculating the undamped natural frequency."
+        },
+        {
+          "formula": "$2 \\zeta \\omega_n = \\frac{-M_q}{I_{yy}}$",
+          "name": "Damping Term for Pure Pitch",
+          "conditions": "Derived from the pitching equation, assuming $M_q$ is negative for positive damping.",
+          "type": "equation",
+          "relevance": "Essential for calculating the damping ratio."
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Aircraft design and flight control system development for all types of aircraft (commercial, military, UAVs)."
+        ],
+        "specific_systems": [
+          "Stability analysis of any aircraft, from small drones to large transport aircraft, to predict their dynamic response to disturbances."
+        ],
+        "practical_relevance": "Understanding and predicting an aircraft's dynamic response to disturbances (e.g., turbulence, control inputs) is critical for ensuring safe and comfortable flight. The damping ratio determines how quickly oscillations decay, directly impacting ride quality, pilot workload, and overall flight safety. A well-damped aircraft is easier to control and provides a smoother ride."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Incorrectly handling the signs of $M_{\\alpha}$ and $M_q$ when mapping to the standard second-order ODE form.",
+          "why_students_make_it": "The standard form $\\ddot{x} + 2 \\zeta \\omega_n \\dot{x} + \\omega_n^2 x = 0$ has positive coefficients. However, $M_{\\alpha}$ (for static stability) and $M_q$ (for pitch damping) are typically negative. Students might forget to include the negative sign from the derivative definition when equating terms.",
+          "type": "Sign Error",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Always write the equation of motion as $I_{yy} \\ddot{\\alpha} - M_q \\dot{\\alpha} - M_{\\alpha} \\alpha = 0$ first. Then, explicitly rearrange it to the standard form $\\ddot{\\alpha} + \\left(\\frac{-M_q}{I_{yy}}\\right) \\dot{\\alpha} + \\left(\\frac{-M_{\\alpha}}{I_{yy}}\\right) \\alpha = 0$. This makes the mapping of coefficients ($C_1 = -M_q/I_{yy}$ and $C_2 = -M_{\\alpha}/I_{yy}$) explicit and helps avoid sign errors.",
+          "consequence": "Incorrect values for $\\omega_n$, $2 \\zeta \\omega_n$, and consequently $\\zeta$. A positive $M_{\\alpha}$ would imply static instability, leading to an imaginary $\\omega_n$. A positive $M_q$ would imply negative damping, leading to an unstable oscillation."
+        },
+        {
+          "mistake": "Confusing pure pitching motion with the short period mode.",
+          "why_students_make_it": "Both involve pitching, but the short period mode includes vertical translation (coupling with the Z-equation via $Z_{\\alpha}$), which significantly affects the natural frequency and damping. Pure pitch is a simplified 1-DOF model that neglects vertical motion.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Pay close attention to the problem statement. Phrases like 'pure pitching motion about its centre of gravity' or 'fixed pivot' explicitly indicate the 1-DOF model without vertical translation. If $Z_{\\alpha}$ is provided, it's likely a short period problem.",
+          "consequence": "Using more complex equations for the short period mode, leading to incorrect results or unnecessary complexity."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "M-alpha is Spring, M-q is Damper",
+          "concept": "Remembering which aerodynamic derivative corresponds to the restoring force (spring-like) and which to the damping force in the mass-spring-damper analogy for pitching motion.",
+          "effectiveness": "medium",
+          "context": "When setting up the 1-DOF pitching equation and identifying coefficients."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "What is the governing differential equation for pure pitching motion about the center of gravity, using $I_{yy}$, $M_{\\alpha}$, and $M_q$?",
+          "back": "$I_{yy} \\ddot{\\alpha} - M_q \\dot{\\alpha} - M_{\\alpha} \\alpha = 0$",
+          "difficulty": "easy"
+        },
+        {
+          "card_type": "definition",
+          "front": "How are the natural frequency ($\\omega_n$) and damping ratio ($\\zeta$) related to the coefficients $C_1$ and $C_2$ in the standard second-order ODE $\\ddot{x} + C_1 \\dot{x} + C_2 x = 0$?",
+          "back": "$\\omega_n = \\sqrt{C_2}$ and $\\zeta = \\frac{C_1}{2 \\omega_n}$",
+          "difficulty": "medium"
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "Why are $M_{\\alpha}$ and $M_q$ typically negative for a stable aircraft, and how does this affect their use in the standard ODE form?",
+          "back": "$M_{\\alpha}$ is negative because a positive angle of attack (nose up) creates a nose-down (restoring) pitching moment. $M_q$ is negative because a positive pitch rate (pitching up) creates a nose-down (damping) pitching moment. In the standard ODE $\\ddot{x} + C_1 \\dot{x} + C_2 x = 0$, $C_1$ and $C_2$ must be positive for stability. Therefore, we use $-M_{\\alpha}$ for the 'spring' term and $-M_q$ for the 'damping' term.",
+          "difficulty": "medium"
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Aircraft stability and control design and analysis.",
+          "industry_example": "During the conceptual and preliminary design phases of an aircraft (e.g., for a new fighter jet or commercial airliner), engineers perform extensive dynamic stability analysis. They use wind tunnel models and computational fluid dynamics (CFD) to determine aerodynamic derivatives like $M_{\\alpha}$ and $M_q$. These values are then used to calculate damping ratios and natural frequencies for various flight conditions. If the damping ratio is too low, the aircraft might require a Stability Augmentation System (SAS) or a redesign of its tail surfaces to improve damping.",
+          "why_it_matters": "An aircraft with insufficient pitch damping (low $\\zeta$) would oscillate excessively after a disturbance, leading to pilot fatigue, passenger discomfort, and potentially dangerous flight characteristics. Conversely, an excessively high damping ratio might make the aircraft feel sluggish and unresponsive to pilot inputs. Optimizing damping is crucial for achieving a balance between stability, control, and ride quality."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "Recognize the 'pure pitching motion' and given derivatives as a direct application of the 1-DOF damped oscillator model. Quickly set up the ODE and identify coefficients. This is a high-yield question if the concepts are clear.",
+        "time_management": "This is a straightforward calculation problem. Aim to complete it within 2-3 minutes to allocate more time for potentially longer or more complex problems."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "Aircraft pure pitching motion equation",
+        "Longitudinal dynamic stability damping ratio calculation",
+        "Aerodynamic stability derivatives M_alpha M_q physical meaning",
+        "Second-order system natural frequency damping ratio",
+        "Mass moment of inertia in aircraft dynamics",
+        "Aircraft short period mode vs pure pitch"
+      ],
+      "alternative_methods": [
+        {
+          "name": "State-Space Representation",
+          "description": "The pitching equation can be written in state-space form, which is a more general approach particularly useful for coupled motions or when analyzing with control systems. For pure pitch, the state vector could be $[\\alpha, \\dot{\\alpha}]^T$, leading to a 2x2 system matrix from which eigenvalues can be found. The damping ratio and natural frequency are then derived from these eigenvalues.",
+          "pros_cons": "More general and extensible for complex, multi-DOF systems or control system design (pros); more complex for this simple 1-DOF case (cons).",
+          "when_to_use": "When dealing with coupled longitudinal modes (short period, phugoid), lateral-directional modes, or designing flight control systems (e.g., using MATLAB/Simulink for analysis)."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Mechanical Vibrations": "The entire analysis relies on the fundamental principles of damped harmonic oscillators, directly analogous to a mass-spring-damper system. Concepts like natural frequency, damping ratio, and the form of the second-order differential equation are identical.",
+        "Control Systems": "Aircraft dynamics are often represented as transfer functions or state-space models in control system design. The damping ratio and natural frequency are critical performance metrics for system response (e.g., overshoot, settling time) and are directly used in designing autopilots and stability augmentation systems.",
+        "Differential Equations": "The core of the problem involves setting up and interpreting a second-order linear ordinary differential equation with constant coefficients."
+      },
+      "deeper_dive_topics": [
+        "Short Period Mode vs. Phugoid Mode: Understanding the two primary longitudinal dynamic modes of an aircraft, their characteristic frequencies, and damping.",
+        "Effect of Center of Gravity Location: How shifting the CG affects $M_{\\alpha}$ and $M_q$, and consequently the aircraft's stability and damping.",
+        "Contribution of Aircraft Components: Analyzing how the wing, horizontal tail, and fuselage contribute to the overall $M_{\\alpha}$ and $M_q$ derivatives.",
+        "Stability Augmentation Systems (SAS): How control systems can be used to artificially increase damping or modify natural frequency if the inherent aerodynamic stability is insufficient."
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2018_AE_Q55",
+        "year": 2018,
+        "marks": 2.0,
+        "negative_marks": 0.0,
+        "time_expected": "2-3 minutes",
+        "success_rate_estimate": "75%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 4: Flight Mechanics",
+        "gate_subsection": "Longitudinal and Lateral-Directional Dynamics and Stability",
+        "weightage": "10-15%",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "This question is a fundamental and well-aligned assessment of core concepts in aircraft longitudinal dynamic stability, specifically the simplified pure pitching motion."
+      },
+      "rag_quality": {
+        "relevance_score": 0.95,
+        "chunks_used": 5,
+        "sources_distribution": {
+          "books": 2,
+          "videos": 3
+        },
+        "notes": "RAG chunks provided excellent context on the single-degree-of-freedom pitching equation, its analogy to a mass-spring-damper system, and the definitions and physical meaning of the dimensional stability derivatives $M_{\\alpha}$ and $M_q$. This directly supported the derivation and calculation steps, ensuring accuracy and comprehensive explanation."
+      },
+      "model_meta": {
+        "timestamp": "2024-07-30T12:00:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Calculate the natural frequency of the pure pitching motion using the given data.",
+        "Given the damping ratio, calculate the time to half amplitude or the number of cycles to half amplitude for the pitching motion.",
+        "Analyze the effect of changing the mass moment of inertia ($I_{yy}$) or the pitch damping derivative ($M_q$) on the damping ratio.",
+        "Compare the damping ratio of pure pitch with that of the short period mode, given additional derivatives like $Z_{\\alpha}$ and $Z_q$."
+      ]
+    },
+    "question_id": "GATE_2018_AE_Q55",
+    "year": 2018,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "NAT",
+    "question_text": "An aircraft wind tunnel model, having a pitch axis mass moment of inertia (Iyy) of 0.014 kg-m^2, is mounted in such a manner that it has pure pitching motion about its centre of gravity, where it is supported through a frictionless hinge. If the pitching moment (M) derivative with respect to angle of attack (alpha), denoted by ‘M_alpha’, is -0.504 N-m/rad and the pitching moment (M) derivative with respect to pitch rate (q), denoted by ‘M_q’, is -0.0336 N-m/(rad/s), the damping ratio of the resulting motion due to an initial disturbance in pitch angle is approximately _________ (accurate to three decimal places)."
+  },
+  "tokens_used": 18263,
+  "input_tokens": 11583,
+  "output_tokens": 6680,
+  "cost": 0.00574545,
+  "time_seconds": 55.02249526977539
+}
