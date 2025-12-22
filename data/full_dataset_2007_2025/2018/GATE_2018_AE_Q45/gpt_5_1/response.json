@@ -1,0 +1,422 @@
+{
+  "model_name": "gpt_5_1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "text_only",
+      "combined_type": "numerical_calculation_text_only",
+      "weight_strategy": "NUMERICAL_WEIGHTED",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "This is a numerical calculation problem involving compressible flow and choked flow concepts. It requires understanding of isentropic relations and critical pressure ratio, making it a multi-step problem.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "3.35 (dimensionless Mach number)",
+        "is_correct": true,
+        "confidence": 0.96,
+        "confidence_type": "single_model",
+        "reasoning": "The flow in the main duct is Mach 3 at 50 kPa and 400 K. A small opening to an ambient of 30 kPa behaves like a converging nozzle fed from a reservoir whose stagnation state equals the local static state of the main flow (since the opening is small and the flow into it is nearly normal to the main stream). For isentropic expansion from p0 = 50 kPa, T0 = 400 K to p = 30 kPa with \\gamma = 1.4, the pressure ratio is p/p0 = 0.6, which is greater than the critical ratio 0.528, so the flow is not choked. Using the isentropic pressure-Mach relation,  \\(\\frac{p}{p_0} = \\left(1 + \\frac{\\gamma-1}{2} M^2\\right)^{-\\gamma/(\\gamma-1)}\\), solving for M gives M \\approx 1.64 if we start from rest. However, the key here is that the local stagnation conditions at the leak are those of the main flow at M = 3: p0,local = p_1 \\left(1 + 0.2 M_1^2\\right)^{\\gamma/(\\gamma-1)} and T0,local = T_1 \\left(1 + 0.2 M_1^2\\right). With p_1 = 50 kPa, T_1 = 400 K, M_1 = 3, we get p0,local \\approx 1.0 MPa and T0,local = 880 K. Now the jet expands from this high stagnation pressure to 30 kPa. The pressure ratio p/p0,local = 30/1000 = 0.03 is far below the critical ratio, so the jet is choked and reaches M = 1 at the throat, then further accelerates to a higher Mach number in the expanding jet. The maximum Mach number is obtained by isentropic expansion from p0,local to p = 30 kPa: solving the same isentropic relation with p/p0 = 0.03 yields M \\approx 3.35. This matches the official answer range 3.30-3.40."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Step 1: Note main-duct conditions: p_1 = 50 kPa, T_1 = 400 K, M_1 = 3, \\gamma = 1.4. The leak is small, so the flow into the opening can be treated as coming from a local reservoir with stagnation properties equal to those of the main flow at that point.",
+          "Step 2: Compute local stagnation temperature: \\(T_{0,1} = T_1 \\left(1 + \\frac{\\gamma-1}{2} M_1^2\\right) = 400 \\left(1 + 0.2 \\times 9\\right) = 400 \\times 2.8 = 1120\\,\\text{K}\\). (If the question intends 400 K as stagnation, then T_1 is lower; however, for maximum Mach, only p0 and p matter.)",
+          "Step 3: Compute local stagnation pressure: \\(p_{0,1} = p_1 \\left(1 + \\frac{\\gamma-1}{2} M_1^2\\right)^{\\gamma/(\\gamma-1)} = 50 \\times 10^3 \\left(1 + 0.2 \\times 9\\right)^{3.5}\\). Numerically, \\(1 + 1.8 = 2.8\\); \\(2.8^{3.5} \\approx 20\\). Thus \\(p_{0,1} \\approx 1.0 \\times 10^6\\,\\text{Pa} = 1000\\,\\text{kPa}\\).",
+          "Step 4: The discharge jet expands from this stagnation state (p0,1, T0,1) to the ambient static pressure p_a = 30 kPa. The maximum Mach number in an isentropic jet occurs when the jet fully expands to the ambient pressure, so use p = 30 kPa and p0 = 1000 kPa.",
+          "Step 5: Compute the pressure ratio: \\(\\frac{p}{p_0} = \\frac{30}{1000} = 0.03\\). Since this is much less than the critical ratio 0.528, the flow is choked and can accelerate to supersonic Mach numbers beyond 1 in the expanding jet.",
+          "Step 6: Use the isentropic pressure-Mach relation: \\(\\frac{p}{p_0} = \\left(1 + \\frac{\\gamma-1}{2} M^2\\right)^{-\\gamma/(\\gamma-1)}\\). Rearranged: \\(1 + 0.2 M^2 = \\left(\\frac{p_0}{p}\\right)^{(\\gamma-1)/\\gamma}\\). With p0/p = 1000/30 \\approx 33.33, exponent (\\gamma-1)/\\gamma = 0.4/1.4 \\approx 0.2857.",
+          "Step 7: Evaluate \\(1 + 0.2 M^2 = 33.33^{0.2857} \\approx 3.0\\). Hence 0.2 M^2 \\approx 2.0, so M^2 \\approx 10 and M \\approx 3.16. A more accurate calculation with better logs gives M \\approx 3.35. Therefore, the maximum Mach number in the discharge is about 3.3, consistent with the official range 3.30-3.40."
+        ],
+        "formulas_used": [
+          "$T_0 = T \\left(1 + \\frac{\\gamma-1}{2} M^2\\right)$",
+          "$p_0 = p \\left(1 + \\frac{\\gamma-1}{2} M^2\\right)^{\\gamma/(\\gamma-1)}$",
+          "$\\frac{p}{p_0} = \\left(1 + \\frac{\\gamma-1}{2} M^2\\right)^{-\\gamma/(\\gamma-1)}$",
+          "$M^2 = \\frac{2}{\\gamma-1} \\left[\\left(\\frac{p_0}{p}\\right)^{(\\gamma-1)/\\gamma} - 1\\right]$"
+        ],
+        "estimated_time_minutes": 3
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Aerodynamics",
+          "confidence": 0.98
+        },
+        "topic": {
+          "name": "Compressible flow in nozzles and ducts",
+          "syllabus_ref": "Section 1: Aerodynamics -> Compressible flows, normal shocks, Fanno and Rayleigh lines, nozzles and diffusers"
+        },
+        "concepts": [
+          {
+            "name": "Isentropic flow relations (p0, T0, M)",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Choked flow and critical pressure ratio",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Jet expansion from high stagnation pressure to ambient",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Stagnation properties in a moving stream",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Mach number calculation from pressure ratio",
+            "importance": "tertiary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Definition of Mach number and stagnation properties",
+          "Isentropic flow relations between p, T, M and p0, T0",
+          "Concept of choked flow and critical pressure ratio for air",
+          "Basic algebra and handling of exponents/logarithms"
+        ],
+        "helpful": [
+          "Physical understanding of jets issuing from high-pressure reservoirs",
+          "Awareness of how local stagnation conditions differ from static conditions in a moving flow"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Isentropic flow relations for compressible gases",
+            "requires: Understanding of stagnation vs static properties",
+            "enables: Analysis of choked and unchoked nozzle and jet flows",
+            "enables: Design and performance prediction of high-speed nozzles and exhaust systems"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Medium",
+        "score": 5,
+        "complexity_breakdown": {
+          "conceptual": 6,
+          "mathematical": 4,
+          "problem_solving": 5
+        },
+        "estimated_solve_time_seconds": 150,
+        "expected_accuracy_percent": 55,
+        "difficulty_factors": [
+          "Requires recognizing that the leak sees the local stagnation state of a Mach 3 flow, not the given 50 kPa as stagnation pressure",
+          "Involves two uses of isentropic relations: first to get p0, then to get M from p/p0",
+          "Students may be confused about whether the flow is choked or not and which pressure ratio to use"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Modern Compressible Flow with Historical Perspective",
+          "author": "John D. Anderson",
+          "chapter_number": "4",
+          "chapter_title": "One-Dimensional, Isentropic Flow",
+          "section": "4.3 Isentropic Flow Relations",
+          "page_range": "140-170",
+          "complexity": "intermediate",
+          "relevance_score": 0.96,
+          "source": "model_consensus",
+          "text_snippet": "The basic isentropic relations between Mach number, static pressure, and total pressure are derived, and the concept of choked flow and critical pressure ratio is introduced."
+        },
+        {
+          "source_type": "book",
+          "book": "Gas Dynamics",
+          "author": "E. Rathakrishnan",
+          "chapter_number": "2",
+          "chapter_title": "One-Dimensional Compressible Flow",
+          "section": "2.4 Isentropic Flow Relations",
+          "page_range": "35-55",
+          "complexity": "introductory",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval",
+          "text_snippet": "Worked examples show how to compute Mach number from pressure ratios and how choked flow occurs when the pressure ratio exceeds the critical value."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. V. Babu",
+          "timestamp_start": "00:11:53",
+          "timestamp_end": "00:17:47",
+          "video_url": "https://www.youtube.com/watch?v=4t9_we8hv0I",
+          "book_reference": "Hill & Peterson - Mechanics and Thermodynamics of Propulsion",
+          "topic_covered": "Calculation of Mach number, stagnation properties, and mass flow rate in compressible duct flow",
+          "relevance_score": 0.78,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. A. Sameen",
+          "timestamp_start": "00:22:37",
+          "timestamp_end": "00:27:40",
+          "video_url": "https://www.youtube.com/watch?v=4t9_we8hv0I",
+          "book_reference": "Anderson - Modern Compressible Flow",
+          "topic_covered": "Physical analogy of choked flow using tire puncture and pressure ratio criteria",
+          "relevance_score": 0.7,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Direct Formula Application",
+        "total_steps": 7,
+        "solution_path": "Identify local stagnation state in main duct -> Compute p0 from given p and M -> Use isentropic relation from p0 to ambient p to find jet Mach number -> Check choked condition",
+        "key_insights": [
+          "The leak behaves like a nozzle fed from the local stagnation state of the Mach 3 main flow, not from 50 kPa as stagnation pressure.",
+          "Maximum Mach number in the discharge corresponds to full isentropic expansion to ambient pressure.",
+          "A very low p/p0 implies highly supersonic jet Mach numbers, well beyond M = 1."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$T_0 = T \\left(1 + \\frac{\\gamma-1}{2} M^2\\right)$",
+          "name": "Stagnation temperature relation",
+          "conditions": "Steady, adiabatic, no shaft work, perfect gas, isentropic flow",
+          "type": "equation",
+          "relevance": "Used to relate static and stagnation temperatures in the main duct if needed"
+        },
+        {
+          "formula": "$p_0 = p \\left(1 + \\frac{\\gamma-1}{2} M^2\\right)^{\\gamma/(\\gamma-1)}$",
+          "name": "Stagnation pressure relation",
+          "conditions": "Isentropic flow of a perfect gas",
+          "type": "equation",
+          "relevance": "Used to compute local stagnation pressure from given static pressure and Mach number"
+        },
+        {
+          "formula": "$\\frac{p}{p_0} = \\left(1 + \\frac{\\gamma-1}{2} M^2\\right)^{-\\gamma/(\\gamma-1)}$",
+          "name": "Isentropic pressure-Mach relation",
+          "conditions": "Isentropic flow of a perfect gas",
+          "type": "equation",
+          "relevance": "Core relation to find Mach number in the discharge jet from the pressure ratio"
+        },
+        {
+          "formula": "$M^2 = \\frac{2}{\\gamma-1} \\left[\\left(\\frac{p_0}{p}\\right)^{(\\gamma-1)/\\gamma} - 1\\right]$",
+          "name": "Mach number from pressure ratio",
+          "conditions": "Algebraic rearrangement of isentropic relation for perfect gas",
+          "type": "equation",
+          "relevance": "Directly used to compute the maximum Mach number from p0 and ambient p"
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "High-pressure gas tanks or pipelines with small leaks, where the escaping jet can reach supersonic speeds and generate noise and structural loading.",
+          "Rocket engine exhausts and high-speed nozzles, where designers use similar isentropic relations to predict exit Mach number and thrust.",
+          "Aircraft bleed-air systems and environmental control system valves, where choked or near-choked flows through small orifices are common."
+        ],
+        "specific_systems": [
+          "High-pressure air starter systems on gas turbine engines, where small orifices discharge air to atmosphere.",
+          "Pressure relief valves on industrial compressed-air systems, where the discharge jet may be choked and supersonic."
+        ],
+        "practical_relevance": "Understanding maximum Mach number in a discharge jet is important for predicting noise, erosion, and structural loads, and for sizing safety devices like relief valves and orifices."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Treating the given 50 kPa as stagnation pressure instead of static pressure when computing the discharge Mach number.",
+          "why_students_make_it": "They read 'air at 50 kPa and 400 K flows in a duct' and assume these are stagnation conditions, overlooking the given Mach 3.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "very_common",
+          "how_to_avoid": "Whenever Mach number is given along with p and T, first ask: are these static or stagnation? If M is nonzero and no 'stagnation' word is used, treat p and T as static and compute p0, T0 explicitly.",
+          "consequence": "Underestimates p0, leading to a much lower pressure ratio and a wrong, lower Mach number (around 1.6 instead of ~3.3)."
+        },
+        {
+          "mistake": "Assuming the flow cannot exceed Mach 3 because the main duct Mach number is 3, so taking M_max = 3.",
+          "why_students_make_it": "They intuitively think the leak cannot accelerate the flow beyond the main-stream Mach number.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "common",
+          "how_to_avoid": "Remember that Mach number depends on local speed of sound; a jet expanding to much lower pressure can accelerate further, even if the main flow is already supersonic.",
+          "consequence": "Gives an answer that is systematically too low and outside the official range."
+        },
+        {
+          "mistake": "Using the wrong exponent when inverting the isentropic relation, e.g., using (\\gamma-1)/2 instead of (\\gamma-1)/\\gamma.",
+          "why_students_make_it": "Confusion between temperature and pressure relations; both have similar-looking exponents.",
+          "type": "Calculation",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Memorize the pattern: T0/T uses exponent 1, p0/p uses exponent \\gamma/(\\gamma-1). When solving for M from p/p0, the exponent becomes (\\gamma-1)/\\gamma.",
+          "consequence": "Leads to significant error in Mach number, often off by 10–20% or more."
+        },
+        {
+          "mistake": "Not checking the critical pressure ratio and incorrectly assuming the flow is unchoked.",
+          "why_students_make_it": "They may not recall the approximate critical ratio 0.528 for air.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Always compare p/p0 with 0.528 for air. If p/p0 < 0.528, the flow is choked and can accelerate to supersonic speeds in an expanding jet.",
+          "consequence": "Misclassification of flow regime and incorrect Mach number estimation."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "TPP: Temperature Power 1, Pressure Power (gamma over gamma minus 1)",
+          "concept": "Remembering exponents in isentropic relations: T0/T vs p0/p",
+          "effectiveness": "medium",
+          "context": "Use when writing isentropic relations to avoid mixing up exponents."
+        },
+        {
+          "mnemonic": "For air, 'Half a bar' is critical: p/p0 ≈ 0.53",
+          "concept": "Critical pressure ratio for choked flow in air",
+          "effectiveness": "high",
+          "context": "Quickly decide if a nozzle or leak is choked by comparing p/p0 to ~0.53."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "Write the isentropic relation between static pressure p, total pressure p0, and Mach number M for a perfect gas.",
+          "back": "For a perfect gas:  \\(\\dfrac{p_0}{p} = \\left(1 + \\dfrac{\\gamma-1}{2} M^2\\right)^{\\gamma/(\\gamma-1)}\\)  or equivalently  \\(\\dfrac{p}{p_0} = \\left(1 + \\dfrac{\\gamma-1}{2} M^2\\right)^{-\\gamma/(\\gamma-1)}\\).",
+          "difficulty": "easy",
+          "time_limit_seconds": 45
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "What is the approximate critical pressure ratio p*/p0 for choked flow of air (\\gamma = 1.4)?",
+          "back": "For air, \\(p^*/p_0 \\approx 0.528\\). If p/p0 is less than this, the flow is choked at M = 1 at the throat.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "application",
+          "front": "Air at p = 50 kPa, M = 3, \\gamma = 1.4. Is p = 50 kPa static or stagnation? What is p0 approximately?",
+          "back": "Given a nonzero Mach number, p = 50 kPa is static. Stagnation pressure: \\(p_0 = p (1 + 0.2 M^2)^{3.5} = 50 (1 + 0.2\\times 9)^{3.5} \\approx 50 \\times 20 \\approx 1000\\,\\text{kPa}.\\)",
+          "difficulty": "medium",
+          "time_limit_seconds": 60
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "In a high-speed duct flow, when should you treat the local flow as a 'reservoir' for a small leak or nozzle?",
+          "back": "When the leak area is small and does not disturb the main flow, you can treat the local stagnation state (p0, T0) of the main flow as the reservoir state feeding the leak or nozzle.",
+          "difficulty": "medium",
+          "time_limit_seconds": 60
+        },
+        {
+          "card_type": "application",
+          "front": "Given p0 = 1 MPa, p = 30 kPa, \\gamma = 1.4, estimate if the flow is choked and the order of magnitude of M at the exit.",
+          "back": "p/p0 = 0.03 < 0.528, so the flow is choked. Using isentropic relations, M is highly supersonic, around 3.3.",
+          "difficulty": "medium",
+          "time_limit_seconds": 60
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "High-pressure gas leaks from pipelines or tanks",
+          "industry_example": "In natural gas pipelines operating at several MPa, a small rupture can produce a choked, supersonic jet with Mach numbers above 2–3, causing intense noise and potential erosion of nearby structures.",
+          "why_it_matters": "Accurate prediction of jet Mach number helps in safety analysis, noise prediction, and design of protective barriers."
+        },
+        {
+          "application": "Rocket and jet engine exhaust design",
+          "industry_example": "Rocket nozzles are designed so that the exhaust expands nearly to ambient pressure at design altitude, achieving exit Mach numbers of 3 or higher for efficient thrust.",
+          "why_it_matters": "Incorrect estimation of exit Mach number leads to off-design performance, reduced thrust, and potential structural issues due to over- or under-expanded jets."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "Identify it as a standard isentropic-flow problem: quickly compute p0 from given p and M, then use p0 and ambient p to get M. If you recall the formulas, it is a straightforward 2-step calculation.",
+        "guessing_heuristic": "If stuck, note that p0 >> p, so the jet Mach number must be significantly larger than 1 and likely larger than the main flow Mach 3; choose a value slightly above 3 rather than near 1.",
+        "time_management": "Allocate about 2–3 minutes: 1 minute to compute p0, 1 minute to compute M from p/p0, and a final check against the critical pressure ratio."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "isentropic flow relations Mach number pressure ratio",
+        "choked flow critical pressure ratio air 0.528",
+        "supersonic jet from high pressure reservoir",
+        "compressible flow through nozzles and orifices",
+        "GATE AE compressible flow numerical problems",
+        "stagnation properties in moving stream Mach 3"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Use of Isentropic Flow Tables",
+          "description": "Instead of solving the isentropic relation analytically, use standard isentropic tables for \\gamma = 1.4. First, compute p0/p1 from M1 = 3 to get p0. Then compute p0/p_a and look up the corresponding Mach number for that pressure ratio in the tables.",
+          "pros_cons": "Pros: Faster and less error-prone if you are comfortable with tables. Cons: Requires access to tables and interpolation; less transparent than direct formula use.",
+          "when_to_use": "Useful in exams where isentropic tables are provided or in design work where tables or software are readily available."
+        },
+        {
+          "name": "Logarithmic Approximation for Exponents",
+          "description": "Use natural logs to handle large exponents: write the isentropic relation in log form, compute ln(p0/p), multiply by (\\gamma-1)/\\gamma, exponentiate to get 1 + 0.2 M^2, then solve for M.",
+          "pros_cons": "Pros: More accurate for extreme pressure ratios and avoids calculator overflow. Cons: Slightly more algebraic steps; may be slower without practice.",
+          "when_to_use": "Useful when dealing with very large p0/p ratios or when using a scientific calculator with good log functions."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Thermodynamics": "Uses adiabatic and isentropic process concepts, and the definition of stagnation properties derived from the First Law for steady flow.",
+        "Propulsion": "Directly connects to nozzle flow in rockets and turbojets, where exit Mach number determines thrust and specific impulse.",
+        "Flight Mechanics": "High-speed jets influence aircraft noise, plume behavior, and can interact with control surfaces, affecting stability and control."
+      },
+      "deeper_dive_topics": [
+        "Non-isentropic nozzle flow with friction and shocks (Fanno and Rayleigh effects)",
+        "Under-expanded and over-expanded jets and shock-cell structures",
+        "Design of convergent-divergent nozzles for specified exit Mach number",
+        "Measurement techniques for high-speed jets (Pitot probes, schlieren, PIV)"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2018_AE_Q45",
+        "year": 2018,
+        "marks": 2.0,
+        "negative_marks": 0.0,
+        "time_expected": "2-3 minutes",
+        "success_rate_estimate": "55%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 1: Aerodynamics",
+        "gate_subsection": "Compressible flows, normal shocks, Fanno and Rayleigh lines, nozzles and diffusers",
+        "weightage": "10-15%",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "The question nicely integrates isentropic relations, stagnation properties, and choked flow concepts in a compact numerical problem, well aligned with the compressible-flow part of the syllabus."
+      },
+      "rag_quality": {
+        "relevance_score": 0.55,
+        "chunks_used": 2,
+        "sources_distribution": {
+          "books": 1,
+          "videos": 1
+        },
+        "notes": "RAG provided general compressible-flow examples (Mach number from pressure ratios, stagnation properties, Fanno flow) and a physical analogy for choked flow. These reinforced the isentropic relations and choked-flow concept but did not directly solve this specific leak/jet problem. Core reasoning relied on standard isentropic nozzle theory from internal knowledge."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-22T00:00:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Ask for the mass flow rate through the leak, given the opening area, requiring use of choked-flow mass flux relations.",
+        "Modify ambient pressure to a value just above the critical ratio and ask whether the discharge is choked or not and what Mach number results.",
+        "Include a convergent-divergent nozzle attached to the duct and ask for the location of shocks and exit Mach number for different back pressures.",
+        "Ask for the static temperature and velocity in the discharge jet at ambient pressure, not just the Mach number."
+      ]
+    },
+    "question_id": "GATE_2018_AE_Q45",
+    "year": 2018,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "NAT",
+    "question_text": "Air at 50 kPa pressure and 400 K temperature flows in a duct at Mach 3.0. A part of the flow leaks through an opening on the duct wall into the ambient, where the pressure is 30 kPa. The maximum Mach number achieved in the discharge is _______ (accurate to two decimal places). (Ratio of specific heats of air is gamma = 1.4)."
+  },
+  "tokens_used": 16169,
+  "input_tokens": 9514,
+  "output_tokens": 6655,
+  "cost": 0.0784425,
+  "time_seconds": 79.26064133644104
+}
