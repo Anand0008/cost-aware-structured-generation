@@ -1,0 +1,422 @@
+{
+  "model_name": "gpt_5_1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "mathematical_derivation",
+      "media_type": "text_only",
+      "combined_type": "mathematical_derivation_text_only",
+      "weight_strategy": "MATH_WEIGHTED",
+      "classification_confidence": 0.9,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "The question requires solving a Sturm-Liouville problem, which involves finding eigenvalues and eigenfunctions. While not a direct derivation request, it requires a multi-step solution process to arrive at the correct answer from the given differential equation and boundary conditions.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": false,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "C",
+        "is_correct": true,
+        "confidence": 0.99,
+        "confidence_type": "single_model",
+        "reasoning": "We solve the eigenvalue problem \\(y'' + k^2 \\lambda y = 0\\) on \\(0<x<1\\) with \\(y(0)=0, y(1)=0\\). Let \\(\\mu^2 = k^2 \\lambda\\). Then the equation becomes \\(y'' + \\mu^2 y = 0\\), whose nontrivial solutions satisfying Dirichlet BCs are well known from Sturm-Liouville theory (see RAG chunks 1,2,6): eigenfunctions \\(y_n(x) = \\sin(n\\pi x)\\) with \\(\\mu_n = n\\pi\\), \\(n=1,2,3,\\dots\\). Thus \\(\\mu_n^2 = n^2\\pi^2 = k^2 \\lambda_n\\), giving \\(\\lambda_n = n^2\\pi^2/k^2\\). So eigenvalues: \\(\\lambda_n = n^2 \\pi^2/k^2\\); eigenfunctions: \\(u_n(x) = \\sin(n\\pi x)\\). Option C matches this exactly. Options A and D have wrong scaling of \\(\\lambda_n\\) (missing division by \\(k^2\\)), and A also uses \\(\\sin(\\lambda_n x)\\) instead of \\(\\sin(n\\pi x)\\). Option B has correct \\(\\lambda_n\\) but wrong eigenfunctions \\(\\sin(k n \\pi x)\\), which do not satisfy the ODE with that eigenvalue."
+      },
+      "explanation": {
+        "question_nature": "Derivation",
+        "step_by_step": [
+          "Rewrite the ODE in a standard form: given \\(y'' + k^2 \\lambda y = 0\\), define \\(\\mu^2 = k^2 \\lambda\\) so the equation becomes \\(y'' + \\mu^2 y = 0\\).",
+          "Solve the ODE for different signs of \\(\\mu^2\\): for \\(\\mu^2>0\\), the general solution is \\(y(x) = A \\cos(\\mu x) + B \\sin(\\mu x)\\). (Cases \\(\\mu^2=0\\) or \\(\\mu^2<0\\) lead only to trivial solutions under these BCs, as in the standard Sturm-Liouville example in the RAG.)",
+          "Apply the boundary condition at \\(x=0\\): \\(y(0) = A \\cos 0 + B \\sin 0 = A = 0\\). Hence \\(y(x) = B \\sin(\\mu x)\\).",
+          "Apply the boundary condition at \\(x=1\\): \\(y(1) = B \\sin(\\mu) = 0\\). For a nontrivial eigenfunction, \\(B \\neq 0\\), so we require \\(\\sin(\\mu) = 0\\).",
+          "Solve \\(\\sin(\\mu)=0\\): this gives \\(\\mu = n\\pi\\), where \\(n\\) is an integer. Discard \\(n=0\\) (trivial solution) and negative \\(n\\) (same eigenfunctions up to sign), so \\(n=1,2,3,\\dots\\). Thus \\(\\mu_n = n\\pi\\) and eigenfunctions \\(u_n(x) = \\sin(n\\pi x)\\).",
+          "Relate \\(\\mu_n\\) back to \\(\\lambda_n\\): since \\(\\mu_n^2 = k^2 \\lambda_n\\) and \\(\\mu_n^2 = n^2 \\pi^2\\), we get \\(k^2 \\lambda_n = n^2 \\pi^2\\), hence \\(\\lambda_n = n^2 \\pi^2 / k^2\\).",
+          "Compare with options: only option C has \\(\\lambda_n = n^2 \\pi^2/k^2\\) and \\(u_n(x) = \\sin(n\\pi x)\\) (with integer \\(n\\)), so C is correct."
+        ],
+        "formulas_used": [
+          "$y'' + k^2 \\lambda y = 0$",
+          "$\\mu^2 = k^2 \\lambda$",
+          "$y(x) = A \\cos(\\mu x) + B \\sin(\\mu x)$",
+          "$y(0)=0 \\Rightarrow A=0$",
+          "$y(1)=0 \\Rightarrow B \\sin(\\mu)=0$",
+          "$\\sin(\\mu)=0 \\Rightarrow \\mu = n\\pi$",
+          "$\\mu_n^2 = k^2 \\lambda_n$",
+          "$\\lambda_n = n^2 \\pi^2 / k^2$"
+        ],
+        "estimated_time_minutes": 3
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Structures",
+          "confidence": 0.78
+        },
+        "topic": {
+          "name": "Sturm-Liouville problems and eigenvalue analysis of ODEs",
+          "syllabus_ref": "Section 2: Structures -> Solid Mechanics and Vibrations -> Differential equations, eigenvalues and eigenvectors"
+        },
+        "concepts": [
+          {
+            "name": "Sturm-Liouville eigenvalue problem",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Boundary conditions and quantization of eigenvalues",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Solutions of second-order linear ODEs with constant coefficients",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Dirichlet boundary conditions (fixed ends)",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Scaling of eigenvalues with parameters (here k)",
+            "importance": "tertiary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "General solution of second-order linear ODEs with constant coefficients",
+          "Concept of eigenvalues and eigenfunctions in Sturm-Liouville problems",
+          "Application of boundary conditions to determine constants and eigenvalues",
+          "Basic trigonometric properties, especially zeros of $\\sin(x)$",
+          "Understanding of parameter substitution to nondimensionalize ODEs"
+        ],
+        "helpful": [
+          "Physical analogy of vibrating string fixed at both ends",
+          "Orthogonality of sine eigenfunctions on $(0,1)$"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: General solution of $y'' + a^2 y = 0$",
+            "requires: Understanding boundary conditions and nontrivial solutions",
+            "enables: Solving PDEs via separation of variables using eigenfunction expansions",
+            "enables: Modal analysis of structural vibration problems"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Easy",
+        "score": 3,
+        "complexity_breakdown": {
+          "conceptual": 3,
+          "mathematical": 3,
+          "problem_solving": 3
+        },
+        "estimated_solve_time_seconds": 120,
+        "expected_accuracy_percent": 75,
+        "difficulty_factors": [
+          "Requires recognizing the standard fixed–fixed string eigenproblem form",
+          "Careful tracking of the parameter k to get the correct scaling of eigenvalues",
+          "Distinguishing between eigenparameter lambda and spatial frequency n pi"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Higher Engineering Mathematics",
+          "author": "B. S. Grewal",
+          "chapter_number": "30",
+          "chapter_title": "Boundary Value Problems and Eigenvalue Problems",
+          "section": "Sturm-Liouville Problems; Example $y'' + \\lambda y = 0$, $y(0)=y(\\pi)=0$",
+          "page_range": "approx. 900-910",
+          "complexity": "intermediate",
+          "relevance_score": 0.95,
+          "source": "rag_retrieval",
+          "text_snippet": "For $y'' + \\lambda y = 0$ with $y(0)=0$, $y(\\pi)=0$, the eigenvalues are $\\lambda_n = n^2$ and eigenfunctions $y_n(x) = \\sin(nx)$."
+        },
+        {
+          "source_type": "book",
+          "book": "Advanced Engineering Mathematics",
+          "author": "Erwin Kreyszig",
+          "chapter_number": "11",
+          "chapter_title": "Sturm-Liouville Problems. Eigenvalues and Eigenfunctions",
+          "section": "Regular Sturm-Liouville problems and examples",
+          "page_range": "approx. 530-545",
+          "complexity": "intermediate",
+          "relevance_score": 0.9,
+          "source": "model_consensus",
+          "text_snippet": ""
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. P. N. Agrawal and Prof. D. N. Pandey",
+          "timestamp_start": "00:07:26",
+          "timestamp_end": "00:14:01",
+          "video_url": "https://www.youtube.com/watch?v=jdeTcLwklV8",
+          "book_reference": "B. S. Grewal, Boundary Value Problems and Eigenvalue Problems",
+          "topic_covered": "Solving $y'' + \\lambda y = 0$ with $y(0)=0$, $y(\\pi)=0$; eigenvalues and eigenfunctions for a regular Sturm-Liouville problem",
+          "relevance_score": 0.96,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. P. N. Agrawal and Prof. D. N. Pandey",
+          "timestamp_start": "00:17:40",
+          "timestamp_end": "00:19:30",
+          "video_url": "https://www.youtube.com/watch?v=8GDO0aC-ukY",
+          "book_reference": "Erwin Kreyszig, PDEs and separation of variables",
+          "topic_covered": "Deriving discrete eigenvalues from $\\sin(\\mu \\pi)=0$ and interpreting $\\mu=n$",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "First Principles Derivation",
+        "total_steps": 7,
+        "solution_path": "Parameter substitution to standard form \\rightarrow Solve ODE \\rightarrow Apply boundary conditions \\rightarrow Quantize \\mu \\rightarrow Back-substitute to find \\lambda_n and eigenfunctions",
+        "key_insights": [
+          "Introduce \\(\\mu^2 = k^2 \\lambda\\) to reduce the equation to the standard harmonic form.",
+          "Dirichlet boundary conditions at both ends select sine functions and quantize \\(\\mu\\) as integer multiples of \\(\\pi\\).",
+          "The parameter \\(k\\) only rescales eigenvalues, not eigenfunctions in \\(x\\)."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$y'' + k^2 \\lambda y = 0$",
+          "name": "Given Sturm-Liouville differential equation",
+          "conditions": "Valid on the interval $(0,1)$ with parameter $k$ and eigenparameter $\\lambda$",
+          "type": "equation",
+          "relevance": "Starting point of the eigenvalue problem"
+        },
+        {
+          "formula": "$\\mu^2 = k^2 \\lambda$",
+          "name": "Parameter substitution",
+          "conditions": "Used to convert the ODE into standard harmonic oscillator form",
+          "type": "equation",
+          "relevance": "Simplifies solving the ODE and relating eigenvalues"
+        },
+        {
+          "formula": "$y(x) = A \\cos(\\mu x) + B \\sin(\\mu x)$",
+          "name": "General solution of harmonic ODE",
+          "conditions": "Solution of $y'' + \\mu^2 y = 0$ for real $\\mu$",
+          "type": "equation",
+          "relevance": "Core solution used before applying boundary conditions"
+        },
+        {
+          "formula": "$\\sin(\\mu) = 0$",
+          "name": "Eigenvalue condition from boundary at $x=1$",
+          "conditions": "Arises from $y(1)=0$ and nontrivial $B$",
+          "type": "equation",
+          "relevance": "Leads to discrete eigenvalues $\\mu = n\\pi$ and hence $\\lambda_n$"
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Transverse vibration modes of a slender aircraft wing idealized as a fixed-fixed beam or string, where eigenvalues determine natural frequencies.",
+          "Acoustic modes in a closed-closed duct segment of length 1 m, where pressure modes follow sine distributions similar to this problem."
+        ],
+        "specific_systems": [
+          "Vibration analysis of satellite appendages (e.g., solar panels) modeled with fixed boundary conditions.",
+          "Design of structural test rigs where boundary conditions are approximated as fixed at both ends."
+        ],
+        "practical_relevance": "Correctly identifying eigenvalues and eigenfunctions is essential for predicting resonance frequencies and mode shapes; errors in scaling parameters like k can lead to large mistakes in predicted natural frequencies and potentially unsafe designs."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Forgetting to include the factor $k^2$ when relating $\\mu^2$ and $\\lambda$, leading to eigenvalues $\\lambda_n = n^2 \\pi^2$ instead of $n^2 \\pi^2 / k^2$.",
+          "why_students_make_it": "They directly copy the standard result for $y'' + \\lambda y = 0$ without adjusting for the extra $k^2$ factor.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Always explicitly define a new parameter, e.g., $\\mu^2 = k^2 \\lambda$, and at the end back-substitute carefully to solve for $\\lambda_n$.",
+          "consequence": "All eigenvalues are off by a factor of $k^2$, giving wrong natural frequencies or decay rates."
+        },
+        {
+          "mistake": "Using $u_n(x) = \\sin(\\lambda_n x)$ instead of $u_n(x) = \\sin(n\\pi x)$.",
+          "why_students_make_it": "They confuse the eigenparameter $\\lambda$ with the spatial frequency $n\\pi$ appearing in the sine argument.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Remember that the sine argument comes from $\\mu x$ where $\\mu = n\\pi$; $\\lambda$ is related to $\\mu^2$ via $k^2 \\lambda = \\mu^2$ and does not appear directly inside the sine.",
+          "consequence": "The proposed eigenfunctions do not satisfy the original ODE with the given eigenvalues."
+        },
+        {
+          "mistake": "Including $n=0$ as a valid eigenvalue/eigenfunction for this Dirichlet problem.",
+          "why_students_make_it": "They mechanically write $n=0, \\pm 1, \\pm 2, \\dots$ without checking whether the $n=0$ mode is trivial.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "common",
+          "how_to_avoid": "Always check if the $n=0$ mode gives a nontrivial solution; for $\\sin(0\\cdot x)=0$ it is identically zero and must be discarded.",
+          "consequence": "They list a non-physical 'mode' that is just the zero solution, which is not an eigenfunction."
+        },
+        {
+          "mistake": "Choosing cosine eigenfunctions for fixed-fixed (Dirichlet) boundary conditions.",
+          "why_students_make_it": "They mix up boundary condition types: Neumann (derivative zero) vs Dirichlet (value zero).",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Memorize: fixed ends (value zero) → sine; insulated or free slope (derivative zero) → cosine.",
+          "consequence": "Cosine functions do not satisfy $y(0)=0$ unless they are trivial."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "FiXeD ends → SiNeD modes (Fixed → Sine, Derivative zero → Cosine)",
+          "concept": "Choosing sine vs cosine eigenfunctions based on boundary conditions",
+          "effectiveness": "high",
+          "context": "Use when deciding the functional form of eigenfunctions for 1D Sturm-Liouville problems."
+        },
+        {
+          "mnemonic": "k squares lambda: $\\mu^2 = k^2 \\lambda$",
+          "concept": "Relationship between the ODE parameter k, eigenvalue lambda, and spatial frequency mu",
+          "effectiveness": "medium",
+          "context": "Use when converting $y'' + k^2 \\lambda y = 0$ to standard harmonic form."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "concept_recall",
+          "front": "For $y'' + \\lambda y = 0$ on $(0,\\pi)$ with $y(0)=y(\\pi)=0$, what are the eigenvalues and eigenfunctions?",
+          "back": "Eigenvalues: $\\lambda_n = n^2$, eigenfunctions: $y_n(x) = \\sin(nx)$, for $n=1,2,3,\\dots$.",
+          "difficulty": "easy",
+          "time_limit_seconds": 40
+        },
+        {
+          "card_type": "formula_recall",
+          "front": "Given $y'' + k^2 \\lambda y = 0$ and substitution $\\mu^2 = k^2 \\lambda$, express $\\lambda$ in terms of $\\mu$ and $k$.",
+          "back": "$\\lambda = \\mu^2 / k^2$.",
+          "difficulty": "easy",
+          "time_limit_seconds": 20
+        },
+        {
+          "card_type": "application",
+          "front": "Solve for eigenvalues of $y'' + k^2 \\lambda y = 0$, $0<x<1$, with $y(0)=y(1)=0$.",
+          "back": "General solution: $y = A \\cos(\\mu x) + B \\sin(\\mu x)$ with $\\mu^2 = k^2 \\lambda$. BC at 0 → $A=0$. BC at 1 → $\\sin(\\mu)=0$ → $\\mu=n\\pi$. Thus $\\lambda_n = n^2 \\pi^2 / k^2$, $n=1,2,3,\\dots$.",
+          "difficulty": "medium",
+          "time_limit_seconds": 60
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "Why is $u_0(x)=\\sin(0\\cdot x)$ not an acceptable eigenfunction for Dirichlet BCs?",
+          "back": "Because $\\sin(0\\cdot x) = 0$ for all $x$, giving only the trivial solution. Eigenfunctions must be nontrivial.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "Which boundary condition type typically leads to cosine eigenfunctions: value zero or derivative zero?",
+          "back": "Derivative zero (Neumann or insulated boundary) typically leads to cosine eigenfunctions.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Natural vibration modes of beams and strings with fixed ends",
+          "industry_example": "An aircraft control cable or a slender antenna mast fixed at both ends has transverse vibration modes described by sine eigenfunctions; eigenvalues determine natural frequencies.",
+          "why_it_matters": "Incorrect eigenvalues lead to wrong frequency predictions, risking resonance and structural failure."
+        },
+        {
+          "application": "Separation of variables in heat conduction problems",
+          "industry_example": "Temperature distribution in a thin rod of length 1 m held at zero temperature at both ends uses sine eigenfunctions in the spatial part, with eigenvalues affecting decay rates.",
+          "why_it_matters": "Accurate eigenvalues are needed to predict cooling times and thermal stresses."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "Recognize this as the standard fixed–fixed Sturm-Liouville problem. Immediately write the general solution, apply BCs, and use the known pattern $\\mu=n\\pi$ to get $\\lambda_n$. Should take under 2 minutes.",
+        "guessing_heuristic": "Eliminate options where eigenfunctions are $\\sin(\\lambda_n x)$ or $\\sin(k n \\pi x)$; the argument must be $n\\pi x$. Then choose the option where $\\lambda_n$ scales as $n^2 \\pi^2 / k^2$.",
+        "time_management": "If you recognize the pattern, solve quickly; if not, at least set $\\mu^2 = k^2 \\lambda$ and recall the standard $y''+\\mu^2 y=0$ eigenvalues to avoid lengthy derivation."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "Sturm-Liouville problem fixed ends",
+        "eigenvalues eigenfunctions y'' + lambda y = 0",
+        "Dirichlet boundary conditions sine eigenfunctions",
+        "Grewal boundary value problems eigenvalues",
+        "Kreyszig Sturm-Liouville example y'' + lambda y",
+        "vibrating string fixed-fixed modes",
+        "separation of variables sine series"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Direct comparison with standard problem",
+          "description": "Recall the standard result for $y'' + \\lambda y = 0$ on $(0,1)$ with $y(0)=y(1)=0$: eigenvalues $\\lambda_n = n^2 \\pi^2$, eigenfunctions $\\sin(n\\pi x)$. Then note that in the given problem, $k^2 \\lambda$ plays the role of $\\lambda$ in the standard form, so set $k^2 \\lambda_n = n^2 \\pi^2$ to obtain $\\lambda_n = n^2 \\pi^2 / k^2$ without re-deriving the full solution.",
+          "pros_cons": "Pros: Very fast once the standard result is memorized. Cons: Relies on memory; if the standard problem is forgotten, this method fails.",
+          "when_to_use": "Useful in timed exams when you immediately recognize the problem as a scaled version of the classic fixed–fixed string eigenproblem."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Vibrations": "The same eigenvalue problem appears in transverse vibration of strings and beams, where eigenvalues relate to natural frequencies.",
+        "Heat Transfer": "In 1D transient conduction with fixed temperature boundaries, separation of variables leads to identical spatial eigenfunctions.",
+        "Control Systems": "Modal decomposition of flexible structures uses these eigenfunctions as modes in state-space models.",
+        "Quantum Mechanics": "The Schr\\\"odinger equation in a 1D infinite potential well has sine eigenfunctions and discrete energy eigenvalues analogous to this problem."
+      },
+      "deeper_dive_topics": [
+        "Orthogonality and completeness of sine eigenfunctions on $(0,1)$",
+        "General Sturm-Liouville theory with variable coefficients $p(x), q(x), r(x)$",
+        "Effect of different boundary conditions (Neumann, Robin) on eigenvalues and eigenfunctions",
+        "Use of eigenfunction expansions to solve PDEs in complex geometries"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2017_AE_Q04",
+        "year": 2017,
+        "marks": 1.0,
+        "negative_marks": 0.33,
+        "time_expected": "1-2 minutes",
+        "success_rate_estimate": "75%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 2: Structures",
+        "gate_subsection": "Solid Mechanics and Vibrations; differential equations, eigenvalues and eigenvectors, vibration of single and multi degree of freedom systems",
+        "weightage": "5-10%",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "The question nicely tests core understanding of Sturm-Liouville eigenproblems and boundary conditions, which are fundamental for vibration and PDE topics in the syllabus."
+      },
+      "rag_quality": {
+        "relevance_score": 0.9,
+        "chunks_used": 4,
+        "sources_distribution": {
+          "books": 0,
+          "videos": 4
+        },
+        "notes": "RAG provided detailed examples of solving $y'' + \\lambda y = 0$ with Dirichlet and Neumann boundary conditions, including the case $y(0)=y(\\pi)=0$ and the derivation of $\\sin(\\mu \\pi)=0$ leading to discrete eigenvalues. This directly parallels the given problem; only a simple scaling by $k^2$ was needed beyond the RAG content."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-22T00:00:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Ask for normalization of the eigenfunctions $u_n(x)$ and compute orthogonality integrals on $(0,1)$.",
+        "Modify boundary conditions to $y'(0)=0$, $y(1)=0$ and ask for the new eigenvalues and eigenfunctions.",
+        "Extend to a PDE: solve the 1D heat equation with these spatial eigenfunctions and given initial temperature distribution.",
+        "Consider a variable coefficient Sturm-Liouville problem and ask for qualitative properties of eigenvalues (e.g., ordering, positivity)."
+      ]
+    },
+    "question_id": "GATE_2017_AE_Q04",
+    "year": 2017,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "MCQ",
+    "question_text": "The eigenvalues lambda_n and eigenfunctions u_n(x) of the Sturm-Liouville problem d^2y/dx^2 + k^2 lambda y = 0, 0 < x < 1; y(0) = 0, y(1) = 0 are given by:"
+  },
+  "tokens_used": 18750,
+  "input_tokens": 12573,
+  "output_tokens": 6177,
+  "cost": 0.07748625,
+  "time_seconds": 63.29651165008545
+}

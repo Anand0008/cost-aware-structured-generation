@@ -1,0 +1,381 @@
+{
+  "model_name": "gemini_2.5_pro",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "mathematical_derivation",
+      "media_type": "text_only",
+      "combined_type": "mathematical_derivation_text_only",
+      "weight_strategy": "MATH_WEIGHTED",
+      "classification_confidence": 0.9,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "The question requires solving a Sturm-Liouville problem, which involves finding eigenvalues and eigenfunctions. While not a direct derivation request, it requires a multi-step solution process to arrive at the correct answer from the given differential equation and boundary conditions.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": false,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "C",
+        "is_correct": true,
+        "confidence": 1.0,
+        "confidence_type": "single_model",
+        "reasoning": "The problem is a regular Sturm-Liouville boundary value problem. We need to find the values of `\\lambda` (eigenvalues) for which non-trivial solutions `y(x)` (eigenfunctions) exist, satisfying the given differential equation and boundary conditions.\n\nThe given differential equation is `\\frac{d^2y}{dx^2} + k^2 \\lambda y = 0` with boundary conditions `y(0) = 0` and `y(1) = 0`.\n\nLet's analyze the cases for `k^2 \\lambda`:\n\n1.  **Case 1: `k^2 \\lambda = 0` (i.e., `\\lambda = 0`)**\n    The ODE becomes `\\frac{d^2y}{dx^2} = 0`.\n    Integrating twice, the general solution is `y(x) = Ax + B`.\n    Applying the first boundary condition `y(0) = 0 \\implies A(0) + B = 0 \\implies B = 0`.\n    Applying the second boundary condition `y(1) = 0 \\implies A(1) + 0 = 0 \\implies A = 0`.\n    This leads to the trivial solution `y(x) = 0`. Thus, `\\lambda = 0` is not an eigenvalue.\n\n2.  **Case 2: `k^2 \\lambda < 0` (i.e., `\\lambda < 0`)**\n    Let `k^2 \\lambda = -\\alpha^2` for some real `\\alpha > 0`.\n    The ODE becomes `\\frac{d^2y}{dx^2} - \\alpha^2 y = 0`.\n    The characteristic equation is `m^2 - \\alpha^2 = 0 \\implies m = \\pm \\alpha`.\n    The general solution is `y(x) = C_1 e^{\\alpha x} + C_2 e^{-\\alpha x}` or, equivalently, `y(x) = C_1 \\cosh(\\alpha x) + C_2 \\sinh(\\alpha x)`.\n    Applying `y(0) = 0 \\implies C_1 \\cosh(0) + C_2 \\sinh(0) = C_1 = 0`.\n    So, `y(x) = C_2 \\sinh(\\alpha x)`.\n    Applying `y(1) = 0 \\implies C_2 \\sinh(\\alpha) = 0`.\n    Since `\\alpha > 0`, `\\sinh(\\alpha)` is never zero. Therefore, `C_2` must be `0`.\n    This leads to the trivial solution `y(x) = 0`. Thus, there are no negative eigenvalues.\n\n3.  **Case 3: `k^2 \\lambda > 0` (i.e., `\\lambda > 0`)**\n    Let `k^2 \\lambda = \\alpha^2` for some real `\\alpha > 0`.\n    The ODE becomes `\\frac{d^2y}{dx^2} + \\alpha^2 y = 0`.\n    The characteristic equation is `m^2 + \\alpha^2 = 0 \\implies m = \\pm i\\alpha`.\n    The general solution is `y(x) = C_1 \\cos(\\alpha x) + C_2 \\sin(\\alpha x)`.\n    Applying the first boundary condition `y(0) = 0 \\implies C_1 \\cos(0) + C_2 \\sin(0) = C_1 = 0`.\n    So, the solution simplifies to `y(x) = C_2 \\sin(\\alpha x)`.\n    Applying the second boundary condition `y(1) = 0 \\implies C_2 \\sin(\\alpha) = 0`.\n    For a non-trivial solution (i.e., `y(x)` is not identically zero), `C_2` must be non-zero. Therefore, we must have `\\sin(\\alpha) = 0`.\n    This implies that `\\alpha` must be an integer multiple of `\\pi`, i.e., `\\alpha = n\\pi` for some integer `n`.\n    Since we assumed `\\alpha > 0`, we consider `n = 1, 2, 3, ...`. (Note: `n=0` leads to `\\alpha=0`, which corresponds to `\\lambda=0`, already shown to be trivial. Negative integer values for `n` would yield eigenfunctions that are scalar multiples of positive `n` values, e.g., `\\sin(-n\\pi x) = -\\sin(n\\pi x)`).\n\n    Now, we find the eigenvalues `\\lambda_n` using `k^2 \\lambda = \\alpha^2`:\n    `\\lambda_n = \\frac{\\alpha^2}{k^2} = \\frac{(n\\pi)^2}{k^2} = \\frac{n^2 \\pi^2}{k^2}`.\n\n    The corresponding eigenfunctions `u_n(x)` (choosing `C_2 = 1` for simplicity) are:\n    `u_n(x) = \\sin(\\alpha x) = \\sin(n\\pi x)`.\n\nComparing these results with the given options, Option C provides the correct eigenvalues `\\lambda_n = \\frac{n^2 \\pi^2}{k^2}` and eigenfunctions `u_n(x) = \\sin(n\\pi x)`. The range `n = 0, \\pm 1, \\pm 2, ...` in the option is a general way to list the index, but for distinct non-trivial eigenfunctions, `n = 1, 2, 3, ...` is typically considered."
+      },
+      "explanation": {
+        "question_nature": "Derivation",
+        "step_by_step": [
+          "**Step 1: Identify the problem type and governing equation.** The problem is a Sturm-Liouville boundary value problem (SLBVP) defined by the second-order homogeneous linear ordinary differential equation `$\\frac{d^2y}{dx^2} + k^2 \\lambda y = 0$` on the interval `$(0, 1)$`, with Dirichlet boundary conditions `y(0) = 0` and `y(1) = 0`.",
+          "**Step 2: Analyze the case for `$\\lambda = 0$` (or `k^2 \\lambda = 0`).** Substitute `$\\lambda = 0$` into the ODE, which simplifies to `$\\frac{d^2y}{dx^2} = 0$`. Integrate twice to get the general solution `y(x) = Ax + B`. Apply the boundary conditions `y(0) = 0` and `y(1) = 0` to show that `A=0` and `B=0`, leading to the trivial solution `y(x) = 0`. Conclude that `$\\lambda = 0$` is not an eigenvalue.",
+          "**Step 3: Analyze the case for `$\\lambda < 0$` (or `k^2 \\lambda < 0`).** Let `k^2 \\lambda = -\\alpha^2` for some real `$\\alpha > 0$`. The ODE becomes `$\\frac{d^2y}{dx^2} - \\alpha^2 y = 0$`. The general solution is `y(x) = C_1 \\cosh(\\alpha x) + C_2 \\sinh(\\alpha x)`. Apply `y(0) = 0` to find `C_1 = 0`. Then apply `y(1) = 0` to `y(x) = C_2 \\sinh(\\alpha x)`. Since `$\\sinh(\\alpha) \\neq 0$` for `$\\alpha > 0$`, this forces `C_2 = 0`, resulting in the trivial solution `y(x) = 0`. Conclude that there are no negative eigenvalues.",
+          "**Step 4: Analyze the case for `$\\lambda > 0$` (or `k^2 \\lambda > 0`).** Let `k^2 \\lambda = \\alpha^2` for some real `$\\alpha > 0$`. The ODE becomes `$\\frac{d^2y}{dx^2} + \\alpha^2 y = 0$`. The general solution is `y(x) = C_1 \\cos(\\alpha x) + C_2 \\sin(\\alpha x)`.",
+          "**Step 5: Apply the first boundary condition.** Use `y(0) = 0` in the general solution from Step 4: `C_1 \\cos(0) + C_2 \\sin(0) = 0 \\implies C_1 = 0`. This simplifies the solution to `y(x) = C_2 \\sin(\\alpha x)`.",
+          "**Step 6: Apply the second boundary condition and determine `$\\alpha$`.** Use `y(1) = 0` in the simplified solution from Step 5: `C_2 \\sin(\\alpha) = 0`. For a non-trivial solution, `C_2 \\neq 0`, which implies `\\sin(\\alpha) = 0`.",
+          "**Step 7: Determine the eigenvalues `$\\lambda_n$`.** From `\\sin(\\alpha) = 0`, we get `\\alpha = n\\pi` for `n = 1, 2, 3, ...` (excluding `n=0` for trivial solution and negative `n` for redundant eigenfunctions). Substitute this back into `k^2 \\lambda = \\alpha^2` to find `$\\lambda_n = \\frac{(n\\pi)^2}{k^2} = \\frac{n^2 \\pi^2}{k^2}$`.",
+          "**Step 8: Determine the eigenfunctions `u_n(x)`.** Using `$\\alpha = n\\pi$` and setting `C_2 = 1` (as eigenfunctions are unique up to a constant multiplier), the eigenfunctions are `u_n(x) = \\sin(n\\pi x)`."
+        ],
+        "formulas_used": [
+          "$\\frac{d^2y}{dx^2} + \\omega^2 y = 0 \\implies y(x) = C_1 \\cos(\\omega x) + C_2 \\sin(\\omega x)$",
+          "$\\frac{d^2y}{dx^2} - \\omega^2 y = 0 \\implies y(x) = C_1 \\cosh(\\omega x) + C_2 \\sinh(\\omega x)$",
+          "$\\sin(n\\pi) = 0 \\quad \\text{for integer } n$"
+        ],
+        "estimated_time_minutes": 3
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Engineering Mathematics",
+          "confidence": 1.0
+        },
+        "topic": {
+          "name": "Ordinary Differential Equations (ODEs)",
+          "syllabus_ref": "GATE AE Syllabus -> Engineering Mathematics -> Differential Equations -> Second order linear differential equations with constant coefficients, Initial and boundary value problems."
+        },
+        "concepts": [
+          {
+            "name": "Sturm-Liouville Problem",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Eigenvalues and Eigenfunctions",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Boundary Value Problems",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Homogeneous Linear ODEs",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Separation of Variables (Contextual)",
+            "importance": "tertiary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Solving second-order homogeneous linear ODEs with constant coefficients.",
+          "Understanding of trigonometric and hyperbolic functions.",
+          "Application of boundary conditions to ODE solutions.",
+          "Concept of trivial vs. non-trivial solutions."
+        ],
+        "helpful": [
+          "Basic understanding of Sturm-Liouville theory properties.",
+          "Physical interpretation of eigenvalues and eigenfunctions (e.g., vibrating string)."
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Homogeneous Linear ODEs",
+            "requires: Boundary Conditions",
+            "enables: Solving Partial Differential Equations (PDEs) by Separation of Variables",
+            "enables: Modal Analysis in Vibrations"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Medium",
+        "score": 6,
+        "complexity_breakdown": {
+          "conceptual": 6,
+          "mathematical": 6
+        },
+        "estimated_solve_time_seconds": 180,
+        "expected_accuracy_percent": 65,
+        "difficulty_factors": [
+          "Requires systematic analysis of three cases for `$\\lambda$` (zero, negative, positive).",
+          "Careful application of Dirichlet boundary conditions.",
+          "Correctly interpreting the `$\\sin(\\alpha) = 0$` condition for non-trivial solutions.",
+          "Distinguishing between `k^2 \\lambda` and `$\\lambda$` in the final eigenvalue expression."
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Erwin Kreyszig - Advanced Engineering Mathematics",
+          "author": "Erwin Kreyszig",
+          "chapter_title": "Sturm-Liouville Problems. Eigenvalues and Eigenfunctions",
+          "section": "11.5",
+          "complexity": "intermediate",
+          "relevance_score": 0.95,
+          "source": "rag_retrieval",
+          "text_snippet": "For a homogeneous Sturm-Liouville Boundary Value Problem, the trivial solution `y(x) = 0` is always possible. However, we are interested in specific values of the parameter `lambda` for which the problem admits **non-trivial solutions**. These specific values of `lambda` are called **eigenvalues**, and their corresponding non-trivial solutions `y(x)` are called **eigenfunctions`."
+        },
+        {
+          "source_type": "book",
+          "book": "B.S. Grewal - Higher Engineering Mathematics",
+          "author": "B.S. Grewal",
+          "chapter_title": "Boundary Value Problems and Eigenvalue Problems",
+          "section": "30",
+          "complexity": "introductory",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval",
+          "text_snippet": "This section demonstrates the process of finding the eigenvalues and corresponding eigenfunctions for a specific, simple regular Sturm-Liouville boundary value problem by considering different cases for the parameter `lambda`."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. P.N. Agrawal and Prof. D.N. Pandey",
+          "timestamp_start": "00:07:26",
+          "timestamp_end": "00:14:01",
+          "video_url": "https://www.youtube.com/watch?v=jdeTcLwklV8",
+          "topic_covered": "Finding eigenvalues and eigenfunctions for `y'' + lambda*y = 0` with `y(0)=0, y(pi)=0`.",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. P.N. Agrawal and Prof. D.N. Pandey",
+          "timestamp_start": "00:05:15",
+          "timestamp_end": "00:07:26",
+          "video_url": "https://www.youtube.com/watch?v=jdeTcLwklV8",
+          "topic_covered": "Definition of eigenvalues, eigenfunctions, and spectrum for SLBVPs.",
+          "relevance_score": 0.8,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "First Principles Derivation",
+        "total_steps": 8,
+        "solution_path": "ODE Solution by Cases -> Boundary Condition Application -> Eigenvalue/Eigenfunction Extraction",
+        "key_insights": [
+          "The sign of the coefficient of `y` (here `k^2 \\lambda`) dictates the form of the general solution (exponential/hyperbolic vs. trigonometric).",
+          "Boundary conditions are crucial for 'quantizing' the parameter `$\\lambda$` into discrete eigenvalues.",
+          "Non-trivial solutions are the objective; trivial solutions do not yield eigenvalues."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$\\frac{d^2y}{dx^2} + \\omega^2 y = 0$",
+          "name": "Homogeneous Second-Order ODE (Oscillatory)",
+          "conditions": "When `$\\omega^2 > 0$`",
+          "type": "equation",
+          "relevance": "Core equation type for the `$\\lambda > 0$` case."
+        },
+        {
+          "formula": "$\\frac{d^2y}{dx^2} - \\omega^2 y = 0$",
+          "name": "Homogeneous Second-Order ODE (Exponential)",
+          "conditions": "When `$\\omega^2 > 0$`",
+          "type": "equation",
+          "relevance": "Core equation type for the `$\\lambda < 0$` case."
+        },
+        {
+          "formula": "$\\sin(x) = 0 \\implies x = n\\pi$",
+          "name": "Sine Zero Condition",
+          "conditions": "For integer `n`",
+          "type": "principle",
+          "relevance": "Essential for determining discrete eigenvalues from boundary conditions."
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Vibration analysis in aerospace structures (e.g., wing flutter, fuselage modes).",
+          "Heat transfer analysis in aircraft components (e.g., temperature distribution in engine parts).",
+          "Acoustic wave propagation in aircraft cabins."
+        ],
+        "specific_systems": [
+          "Modal analysis of aircraft wings to determine natural frequencies and mode shapes.",
+          "Design of acoustic liners in jet engines to suppress noise."
+        ],
+        "practical_relevance": "Understanding eigenvalues and eigenfunctions allows engineers to predict the natural behavior (vibration modes, heat distribution patterns) of physical systems, which is critical for structural integrity, performance, and safety in aerospace design."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Incorrectly handling the `k^2` term, either by absorbing it into `$\\lambda$` or misplacing it in the final eigenvalue expression.",
+          "why_students_make_it": "Lack of attention to detail in the problem statement, or rushing the algebraic manipulation.",
+          "type": "Calculation",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Clearly define `$\\alpha^2 = k^2 \\lambda$` (or similar substitution) at the beginning and consistently track `k` throughout the derivation. Double-check the final substitution for `$\\lambda$`.",
+          "consequence": "Leads to incorrect eigenvalues, matching options A or D."
+        },
+        {
+          "mistake": "Failing to test all three cases for `$\\lambda$` (zero, negative, positive).",
+          "why_students_make_it": "Overlooking the possibility of non-oscillatory solutions or assuming `$\\lambda$` must be positive.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Always follow the systematic approach of checking `$\\lambda=0$`, `$\\lambda<0$`, and `$\\lambda>0$` for Sturm-Liouville problems.",
+          "consequence": "Might miss valid eigenvalues or incorrectly assume trivial cases are eigenvalues."
+        },
+        {
+          "mistake": "Incorrectly applying boundary conditions, especially if derivative (Neumann) conditions were present.",
+          "why_students_make_it": "Confusion between `y(0)=0` and `y'(0)=0`.",
+          "type": "Application",
+          "severity": "Medium",
+          "frequency": "common",
+          "how_to_avoid": "Carefully write down the boundary conditions and substitute them into the correct function (`y(x)` or `y'(x)`).",
+          "consequence": "Leads to incorrect constants `C_1, C_2` and thus wrong eigenfunctions/eigenvalues."
+        },
+        {
+          "mistake": "Including `n=0` or negative `n` values for distinct eigenfunctions when only positive integers are typically considered for unique non-trivial solutions.",
+          "why_students_make_it": "Not understanding the physical meaning or mathematical redundancy of `n=0` (trivial) and `n<0` (same as `n>0` up to a sign).",
+          "type": "Conceptual",
+          "severity": "Low",
+          "frequency": "common",
+          "how_to_avoid": "Remember that `$\\sin(0x)=0$` is trivial and `$\\sin(-nx) = -\\sin(nx)$`. For distinct non-trivial eigenfunctions, `n=1, 2, 3, ...` is sufficient. However, for multiple-choice questions, be aware that options might list `n = 0, \\pm 1, \\pm 2, ...` as a general index set.",
+          "consequence": "Does not affect the correctness of the eigenvalue/eigenfunction form, but can cause confusion."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "SLBVP: S-L-B-V-P, Sign-Logic-Boundary-Value-Problem",
+          "concept": "Reminds to check the sign of `$\\lambda$` (or the coefficient of `y`) systematically.",
+          "effectiveness": "medium",
+          "context": "When starting any Sturm-Liouville problem."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "What is the general solution for `$\\frac{d^2y}{dx^2} + \\omega^2 y = 0$`?",
+          "back": "`y(x) = C_1 \\cos(\\omega x) + C_2 \\sin(\\omega x)`",
+          "difficulty": "easy"
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "What are eigenvalues and eigenfunctions in an SLBVP?",
+          "back": "Eigenvalues are specific values of the parameter `$\\lambda$` for which an SLBVP has non-trivial solutions. Eigenfunctions are the corresponding non-trivial solutions `y(x)`.",
+          "difficulty": "medium"
+        },
+        {
+          "card_type": "application",
+          "front": "How do Dirichlet boundary conditions `y(0)=0, y(L)=0` affect the solution of `y'' + \\alpha^2 y = 0`?",
+          "back": "`y(0)=0` implies `C_1=0`, leaving `y(x) = C_2 \\sin(\\alpha x)`. `y(L)=0` implies `$\\sin(\\alpha L)=0$`, leading to `$\\alpha L = n\\pi$`.",
+          "difficulty": "medium"
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "What is a common mistake when dealing with a `k^2` term in `y'' + k^2 \\lambda y = 0`?",
+          "back": "Forgetting to divide by `k^2` when expressing `$\\lambda_n$` in terms of `n\\pi`, or incorrectly placing `k` in the eigenfunction.",
+          "difficulty": "medium"
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Structural vibration analysis.",
+          "industry_example": "Designing aircraft wings to avoid resonance at critical flight frequencies. The natural frequencies (eigenvalues) and vibration modes (eigenfunctions) of the wing are found by solving an SLBVP.",
+          "why_it_matters": "If an aircraft structure vibrates at its natural frequency due to external forces (e.g., engine vibrations, atmospheric turbulence), it can lead to resonance, causing catastrophic structural failure (e.g., flutter)."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "Recognize it as a standard SLBVP. If `y(0)=0, y(L)=0` (Dirichlet), expect sine functions. If `y'(0)=0, y'(L)=0` (Neumann), expect cosine functions (including constant for `n=0`).",
+        "time_management": "Allocate 2-3 minutes. The derivation is systematic; avoid getting stuck on algebraic errors."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "Sturm-Liouville problem eigenvalues eigenfunctions",
+        "Homogeneous second order ODE boundary value problem",
+        "Dirichlet boundary conditions sine eigenfunctions",
+        "Vibrating string equation eigenvalues",
+        "Separation of variables heat equation spatial part",
+        "Eigenvalue problem `y'' + lambda y = 0`"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Matrix Method for Discrete Systems (Analogy)",
+          "description": "While not directly applicable to continuous ODEs, understanding eigenvalues/eigenvectors for matrices can provide intuition. Discretizing the ODE using finite differences converts it into a matrix eigenvalue problem.",
+          "pros_cons": "Pros: Provides a numerical approach, connects to linear algebra. Cons: More complex for analytical solutions, introduces approximation errors.",
+          "when_to_use": "For numerical solutions of complex boundary value problems or for conceptual understanding of eigenvalues in a discrete context."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Physics": "The Schrödinger equation in quantum mechanics is a form of Sturm-Liouville equation, where eigenvalues represent energy levels and eigenfunctions represent wave functions.",
+        "Structural Dynamics": "Used extensively in modal analysis to determine natural frequencies and mode shapes of structures.",
+        "Heat Transfer": "The spatial part of the solution to the heat equation (after separation of variables) often leads to a Sturm-Liouville problem.",
+        "Control Systems": "Stability analysis of linear systems can involve eigenvalues."
+      },
+      "deeper_dive_topics": [
+        "Orthogonality and completeness of eigenfunctions.",
+        "Generalized Fourier series (eigenfunction expansions).",
+        "Regular vs. singular Sturm-Liouville problems (e.g., Bessel's equation, Legendre's equation).",
+        "Variational methods for estimating eigenvalues."
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2017_AE_Q04",
+        "year": 2017,
+        "marks": 1.0,
+        "negative_marks": 0.33,
+        "time_expected": "2-3 minutes",
+        "success_rate_estimate": "65%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Engineering Mathematics",
+        "gate_subsection": "Differential Equations",
+        "weightage": "8-10%",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "This question perfectly aligns with the 'Initial and boundary value problems' and 'Solution of Partial Differential Equations by separation of variables' topics, as Sturm-Liouville problems are fundamental to the latter."
+      },
+      "rag_quality": {
+        "relevance_score": 0.9,
+        "chunks_used": 3,
+        "sources_distribution": {
+          "books": 0,
+          "videos": 3
+        },
+        "notes": "RAG chunks 1, 2, and 6 were highly relevant, providing the exact methodology for solving `y'' + lambda*y = 0` with Dirichlet boundary conditions, and explaining the concepts of eigenvalues/eigenfunctions and the treatment of `n` values. The other chunks provided general SLBVP context which was helpful for background but not directly for the solution steps."
+      },
+      "model_meta": {
+        "timestamp": "2024-07-29T12:00:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "A similar problem with Neumann boundary conditions (`y'(0)=0, y'(L)=0`), leading to cosine eigenfunctions.",
+        "A problem with mixed boundary conditions (e.g., `y(0)=0, y'(L)=0`).",
+        "A problem involving a non-constant coefficient `p(x)` or `r(x)` in the general Sturm-Liouville form `$\\frac{d}{dx}(p(x) \\frac{dy}{dx}) + q(x) y + \\lambda r(x) y = 0$`.",
+        "A question asking for the orthogonality property of the eigenfunctions with respect to a weight function."
+      ]
+    },
+    "question_id": "GATE_2017_AE_Q04",
+    "year": 2017,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "MCQ",
+    "question_text": "The eigenvalues lambda_n and eigenfunctions u_n(x) of the Sturm-Liouville problem d^2y/dx^2 + k^2 lambda y = 0, 0 < x < 1; y(0) = 0, y(1) = 0 are given by:"
+  },
+  "tokens_used": 20703,
+  "input_tokens": 13582,
+  "output_tokens": 7121,
+  "cost": 0.0063099,
+  "time_seconds": 69.80832195281982
+}
