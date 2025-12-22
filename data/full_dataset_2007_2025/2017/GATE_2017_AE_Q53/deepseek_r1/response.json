@@ -1,0 +1,402 @@
+{
+  "model_name": "deepseek_r1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "image_based",
+      "combined_type": "numerical_calculation_image_based",
+      "weight_strategy": "MATH_IMAGE_HYBRID",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "This is a numerical calculation problem involving bending stress in a thin-walled beam. It requires understanding of bending moment, section modulus, and stress calculation, making it a multi-concept integration problem. The image is essential for understanding the geometry. It requires multiple steps to calculate the section modulus and then the stress.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "7.250",
+        "is_correct": true,
+        "confidence": 0.95,
+        "confidence_type": "single_model",
+        "reasoning": "The maximum normal stress is calculated using biaxial bending theory. For a thin-walled square cross-section with outer dimension 120 mm, thickness 1 mm, moment M_o = 96 Nm at 45°, the moment components are M_x = M_y = M_o/√2. The moment of inertia I_x = I_y = (120^4 - 118^4)/12 = 1,123,518.6667 mm^4. The extreme fiber distance is 60 mm. Maximum stress occurs at corner (60,60): σ_max = (M_x*y_max)/I_x + (M_y*x_max)/I_y = (√2 * M_o * c)/I, where c=60 mm, M_o=96,000 Nmm. This yields σ_max ≈ 7.250 MPa, which lies within the official answer range (6.900 to 7.400)."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Step 1: Identify loading and geometry. The beam has a thin-walled square cross-section (outer 120 mm × 120 mm, thickness 1 mm). The applied moment M_o = 96 Nm acts at 45° to the horizontal axis.",
+          "Step 2: Resolve the moment into components about principal axes (x and y). Since the section is symmetric, principal axes are horizontal and vertical. M_x = M_o cos(45°) = 96/√2 Nm, M_y = M_o sin(45°) = 96/√2 Nm.",
+          "Step 3: Compute section properties. Moment of inertia about x-axis (I_x) = (120×120^3 - 118×118^3)/12 = 1,123,518.6667 mm^4. By symmetry, I_y = I_x. Extreme fiber distance (to outer corner) x_max = y_max = 60 mm.",
+          "Step 4: Write the bending stress formula for biaxial bending: σ = (M_x * y)/I_x + (M_y * x)/I_y.",
+          "Step 5: Determine the critical point for maximum normal stress. Since M_x and M_y are positive, both produce compressive stress at the top-right corner (positive x, positive y). Thus, maximum compressive stress magnitude occurs at (x=60 mm, y=60 mm).",
+          "Step 6: Calculate σ_max = (M_x * 60)/I_x + (M_y * 60)/I_y. Substitute M_x = M_y = 96,000/√2 Nmm, I_x = I_y = 1,123,518.6667 mm^4. Simplify to σ_max = (√2 * 96,000 * 60) / 1,123,518.6667 = 7.250 N/mm² = 7.250 MPa."
+        ],
+        "formulas_used": [
+          "$M_x = M_o \\cos\\theta$, $M_y = M_o \\sin\\theta$",
+          "$I_x = \\frac{B H^3 - b h^3}{12}$ for hollow rectangle",
+          "$\\sigma = \\frac{M_x y}{I_x} + \\frac{M_y x}{I_y}$",
+          "$\\sigma_{\\text{max}} = \\frac{\\sqrt{2} M_o c}{I}$ (for square with I_x=I_y, c = extreme fiber distance, θ=45°)"
+        ],
+        "estimated_time_minutes": 5
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Structures",
+          "confidence": 1.0
+        },
+        "topic": {
+          "name": "Bending of Beams / Unsymmetrical Bending",
+          "syllabus_ref": "Strength of Materials: Bending stress in beams, unsymmetrical bending."
+        },
+        "concepts": [
+          {
+            "name": "Biaxial bending stress",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Thin-walled section properties",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Moment of inertia for hollow sections",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Superposition of stresses",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Flexure formula for bending stress ($\\sigma = My/I$)",
+          "Moment of inertia calculation for composite sections",
+          "Superposition principle for linear elastic stress"
+        ],
+        "helpful": [
+          "Thin-walled section approximations",
+          "Transformation of moments into components"
+        ],
+        "dependency_tree": {
+          "Maximum normal stress in biaxial bending": [
+            "requires: Bending stress formula",
+            "requires: Section properties (I, extreme fiber distance)",
+            "requires: Resolution of moment into components",
+            "enables: Design of thin-walled beams in aerospace structures"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Medium",
+        "score": 6,
+        "complexity_breakdown": {
+          "conceptual": 6,
+          "mathematical": 7,
+          "problem_solving": 6
+        },
+        "estimated_solve_time_seconds": 180,
+        "expected_accuracy_percent": 65,
+        "difficulty_factors": [
+          "Requires recognizing unsymmetrical bending due to moment at an angle",
+          "Careful unit conversion (Nm to Nmm, mm^4)",
+          "Accurate computation of moment of inertia for hollow section"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Aircraft Structures for Engineering Students",
+          "author": "T.H.G. Megson",
+          "chapter_number": "16-17",
+          "chapter_title": "Bending of Beams, Shear of Beams",
+          "section": "Bending stresses, Unsymmetrical bending",
+          "relevance_score": 0.8,
+          "source": "model_consensus",
+          "text_snippet": "For thin-walled beams, bending stresses are calculated using the flexure formula; for unsymmetrical bending, superposition of stresses due to moment components is used."
+        },
+        {
+          "source_type": "book",
+          "book": "Mechanics of Materials",
+          "author": "Beer & Johnston",
+          "chapter_number": "4",
+          "chapter_title": "Pure Bending",
+          "section": "4.3 Bending Stresses",
+          "relevance_score": 0.7,
+          "source": "model_consensus",
+          "text_snippet": "The flexure formula σ = My/I applies to symmetric beams under pure bending."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. S.K. Bhattacharyya",
+          "timestamp_start": "00:51:57",
+          "timestamp_end": "None",
+          "video_url": "https://www.youtube.com/watch?v=sP34uzn7diA",
+          "book_reference": "Megson, T.H.G.",
+          "topic_covered": "Stresses in Beams - flexure formula",
+          "relevance_score": 0.6,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. S.K. Bhattacharyya",
+          "timestamp_start": "00:51:25",
+          "timestamp_end": "00:56:36",
+          "video_url": "https://www.youtube.com/watch?v=uNu3hatDzo8",
+          "book_reference": "Beer & Johnston",
+          "topic_covered": "Combined Stresses - superposition of axial and bending",
+          "relevance_score": 0.5,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Superposition of bending stresses due to moment components",
+        "total_steps": 6,
+        "solution_path": "Resolve moment → Compute I → Identify critical point → Apply biaxial bending formula → Calculate numerical value",
+        "key_insights": [
+          "Since the cross-section is square and symmetric, I_x = I_y, simplifying the biaxial bending formula.",
+          "The maximum stress occurs at the corner farthest from the neutral axis (line y = -x for θ=45°).",
+          "Unit consistency (Nm to Nmm, mm^4) is crucial for correct stress in MPa."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$\\sigma = \\frac{M_x y}{I_x} + \\frac{M_y x}{I_y}$",
+          "name": "Biaxial bending stress",
+          "conditions": "Linear elastic material, small deformations, plane sections remain plane.",
+          "type": "equation",
+          "relevance": "Core formula for calculating normal stress under unsymmetrical bending."
+        },
+        {
+          "formula": "$I_x = \\frac{B H^3 - b h^3}{12}$",
+          "name": "Moment of inertia for hollow rectangular section",
+          "conditions": "Uniform thickness, centroidal axis.",
+          "type": "equation",
+          "relevance": "Used to compute I_x for the thin-walled square tube."
+        },
+        {
+          "formula": "$M_x = M_o \\cos\\theta$, $M_y = M_o \\sin\\theta$",
+          "name": "Moment components",
+          "conditions": "θ measured from x-axis.",
+          "type": "equation",
+          "relevance": "Resolves the applied moment into principal axes."
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Aircraft wing spars and fuselage frames",
+          "Spacecraft truss structures"
+        ],
+        "specific_systems": [
+          "Thin-walled box beams in UAV wings",
+          "Aluminum alloy structural members in satellites"
+        ],
+        "practical_relevance": "Accurate stress prediction ensures lightweight, safe aerospace structures; prevents buckling and yield failures."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Using the midline distance (e.g., 59.5 mm) instead of outer fiber distance (60 mm) for y_max",
+          "why_students_make_it": "Confusion in thin-walled approximations; thinking stress is computed at midline.",
+          "type": "Calculation",
+          "severity": "Medium",
+          "frequency": "common",
+          "how_to_avoid": "Remember: maximum stress always occurs at the outermost fiber. For thin-walled sections, use distance to outer surface.",
+          "consequence": "Stress underestimated by ~0.8%."
+        },
+        {
+          "mistake": "Not resolving the moment into components, treating it as uniaxial bending",
+          "why_students_make_it": "Overlooking the 45° angle; assuming moment acts about a principal axis.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Always check the moment direction relative to principal axes. If not aligned, resolve components.",
+          "consequence": "Stress underestimated by factor of √2 (~41% error)."
+        },
+        {
+          "mistake": "Incorrect moment of inertia calculation (e.g., using solid section formula or neglecting thickness)",
+          "why_students_make_it": "Forgetting the hollow nature; using I = b h^3/12 with outer dimensions only.",
+          "type": "Calculation",
+          "severity": "High",
+          "frequency": "occasional",
+          "how_to_avoid": "Carefully compute I for hollow rectangle: I = (outer section I) - (inner section I).",
+          "consequence": "I overestimated, stress underestimated significantly."
+        },
+        {
+          "mistake": "Unit inconsistency: not converting M_o from Nm to Nmm while keeping I in mm^4",
+          "why_students_make_it": "Rushing, lack of systematic unit conversion.",
+          "type": "Units",
+          "severity": "High",
+          "frequency": "very_common",
+          "how_to_avoid": "Convert all quantities to consistent units (e.g., N and mm) before plugging into formula.",
+          "consequence": "Stress off by factor of 1000 (if M in Nm, I in mm^4)."
+        },
+        {
+          "mistake": "Choosing the wrong corner for maximum stress (e.g., picking (60, -60) which gives tensile stress)",
+          "why_students_make_it": "Not considering sign of stress contributions from M_x and M_y.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Determine sign of stress at each corner: for positive M_x, compression at positive y; for positive M_y, compression at positive x. So both compressive at (60,60).",
+          "consequence": "May compute tensile stress magnitude (same magnitude, but sign opposite)."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "CC-45: For Combined bending at 45°, Compressive stress at Corner with both coordinates positive.",
+          "concept": "Identifying critical corner for maximum compressive stress when M_x and M_y are positive.",
+          "effectiveness": "medium",
+          "context": "Unsymmetric bending of symmetric sections with moment in first quadrant."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "What is the bending stress formula for biaxial bending?",
+          "back": "$\\sigma = \\frac{M_x y}{I_x} + \\frac{M_y x}{I_y}$",
+          "difficulty": "medium",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "Where does maximum normal stress occur in a square cross-section under biaxial bending with M_x and M_y both positive?",
+          "back": "At the corner where both x and y are maximum (top-right), because both moment components produce compressive stress there.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "What is the most common unit error in bending stress calculations?",
+          "back": "Not converting bending moment from Nm to Nmm when moment of inertia is in mm^4. Always use consistent units: 1 Nm = 1000 Nmm.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "calculation",
+          "front": "For a thin-walled square tube outer 120 mm, thickness 1 mm, compute I_x.",
+          "back": "I_x = (120^4 - 118^4)/12 = 1,123,518.67 mm^4. Inner dimension = 120 - 2×1 = 118 mm.",
+          "difficulty": "medium",
+          "time_limit_seconds": 45
+        },
+        {
+          "card_type": "application",
+          "front": "Why is unsymmetrical bending analysis important for aircraft structures?",
+          "back": "Aircraft components (wings, fuselage) experience complex loads; thin-walled beams must be designed to withstand combined bending moments in multiple directions to avoid failure.",
+          "difficulty": "hard",
+          "time_limit_seconds": 60
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Design of aircraft wing spars",
+          "industry_example": "In a Boeing 787 composite wing spar, thin-walled box sections are used to save weight while carrying bending moments from aerodynamic loads that may not align with principal axes.",
+          "why_it_matters": "Incorrect stress calculation could lead to undersized spar, causing wing failure, or oversized spar, adding unnecessary weight and reducing fuel efficiency."
+        },
+        {
+          "application": "Satellite truss structures",
+          "industry_example": "Aluminum alloy truss members in satellites experience thermal gradients and launch loads leading to bending moments at angles. Thin-walled square tubes are common.",
+          "why_it_matters": "Space environment demands high reliability; accurate stress analysis ensures structural integrity during launch and operation."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt if comfortable with bending stress calculations",
+        "triage_tip": "Quickly check: symmetric cross-section? I_x = I_y? If yes, use simplified formula σ_max = M_o * d / I where d = perpendicular distance from neutral axis to farthest corner. For square at 45°, d = a/√2.",
+        "guessing_heuristic": "If stuck, compute order of magnitude: M ~100 Nm, dimensions ~0.1 m, I ~10^-6 m^4, stress ~ M*c/I ~ 100*0.06/10^-6 = 6 MPa. So guess around 7 MPa.",
+        "time_management": "Allocate 4-5 minutes: 1 min to understand geometry, 2 min for calculations, 1 min to verify units."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "unsymmetrical bending thin-walled square tube",
+        "biaxial bending stress calculation",
+        "moment of inertia hollow rectangle",
+        "GATE aerospace structures bending",
+        "maximum normal stress in beam at angle",
+        "thin-walled beam square cross-section",
+        "Megson aircraft structures bending",
+        "combined bending stress superposition"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Neutral axis distance method",
+          "description": "For symmetric sections with I_x = I_y, the neutral axis is aligned with the moment vector. Compute perpendicular distance from farthest point to neutral axis, then use σ = M * d / I, where I is moment of inertia about axis perpendicular to neutral axis (same as I_x since isotropic).",
+          "pros_cons": "Pros: Simpler geometric interpretation. Cons: Requires correct identification of neutral axis and farthest point.",
+          "when_to_use": "When I_x = I_y and moment direction is known; faster for symmetric sections."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Aircraft Structural Design": "Thin-walled beams are fundamental in airframe design; this analysis directly applies to wing boxes, fuselage frames.",
+        "Solid Mechanics": "Builds on concepts of stress transformation, principal axes, and superposition.",
+        "Finite Element Analysis": "Validation of simple analytical models against numerical simulations for complex load cases."
+      },
+      "deeper_dive_topics": [
+        "Warping torsion in open thin-walled sections",
+        "Shear center location for unsymmetrical bending",
+        "Effect of cross-sectional shape (C, I, Z) on unsymmetrical bending",
+        "Plastic bending and limit analysis for thin-walled beams"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2017_AE_Q53",
+        "year": 2017,
+        "marks": 2.0,
+        "negative_marks": 0.0,
+        "time_expected": "4-5 minutes",
+        "success_rate_estimate": "65%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Solid Mechanics / Structures",
+        "gate_subsection": "Bending of Beams, Unsymmetrical Bending",
+        "weightage": "8-10%",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Well-aligned with GATE AE syllabus; tests core concepts of bending stress with realistic thin-walled geometry."
+      },
+      "rag_quality": {
+        "relevance_score": 0.5,
+        "chunks_used": 2,
+        "sources_distribution": {
+          "books": 1,
+          "videos": 1
+        },
+        "notes": "RAG provided general bending stress formulas (Chunk 1) and combined stresses (Chunk 6), but did not specifically address unsymmetrical bending or thin-walled square tube moment of inertia calculation. Therefore, internal knowledge was used for the detailed solution."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-13T10:30:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Vary the angle of applied moment (e.g., 30°, 60°)",
+        "Change cross-section to circular thin-walled tube or I-section",
+        "Include axial load in addition to bending moment",
+        "Ask for location of maximum stress rather than magnitude"
+      ]
+    },
+    "question_id": "GATE_2017_AE_Q53",
+    "year": 2017,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "NAT",
+    "question_text": "The maximum normal stress in MN/m^2 for the thin walled beam of square cross section of outer dimension 120 mm x 120 mm and wall thickness 1 mm under the action of moment M_o=96 Nm as shown in the figure is ________ (in three decimal places)."
+  },
+  "tokens_used": 23268,
+  "input_tokens": 9769,
+  "output_tokens": 13499,
+  "cost": 0.03493576,
+  "time_seconds": 458.60464000701904
+}
