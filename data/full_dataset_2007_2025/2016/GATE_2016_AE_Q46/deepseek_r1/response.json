@@ -1,0 +1,348 @@
+{
+  "model_name": "deepseek_r1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "text_only",
+      "combined_type": "numerical_calculation_text_only",
+      "weight_strategy": "NUMERICAL_WEIGHTED",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "The question requires calculating the effective specific impulse given the thrust and specific impulse of the main engine and strap-on motors. It involves a weighted average calculation, making it a multi-step numerical problem of medium difficulty.",
+      "difficulty_score": 5,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": false,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": false
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "312.7 s (approximately, within range 310-315 s)",
+        "is_correct": true,
+        "confidence": 0.99,
+        "confidence_type": "single_model",
+        "reasoning": "The effective specific impulse for multiple engines firing simultaneously is computed as the total thrust divided by (g0 times total mass flow rate). Using the given thrusts and specific impulses, the calculation yields approximately 312.7 s, which falls within the official answer range of 310-315 s."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Step 1: Identify the total thrust. Main engine thrust = 6300 kN, each strap-on thrust = 12000 kN, and there are two strap-ons. So F_total = 6300 + 2×12000 = 30300 kN.",
+          "Step 2: Recall that specific impulse I_sp = F/(ṁ g0). Therefore, mass flow rate for each engine is ṁ = F/(I_sp g0).",
+          "Step 3: Compute individual mass flow rates: ṁ_main = 6300 / (428 × 9.81) kN/(m/s²) but since g0 cancels later, we can avoid numerical g0 by using the formula: I_sp_eff = F_total / (g0 × ṁ_total) = F_total / (g0 × (ṁ_main + 2ṁ_strap)) = F_total / ( (F_main/I_sp_main) + (2F_strap/I_sp_strap) ) because g0 cancels.",
+          "Step 4: Compute denominator: (F_main/I_sp_main) + (2F_strap/I_sp_strap) = (6300/428) + (24000/292) ≈ 14.7196 + 82.1918 = 96.9114.",
+          "Step 5: Compute I_sp_eff = F_total / denominator = 30300 / 96.9114 ≈ 312.66 s.",
+          "Step 6: Verify with g0 if needed: Alternatively, compute ṁ_main = 6300×1000/(428×9.81) ≈ 1501.2 kg/s, ṁ_strap = 12000×1000/(292×9.81) ≈ 4190.7 kg/s, ṁ_total = 1501.2 + 2×4190.7 = 9882.6 kg/s, F_total = 3.03×10^7 N, then I_sp_eff = 3.03e7/(9.81×9882.6) ≈ 312.7 s."
+        ],
+        "formulas_used": [
+          "$I_{sp} = \\frac{F}{\\dot{m} g_0}$",
+          "$\\dot{m} = \\frac{F}{I_{sp} g_0}$",
+          "$I_{sp,\\text{eff}} = \\frac{F_{\\text{total}}}{g_0 \\dot{m}_{\\text{total}}} = \\frac{F_{\\text{total}}}{\\sum \\frac{F_i}{I_{sp,i}}}$"
+        ],
+        "estimated_time_minutes": 4
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Propulsion",
+          "confidence": 1.0
+        },
+        "topic": {
+          "name": "Rocket Performance Parameters",
+          "syllabus_ref": "Section 6 Propulsion: Rocket Propulsion"
+        },
+        "concepts": [
+          {
+            "name": "Specific Impulse",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Mass Flow Rate",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Combined Engine Performance",
+            "importance": "primary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Definition of specific impulse: thrust per unit weight flow rate",
+          "Understanding that total thrust and total mass flow rate add for parallel engines"
+        ],
+        "helpful": [
+          "Rocket equation basics",
+          "Unit conversions (kN to N)"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: definition of specific impulse",
+            "requires: addition of thrust and mass flow rates for parallel engines",
+            "enables: calculation of effective specific impulse for multi-engine vehicles",
+            "enables: performance analysis of staged rockets with boosters"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Medium",
+        "score": 5,
+        "complexity_breakdown": {
+          "conceptual": 4,
+          "mathematical": 5,
+          "problem_solving": 6
+        },
+        "estimated_solve_time_seconds": 180,
+        "expected_accuracy_percent": 65,
+        "difficulty_factors": [
+          "Requires understanding that effective specific impulse is not a simple average but weighted by mass flow rates",
+          "Need to handle multiple engines and avoid simply averaging specific impulses"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Rocket Propulsion Elements",
+          "author": "Sutton-Biblarz",
+          "chapter_number": "2",
+          "chapter_title": "DEFINITIONS AND FUNDAMENTALS",
+          "section": "§2.1",
+          "page_range": null,
+          "complexity": "intermediate",
+          "relevance_score": 0.8,
+          "source": "rag_retrieval",
+          "text_snippet": "Specific Impulse (General): $I_s = \\frac{{\\int_{{0}}^{{t}} F \\,dt}}{{g_0 \\int_{{0}}^{{t}} \\dot{{m}} \\,dt}} = \\frac{{I_t}}{{m_p g_0}}$ and Specific Impulse (Constant Thrust & Flow): $I_s = \\frac{{F}}{{\\dot{{m}} g_0}}$"
+        },
+        {
+          "source_type": "book",
+          "book": "Introduction to Flight",
+          "author": "John D. Anderson Jr.",
+          "chapter_number": "9",
+          "chapter_title": "Propulsion",
+          "section": "§9.10",
+          "page_range": null,
+          "complexity": "introductory",
+          "relevance_score": 0.6,
+          "source": "rag_retrieval",
+          "text_snippet": "Worked Example: Calculating Burnout Velocity using rocket equation with specific impulse."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Dr. D.P. Mishra",
+          "timestamp_start": "00:01:56",
+          "timestamp_end": "00:03:05",
+          "video_url": null,
+          "book_reference": "Sutton, 'Rocket Propulsion Elements'",
+          "topic_covered": "Rocket boosters and their contribution to thrust",
+          "relevance_score": 0.5,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Direct Formula Application",
+        "total_steps": 6,
+        "solution_path": "Total Thrust → Individual Mass Flow Rates → Total Mass Flow Rate → Effective Specific Impulse",
+        "key_insights": [
+          "The effective specific impulse is not a simple average but a weighted harmonic mean weighted by thrust.",
+          "The acceleration due to gravity cancels out in the calculation if using the formula I_sp_eff = F_total / (sum(F_i/I_sp_i))."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$I_{sp} = \\frac{F}{\\dot{m} g_0}$",
+          "name": "Specific Impulse Definition",
+          "conditions": "Constant thrust and mass flow rate",
+          "type": "equation",
+          "relevance": "Core definition used to derive mass flow rates"
+        },
+        {
+          "formula": "$\\dot{m}_{\\text{total}} = \\sum \\dot{m}_i = \\sum \\frac{F_i}{I_{sp,i} g_0}$",
+          "name": "Total Mass Flow Rate",
+          "conditions": "Multiple engines operating in parallel",
+          "type": "equation",
+          "relevance": "Used to combine contributions from all engines"
+        },
+        {
+          "formula": "$I_{sp,\\text{eff}} = \\frac{F_{\\text{total}}}{\\dot{m}_{\\text{total}} g_0} = \\frac{\\sum F_i}{\\sum \\frac{F_i}{I_{sp,i}}}$",
+          "name": "Effective Specific Impulse for Multiple Engines",
+          "conditions": "All engines firing simultaneously, constant thrust",
+          "type": "equation",
+          "relevance": "Direct formula for the answer"
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Space Shuttle had main engines and solid rocket boosters firing together",
+          "Falcon Heavy with multiple Merlin engines firing in parallel"
+        ],
+        "specific_systems": [
+          "Space Shuttle: Main Engines (SSME) and Solid Rocket Boosters (SRBs)",
+          "Ariane 5 with Vulcain main engine and solid boosters"
+        ],
+        "practical_relevance": "Calculating combined specific impulse is essential for predicting overall vehicle performance during staged ascent, especially during booster phase."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Averaging the specific impulses directly (arithmetic or weighted by thrust) without considering mass flow rates.",
+          "why_students_make_it": "Intuitive but incorrect assumption that effective I_sp is a simple average.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Remember that I_sp is inversely proportional to mass flow rate for given thrust. Use the formula I_sp_eff = total thrust / (g0 * total mass flow rate).",
+          "consequence": "May get a value around 330-340 s, which is incorrect."
+        },
+        {
+          "mistake": "Forgetting to multiply strap-on thrust by 2 when computing total thrust or total mass flow rate.",
+          "why_students_make_it": "Overlooking that there are two identical strap-ons.",
+          "type": "Calculation",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Carefully read the problem statement: 'two identical strap-on motors'. Explicitly write: F_strap_total = 2 × F_one_strap.",
+          "consequence": "Total thrust and mass flow rate will be half, leading to incorrect I_sp_eff."
+        },
+        {
+          "mistake": "Using inconsistent units (e.g., not converting kN to N while keeping g0=9.81 m/s^2).",
+          "why_students_make_it": "Thrust is given in kN, and students might forget to convert to N when computing mass flow rate in kg/s.",
+          "type": "Units",
+          "severity": "Medium",
+          "frequency": "common",
+          "how_to_avoid": "Either convert all forces to Newtons (1 kN = 1000 N) or note that in the formula I_sp_eff = F_total / (sum(F_i/I_sp_i)), the units of force cancel, so kN can be used directly as long as consistent.",
+          "consequence": "If using kN for F but g0 in m/s^2, mass flow rate calculation would be off by 1000."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "Total Thrust Over Total Weight Flow",
+          "concept": "Effective specific impulse is total thrust divided by total weight flow rate (g0 times total mass flow rate).",
+          "effectiveness": "medium",
+          "context": "When combining multiple rocket engines."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "What is the formula for effective specific impulse when multiple rocket engines fire simultaneously?",
+          "back": "$I_{sp,\\text{eff}} = \\frac{\\sum F_i}{\\sum \\frac{F_i}{I_{sp,i}}}$, where $F_i$ are individual thrusts and $I_{sp,i}$ are individual specific impulses. Alternatively, $I_{sp,\\text{eff}} = \\frac{F_{\\text{total}}}{\\dot{m}_{\\text{total}} g_0}$.",
+          "difficulty": "medium",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "Why can't you take a simple arithmetic average of specific impulses to get the effective specific impulse?",
+          "back": "Because specific impulse is inversely proportional to mass flow rate for a given thrust. The effective I_sp depends on the total mass flow rate, which is the sum of individual mass flow rates. Averaging I_sp values ignores the different mass flow rates associated with each engine.",
+          "difficulty": "hard",
+          "time_limit_seconds": 45
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "What is a common unit mistake when calculating specific impulse with thrust in kN?",
+          "back": "Forgetting to convert kN to N when computing mass flow rate as ṁ = F/(I_sp g0). Since g0 is in m/s^2, F must be in N to get ṁ in kg/s. However, in the formula I_sp_eff = F_total / (sum(F_i/I_sp_i)), forces can be in any consistent unit (e.g., kN) because they cancel.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Launch vehicle performance during boost phase",
+          "industry_example": "Space Shuttle: Three main engines (SSME) with I_sp ~450 s and two solid rocket boosters (SRBs) with I_sp ~250 s firing together. The combined specific impulse determines initial acceleration and fuel consumption.",
+          "why_it_matters": "A lower combined I_sp means higher propellant consumption for the same thrust, affecting the payload capacity."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "This is a straightforward numerical calculation if you know the formula for combined specific impulse. Should take 2-3 minutes.",
+        "guessing_heuristic": "If stuck, note that the effective I_sp will be between the lowest and highest individual I_sp (292 and 428), and likely closer to the one with higher thrust contribution (strap-ons have higher thrust, so expect closer to 292 than to 428). So guess around 300-320.",
+        "time_management": "Budget 3 minutes for this 2-mark question."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "combined specific impulse multiple engines",
+        "effective specific impulse rocket boosters",
+        "parallel rocket engines specific impulse",
+        "specific impulse calculation strap-on boosters",
+        "rocket performance parameters",
+        "specific impulse weighted average",
+        "total thrust total mass flow rate",
+        "GATE propulsion numerical"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Weighted Harmonic Mean",
+          "description": "The effective specific impulse can be seen as the weighted harmonic mean of individual specific impulses, weighted by the thrusts: I_sp_eff = (sum F_i) / (sum (F_i / I_sp_i)).",
+          "pros_cons": "Pros: Direct formula, no need to compute mass flow rates explicitly. Cons: Less intuitive physically.",
+          "when_to_use": "When thrusts and specific impulses are given directly."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Thermodynamics": "Specific impulse relates to the efficiency of converting thermal energy to kinetic energy in the exhaust.",
+        "Fluid Mechanics": "Mass flow rate calculation involves fluid flow through nozzles.",
+        "Dynamics": "Thrust produces acceleration according to Newton's second law."
+      },
+      "deeper_dive_topics": [
+        "Effect of altitude on specific impulse for air-breathing vs. rocket engines",
+        "Combined cycle propulsion systems",
+        "Staging and mass ratio optimization"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2016_AE_Q46",
+        "year": 2016,
+        "marks": 2.0,
+        "negative_marks": 0.0,
+        "time_expected": "3-4 minutes",
+        "success_rate_estimate": "65%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 6: Propulsion",
+        "gate_subsection": "Rocket Propulsion: Performance parameters",
+        "weightage": "Approximately 5-8% in Propulsion section",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Directly tests understanding of specific impulse and its combination for multiple engines, a key concept in rocket performance."
+      },
+      "rag_quality": {
+        "relevance_score": 0.6,
+        "chunks_used": 2,
+        "sources_distribution": {
+          "books": 2,
+          "videos": 1
+        },
+        "notes": "RAG provided fundamental formulas for specific impulse and total impulse (Chunk 3 from Sutton, Chunk 1 example) and context on rocket boosters (Chunk 2). However, it did not explicitly cover the method for calculating effective specific impulse for multiple engines firing simultaneously. The derivation was done using internal knowledge."
+      },
+      "model_meta": {
+        "timestamp": "2025-04-10T12:00:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "If one strap-on motor fails, what is the effective specific impulse?",
+        "What would be the effective specific impulse if the main engine and strap-ons have different burn times?",
+        "Given effective specific impulse and total thrust, find the specific impulse of one engine if others are known.",
+        "Calculate the mass flow rate of each engine given combined specific impulse."
+      ]
+    },
+    "question_id": "GATE_2016_AE_Q46",
+    "year": 2016,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "NAT",
+    "question_text": "A launch vehicle has a main rocket engine with two identical strap-on motors, all of which fire simultaneously during the operation. The main engine delivers a thrust of 6300 kN with a specific impulse of 428 s. Each strap-on motor delivers a thrust of 12000 kN with specific impulse of 292 s. The acceleration due to gravity is 9.81 m/s^2. The effective (combined) specific impulse of the vehicle is _______ s."
+  },
+  "tokens_used": 19116,
+  "input_tokens": 8491,
+  "output_tokens": 10625,
+  "cost": 0.0279388,
+  "time_seconds": 356.65744805336
+}
