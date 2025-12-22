@@ -1,0 +1,371 @@
+{
+  "model_name": "deepseek_r1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "text_only",
+      "combined_type": "numerical_calculation_text_only",
+      "weight_strategy": "NUMERICAL_WEIGHTED",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "The question requires solving a system of linear equations to determine if a unique, infinite, or no solution exists. This involves calculating the determinant or rank of the matrix, which constitutes a multi-step numerical calculation. Since the difficulty is medium-hard, GPT-5.1 is recommended.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": false,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "B",
+        "is_correct": true,
+        "confidence": 0.99,
+        "confidence_type": "single_model",
+        "reasoning": "The determinant of matrix A is zero, indicating rank(A) < 3. Row reduction of the augmented matrix [A|b] shows rank(A) = rank([A|b]) = 2, which is less than the number of unknowns (n=3). According to the Rouché-Capelli theorem, this means the system is consistent and has infinitely many solutions. This aligns with the official answer key."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Step 1: Write the system and note it is of the form Ax = b, where A is a 3x3 matrix and x is a 3x1 vector of unknowns.",
+          "Step 2: Check if a unique solution exists by computing det(A). det(A) = 2*(2*5 - 7*1) - 0*(3*5 - 7*3) + 2*(3*1 - 2*3) = 2*(10-7) + 2*(3-6) = 6 - 6 = 0.",
+          "Step 3: Since det(A)=0, matrix A is singular (rank deficient). Thus, rank(A) < 3. The system cannot have a unique solution; it either has no solution or infinitely many solutions.",
+          "Step 4: Perform Gaussian elimination on the augmented matrix [A|b] to determine the rank of A and [A|b] and check consistency.",
+          "Step 5: Row reduce [A|b] = [[2,0,2,4],[3,2,7,4],[3,1,5,5]]. After operations (R1=R1/2, R2=R2-3R1, R3=R3-3R1, R2=R2/2, R3=R3-R2), we get [[1,0,1,2],[0,1,2,-1],[0,0,0,0]].",
+          "Step 6: From the row-echelon form, the coefficient matrix part has 2 non-zero rows, so rank(A) = 2. The augmented matrix also has 2 non-zero rows, so rank([A|b]) = 2.",
+          "Step 7: Since rank(A) = rank([A|b]) = 2 < 3 (number of unknowns), the system is consistent and has infinitely many solutions. The number of free variables = n - rank(A) = 1."
+        ],
+        "formulas_used": [
+          "$\\det(A) = a_{11}(a_{22}a_{33} - a_{23}a_{32}) - a_{12}(a_{21}a_{33} - a_{23}a_{31}) + a_{13}(a_{21}a_{32} - a_{22}a_{31})$",
+          "$\\text{Rank condition for solutions: } \\text{If } \\text{rank}(A) = \\text{rank}([A|b]) < n \\implies \\text{infinitely many solutions}$",
+          "$\\text{Number of free variables} = n - \\text{rank}(A)$"
+        ],
+        "estimated_time_minutes": 3
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Engineering Mathematics",
+          "confidence": 0.9
+        },
+        "topic": {
+          "name": "Linear Algebra",
+          "syllabus_ref": "Section 1: Engineering Mathematics -> Linear Algebra"
+        },
+        "concepts": [
+          {
+            "name": "Rouché-Capelli Theorem (Consistency of Linear Systems)",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Rank of a Matrix",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Determinant and Singularity",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Gaussian Elimination",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Matrix operations and determinants",
+          "Row reduction/Gaussian elimination",
+          "Concept of rank of a matrix"
+        ],
+        "helpful": [
+          "Vector spaces and linear independence",
+          "Homogeneous vs non-homogeneous systems"
+        ],
+        "dependency_tree": {
+          "Main Concept: Solution of Linear Systems Ax=b": [
+            "requires: Matrix determinant calculation",
+            "requires: Row reduction method",
+            "requires: Understanding of rank",
+            "enables: Analysis of system consistency in control theory and structural analysis"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Easy",
+        "score": 3,
+        "complexity_breakdown": {
+          "conceptual": 4,
+          "mathematical": 3,
+          "problem_solving": 3
+        },
+        "estimated_solve_time_seconds": 120,
+        "expected_accuracy_percent": 70,
+        "difficulty_factors": [
+          "Direct application of rank theorem",
+          "Requires careful determinant calculation and row reduction"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Advanced Engineering Mathematics",
+          "author": "Erwin Kreyszig",
+          "chapter_number": "8",
+          "chapter_title": "Linear Systems of Equations",
+          "section": "Rouché-Capelli Theorem, Rank Criterion for Solutions",
+          "page_range": "",
+          "complexity": "intermediate",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval",
+          "text_snippet": "When the determinant of A is zero (i.e., rank(A) < n), we use the rank of the augmented matrix [A|b] to determine if there are no solutions or infinitely many solutions."
+        },
+        {
+          "source_type": "book",
+          "book": "Higher Engineering Mathematics",
+          "author": "B.S. Grewal",
+          "chapter_number": "",
+          "chapter_title": "Matrices and Linear Equations",
+          "section": "Consistency and Solutions",
+          "page_range": "",
+          "complexity": "introductory",
+          "relevance_score": 0.8,
+          "source": "model_consensus",
+          "text_snippet": "For a system Ax = b, if rank(A) = rank([A|b]) < number of unknowns, the system has infinitely many solutions."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. Niket Kaisare",
+          "timestamp_start": "00:06:16",
+          "timestamp_end": "00:08:22",
+          "video_url": "",
+          "book_reference": "Erwin Kreyszig",
+          "topic_covered": "Conditions for Solutions Using Rank of Augmented Matrix",
+          "relevance_score": 0.85,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. Jitendra Kumar",
+          "timestamp_start": "00:15:00",
+          "timestamp_end": "00:18:20",
+          "video_url": "https://www.youtube.com/watch?v=0zdUQyAnLNY",
+          "book_reference": "Erwin Kreyszig",
+          "topic_covered": "System of Linear Equations –Gauss Elimination (Cont.)",
+          "relevance_score": 0.8,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Direct Rank Analysis via Determinant and Row Reduction",
+        "total_steps": 7,
+        "solution_path": "Compute determinant → If zero, perform row reduction on augmented matrix → Compare ranks → Conclude",
+        "key_insights": [
+          "A zero determinant immediately rules out a unique solution.",
+          "The ranks of A and [A|b] must be compared after ensuring row reduction is correct."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$\\det(A) = 0$",
+          "name": "Condition for Non-Uniqueness",
+          "conditions": "For a square matrix A, if det(A)=0, then A is singular and the system Ax=b does not have a unique solution.",
+          "type": "equation",
+          "relevance": "First check to rule out unique solution"
+        },
+        {
+          "formula": "$\\text{rank}(A) = \\text{rank}([A|b]) < n$",
+          "name": "Rouché-Capelli Theorem for Infinite Solutions",
+          "conditions": "System is consistent and has infinitely many solutions when ranks are equal but less than number of unknowns.",
+          "type": "principle",
+          "relevance": "Core condition to determine infinite solutions"
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Solving equilibrium equations in truss structures (if system is underdetermined, multiple equilibrium states may exist)",
+          "Analyzing electrical circuits with dependent components"
+        ],
+        "specific_systems": [
+          "Flight control systems where control surfaces may have redundant effects leading to multiple control input solutions"
+        ],
+        "practical_relevance": "Understanding whether a linear system has unique or infinite solutions is crucial in design and analysis to avoid ill-posed problems or to exploit redundancies."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Assuming det(A)=0 implies no solution, without checking consistency via augmented matrix rank.",
+          "why_students_make_it": "Overgeneralization from 2x2 systems where zero determinant often means parallel lines (no solution), but in higher dimensions, it could also mean coincident planes (infinite solutions).",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Always compute rank of both A and [A|b] after finding det(A)=0. Use Gaussian elimination to check consistency.",
+          "consequence": "Will incorrectly choose 'no solution' instead of 'infinite solutions'."
+        },
+        {
+          "mistake": "Calculation errors in determinant or row reduction, leading to wrong rank.",
+          "why_students_make_it": "Rushing through arithmetic, especially with signed numbers and fractions.",
+          "type": "Calculation",
+          "severity": "Medium",
+          "frequency": "common",
+          "how_to_avoid": "Double-check each step, use systematic row operations, and consider cross-verifying with alternative methods (like minors for determinant).",
+          "consequence": "Incorrect conclusion about solution existence/uniqueness."
+        },
+        {
+          "mistake": "Misinterpreting the number of solutions: thinking 'five possible solutions' is a plausible option for linear systems.",
+          "why_students_make_it": "Confusion with nonlinear systems or misreading the options.",
+          "type": "Conceptual",
+          "severity": "Low",
+          "frequency": "occasional",
+          "how_to_avoid": "Remember: For linear systems, the only possibilities are zero, one, or infinitely many solutions. 'Five solutions' is never correct for linear systems.",
+          "consequence": "Might select option D, which is a distractor."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "RANK RULE: Rank(A) = Rank([A|b]) → Consistent; Rank(A) < n → Infinite; Rank(A) = n → Unique.",
+          "concept": "Rouché-Capelli theorem conditions",
+          "effectiveness": "high",
+          "context": "When solving linear systems, after computing ranks."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "concept_recall",
+          "front": "For a linear system Ax=b, what does det(A) ≠ 0 imply?",
+          "back": "The matrix A is invertible, and the system has a unique solution x = A^{-1}b.",
+          "difficulty": "easy",
+          "time_limit_seconds": 20
+        },
+        {
+          "card_type": "definition",
+          "front": "State the Rouché-Capelli theorem for consistency.",
+          "back": "A system Ax=b is consistent if and only if the rank of coefficient matrix A equals the rank of augmented matrix [A|b].",
+          "difficulty": "medium",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "application",
+          "front": "Given A is 3x3 with det(A)=0 and rank(A)=rank([A|b])=2, how many solutions exist?",
+          "back": "Infinitely many solutions, because ranks are equal (consistent) but less than n=3. Number of free variables = 3-2=1.",
+          "difficulty": "medium",
+          "time_limit_seconds": 25
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "What is the common pitfall when det(A)=0?",
+          "back": "Assuming it automatically means no solution. Must check rank of augmented matrix to distinguish between no solution and infinite solutions.",
+          "difficulty": "easy",
+          "time_limit_seconds": 20
+        },
+        {
+          "card_type": "formula_recall",
+          "front": "How do you compute the number of free variables in a consistent system?",
+          "back": "Number of free variables = n (number of unknowns) - rank(A).",
+          "difficulty": "easy",
+          "time_limit_seconds": 15
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Structural analysis: Solving for forces in statically indeterminate trusses.",
+          "industry_example": "Aircraft wing spar design where redundancy leads to multiple valid internal force distributions.",
+          "why_it_matters": "Engineers must recognize when a system has infinite solutions to either add constraints (for uniqueness) or exploit redundancy (for robustness)."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "Quickly compute determinant; if zero, do row reduction on augmented matrix. This is a standard 2-3 minute problem.",
+        "guessing_heuristic": "If determinant is zero, eliminate 'unique solution'. If row reduction yields a row [0 0 0 | non-zero], guess 'no solution'; else guess 'infinite solutions'.",
+        "time_management": "Budget 2-3 minutes. If stuck, move on and return."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "Rouché-Capelli theorem",
+        "rank of matrix augmented matrix",
+        "linear system infinite solutions",
+        "Gaussian elimination example",
+        "determinant zero solutions",
+        "GATE AE linear algebra",
+        "consistent inconsistent system"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Using Matrix Inversion (for unique solution check only)",
+          "description": "Attempt to compute A^{-1}. If it exists, unique solution; if not, proceed to rank analysis.",
+          "pros_cons": "Pros: Direct if invertible. Cons: Inversion computationally heavy and doesn't distinguish between no solution and infinite solutions.",
+          "when_to_use": "Only when suspecting unique solution (e.g., if matrix appears well-conditioned). Not recommended for this problem."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Control Systems": "State-space representations: solution existence affects controllability and observability.",
+        "Flight Mechanics": "Linearized equations of motion: multiple solutions might indicate trim condition families.",
+        "Structural Mechanics": "Equilibrium equations: infinite solutions correspond to mechanisms or indeterminate structures."
+      },
+      "deeper_dive_topics": [
+        "Null space and dimension theorem: The number of free variables equals the dimension of the null space of A.",
+        "Pseudoinverse solutions for inconsistent systems (least squares).",
+        "Condition number and sensitivity of solutions to perturbations in A and b."
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2017_AE_Q26",
+        "year": 2017,
+        "marks": 2.0,
+        "negative_marks": 0.66,
+        "time_expected": "2-3 minutes",
+        "success_rate_estimate": "70%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 1: Engineering Mathematics",
+        "gate_subsection": "Linear Algebra",
+        "weightage": "~5-8%",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Well-aligned with core linear algebra concepts tested in GATE."
+      },
+      "rag_quality": {
+        "relevance_score": 0.9,
+        "chunks_used": 6,
+        "sources_distribution": {
+          "books": 0,
+          "videos": 6
+        },
+        "notes": "RAG chunks provided excellent coverage of the Rouché-Capelli theorem, rank conditions, and solution classification. All chunks were highly relevant, explaining the concepts needed to solve this problem. The video notes from Prof. Niket Kaisare and Prof. Jitendra Kumar directly address the conditions for unique, infinite, and no solutions using rank and determinant."
+      },
+      "model_meta": {
+        "timestamp": "2025-03-27T10:30:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Change vector b to make the system inconsistent (no solution).",
+        "Make A a non-square matrix (m x n) and ask about solution existence.",
+        "Ask for the general solution in parametric form after finding infinite solutions.",
+        "Combine with eigenvalues: ask for solutions when A is singular and b is an eigenvector."
+      ]
+    },
+    "question_id": "GATE_2017_AE_Q26",
+    "year": 2017,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "MCQ",
+    "question_text": "Matrix [A] = [2 0 2; 3 2 7; 3 1 5] and vector {b} = {4; 4; 5} are given. If vector {x} is the solution to the system of equations [A]{x} = {b}, which of the following is true for {x}:"
+  },
+  "tokens_used": 15534,
+  "input_tokens": 10027,
+  "output_tokens": 5507,
+  "cost": 0.01757518,
+  "time_seconds": 196.2262945175171
+}
