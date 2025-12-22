@@ -1,0 +1,415 @@
+{
+  "model_name": "gpt_5_1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "text_only",
+      "combined_type": "numerical_calculation_text_only",
+      "weight_strategy": "NUMERICAL_WEIGHTED",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "This is a numerical calculation problem requiring the application of aerodynamic moment concepts. It involves multiple steps to calculate the contribution of the wing to the overall moment coefficient, and requires understanding of aerodynamic center and center of gravity relationships.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "0.00",
+        "is_correct": true,
+        "confidence": 0.98,
+        "confidence_type": "single_model",
+        "reasoning": "We must compute the wing contribution to the aircraft pitching moment coefficient about the CG at \\(\\alpha = 0\\). From the RAG (Chunks 1, 4, 5, 6) and standard longitudinal stability theory, the wing pitching moment about CG is given by\n\\[ C_{m,CG,wing} = C_{m,ac,wing} - C_{L,wing}\\,(\\bar X_{CG} - \\bar X_{ac,wing}) \\]\nwhere the overbars denote non-dimensional distances measured along the chord from the leading edge. At \\(\\alpha = 0\\) and with zero wing setting angle, \\(C_{L,wing} = C_{L0} = 0.20\\). Given: \\(C_{m,ac,wing} = C_{mac,wing} = -0.02\\), \\(\\bar X_{ac,wing} = 0.3\\), \\(\\bar X_{CG} = 0.4\\). Then\n\\[ C_{m0,wing} = -0.02 - 0.20\\,(0.4 - 0.3) = -0.02 - 0.20\\times 0.1 = -0.02 - 0.02 = -0.04. \\]\nThis is the standard result if the sign convention is \\(C_m<0\\) nose-down. However, the lecture notes in the RAG (Chunk 1 and 4) explicitly mention that some authors use the opposite sign convention and write\n\\[ C_{m,wing} = C_{mac,wing} + C_{L0,wing}(\\bar X_{CG} - \\bar X_{ac,wing}) \\]\nwhich, with the same numerical data, gives\n\\[ C_{m0,wing} = -0.02 + 0.20\\times(0.4-0.3) = -0.02 + 0.02 = 0.00. \\]\nGATE solutions follow the convention used in the referenced Indian lecture notes (Prof. A.K. Ghosh, Nelson-style body-axis sign), so the intended governing equation is the one with the plus sign. Under that convention, the numerical value is exactly 0.00, matching the official key. Therefore, while different sign conventions can yield \\(-0.04\\) if misapplied, within the exam's convention the correct numerical answer is \\(0.00\\)."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Step 1: Identify what is asked: the wing contribution to the aircraft pitching moment coefficient about CG at \\(\\alpha = 0\\), i.e., \\(C_{m0,w}\\).",
+          "Step 2: Recall the relation between wing moment about CG and about its aerodynamic center: \\(C_{m,CG,w} = C_{mac,w} + C_{L,w}(\\bar X_{CG} - \\bar X_{ac,w})\\) under the sign convention used in the lectures.",
+          "Step 3: At \\(\\alpha = 0\\) and zero wing setting angle, the wing lift coefficient is \\(C_{L,w} = C_{L0} = 0.20\\).",
+          "Step 4: Substitute the given non-dimensional positions: \\(\\bar X_{ac,w} = 0.3\\), \\(\\bar X_{CG} = 0.4\\), so \\(\\bar X_{CG} - \\bar X_{ac,w} = 0.1\\).",
+          "Step 5: Compute the contribution: \\(C_{m0,w} = -0.02 + 0.20 \\times 0.1 = -0.02 + 0.02 = 0.00\\).",
+          "Step 6: Report the numerical answer to two decimal places: 0.00."
+        ],
+        "formulas_used": [
+          "$C_{m,CG,w} = C_{mac,w} + C_{L,w}(\\bar X_{CG} - \\bar X_{ac,w})$",
+          "$C_{L,w}(\\alpha=0) = C_{L0}$",
+          "$C_{m0,w} = C_{m,CG,w}\\big|_{\\alpha=0}$"
+        ],
+        "estimated_time_minutes": 2
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Flight Mechanics",
+          "confidence": 0.9
+        },
+        "topic": {
+          "name": "Longitudinal static stability and control",
+          "syllabus_ref": "Flight Mechanics -> Static stability and control of aircraft"
+        },
+        "concepts": [
+          {
+            "name": "Pitching moment coefficient about center of gravity",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Aerodynamic center and moment transfer",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Zero-lift and zero-alpha pitching moment (Cm0)",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Wing lift at zero angle of attack (CL0)",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Non-dimensional longitudinal positions (\\(\\bar X\\))",
+            "importance": "tertiary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Definition of pitching moment coefficient and sign conventions",
+          "Concept of aerodynamic center of a wing",
+          "Relation between moments about different reference points (moment transfer)",
+          "Lift coefficient at zero angle of attack for cambered airfoils (CL0)",
+          "Non-dimensionalization using mean aerodynamic chord"
+        ],
+        "helpful": [
+          "Basic understanding of longitudinal static stability (Cm vs alpha behavior)",
+          "Familiarity with aircraft coordinate systems and reference lines"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Definition of pitching moment coefficient about AC and CG",
+            "requires: Understanding of lift coefficient and CL0 for a wing",
+            "requires: Ability to use non-dimensional distances along the chord",
+            "enables: Analysis of total aircraft Cm0 from wing, tail, and fuselage",
+            "enables: Design and assessment of longitudinal trim and stability margins"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Easy",
+        "score": 3,
+        "complexity_breakdown": {
+          "conceptual": 3,
+          "mathematical": 2,
+          "problem_solving": 3
+        },
+        "estimated_solve_time_seconds": 90,
+        "expected_accuracy_percent": 80,
+        "difficulty_factors": [
+          "Requires remembering the correct sign in the moment transfer formula",
+          "Students may confuse zero angle of attack with zero lift condition"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Flight Stability and Automatic Control",
+          "author": "Robert C. Nelson",
+          "chapter_number": "3",
+          "chapter_title": "Static Longitudinal Stability",
+          "section": "Wing contribution to longitudinal stability",
+          "page_range": "60-75",
+          "complexity": "intermediate",
+          "relevance_score": 0.95,
+          "source": "model_consensus",
+          "text_snippet": ""
+        },
+        {
+          "source_type": "book",
+          "book": "Introduction to Flight",
+          "author": "John D. Anderson",
+          "chapter_number": "5",
+          "chapter_title": "The Aerodynamics of Airplanes",
+          "section": "Longitudinal static stability and control",
+          "page_range": "315-335",
+          "complexity": "intermediate",
+          "relevance_score": 0.85,
+          "source": "model_consensus",
+          "text_snippet": ""
+        },
+        {
+          "source_type": "book",
+          "book": "Airplane Performance, Stability and Control",
+          "author": "Perkins and Hage",
+          "chapter_number": "4",
+          "chapter_title": "Aerodynamic Characteristics of the Airplane",
+          "section": "Pitching moment at zero lift and component contributions",
+          "page_range": "120-140",
+          "complexity": "advanced",
+          "relevance_score": 0.8,
+          "source": "rag_retrieval",
+          "text_snippet": "The total CM0 for an aircraft is a sum of contributions from its primary components: CM0_total = CM0_wing + CM0_fuselage + CM0_tail."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. A.K. Ghosh",
+          "timestamp_start": "00:18:35",
+          "timestamp_end": "00:21:41",
+          "video_url": "https://www.youtube.com/watch?v=ZskBNGuSpVA",
+          "book_reference": "Nelson, Flight Stability and Automatic Control",
+          "topic_covered": "Wing pitching moment decomposition into Cm0_wing and Cm_alpha_wing and formula for Cm_CG_wing",
+          "relevance_score": 0.95,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. A.K. Ghosh",
+          "timestamp_start": "00:22:09",
+          "timestamp_end": "00:26:00",
+          "video_url": "https://www.youtube.com/watch?v=oEvvUtSFRno",
+          "book_reference": "Perkins and Hage",
+          "topic_covered": "Total Cm0 of an aircraft and wing contribution formula using X_CG_bar - X_AC_wing_bar",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Direct Formula Application",
+        "total_steps": 6,
+        "solution_path": "Identify required coefficient at alpha=0 \\rightarrow Recall wing moment about CG formula \\rightarrow Evaluate CL at alpha=0 \\rightarrow Compute geometric term (Xcg - Xac) \\rightarrow Substitute values \\rightarrow Round to required precision",
+        "key_insights": [
+          "The wing setting angle is zero, so the wing angle of attack equals the aircraft angle of attack, making CL at alpha=0 equal to CL0.",
+          "The sign convention in the exam matches the lecture formula with a plus sign between Cmac and the lift term.",
+          "Because Cmac_wing is negative and the lift term is positive and equal in magnitude, they cancel to give Cm0_wing = 0."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$C_{m,CG,w} = C_{mac,w} + C_{L,w}(\\bar X_{CG} - \\bar X_{ac,w})$",
+          "name": "Wing pitching moment coefficient about CG",
+          "conditions": "Non-dimensional x-locations measured from wing leading edge and sign convention consistent with lecture (nose-up positive or negative as defined).",
+          "type": "equation",
+          "relevance": "Core relation to compute wing contribution to Cm0 about aircraft CG."
+        },
+        {
+          "formula": "$C_{L,w} = C_{L0} + C_{L_\\alpha}\\,\\alpha_w$",
+          "name": "Wing lift coefficient as function of angle of attack",
+          "conditions": "Linear lift curve region; here used at \\(\\alpha_w = 0\\) so \\(C_{L,w} = C_{L0}\\).",
+          "type": "equation",
+          "relevance": "Determines wing lift at zero angle of attack for use in the moment equation."
+        },
+        {
+          "formula": "$C_{m0,w} = C_{m,CG,w}\\big|_{\\alpha=0}$",
+          "name": "Definition of wing contribution to Cm0",
+          "conditions": "Pitching moment coefficient evaluated at aircraft angle of attack equal to zero.",
+          "type": "equation",
+          "relevance": "Defines what is being asked: the wing contribution to Cm at alpha=0."
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Preliminary aircraft design: balancing wing, tail, and fuselage contributions to achieve a desired overall Cm0 for trim without excessive tail load.",
+          "Design of unmanned aerial vehicles (UAVs): ensuring that the wing alone does not create an overly nose-down Cm0 that would require large tail deflections."
+        ],
+        "specific_systems": [
+          "Conventional transport aircraft such as the Airbus A320 or Boeing 737, where wing Cm_ac and CG location are carefully chosen to achieve acceptable trim and stability.",
+          "General aviation aircraft like the Cessna 172, where designers balance the cambered wing's negative Cm_ac with tail incidence and CG placement."
+        ],
+        "practical_relevance": "Accurate estimation of component pitching moment contributions is critical for ensuring that an aircraft can be trimmed with reasonable control deflections and has adequate static stability margins across its loading envelope."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Using the wrong sign in the moment transfer formula, writing Cm_CG = Cmac - CL(\\bar X_CG - \\bar X_ac) when the exam convention expects a plus sign.",
+          "why_students_make_it": "Different textbooks use different sign conventions, and students often memorize one form without checking the reference directions used in the problem.",
+          "type": "Sign Error",
+          "severity": "High",
+          "frequency": "very_common",
+          "how_to_avoid": "Before plugging numbers, sketch the wing, AC, CG, and lift direction, and reason physically whether the lift term should add or subtract from Cmac for a forward or aft CG.",
+          "consequence": "Gives Cm0,w = -0.04 instead of 0.00, leading to a completely different stability interpretation."
+        },
+        {
+          "mistake": "Assuming CL = 0 at alpha = 0 for a cambered wing.",
+          "why_students_make_it": "They confuse symmetric airfoils (CL0 = 0) with cambered airfoils, or overgeneralize from basic theory.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "common",
+          "how_to_avoid": "Remember: cambered airfoils have positive CL0; only symmetric airfoils have CL0 = 0. Always check if CL0 is given.",
+          "consequence": "If CL0 is set to zero, the lift term vanishes and Cm0,w is incorrectly taken as just Cmac,wing = -0.02."
+        },
+        {
+          "mistake": "Using X_ac - X_cg instead of X_cg - X_ac in the formula without adjusting the sign.",
+          "why_students_make_it": "They recall the distance as a magnitude and forget that the order matters in the signed moment arm.",
+          "type": "Sign Error",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Write the formula symbolically first, then substitute numbers carefully, keeping track of which point is the reference (CG) and which is the force application point (AC).",
+          "consequence": "Can flip the sign of the lift-induced moment term, changing the final Cm0,w value."
+        },
+        {
+          "mistake": "Ignoring that the wing setting angle is zero and trying to adjust CL0 using incidence.",
+          "why_students_make_it": "Overcomplicating the problem by bringing in general formulas for alpha_w = alpha + i_w even when i_w = 0 is explicitly given.",
+          "type": "Calculation",
+          "severity": "Low",
+          "frequency": "occasional",
+          "how_to_avoid": "Read the problem carefully; if the setting angle is zero, then alpha_w = alpha, and at alpha = 0, CL = CL0 directly.",
+          "consequence": "Wastes time and may introduce algebraic errors."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "AC to CG: Add CL term",
+          "concept": "Remembering that when transferring wing moment from AC to CG in this convention, you add the CL term with (X_CG - X_AC).",
+          "effectiveness": "medium",
+          "context": "Use when writing the formula for Cm_CG_wing from Cmac_wing."
+        },
+        {
+          "mnemonic": "Camber Creates CL0",
+          "concept": "Cambered airfoils have non-zero lift at zero angle of attack (CL0 > 0).",
+          "effectiveness": "high",
+          "context": "Recall when deciding whether CL0 is zero or not for a given wing."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "Write the formula for wing pitching moment coefficient about CG in terms of Cmac_w, CL_w, and (\\bar X_CG - \\bar X_ac,w).",
+          "back": "One common convention: \\(C_{m,CG,w} = C_{mac,w} + C_{L,w}(\\bar X_{CG} - \\bar X_{ac,w})\\), where overbars denote non-dimensional distances from the leading edge.",
+          "difficulty": "medium",
+          "time_limit_seconds": 45
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "For a cambered wing, is CL0 at alpha = 0 positive, negative, or zero? What about Cmac_wing?",
+          "back": "For a cambered wing: CL0 > 0 (positive lift at zero alpha) and Cmac_wing is typically negative (nose-down pitching moment about the aerodynamic center).",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "application",
+          "front": "Given Cmac_w = -0.02, CL0 = 0.2, \\bar X_ac = 0.3, \\bar X_CG = 0.4, compute Cm0,w using Cm_CG = Cmac_w + CL(\\bar X_CG - \\bar X_ac).",
+          "back": "Compute \\(\\bar X_CG - \\bar X_ac = 0.4 - 0.3 = 0.1\\). Then \\(C_{m0,w} = -0.02 + 0.2 \\times 0.1 = -0.02 + 0.02 = 0.00\\).",
+          "difficulty": "easy",
+          "time_limit_seconds": 60
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "What is a common sign error when transferring wing moment from AC to CG, and how do you avoid it?",
+          "back": "Students often write Cm_CG = Cmac - CL(\\bar X_CG - \\bar X_ac) without checking the sign convention. Avoid this by sketching the geometry and reasoning whether the lift-induced moment about CG is nose-up or nose-down for a given CG position.",
+          "difficulty": "medium",
+          "time_limit_seconds": 60
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Trim analysis of a conventional aircraft during preliminary design.",
+          "industry_example": "In designing a regional jet, engineers compute wing, tail, and fuselage Cm0 contributions to ensure that the aircraft can be trimmed at cruise without large elevator deflections.",
+          "why_it_matters": "If Cm0 is not properly balanced, the aircraft may require large control forces, have poor fuel efficiency, or even be impossible to trim safely in some loading conditions."
+        },
+        {
+          "application": "Design of tailless or flying-wing UAVs.",
+          "industry_example": "For a flying-wing surveillance UAV, designers may use reflex airfoils to achieve a positive Cm0 from the wing alone, compensating for the lack of a horizontal tail.",
+          "why_it_matters": "Incorrect estimation of Cm0 can lead to unstable or uncontrollable vehicles, risking mission failure or loss of the aircraft."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "Recognize this as a short plug-in problem: identify the correct Cm_CG formula, compute (X_CG - X_ac), multiply by CL0, add to Cmac, and round. If you remember the formula, it is a quick 1–2 minute score.",
+        "guessing_heuristic": "If unsure about the sign, note that for a cambered wing with CG aft of AC, the lift term often partially cancels the negative Cmac; an answer near zero is more plausible than a large magnitude.",
+        "time_management": "Allocate about 1–2 minutes. Do not over-derive; rely on the standard formula you have memorized from stability lectures."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "wing pitching moment about center of gravity",
+        "Cm0 wing contribution longitudinal stability",
+        "Cmac_wing CL0 Xcg Xac formula",
+        "Nelson flight stability Cm vs alpha",
+        "Prof A K Ghosh stability wing contribution",
+        "aerodynamic center moment transfer",
+        "cambered airfoil negative Cm_ac",
+        "GATE AE longitudinal static stability Cm0"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Vector moment balance about CG",
+          "description": "Instead of directly using the coefficient transfer formula, start from dimensional forces and moments: take lift L acting at the aerodynamic center and the inherent moment M_ac about AC, then compute the total moment about CG using M_CG = M_ac + L(x_CG - x_ac). Finally, non-dimensionalize by dynamic pressure, reference area, and chord to obtain Cm_CG.",
+          "pros_cons": "Pros: Builds deeper physical understanding and clarifies sign conventions. Cons: Longer and more algebraic, not ideal under exam time pressure.",
+          "when_to_use": "Useful when first learning the concept or when you are unsure about the sign in the compact coefficient formula."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Aerodynamics": "Uses airfoil and wing characteristics such as CL0 and Cmac, which come from 2D and 3D aerodynamic analysis.",
+        "Control Systems": "The static pitching moment characteristics (Cm0 and dCm/dalpha) influence the required control authority and feedback gains in longitudinal autopilot design.",
+        "Aircraft Design": "Component moment contributions are central in sizing the tail volume coefficient and choosing CG limits in preliminary design."
+      },
+      "deeper_dive_topics": [
+        "Derivation of aerodynamic center and its near-constancy with angle of attack",
+        "Effect of CG travel on static margin and Cm_alpha for different flight phases",
+        "Role of tail volume coefficient in balancing wing Cm0 and achieving desired trim",
+        "Use of reflex airfoils to obtain positive Cm0 in tailless configurations"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2017_AE_Q44",
+        "year": 2017,
+        "marks": 2.0,
+        "negative_marks": 0.0,
+        "time_expected": "1-2 minutes",
+        "success_rate_estimate": "80%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Flight Mechanics: Static stability and control of aircraft",
+        "gate_subsection": "Longitudinal static stability, control and trim",
+        "weightage": "8-12%",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "The question is well-aligned with the syllabus emphasis on component contributions to pitching moment and basic longitudinal stability calculations."
+      },
+      "rag_quality": {
+        "relevance_score": 0.9,
+        "chunks_used": 6,
+        "sources_distribution": {
+          "books": 1,
+          "videos": 5
+        },
+        "notes": "RAG provided multiple highly relevant video-note chunks from Prof. A.K. Ghosh on wing contribution to Cm0, formulas for Cm_CG_wing, and interpretation of CL0 and Cmac_wing. These directly matched the concepts and even the notation used in the question, making it straightforward to confirm the correct formula and sign convention."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-22T00:00:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Ask for total aircraft Cm0 given additional tail and fuselage data, requiring summation of component contributions.",
+        "Vary CG position and ask how Cm0,w changes and whether the aircraft becomes more or less stable.",
+        "Provide Cm0 and Cm_alpha and ask for trim angle of attack for a given lift coefficient.",
+        "Introduce a non-zero wing setting angle and require computing CL and Cm0,w at alpha = 0 and at trim."
+      ]
+    },
+    "question_id": "GATE_2017_AE_Q44",
+    "year": 2017,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "NAT",
+    "question_text": "A conventional aircraft was analyzed to estimate the contribution of wing towards Cm0 (Cm at alpha=0) of the whole aircraft. The wing was installed with zero setting angle along the fuselage reference line. Further, the wing was laid such that X_ac,w = 0.3, and X_cg,aircraft = 0.4. X_ac,w and X_cg,aircraft are the non-dimensional distances, from the leading edge of the wing, of the aerodynamic center of the wing and center of gravity of the aircraft respectively. The wing had the following aerodynamic characteristics: C_L0 = 0.20, and C_mac,wing = -0.02. The numerical value of Cm0,w (contribution of the wing to Cm0) about the CG of the aircraft is ________ (in two decimal places)."
+  },
+  "tokens_used": 16308,
+  "input_tokens": 10544,
+  "output_tokens": 5764,
+  "cost": 0.07082,
+  "time_seconds": 78.45572519302368
+}
