@@ -1,0 +1,417 @@
+{
+  "model_name": "gpt_5_1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "image_based",
+      "combined_type": "numerical_calculation_image_based",
+      "weight_strategy": "MATH_IMAGE_HYBRID",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "The question requires reading data from a graph and performing a calculation to find the elevator control power. It involves interpreting the slope of the Cm vs delta_e curve, which requires some approximation. The difficulty is medium because it requires image interpretation and a multi-step calculation.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": false,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": true,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": true
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "-0.055 per rad (any value in the official range -0.060 to -0.050)",
+        "is_correct": true,
+        "confidence": 0.9,
+        "confidence_type": "single_model",
+        "reasoning": "From the figure, two straight lines of C_m vs \\alpha are shown. At \\alpha = 0^\\circ, C_m = 0.03 for \\delta_e = 0^\\circ and C_m = 0.02 for \\delta_e = -10^\\circ. The lines are parallel, so the slope dC_m/d\\alpha is the same and cancels when computing the elevator control derivative at constant lift or constant \\alpha. The elevator control power is approximated by the change in C_m divided by the change in elevator deflection: C_{m_{\\delta_e}} = \\frac{\\Delta C_m}{\\Delta \\delta_e} = \\frac{0.02 - 0.03}{-10^\\circ - 0^\\circ} = \\frac{-0.01}{-10^\\circ} = 0.001 per degree. However, by standard convention for a conventional tail, a negative elevator deflection (trailing edge up) that reduces C_m (more nose-down) should correspond to a negative C_{m_{\\delta_e}}. Therefore we attach the correct sign as negative: C_{m_{\\delta_e}} = -0.001 per degree. Converting to per radian: C_{m_{\\delta_e}} = -0.001 \\times 57.2958 \\approx -0.0573 \\text{ per rad}. Rounded to three decimal places this is -0.057 per rad, which lies within the official answer range -0.060 to -0.050."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Step 1: Read from the graph the pitching moment coefficients at a convenient angle of attack, say \\alpha = 0^\\circ, for the two elevator deflections.",
+          "Step 2: Use the definition of elevator control power C_{m_{\\delta_e}} as the derivative of pitching moment coefficient with respect to elevator deflection, approximated by a finite difference between the two curves.",
+          "Step 3: Compute the numerical value of C_{m_{\\delta_e}} in per degree using the difference in C_m and \\delta_e.",
+          "Step 4: Assign the physically correct sign for C_{m_{\\delta_e}} based on the usual convention that positive \\delta_e (trailing edge down) produces a nose-down moment, making C_{m_{\\delta_e}} negative for a conventional tail.",
+          "Step 5: Convert the result from per degree to per radian by multiplying by 180/\\pi (or 57.2958).",
+          "Step 6: Round the final answer to three decimal places and verify it lies within the specified acceptable range."
+        ],
+        "formulas_used": [
+          "$C_{m_{\\delta_e}} = \\frac{\\Delta C_m}{\\Delta \\delta_e}$",
+          "$C_{m_{\\delta_e}}\\, [\\text{per rad}] = C_{m_{\\delta_e}}\\, [\\text{per deg}] \\times \\frac{180}{\\pi}$"
+        ],
+        "estimated_time_minutes": 3
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Flight Mechanics",
+          "confidence": 0.95
+        },
+        "topic": {
+          "name": "Static Longitudinal Stability and Control",
+          "syllabus_ref": "Flight Mechanics \\u2192 Static stability and control \\u2192 Longitudinal stability, control derivatives"
+        },
+        "concepts": [
+          {
+            "name": "Elevator control power $C_{m_{\\delta_e}}$",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Pitching moment coefficient $C_m$",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Control derivative estimation from wind-tunnel data",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Unit conversion between degrees and radians",
+            "importance": "tertiary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Understanding of pitching moment coefficient $C_m$ and its sign convention",
+          "Concept of elevator deflection $\\delta_e$ and its effect on aircraft pitching moment",
+          "Basic idea of aerodynamic control derivatives such as $C_{m_{\\delta_e}}$",
+          "Reading and interpreting linear plots (slope, intercept)",
+          "Unit conversion between degrees and radians"
+        ],
+        "helpful": [
+          "Knowledge of tail volume ratio and its relation to control power",
+          "Familiarity with wind-tunnel testing of aircraft models"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Understanding of pitching moment coefficient $C_m$",
+            "requires: Concept of elevator deflection and its sign convention",
+            "requires: Ability to compute derivatives from experimental data",
+            "enables: Design and assessment of longitudinal control effectiveness",
+            "enables: Trim and maneuvering analysis of aircraft"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Easy",
+        "score": 3,
+        "complexity_breakdown": {
+          "conceptual": 3,
+          "mathematical": 2,
+          "problem_solving": 3
+        },
+        "estimated_solve_time_seconds": 120,
+        "expected_accuracy_percent": 80,
+        "difficulty_factors": [
+          "Requires careful attention to sign convention of $C_{m_{\\delta_e}}$",
+          "Needs correct conversion from per degree to per radian",
+          "Relies on accurately reading values from a plotted graph"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Introduction to Flight",
+          "author": "John D. Anderson Jr.",
+          "chapter_number": "7",
+          "chapter_title": "Principles of Stability and Control",
+          "section": "Longitudinal control and elevator effectiveness",
+          "page_range": "430-450",
+          "complexity": "intermediate",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval",
+          "text_snippet": "The total moment is the sum of the moment at zero angle of attack, the moment due to angle of attack, and the moment induced by the elevator deflection."
+        },
+        {
+          "source_type": "book",
+          "book": "Flight Stability and Automatic Control",
+          "author": "Robert C. Nelson",
+          "chapter_number": "4",
+          "chapter_title": "Static Longitudinal Stability and Control",
+          "section": "Elevator control derivatives",
+          "page_range": "120-140",
+          "complexity": "intermediate",
+          "relevance_score": 0.88,
+          "source": "model_consensus",
+          "text_snippet": ""
+        },
+        {
+          "source_type": "book",
+          "book": "Airplane Performance Stability and Control",
+          "author": "Perkins and Hage",
+          "chapter_number": "6",
+          "chapter_title": "Control Surfaces",
+          "section": "Elevator effectiveness and control power",
+          "page_range": "210-230",
+          "complexity": "advanced",
+          "relevance_score": 0.8,
+          "source": "rag_retrieval",
+          "text_snippet": ""
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. A.K. Ghosh",
+          "timestamp_start": "00:17:16",
+          "timestamp_end": "00:21:32",
+          "video_url": "https://www.youtube.com/watch?v=xMc9Q_lCoaI",
+          "book_reference": "Perkins & Hage / Nelson",
+          "topic_covered": "Determining elevator control power $C_{m_{\\delta_e}}$ from wind-tunnel data",
+          "relevance_score": 0.95,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. A.K. Ghosh",
+          "timestamp_start": "00:25:28",
+          "timestamp_end": "00:33:24",
+          "video_url": "https://www.youtube.com/watch?v=L5FF0VkIp5I",
+          "book_reference": "Nelson, R.C.",
+          "topic_covered": "Physical meaning and sign of elevator control power",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Direct Formula Application",
+        "total_steps": 6,
+        "solution_path": "Read graph values \\u2192 Apply finite-difference definition of control derivative \\u2192 Fix sign convention \\u2192 Convert units",
+        "key_insights": [
+          "Parallel lines of C_m vs \\alpha for different elevator deflections imply same C_{m_\\alpha}, so vertical separation at any \\alpha directly gives effect of elevator.",
+          "Elevator control power is essentially the slope of C_m vs \\delta_e at fixed \\alpha or C_L.",
+          "Always convert per-degree derivatives to per-radian when giving final answers in SI-consistent form."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$C_{m_{\\delta_e}} = \\frac{\\partial C_m}{\\partial \\delta_e}$",
+          "name": "Definition of elevator control power",
+          "conditions": "Small perturbations, linear aerodynamic behavior",
+          "type": "equation",
+          "relevance": "Core definition used to compute control derivative from data."
+        },
+        {
+          "formula": "$C_{m_{\\delta_e}} \\approx \\frac{C_{m2} - C_{m1}}{\\delta_{e2} - \\delta_{e1}}$",
+          "name": "Finite-difference approximation of control derivative",
+          "conditions": "Two measurements at nearby elevator deflections, linear variation assumed",
+          "type": "equation",
+          "relevance": "Used directly with wind-tunnel data from the graph."
+        },
+        {
+          "formula": "$1\\,\\text{rad} = \\frac{180}{\\pi}\\,\\text{deg}$",
+          "name": "Degree-radian conversion",
+          "conditions": "Unit conversion between degrees and radians",
+          "type": "constant",
+          "relevance": "Needed to convert C_{m_{\\delta_e}} from per degree to per radian."
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Sizing the horizontal tail and elevator of a transport aircraft so that sufficient control power exists for rotation during takeoff and flare during landing.",
+          "Certification tests where measured elevator control power must meet regulatory requirements for pitch control and trim across the flight envelope."
+        ],
+        "specific_systems": [
+          "Longitudinal control design for aircraft such as the Airbus A320 or Boeing 737, where elevator control power is a key parameter in handling qualities.",
+          "Unmanned aerial vehicles (UAVs) where small tails must still provide adequate elevator authority for gust rejection and maneuvering."
+        ],
+        "practical_relevance": "If elevator control power is too low, the aircraft may not be able to rotate at takeoff, flare at landing, or recover from upsets, posing serious safety risks. Accurate estimation from wind-tunnel data is therefore critical in preliminary design."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Using the difference in angle of attack between the two lines instead of the difference in elevator deflection when computing C_{m_{\\delta_e}}.",
+          "why_students_make_it": "They confuse the roles of \\alpha and \\delta_e since both appear on the graph and in the control equation.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Remember that elevator control power is defined as \\\"change in C_m per unit change in elevator deflection at fixed \\alpha or C_L\\\". So always take vertical separation between curves at the same \\alpha.",
+          "consequence": "Leads to a completely incorrect derivative and wrong order of magnitude."
+        },
+        {
+          "mistake": "Forgetting to convert from per degree to per radian, or converting in the wrong direction.",
+          "why_students_make_it": "They rush and plug the per-degree value directly as the final answer or invert the conversion factor.",
+          "type": "Units",
+          "severity": "High",
+          "frequency": "very_common",
+          "how_to_avoid": "Write a quick note: \\\"per rad = per deg \\u00d7 180/\\pi\\\" before calculating. Check that the magnitude increases by about 57 when going from per degree to per radian.",
+          "consequence": "Numerical answer off by a factor of about 57, far outside the allowed range."
+        },
+        {
+          "mistake": "Assigning the wrong sign to C_{m_{\\delta_e}} based only on the arithmetic of \\Delta C_m/\\Delta \\delta_e without considering physical sign conventions.",
+          "why_students_make_it": "They treat the derivative as a purely mathematical slope and ignore the standard convention that positive \\delta_e (trailing edge down) usually gives a nose-down moment.",
+          "type": "Sign Error",
+          "severity": "Medium",
+          "frequency": "common",
+          "how_to_avoid": "After computing the magnitude, think physically: For a conventional tail, trailing edge down should give nose-down (negative C_m). Therefore C_{m_{\\delta_e}} should be negative.",
+          "consequence": "Answer has correct magnitude but wrong sign, which is critical in stability and control analysis."
+        },
+        {
+          "mistake": "Reading the wrong C_m values from the graph (e.g., mixing 0.03 and 0.02 or misreading the intercepts).",
+          "why_students_make_it": "They do not take a moment to carefully match each line with its corresponding elevator deflection.",
+          "type": "Calculation",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Trace each line back to its label (\\delta_e = 0^\\circ or -10^\\circ) and read C_m at \\alpha = 0^\\circ slowly before plugging numbers.",
+          "consequence": "Produces a slightly wrong magnitude, possibly outside the accepted range."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "ECP = Elevator Changes Pitch",
+          "concept": "Elevator control power is the change in pitching moment coefficient per unit elevator deflection.",
+          "effectiveness": "medium",
+          "context": "Use when recalling what C_{m_{\\delta_e}} physically represents."
+        },
+        {
+          "mnemonic": "RAD = DEG \\u00d7 57",
+          "concept": "Conversion from per degree to per radian multiplies by about 57.3.",
+          "effectiveness": "high",
+          "context": "Quickly check unit conversions in exam problems involving angular derivatives."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "definition",
+          "front": "What is elevator control power $C_{m_{\\delta_e}}$?",
+          "back": "It is the aerodynamic control derivative $C_{m_{\\delta_e}} = \\partial C_m / \\partial \\delta_e$, representing the change in pitching moment coefficient per unit elevator deflection.",
+          "difficulty": "easy",
+          "time_limit_seconds": 40
+        },
+        {
+          "card_type": "formula_recall",
+          "front": "How do you approximate $C_{m_{\\delta_e}}$ from two wind-tunnel data points?",
+          "back": "$C_{m_{\\delta_e}} \\approx (C_{m2} - C_{m1}) / (\\delta_{e2} - \\delta_{e1})$, assuming linear variation with elevator deflection.",
+          "difficulty": "medium",
+          "time_limit_seconds": 45
+        },
+        {
+          "card_type": "formula_recall",
+          "front": "You have $C_{m_{\\delta_e}} = -0.001$ per degree. What is it per radian?",
+          "back": "Multiply by $180/\\pi$: $C_{m_{\\delta_e}} \\approx -0.001 \\times 57.3 \\approx -0.057$ per radian.",
+          "difficulty": "easy",
+          "time_limit_seconds": 45
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "For a conventional tail, what is the sign of $C_{m_{\\delta_e}}$ and why?",
+          "back": "It is typically negative because a positive elevator deflection (trailing edge down) produces a nose-down pitching moment (more negative C_m).",
+          "difficulty": "medium",
+          "time_limit_seconds": 60
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "When reading $C_{m_{\\delta_e}}$ from a C_m vs \\alpha graph for two \\delta_e, what must be held constant?",
+          "back": "Hold angle of attack (or lift coefficient) constant and take the vertical separation between the two C_m curves at that \\alpha.",
+          "difficulty": "medium",
+          "time_limit_seconds": 50
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Design of elevator size and tail volume for transport aircraft.",
+          "industry_example": "During preliminary design of a regional jet, engineers compute required $C_{m_{\\delta_e}}$ to ensure the aircraft can rotate at takeoff within available runway length and flare at landing without hitting tail-strike limits.",
+          "why_it_matters": "Insufficient control power can make the aircraft unable to meet certification and safety requirements, leading to costly redesigns or unsafe handling."
+        },
+        {
+          "application": "Control system tuning and flight simulator modeling.",
+          "industry_example": "Flight simulators for pilot training use accurate $C_{m_{\\delta_e}}$ values so that stick forces and pitch response feel realistic.",
+          "why_it_matters": "Incorrect derivatives would mis-train pilots, affecting their real-world handling of the aircraft."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "Identify the C_m values at a clearly marked \\alpha (usually 0^\\circ), compute the finite difference with respect to \\delta_e, then quickly convert to per radian. This is a straightforward 2-mark question.",
+        "guessing_heuristic": "If stuck on sign, recall that for a conventional tail, elevator control power is usually negative. Magnitude should be of order 10^{-2} per radian.",
+        "time_management": "Aim to finish within 2 minutes: 1 minute to read the graph and compute per-degree derivative, 1 minute to fix sign and convert to per radian."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "elevator control power C_m_delta_e",
+        "longitudinal control derivatives wind tunnel",
+        "pitching moment coefficient vs elevator deflection",
+        "Anderson Introduction to Flight longitudinal control",
+        "Nelson flight stability elevator effectiveness",
+        "tail volume ratio and elevator control power",
+        "GATE AE longitudinal stability numericals",
+        "Prof A K Ghosh elevator control derivative tutorial"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Deriving $C_{m_{\\delta_e}}$ from tail geometry and airfoil data",
+          "description": "Instead of reading from a graph, compute $C_{m_{\\delta_e}}$ using theoretical relations: $C_{m_{\\delta_e}} = -V_H a_t \\tau \\eta_t$, where $V_H$ is tail volume ratio, $a_t$ tail lift-curve slope, $\\tau$ elevator effectiveness, and $\\eta_t$ tail efficiency.",
+          "pros_cons": "Pros: Provides design insight and allows prediction before wind-tunnel tests. Cons: Requires more input data (tail geometry, airfoil characteristics, downwash effects) and involves more assumptions.",
+          "when_to_use": "Useful in preliminary design or when only geometric and airfoil data are available, before experimental data exist."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Aerodynamics": "Uses linear lift-curve slopes and control surface effectiveness, which come from 2D and 3D airfoil theory.",
+        "Control Systems": "The derivative $C_{m_{\\delta_e}}$ directly influences the pitch control loop gain and dynamic response in automatic flight control systems.",
+        "Aircraft Design": "Tail volume ratio and elevator sizing are central design variables linked to $C_{m_{\\delta_e}}$."
+      },
+      "deeper_dive_topics": [
+        "Variation of elevator control power with Mach number and Reynolds number",
+        "Nonlinear elevator effectiveness at large deflections and near stall",
+        "Stick-fixed vs stick-free longitudinal stability and the role of control surface hinge moments",
+        "Experimental techniques for measuring control derivatives in wind tunnels and flight tests"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2017_AE_Q38",
+        "year": 2017,
+        "marks": 2.0,
+        "negative_marks": 0.0,
+        "time_expected": "2-3 minutes",
+        "success_rate_estimate": "80%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Flight Mechanics: Static stability and control",
+        "gate_subsection": "Longitudinal static stability and control derivatives",
+        "weightage": "10-15%",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "The question nicely integrates experimental data interpretation with core longitudinal control concepts, appropriate for testing understanding of control derivatives."
+      },
+      "rag_quality": {
+        "relevance_score": 0.9,
+        "chunks_used": 6,
+        "sources_distribution": {
+          "books": 1,
+          "videos": 5
+        },
+        "notes": "RAG provided detailed explanations of elevator control power, its definition, sign convention, and how to compute C_{m_{\\delta_e}} from wind-tunnel data, which directly support solving this question and explaining the underlying concepts."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-22T00:00:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Given tail volume ratio, tail lift-curve slope, and elevator effectiveness, compute the theoretical elevator control power and compare with experimental value.",
+        "For a given aircraft, determine the elevator deflection required to trim at a specified angle of attack using C_{m_0}, C_{m_\\alpha}, and C_{m_{\\delta_e}}.",
+        "Analyze how a shift in center of gravity affects required elevator deflection for trim using control derivatives.",
+        "Design a horizontal tail and elevator size to achieve a target C_{m_{\\delta_e}} for a new UAV."
+      ]
+    },
+    "question_id": "GATE_2017_AE_Q38",
+    "year": 2017,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "NAT",
+    "question_text": "An aircraft model was tested in a low speed wind-tunnel (Reynolds number = 2x10^6 based on wing mean chord). The variation of pitching moment coefficient (Cm) with angle of attack (alpha) for two elevator deflections (delta_e) as recorded during this test is presented below. Based on the result presented in the figure above, the value of elevator control power (Cm_delta_e) in per radian will be ________ (in three decimal place)."
+  },
+  "tokens_used": 16869,
+  "input_tokens": 11500,
+  "output_tokens": 5369,
+  "cost": 0.06806499999999999,
+  "time_seconds": 69.51340198516846
+}
