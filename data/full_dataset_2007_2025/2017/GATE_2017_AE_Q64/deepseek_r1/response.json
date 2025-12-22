@@ -1,0 +1,331 @@
+{
+  "model_name": "deepseek_r1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "text_only",
+      "combined_type": "numerical_calculation_text_only",
+      "weight_strategy": "NUMERICAL_WEIGHTED",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "The question requires counting the number of 3-digit numbers under a given constraint. It involves multiple steps of reasoning to arrive at the correct count, making it a numerical calculation with medium difficulty. The multi_step_reasoning flag is set because it requires calculating the total number of 3-digit numbers, then subtracting the number of cases where '1' is immediately to the right of '2'.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": false,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "C",
+        "is_correct": true,
+        "confidence": 0.99,
+        "confidence_type": "single_model",
+        "reasoning": "Total 3-digit numbers: 900 (from 100 to 999). Violations occur when digit 1 is immediately right of digit 2, i.e., in positions (hundreds, tens) or (tens, units). Case A: hundreds=2 and tens=1 gives 10 numbers (210 to 219). Case B: tens=2 and units=1 gives 9 numbers (hundreds 1-9, so 121, 221,...,921). These cases are disjoint because tens digit cannot be both 1 and 2. Total violations = 10 + 9 = 19. Valid numbers = 900 - 19 = 881, matching option C."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Step 1: Calculate total 3-digit numbers. Hundreds digit: 1-9 (9 choices), tens digit: 0-9 (10 choices), units digit: 0-9 (10 choices). Total = $9 \\times 10 \\times 10 = 900$.",
+          "Step 2: Define violation: digit 1 is immediately right of digit 2. For digits d1 (hundreds), d2 (tens), d3 (units), violations if (d1=2 and d2=1) or (d2=2 and d3=1).",
+          "Step 3: Count violations for first case (d1=2, d2=1). Then d3 can be 0-9, so 10 numbers: 210, 211, ..., 219.",
+          "Step 4: Count violations for second case (d2=2, d3=1). Then d1 can be 1-9, so 9 numbers: 121, 221, ..., 921.",
+          "Step 5: Check overlap between cases. For overlap, we need d2=1 from first case and d2=2 from second case, which is impossible. Thus, no overlap, total violations = 10 + 9 = 19.",
+          "Step 6: Subtract violations from total: Valid numbers = 900 - 19 = 881."
+        ],
+        "formulas_used": [
+          "$\\text{Total} = 9 \\times 10 \\times 10 = 900$",
+          "$\\text{Violations} = |A| + |B|$ where $A$: d1=2, d2=1 and $B$: d2=2, d3=1",
+          "$\\text{Valid} = \\text{Total} - \\text{Violations}$"
+        ],
+        "estimated_time_minutes": 2
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Engineering Mathematics",
+          "confidence": 1.0
+        },
+        "topic": {
+          "name": "Combinatorics and Counting",
+          "syllabus_ref": "Section 1: Engineering Mathematics"
+        },
+        "concepts": [
+          {
+            "name": "Basic Counting Principle",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Complementary Counting (Subtraction Method)",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Disjoint Events",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Understanding of 3-digit numbers (range 100 to 999)",
+          "Basic counting principles (multiplication principle)"
+        ],
+        "helpful": [
+          "Principle of inclusion-exclusion",
+          "Set theory basics (union and intersection)"
+        ],
+        "dependency_tree": {
+          "Main Concept: Counting with Constraints": [
+            "requires: knowledge of digit positions in numbers",
+            "requires: multiplication principle for total count",
+            "enables: solving complex combinatorial problems",
+            "enables: probability calculations with constraints"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Easy",
+        "score": 4,
+        "complexity_breakdown": {
+          "conceptual": 3,
+          "mathematical": 4,
+          "problem_solving": 4
+        },
+        "estimated_solve_time_seconds": 120,
+        "expected_accuracy_percent": 75,
+        "difficulty_factors": [
+          "Requires careful identification of violation cases",
+          "Must avoid double-counting by checking disjointness"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Higher Engineering Mathematics",
+          "author": "B.S. Grewal",
+          "chapter_number": "20",
+          "chapter_title": "Probability and Statistics",
+          "section": "Counting Principles",
+          "page_range": "Not specified",
+          "complexity": "introductory",
+          "relevance_score": 0.3,
+          "source": "model_consensus",
+          "text_snippet": "Basic counting principles including multiplication and addition principles."
+        }
+      ],
+      "video_references": [],
+      "step_by_step_solution": {
+        "approach_type": "Complementary Counting",
+        "total_steps": 6,
+        "solution_path": "Calculate total 3-digit numbers, identify violation conditions, count violations separately, verify disjointness, subtract from total.",
+        "key_insights": [
+          "Violations are disjoint, so simple addition suffices without inclusion-exclusion.",
+          "The condition translates to avoiding the substring '21' in the number's digit sequence."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$N_{\\text{total}} = 9 \\times 10 \\times 10$",
+          "name": "Total 3-digit Numbers",
+          "conditions": "Hundreds digit from 1 to 9, tens and units from 0 to 9",
+          "type": "equation",
+          "relevance": "Base count for subtraction method"
+        },
+        {
+          "formula": "$N_{\\text{valid}} = N_{\\text{total}} - (N_A + N_B)$",
+          "name": "Complementary Counting",
+          "conditions": "When events A and B are disjoint",
+          "type": "principle",
+          "relevance": "Core method to solve by subtracting violations"
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "In computer science, similar counting problems arise in string processing, password policy design, and constraint satisfaction."
+        ],
+        "specific_systems": [],
+        "practical_relevance": "Understanding combinatorial constraints is essential for algorithm design, cryptography, and system security evaluations."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Double-counting violations by assuming '21' can appear in both positions and applying inclusion-exclusion incorrectly.",
+          "why_students_make_it": "Overgeneralization of inclusion-exclusion without verifying overlap.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "common",
+          "how_to_avoid": "Check if the two violation cases can occur simultaneously. Here, they cannot because the tens digit would need to be both 1 and 2.",
+          "consequence": "Would overcount violations, leading to answer less than 881 (e.g., 900 - 20 = 880)."
+        },
+        {
+          "mistake": "Incorrect total count by assuming hundreds digit can be 0, leading to 1000 total 3-digit numbers.",
+          "why_students_make_it": "Forgetting that 3-digit numbers start from 100, not 000 or 099.",
+          "type": "Calculation",
+          "severity": "High",
+          "frequency": "occasional",
+          "how_to_avoid": "Recall definition: 3-digit numbers range from 100 to 999, so hundreds digit has 9 choices (1-9).",
+          "consequence": "Total count would be 1000, making valid numbers 1000 - 19 = 981, which is not an option but could lead to confusion."
+        },
+        {
+          "mistake": "Missing violations in the second case (tens=2, units=1) by restricting hundreds digit to 1-9 but excluding 0, which is correct, but might miscount as 10 if including 0.",
+          "why_students_make_it": "Not carefully considering the range for each digit position.",
+          "type": "Calculation",
+          "severity": "Medium",
+          "frequency": "rare",
+          "how_to_avoid": "Systematically list digit choices: for d2=2 and d3=1, d1 must be 1-9, so 9 choices.",
+          "consequence": "Could count 10 violations for second case, leading to total violations 20 and valid 880."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "3D Count: 9-10-10 for total, avoid 21-right.",
+          "concept": "Remembering the total count (9 hundreds, 10 tens, 10 units) and the constraint to avoid '21'.",
+          "effectiveness": "medium",
+          "context": "For quick recall during exams for similar digit constraint problems."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "concept_recall",
+          "front": "What is the total number of 3-digit numbers?",
+          "back": "900, calculated as 9 choices for hundreds (1-9) × 10 for tens (0-9) × 10 for units (0-9).",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "Why are the two violation cases (hundreds=2,tens=1) and (tens=2,units=1) disjoint in this problem?",
+          "back": "Because the tens digit cannot be both 1 (from first case) and 2 (from second case) simultaneously.",
+          "difficulty": "medium",
+          "time_limit_seconds": 45
+        },
+        {
+          "card_type": "application",
+          "front": "How do you calculate the number of 3-digit numbers where digit 1 is never immediately right of 2?",
+          "back": "Total 3-digit numbers (900) minus violations. Violations: 10 for (2,1,_) and 9 for (_,2,1), total 19. So valid = 900 - 19 = 881.",
+          "difficulty": "medium",
+          "time_limit_seconds": 60
+        },
+        {
+          "card_type": "formula_recall",
+          "front": "What is the complementary counting principle formula used here?",
+          "back": "Valid count = Total count - (Count of violations), assuming violations are counted correctly and disjoint.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Password policy and security analysis",
+          "industry_example": "Designing rules to avoid predictable patterns like '21' in passwords or PINs to enhance security.",
+          "why_it_matters": "Prevents attackers from guessing passwords based on common patterns, improving system security."
+        },
+        {
+          "application": "Algorithm design for string processing",
+          "industry_example": "In text editors or compilers, counting strings that avoid certain substrings for pattern matching or validation.",
+          "why_it_matters": "Efficient algorithms rely on accurate counting to optimize performance and correctness."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "This is a quick counting problem. Calculate total (900) and violations (10+9=19) in under 2 minutes.",
+        "guessing_heuristic": "If stuck, note that options are close: 781, 791, 881, 891. Total is 900, so valid must be less. Violations are small, so valid near 880-890. Guess C (881).",
+        "time_management": "Allocate 2-3 minutes; if not solved quickly, move on and return later."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "combinatorics counting 3-digit numbers",
+        "digit constraints mathematics",
+        "GATE engineering mathematics combinatorics",
+        "complementary counting examples",
+        "inclusion-exclusion principle",
+        "3-digit numbers avoiding substring",
+        "counting with digit patterns",
+        "basic combinatorial enumeration"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Direct Casework on Digit Positions",
+          "description": "Enumerate all possible 3-digit numbers by considering hundreds digit first, then tens and units with constraints to avoid '21'.",
+          "pros_cons": "Pro: Systematic and avoids subtraction. Con: More steps and potential for error in constraint application.",
+          "when_to_use": "If subtraction method is confusing, this provides an alternative check."
+        },
+        {
+          "name": "Using Automata or State Machines",
+          "description": "Model the digit sequence as a state machine where states represent the last digit read, and count valid sequences of length 3.",
+          "pros_cons": "Pro: Generalizable to longer sequences. Con: Overkill for this problem and requires advanced knowledge.",
+          "when_to_use": "For extended problems with more digits or complex patterns."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Computer Science": "Related to finite automata, regular expressions, and string algorithm design for pattern avoidance.",
+        "Probability Theory": "Counting favorable outcomes for events like 'random 3-digit number has no '21' substring'.",
+        "Discrete Mathematics": "Core topic in combinatorics and graph theory for sequence counting."
+      },
+      "deeper_dive_topics": [
+        "General combinatorics of avoiding substrings in sequences",
+        "Generating functions for counting with constraints",
+        "Dynamic programming for counting digit strings",
+        "Applications in coding theory and cryptography"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2017_AE_Q64",
+        "year": 2017,
+        "marks": 2.0,
+        "negative_marks": 0.66,
+        "time_expected": "2-3 minutes",
+        "success_rate_estimate": "70%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 1: Engineering Mathematics",
+        "gate_subsection": "Combinatorics",
+        "weightage": "5-10% in Engineering Mathematics section",
+        "syllabus_relevance_score": "4/5",
+        "feedback_for_syllabus_design": "Directly tests basic combinatorial skills, which are essential for problem-solving in aerospace engineering contexts like optimization and probability."
+      },
+      "rag_quality": {
+        "relevance_score": 0.1,
+        "chunks_used": 0,
+        "sources_distribution": {
+          "books": 0,
+          "videos": 0
+        },
+        "notes": "RAG contained content on numerical methods (significant digits, round-off error), aerodynamics (NACA airfoils), linear algebra (matrix inverses), and floating-point representation, which is not relevant to this combinatorics question. Relied entirely on internal knowledge for solution."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-13T10:30:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Number of 4-digit numbers where digit 1 is never immediately right of 2",
+        "Probability that a randomly chosen 3-digit number contains the substring '21'",
+        "Counting 3-digit numbers with multiple forbidden patterns (e.g., no '12' and no '21')",
+        "General formula for n-digit numbers avoiding a given 2-digit substring"
+      ]
+    },
+    "question_id": "GATE_2017_AE_Q64",
+    "year": 2017,
+    "subject": "General Aptitude",
+    "exam_name": "GATE",
+    "question_type": "MCQ",
+    "question_text": "The number of 3-digit numbers such that the digit 1 is never to the immediate right of 2 is"
+  },
+  "tokens_used": 20187,
+  "input_tokens": 10079,
+  "output_tokens": 10108,
+  "cost": 0.027679969999999998,
+  "time_seconds": 341.87639141082764
+}
