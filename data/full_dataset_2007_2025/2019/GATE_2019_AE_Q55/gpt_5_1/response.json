@@ -1,0 +1,394 @@
+{
+  "model_name": "gpt_5_1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "image_based",
+      "combined_type": "numerical_calculation_image_based",
+      "weight_strategy": "MATH_IMAGE_HYBRID",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "This is a numerical calculation problem involving finding the natural frequency of a spring-mass system. It requires understanding of multiple concepts (spring constant, mass, natural frequency) and involves a multi-step solution to determine the equivalent spring constant and then calculate the frequency. The image is essential for understanding the configuration of the springs and masses.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "25 rad/s",
+        "is_correct": true,
+        "confidence": 0.97,
+        "confidence_type": "single_model",
+        "reasoning": "The system consists of two equal masses m connected in series by three springs: k (left to wall), 2k (between masses), and k (right to wall). Taking rightward displacements x1 and x2 from equilibrium, the restoring forces give the equations of motion: m\\ddot{x}_1 + (k+2k)x_1 - 2k x_2 = 0 and m\\ddot{x}_2 + (k+2k)x_2 - 2k x_1 = 0. Thus the stiffness matrix is K = [[3k, -2k],[-2k, 3k]] and mass matrix M = mI. Natural frequencies satisfy det(K - \\omega^2 M) = 0. This yields (3k - m\\omega^2)^2 - (2k)^2 = 0, so 3k - m\\omega^2 = \\pm 2k. Hence \\omega_1^2 = k/m and \\omega_2^2 = 5k/m. The highest natural frequency is \\omega_2 = \\sqrt{5k/m}. Substituting k = 1250 N/m and m = 10 kg gives \\omega_2 = \\sqrt{5\\times1250/10} = \\sqrt{625} = 25 rad/s, matching the official key."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Step 1: Identify the system as a 2-DOF translational spring-mass system with two equal masses m and three springs: k to the left wall, 2k between masses, and k to the right wall.",
+          "Step 2: Choose generalized coordinates x_1 and x_2 as rightward displacements of the two masses from equilibrium.",
+          "Step 3: Write the force balance on mass 1: left spring force = -k x_1, middle spring force = -2k(x_1 - x_2). Sum gives m \\ddot{x}_1 = -k x_1 - 2k(x_1 - x_2). Rearranged: m \\ddot{x}_1 + 3k x_1 - 2k x_2 = 0.",
+          "Step 4: Write the force balance on mass 2: right spring force = -k x_2, middle spring force = -2k(x_2 - x_1). Sum gives m \\ddot{x}_2 = -k x_2 - 2k(x_2 - x_1). Rearranged: m \\ddot{x}_2 - 2k x_1 + 3k x_2 = 0.",
+          "Step 5: Express in matrix form: [M]{\\ddot{x}} + [K]{x} = 0 with M = m\\begin{bmatrix}1 & 0\\\\0 & 1\\end{bmatrix}, K = \\begin{bmatrix}3k & -2k\\\\-2k & 3k\\end{bmatrix}. Assume harmonic motion {x} = {X} e^{i\\omega t} to obtain (K - \\omega^2 M){X} = 0.",
+          "Step 6: For non-trivial {X}, set det(K - \\omega^2 M) = 0: det\\begin{bmatrix}3k - m\\omega^2 & -2k\\\\-2k & 3k - m\\omega^2\\end{bmatrix} = 0. This gives (3k - m\\omega^2)^2 - (2k)^2 = 0.",
+          "Step 7: Solve the characteristic equation: (3k - m\\omega^2)^2 = 4k^2, so 3k - m\\omega^2 = \\pm 2k. Thus for '+' sign: 3k - m\\omega^2 = 2k \\Rightarrow m\\omega^2 = k \\Rightarrow \\omega_1^2 = k/m. For '−' sign: 3k - m\\omega^2 = -2k \\Rightarrow m\\omega^2 = 5k \\Rightarrow \\omega_2^2 = 5k/m.",
+          "Step 8: Compute the higher frequency: \\omega_2 = \\sqrt{5k/m} = \\sqrt{5\\times1250/10} = \\sqrt{625} = 25 rad/s (highest natural frequency)."
+        ],
+        "formulas_used": [
+          "$m \\ddot{x} + k x = 0$",
+          "$[M]\\{\\ddot{x}\\} + [K]\\{x\\} = 0$",
+          "$\\det([K] - \\omega^2 [M]) = 0$",
+          "$\\omega = \\sqrt{\\dfrac{k}{m}}$",
+          "$\\omega = \\sqrt{\\dfrac{5k}{m}}$"
+        ],
+        "estimated_time_minutes": 3
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Structures",
+          "confidence": 0.96
+        },
+        "topic": {
+          "name": "Vibration of multi-degree-of-freedom systems",
+          "syllabus_ref": "Vibration of beams and multi degree of freedom systems"
+        },
+        "concepts": [
+          {
+            "name": "Natural frequencies of 2-DOF systems",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Mass and stiffness matrices",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Eigenvalue problem in vibrations",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Free vibration of spring-mass systems",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Free vibration of single-degree-of-freedom spring-mass systems",
+          "Hooke\\'s law and spring stiffness concepts",
+          "Matrix representation of equations of motion",
+          "Eigenvalues and determinants for 2x2 matrices"
+        ],
+        "helpful": [
+          "Mode shapes of multi-degree-of-freedom systems",
+          "Physical interpretation of natural frequencies"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Free vibration of single-degree-of-freedom spring-mass systems",
+            "requires: Matrix representation of equations of motion",
+            "enables: Analysis of higher-DOF structural vibration problems",
+            "enables: Design of vibration absorbers and tuned mass dampers"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Medium",
+        "score": 5,
+        "complexity_breakdown": {
+          "conceptual": 5,
+          "mathematical": 5,
+          "problem_solving": 5
+        },
+        "estimated_solve_time_seconds": 150,
+        "expected_accuracy_percent": 65,
+        "difficulty_factors": [
+          "Requires correctly forming coupled equations of motion from the diagram",
+          "Needs comfort with small eigenvalue problem det(K - \\omega^2 M) = 0",
+          "Algebraic manipulation of the determinant can cause mistakes"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Mechanical Vibrations",
+          "author": "S. S. Rao",
+          "chapter_number": "7",
+          "chapter_title": "Multi-Degree-of-Freedom Systems",
+          "section": "Free Vibration of 2-DOF Systems",
+          "page_range": "373-390",
+          "complexity": "intermediate",
+          "relevance_score": 0.96,
+          "source": "model_consensus",
+          "text_snippet": ""
+        },
+        {
+          "source_type": "book",
+          "book": "Aircraft Structures for Engineering Students",
+          "author": "T. H. G. Megson",
+          "chapter_number": "2",
+          "chapter_title": "Vibration of Systems",
+          "section": "Two-degree-of-freedom systems",
+          "page_range": "70-85",
+          "complexity": "intermediate",
+          "relevance_score": 0.9,
+          "source": "model_consensus",
+          "text_snippet": ""
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. S.K. Dwivedy and Prof. Rajiv Tiwari",
+          "timestamp_start": "00:08:03",
+          "timestamp_end": "00:19:50",
+          "video_url": "https://www.youtube.com/watch?v=0LtuQUOX6gg",
+          "book_reference": "S. S. Rao, Mechanical Vibrations",
+          "topic_covered": "Forced and free vibration of a 2-DOF, 3-spring system and determination of natural frequencies",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. Srinivasan Chandrasekaran",
+          "timestamp_start": "00:09:14",
+          "timestamp_end": "00:15:51",
+          "video_url": "https://www.youtube.com/watch?v=KLZZUYoMfAA",
+          "book_reference": "S. S. Rao, Mechanical Vibrations",
+          "topic_covered": "Eigenvalues and eigenvectors for 2-DOF vibration systems and natural frequency calculation",
+          "relevance_score": 0.82,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "First Principles Derivation",
+        "total_steps": 8,
+        "solution_path": "Free-body diagrams \\u2192 Equations of motion \\u2192 Matrix form \\u2192 Characteristic equation \\u2192 Solve for eigenvalues \\u2192 Select highest frequency",
+        "key_insights": [
+          "Symmetry of the system leads to a symmetric stiffness matrix, simplifying the determinant.",
+          "For equal masses, natural frequencies often appear as simple multiples of k/m.",
+          "Highest natural frequency corresponds to the larger eigenvalue of K - \\omega^2 M = 0."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$m \\ddot{x} + k x = 0$",
+          "name": "SDOF free vibration equation",
+          "conditions": "Applies to undamped single-degree-of-freedom spring-mass systems",
+          "type": "equation",
+          "relevance": "Used conceptually to extend to multiple degrees of freedom"
+        },
+        {
+          "formula": "$[M]\\{\\ddot{x}\\} + [K]\\{x\\} = 0$",
+          "name": "Matrix equation of motion for MDOF system",
+          "conditions": "Undamped, free vibration, linear springs and masses",
+          "type": "equation",
+          "relevance": "Core representation for deriving natural frequencies"
+        },
+        {
+          "formula": "$\\det([K] - \\omega^2 [M]) = 0$",
+          "name": "Characteristic equation for natural frequencies",
+          "conditions": "Obtained by assuming harmonic motion and non-trivial mode shapes",
+          "type": "equation",
+          "relevance": "Directly used to compute eigenvalues (\\omega^2) of the system"
+        },
+        {
+          "formula": "$\\omega = \\sqrt{\\dfrac{k}{m}}$",
+          "name": "Natural frequency of SDOF spring-mass system",
+          "conditions": "Undamped, linear spring, single mass",
+          "type": "equation",
+          "relevance": "Appears as one of the eigenfrequencies of the 2-DOF system"
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Vibration analysis of landing gear struts modeled as multi-mass spring systems",
+          "Design of satellite appendages (solar panels, antennas) where multiple masses are connected by flexible elements"
+        ],
+        "specific_systems": [
+          "Two-mass tuned vibration absorbers used in rotorcraft or turbomachinery",
+          "Simplified fuselage or wing models represented as lumped-mass spring systems"
+        ],
+        "practical_relevance": "Accurate prediction of natural frequencies is essential to avoid resonance with engine orders, aerodynamic excitations, or ground-induced vibrations, which can lead to fatigue damage or structural failure."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Writing incorrect spring forces, e.g., using 2k x_1 instead of 2k(x_1 - x_2) for the middle spring.",
+          "why_students_make_it": "They forget that spring force depends on relative displacement of its two ends, not just one coordinate.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "very_common",
+          "how_to_avoid": "Always write spring extension as displacement of right end minus left end; then apply Hooke\\'s law F = k(\\Delta length).",
+          "consequence": "Leads to wrong stiffness matrix and completely incorrect natural frequencies."
+        },
+        {
+          "mistake": "Sign errors when forming the stiffness matrix, such as writing +2k instead of -2k in the off-diagonal terms.",
+          "why_students_make_it": "Difficulty in tracking directions of forces and coordinates in coupled systems.",
+          "type": "Sign Error",
+          "severity": "Medium",
+          "frequency": "common",
+          "how_to_avoid": "After deriving equations, check symmetry: for conservative systems K should be symmetric (K_12 = K_21).",
+          "consequence": "Gives asymmetric K, non-physical modes, and wrong eigenvalues."
+        },
+        {
+          "mistake": "Solving det(K - \\omega^2 M) = 0 incorrectly, especially mishandling the square and \\u00b1 cases.",
+          "why_students_make_it": "Algebraic manipulation under exam pressure.",
+          "type": "Calculation",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Factor carefully: if you get (a - b)^2 - c^2 = 0, rewrite as (a - b - c)(a - b + c) = 0 and solve each factor separately.",
+          "consequence": "Missing one of the natural frequencies or getting non-physical values."
+        },
+        {
+          "mistake": "Reporting the lower natural frequency instead of the highest one asked in the question.",
+          "why_students_make_it": "They compute both frequencies but forget which one is requested.",
+          "type": "Conceptual",
+          "severity": "Low",
+          "frequency": "occasional",
+          "how_to_avoid": "Underline the phrase 'highest natural frequency' in the question and label \\omega_1 < \\omega_2 clearly in your work.",
+          "consequence": "Numerically reasonable but incorrect final answer."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "K matrix is like a network: diagonals are sum of springs at a mass, off-diagonals are negative shared springs.",
+          "concept": "Building stiffness matrix for multi-DOF spring-mass systems",
+          "effectiveness": "high",
+          "context": "When converting free-body equations into matrix form"
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "For an undamped MDOF system [M]{\\ddot{x}} + [K]{x} = 0, what equation gives natural frequencies?",
+          "back": "Assume {x} = {X} e^{i\\omega t} to get (K - \\omega^2 M){X} = 0. Non-trivial {X} requires det(K - \\omega^2 M) = 0.",
+          "difficulty": "easy",
+          "time_limit_seconds": 40
+        },
+        {
+          "card_type": "application",
+          "front": "Two equal masses m are connected by a spring 2k and each to a wall by spring k. Write the stiffness matrix K.",
+          "back": "K = \\begin{bmatrix}3k & -2k\\\\-2k & 3k\\end{bmatrix}, since each mass sees k + 2k on its diagonal and the shared spring gives -2k off-diagonals.",
+          "difficulty": "medium",
+          "time_limit_seconds": 60
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "What does the highest natural frequency physically represent in a 2-DOF system?",
+          "back": "It corresponds to the mode where masses vibrate with more rapid oscillation, typically with adjacent masses moving out of phase and higher effective stiffness.",
+          "difficulty": "medium",
+          "time_limit_seconds": 45
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "How do you ensure correct signs in the stiffness matrix for a 2-DOF spring-mass system?",
+          "back": "Derive equations from free-body diagrams, then check that K is symmetric and that each diagonal term equals the sum of connected spring stiffnesses while off-diagonals are negative shared stiffnesses.",
+          "difficulty": "medium",
+          "time_limit_seconds": 60
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Avoiding resonance in aircraft structures with multiple flexible components",
+          "industry_example": "In a twin-engine aircraft, engine-induced vibrations can excite fuselage and wing modes. Engineers model these as multi-DOF systems to ensure natural frequencies do not coincide with engine orders.",
+          "why_it_matters": "If a structural mode aligns with an excitation frequency, large oscillations can cause passenger discomfort, instrument malfunction, or fatigue cracking."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "Recognize it as a standard 2-DOF spring-mass problem: quickly write equations using symmetry, form 2x2 determinant, and solve for \\omega^2. Algebra is manageable within 2-3 minutes.",
+        "guessing_heuristic": "If stuck, note that one frequency will be around \\sqrt{k/m} and the higher one a few times larger; with k=1250, m=10, \\sqrt{k/m}=~11 rad/s, so a plausible higher frequency is near 25-30 rad/s.",
+        "time_management": "Limit yourself to ~3 minutes. If determinant algebra is taking too long, plug in \\omega^2 = k/m and 5k/m to see if they satisfy the characteristic equation, exploiting symmetry."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "two degree of freedom spring mass system natural frequencies",
+        "mass and stiffness matrix vibration analysis",
+        "determinant K minus omega squared M",
+        "GATE AE vibrations 2 DOF problem",
+        "symmetric stiffness matrix modes",
+        "mechanical vibrations Rao 2 DOF example"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Energy (Rayleigh-Ritz) method for 2-DOF systems",
+          "description": "Assume modal shapes (e.g., in-phase and out-of-phase motion) based on symmetry, compute maximum kinetic and potential energies for each assumed mode, and use T_max = U_max to find \\omega for each mode.",
+          "pros_cons": "Pros: Gives physical insight and can avoid determinant algebra; especially easy for symmetric systems. Cons: Requires good intuition about mode shapes and may be less straightforward for asymmetric systems.",
+          "when_to_use": "Useful when the system is symmetric and likely modes (in-phase, out-of-phase) are obvious, or when you want physical understanding rather than pure matrix manipulation."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Flight Mechanics": "Natural frequencies of flexible modes can couple with rigid-body modes, affecting flutter and dynamic stability.",
+        "Control Systems": "Poles of a closed-loop system are analogous to natural frequencies; eigenvalue analysis is common to both.",
+        "Space Dynamics": "Satellite appendages modeled as multi-DOF systems require eigenvalue analysis to design attitude control without exciting structural modes."
+      },
+      "deeper_dive_topics": [
+        "Mode shapes and orthogonality properties in multi-degree-of-freedom systems",
+        "Modal superposition method for forced vibration response",
+        "Effect of damping on coupled modes in 2-DOF systems",
+        "General eigenvalue problems in structural dynamics using finite element methods"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2019_AE_Q55",
+        "year": 2019,
+        "marks": 2.0,
+        "negative_marks": 0.0,
+        "time_expected": "2-3 minutes",
+        "success_rate_estimate": "65%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Vibration of beams and multi degree of freedom systems",
+        "gate_subsection": "Free vibration of multi degree of freedom systems, natural frequencies and mode shapes",
+        "weightage": "5-8%",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "The question directly tests core skills in setting up and solving 2-DOF vibration problems, which are fundamental for aerospace structural dynamics."
+      },
+      "rag_quality": {
+        "relevance_score": 0.78,
+        "chunks_used": 3,
+        "sources_distribution": {
+          "books": 0,
+          "videos": 3
+        },
+        "notes": "RAG provided detailed examples of SDOF and 2-DOF vibration systems, including derivation of equations of motion, formation of mass and stiffness matrices, and solving det([K] - \\omega^2[M]) = 0. While not matching the exact configuration, the methods and formulas were directly applicable to this problem."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-23T00:00:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Ask for both natural frequencies and corresponding normalized mode shapes for the same 2-DOF system.",
+        "Modify one spring stiffness and ask how the highest natural frequency changes as a function of that stiffness.",
+        "Introduce light damping on each mass and ask for approximate damped natural frequencies and modal damping ratios.",
+        "Apply a harmonic force on one mass and ask at which excitation frequencies resonance occurs and which mass responds more."
+      ]
+    },
+    "question_id": "GATE_2019_AE_Q55",
+    "year": 2019,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "NAT",
+    "question_text": "For the system of springs and masses shown below, k = 1250 N/m and m = 10 kg. The highest natural frequency, omega, of the system is _______ radians/s (round off to the nearest integer)."
+  },
+  "tokens_used": 16611,
+  "input_tokens": 11369,
+  "output_tokens": 5242,
+  "cost": 0.06663125,
+  "time_seconds": 98.2803955078125
+}
