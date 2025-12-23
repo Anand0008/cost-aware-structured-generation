@@ -1,0 +1,404 @@
+{
+  "model_name": "deepseek_r1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "image_based",
+      "combined_type": "numerical_calculation_image_based",
+      "weight_strategy": "MATH_IMAGE_HYBRID",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "This is a numerical calculation problem involving the concept of load factor and its variation along the aircraft during a maneuver. It requires understanding of rigid body dynamics and the effect of acceleration on different points of the aircraft, thus integrating multiple concepts. The image is necessary to understand the geometry.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "2.07",
+        "is_correct": true,
+        "confidence": 0.95,
+        "confidence_type": "single_model",
+        "reasoning": "The vertical load factor at point P is calculated using rigid body kinematics. At the instant of starting the pull-up from steady level flight, the pitch rate is zero, so only pitch acceleration contributes. The vertical acceleration at CG is \\(a_{z,CG} = (n_{CG}-1)g = g\\). At point P, 2 m ahead, additional vertical acceleration due to pitch acceleration is \\( \\alpha \\times r \\) in the vertical direction, yielding \\( a_{z,P} = g + \\alpha x_P \\). With \\( \\alpha = 20 \\, \\text{deg/s}^2 = \\pi/9 \\, \\text{rad/s}^2 \\), \\( x_P = 2 \\, \\text{m} \\), \\( g = 9.81 \\, \\text{m/s}^2 \\), we get \\( n_P = 1 + a_{z,P}/g = 2 + (\\alpha x_P)/g \\approx 2.071 \\), rounding to 2.07. This matches the answer key range 2.06 to 2.08."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Step 1: Convert pitch acceleration from deg/s² to rad/s²: \\( \\alpha = 20 \\times \\frac{\\pi}{180} = \\frac{\\pi}{9} \\, \\text{rad/s}^2 \\).",
+          "Step 2: Find vertical acceleration at CG. Given load factor at CG \\( n_{CG} = 2 \\), and using \\( n = 1 + \\frac{a_z}{g} \\), solve for upward acceleration: \\( a_{z,CG} = (n_{CG}-1)g = g = 9.81 \\, \\text{m/s}^2 \\).",
+          "Step 3: Determine additional vertical acceleration at point P due to pitch acceleration. Since initial pitch rate is zero, only tangential acceleration matters. For a point distance \\( x_P = 2 \\, \\text{m} \\) ahead of CG, the upward acceleration from pitch acceleration is \\( \\alpha \\times x_P \\) (from rigid body kinematics: \\( \\alpha \\times r \\) component in vertical direction).",
+          "Step 4: Compute total upward vertical acceleration at P: \\( a_{z,P} = a_{z,CG} + \\alpha x_P = g + \\alpha x_P \\).",
+          "Step 5: Calculate vertical load factor at P using definition: \\( n_P = 1 + \\frac{a_{z,P}}{g} = 1 + \\frac{g + \\alpha x_P}{g} = 2 + \\frac{\\alpha x_P}{g} \\).",
+          "Step 6: Plug numbers: \\( \\alpha x_P = \\frac{\\pi}{9} \\times 2 \\approx 0.6981 \\, \\text{m/s}^2 \\), \\( \\frac{\\alpha x_P}{g} \\approx \\frac{0.6981}{9.81} \\approx 0.07116 \\).",
+          "Step 7: \\( n_P \\approx 2 + 0.07116 = 2.07116 \\), round to 2.07 (two decimal places)."
+        ],
+        "formulas_used": [
+          "$\\alpha_{\\text{rad}} = \\alpha_{\\text{deg}} \\times \\frac{\\pi}{180}$",
+          "$n = 1 + \\frac{a_z}{g}$",
+          "$a_{z,P} = a_{z,CG} + (\\alpha \\times r)_{z}$",
+          "$a_{\\text{tangential, vertical}} = \\alpha \\, x$ for points ahead of CG",
+          "$n_P = 2 + \\frac{\\alpha \\, x_P}{g}$"
+        ],
+        "estimated_time_minutes": 3
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Flight Mechanics",
+          "confidence": 1.0
+        },
+        "topic": {
+          "name": "Maneuver Loads and Performance",
+          "syllabus_ref": "Section 4: Flight Mechanics -> Performance and Maneuverability"
+        },
+        "concepts": [
+          {
+            "name": "Load Factor",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Rigid Body Kinematics",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Pitch Acceleration",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Pull-up Maneuver",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Definition of load factor \\( n = L/W \\) and relation to vertical acceleration \\( n = 1 + a_z/g \\).",
+          "Rigid body kinematics: acceleration of a point on a rotating body, \\( a_P = a_{CG} + \\alpha \\times r + \\omega \\times (\\omega \\times r) \\).",
+          "Angular unit conversion between degrees and radians."
+        ],
+        "helpful": [
+          "Standard aircraft body axes (x forward, y right, z down).",
+          "Cross product operation and right-hand rule for vector directions."
+        ],
+        "dependency_tree": {
+          "Load Factor at Point P": [
+            "requires: Load factor definition and vertical acceleration",
+            "requires: Rigid body kinematics with angular acceleration",
+            "enables: Structural load analysis during maneuvers",
+            "enables: V-n diagram interpretation for different points on aircraft"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Medium",
+        "score": 6,
+        "complexity_breakdown": {
+          "conceptual": 5,
+          "mathematical": 5,
+          "problem_solving": 7
+        },
+        "estimated_solve_time_seconds": 180,
+        "expected_accuracy_percent": 65,
+        "difficulty_factors": [
+          "Requires combining load factor concept with rotational dynamics.",
+          "Potential sign errors in cross product or unit conversion.",
+          "Image interpretation for geometry."
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Introduction to Flight",
+          "author": "John D. Anderson Jr.",
+          "chapter_number": "6",
+          "chapter_title": "Elements of Airplane Performance",
+          "section": "Pull-Up Maneuver",
+          "page_range": "Not specified in RAG",
+          "complexity": "introductory",
+          "relevance_score": 0.8,
+          "source": "rag_retrieval",
+          "text_snippet": "Pull-up occurs when an airplane in straight, level flight suddenly experiences increased lift (L > W), causing it to turn upward."
+        },
+        {
+          "source_type": "book",
+          "book": "Aircraft Structures for Engineering Students",
+          "author": "T.H.G. Megson",
+          "chapter_number": "14",
+          "chapter_title": "Airframe loads",
+          "section": "§14.3",
+          "page_range": "Not specified",
+          "complexity": "intermediate",
+          "relevance_score": 0.7,
+          "source": "rag_retrieval",
+          "text_snippet": "Derivation for load factor in a steady pull-out: \\( n = \\frac{V^2}{gR} + \\cos\\theta \\)."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. A.K. Ghosh",
+          "timestamp_start": "00:01:07",
+          "timestamp_end": "00:03:31",
+          "video_url": "https://www.youtube.com/watch?v=aWOLkpHQRmA",
+          "book_reference": "Anderson, J.D.",
+          "topic_covered": "Trim Maneuver, Pull-up dynamics",
+          "relevance_score": 0.75,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. Anup Ghosh",
+          "timestamp_start": "00:12:35",
+          "timestamp_end": "00:20:43",
+          "video_url": "https://www.youtube.com/watch?v=smBHK4AQZ9g",
+          "book_reference": "Megson, T.H.G.",
+          "topic_covered": "Aerodynamic Loads and Load Factors",
+          "relevance_score": 0.7,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Rigid Body Kinematics with Load Factor Definition",
+        "total_steps": 7,
+        "solution_path": "Convert units → Find CG acceleration → Add rotational contribution → Compute load factor at P",
+        "key_insights": [
+          "At start of maneuver, pitch rate is zero, so centripetal acceleration is zero.",
+          "Vertical acceleration from pitch acceleration is \\( \\alpha \\times r \\) in upward direction for points ahead of CG.",
+          "Load factor is linear in vertical acceleration: \\( n = 1 + a_z/g \\)."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$n = 1 + \\frac{a_z}{g}$",
+          "name": "Load Factor Definition",
+          "conditions": "For upward vertical acceleration \\( a_z \\) relative to Earth, g is acceleration due to gravity.",
+          "type": "equation",
+          "relevance": "Core formula to relate load factor to vertical acceleration at any point."
+        },
+        {
+          "formula": "$a_{P} = a_{CG} + \\alpha \\times r_{P/CG} + \\omega \\times (\\omega \\times r_{P/CG})$",
+          "name": "Rigid Body Acceleration",
+          "conditions": "For a point P on a rigid body rotating about CG, with angular velocity \\( \\omega \\) and angular acceleration \\( \\alpha \\). Here \\( \\omega = 0 \\) initially.",
+          "type": "equation",
+          "relevance": "Used to find acceleration at point P due to rotational motion."
+        },
+        {
+          "formula": "$a_{\\text{vertical, tangential}} = \\alpha \\, d$",
+          "name": "Tangential Acceleration Component",
+          "conditions": "For rotation about a fixed axis, distance d perpendicular to axis. In this case, d is x-distance along fuselage.",
+          "type": "principle",
+          "relevance": "Simplifies the cross product to get vertical acceleration from pitch acceleration."
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Calculation of load factors on aircraft nose during aggressive pull-up maneuvers, important for structural design of fighter aircraft.",
+          "Instrumentation placement: Accelerometers at different locations measure local load factors for flight testing."
+        ],
+        "specific_systems": [
+          "Fighter aircraft like Sukhoi Su-30 performing high-g maneuvers.",
+          "Civil aircraft certification for maneuver loads per regulations like FAR 25."
+        ],
+        "practical_relevance": "Ensuring structural integrity by accounting for additional loads due to rotational accelerations during dynamic maneuvers."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Forgetting to convert pitch acceleration from degrees per second squared to radians per second squared.",
+          "why_students_make_it": "Unit oversight; degrees are common in aviation, but radians are needed for SI unit consistency.",
+          "type": "Units",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Always check units: angular quantities in dynamics must be in rad for use with linear distances (m).",
+          "consequence": "Answer off by factor of ~57.3 (π/180 inverse), leading to completely wrong value."
+        },
+        {
+          "mistake": "Sign error in the direction of additional vertical acceleration from pitch acceleration.",
+          "why_students_make_it": "Confusion in cross product direction or aircraft axes orientation.",
+          "type": "Sign Error",
+          "severity": "High",
+          "frequency": "occasional",
+          "how_to_avoid": "Use consistent coordinate system (e.g., x forward, y right, z down) and right-hand rule, or intuit: nose-up acceleration pushes nose upward, so points ahead experience upward acceleration relative to CG.",
+          "consequence": "Incorrect load factor (lower or higher than actual)."
+        },
+        {
+          "mistake": "Including centripetal acceleration term when initial pitch rate is zero.",
+          "why_students_make_it": "Misremembering rigid body formula or not noting 'starts executing' implies zero initial angular velocity.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Carefully read problem: 'starts executing from steady level attitude' means initial ω = 0. Only angular acceleration matters at this instant.",
+          "consequence": "Adds unnecessary term, complicating calculation."
+        },
+        {
+          "mistake": "Using load factor directly as acceleration without adding 1: e.g., thinking n_P = a_z,P/g instead of n_P = 1 + a_z,P/g.",
+          "why_students_make_it": "Rote memory without understanding definition: load factor is ratio of lift to weight, and for vertical acceleration, n = 1 + a_z/g.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "common",
+          "how_to_avoid": "Recall physical meaning: n=1 corresponds to no vertical acceleration (lift=weight). Derive from L - W = m a_z.",
+          "consequence": "Load factor off by 1, e.g., getting 1.07 instead of 2.07."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "LOAD: Lift Over Weight Added to One for Acceleration Divided by g: n = 1 + a/g",
+          "concept": "Load factor formula for vertical acceleration",
+          "effectiveness": "medium",
+          "context": "When solving for load factor given vertical acceleration."
+        },
+        {
+          "mnemonic": "Pitch Up, Nose Up: Points Ahead Accelerate Up",
+          "concept": "Direction of tangential acceleration due to nose-up pitch acceleration",
+          "effectiveness": "high",
+          "context": "To remember sign for points ahead of CG during pull-up."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "definition",
+          "front": "What is the definition of vertical load factor n in terms of vertical acceleration a_z?",
+          "back": "n = 1 + a_z/g, where a_z is upward acceleration relative to Earth, g is gravity. For n=2, a_z = g.",
+          "difficulty": "easy",
+          "time_limit_seconds": 20
+        },
+        {
+          "card_type": "formula_recall",
+          "front": "Write the rigid body acceleration formula for a point P relative to CG, assuming initial angular velocity is zero.",
+          "back": "a_P = a_CG + α × r_{P/CG}, where α is angular acceleration, r is position vector from CG to P.",
+          "difficulty": "medium",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "application",
+          "front": "For an aircraft starting a pull-up with pitch acceleration α, point 3 m ahead of CG. What is additional upward acceleration?",
+          "back": "Additional upward acceleration = α * distance, if α in rad/s² and distance in m. So a_add = α * 3 m/s² upward.",
+          "difficulty": "medium",
+          "time_limit_seconds": 25
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "What is a common unit mistake in this problem and how to avoid it?",
+          "back": "Pitch acceleration given in deg/s² must be converted to rad/s² by multiplying by π/180. Otherwise, answer is off by factor ~57.3.",
+          "difficulty": "easy",
+          "time_limit_seconds": 20
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Structural design of aircraft fuselage and nose section.",
+          "industry_example": "During flight testing of a new fighter jet, accelerometers placed on the nose measure local load factors to validate stress calculations during high-g pull-up maneuvers.",
+          "why_it_matters": "Ensures that the aircraft can withstand maneuver loads without structural failure, critical for safety and certification."
+        },
+        {
+          "application": "Pilot training and g-force awareness.",
+          "industry_example": "Pilots experience varying load factors along their body during aggressive maneuvers; understanding local accelerations helps design g-suits and seating.",
+          "why_it_matters": "To prevent pilot disorientation or injury due to high g-forces."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt if comfortable with dynamics",
+        "triage_tip": "Quickly identify: it's a numerical calculation with clear steps (unit conversion, load factor formula, rigid body kinematics). If unsure, skip but worth trying as it's only 2 marks.",
+        "guessing_heuristic": "If guessing, note that load factor at CG is 2, at nose it should be slightly higher due to rotation, so pick >2.0, likely around 2.07.",
+        "time_management": "Spend 2-3 minutes max. If stuck, move on."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "pull-up maneuver load factor calculation",
+        "pitch acceleration effect on aircraft load factor",
+        "rigid body kinematics aircraft maneuver",
+        "vertical load factor at different points on airplane",
+        "GATE aerospace flight mechanics numerical",
+        "aircraft rotational dynamics load factor",
+        "symmetric pull-up with pitch acceleration",
+        "CG vs nose acceleration during pull-up"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Energy Method (not direct)",
+          "description": "For steady pull-up, energy conservation can relate speed to radius, but here with acceleration, kinematics is more straightforward.",
+          "pros_cons": "Not applicable for instantaneous acceleration; kinematics is necessary.",
+          "when_to_use": "Not recommended for this problem."
+        },
+        {
+          "name": "Full Dynamics with Equations of Motion",
+          "description": "Write full 6-DOF equations for aircraft and solve for accelerations at different points. Overkill for this instant.",
+          "pros_cons": "Comprehensive but time-consuming; useful for simulation.",
+          "when_to_use": "In detailed flight dynamics analysis, not for exam quick calculation."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Dynamics of Rigid Bodies": "Direct application of rotational kinematics and acceleration composition.",
+        "Physics: Circular Motion": "Centripetal acceleration concepts, though here initial rate is zero.",
+        "Engineering Mechanics": "Vector cross products, coordinate systems."
+      },
+      "deeper_dive_topics": [
+        "Effect of non-zero initial pitch rate on load factor distribution.",
+        "Load factor variation along fuselage during dynamic maneuvers.",
+        "Structural dynamics: how accelerations translate to stress and bending moments.",
+        "Flight test instrumentation for measuring local load factors."
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2019_AE_Q40",
+        "year": 2019,
+        "marks": 2.0,
+        "negative_marks": 0.0,
+        "time_expected": "2-3 minutes",
+        "success_rate_estimate": "65%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Flight Mechanics",
+        "gate_subsection": "Performance and Maneuverability",
+        "weightage": "Approx 10-15% in Flight Mechanics",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Well-aligned with syllabus topics: aircraft performance, maneuver loads, and basic dynamics."
+      },
+      "rag_quality": {
+        "relevance_score": 0.7,
+        "chunks_used": 4,
+        "sources_distribution": {
+          "books": 2,
+          "videos": 2
+        },
+        "notes": "RAG provided foundational knowledge on pull-up maneuvers, load factor definitions, and steady-state relationships (e.g., q = ng/V). However, it did not explicitly cover the effect of pitch acceleration or rigid body kinematics for points off CG. Internal knowledge was used to supplement rotational dynamics."
+      },
+      "model_meta": {
+        "timestamp": "2025-07-20T10:30:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Same setup but with initial pitch rate non-zero, including centripetal acceleration.",
+        "Point P behind CG instead of ahead, or at wingtip.",
+        "Given load factor at P, find pitch acceleration or distance.",
+        "Include horizontal acceleration effects or combined maneuvers."
+      ]
+    },
+    "question_id": "GATE_2019_AE_Q40",
+    "year": 2019,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "NAT",
+    "question_text": "The airplane shown in figure starts executing a symmetric pull-up maneuver from steady level attitude with a constant nose-up pitch acceleration of 20 deg/s². The vertical load factor measured at this instant at the centre of gravity (CG) is 2. Given that the acceleration due to gravity is 9.81 m/s², the vertical load factor measured at point P on the nose of the airplane, which is 2 m ahead of the CG, is _____ (round off to 2 decimal places)."
+  },
+  "tokens_used": 21968,
+  "input_tokens": 10555,
+  "output_tokens": 11413,
+  "cost": 0.03079972,
+  "time_seconds": 405.89289903640747
+}

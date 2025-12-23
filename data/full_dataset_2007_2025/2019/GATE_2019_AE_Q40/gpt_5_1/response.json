@@ -1,0 +1,409 @@
+{
+  "model_name": "gpt_5_1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "image_based",
+      "combined_type": "numerical_calculation_image_based",
+      "weight_strategy": "MATH_IMAGE_HYBRID",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "This is a numerical calculation problem involving the concept of load factor and its variation along the aircraft during a maneuver. It requires understanding of rigid body dynamics and the effect of acceleration on different points of the aircraft, thus integrating multiple concepts. The image is necessary to understand the geometry.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "2.07 (dimensionless load factor)",
+        "is_correct": true,
+        "confidence": 0.97,
+        "confidence_type": "single_model",
+        "reasoning": "Load factor at CG is given as 2, meaning the vertical acceleration of CG is $(n_{CG}-1)g = (2-1)g = g$ upward. During the symmetric pull-up, the airplane has a nose-up pitch angular acceleration $\\dot{q}$ (about the lateral axis through CG). A point at distance $x$ ahead of CG experiences an additional vertical tangential acceleration $a_{P,rel} = \\alpha x$, where $\\alpha$ is the angular acceleration in rad/s$^2$ and $x$ is the perpendicular distance from the rotation axis. Here $x = 2\\,\\text{m}$ and $\\alpha = 20\\,\\text{deg/s}^2 = 20\\times \\pi/180 \\approx 0.3491\\,\\text{rad/s}^2$. Thus $a_{P,rel} = 0.3491 \\times 2 \\approx 0.6982\\,\\text{m/s}^2$ upward. Total vertical acceleration at P is $a_P = a_{CG} + a_{P,rel} = 9.81 + 0.6982 \\approx 10.508\\,\\text{m/s}^2$. The apparent load factor at P is $n_P = 1 + a_P/g = 1 + 10.508/9.81 \\approx 2.071$. Rounded to two decimals, $n_P \\approx 2.07$, which lies within the official key range 2.06 to 2.08."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Identify that load factor $n$ at any point is $n = 1 + a_z/g$, where $a_z$ is the upward translational acceleration of that point. At CG, $n_{CG} = 2$ is given.",
+          "Compute vertical acceleration of CG: $a_{CG} = (n_{CG} - 1)g = (2-1)g = 9.81\\,\\text{m/s}^2$ upward.",
+          "Convert the given pitch angular acceleration from degrees/s$^2$ to rad/s$^2$: $\\alpha = 20\\,\\text{deg/s}^2 = 20\\times \\pi/180 \\approx 0.3491\\,\\text{rad/s}^2$.",
+          "For a rigid body rotating about CG, the additional tangential acceleration of a point at distance $x$ from CG is $a_{rel} = \\alpha x$ (perpendicular to the body axis). Here $x = 2\\,\\text{m}$ ahead of CG, so $a_{rel} = 0.3491 \\times 2 \\approx 0.6982\\,\\text{m/s}^2$ upward.",
+          "Add this to CG acceleration to get total vertical acceleration at P: $a_P = a_{CG} + a_{rel} = 9.81 + 0.6982 \\approx 10.508\\,\\text{m/s}^2$ upward.",
+          "Compute load factor at P: $n_P = 1 + a_P/g = 1 + 10.508/9.81 \\approx 2.071$. Round to two decimal places: $n_P = 2.07$."
+        ],
+        "formulas_used": [
+          "$n = \\dfrac{L}{W}$",
+          "$n = 1 + \\dfrac{a_z}{g}$",
+          "$a_{CG} = (n_{CG}-1)g$",
+          "$\\alpha_{rad} = \\alpha_{deg} \\dfrac{\\pi}{180}$",
+          "$a_{rel} = \\alpha x$",
+          "$n_P = 1 + \\dfrac{a_P}{g}$"
+        ],
+        "estimated_time_minutes": 3
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Flight Mechanics",
+          "confidence": 0.98
+        },
+        "topic": {
+          "name": "Turning flight and maneuver load factor",
+          "syllabus_ref": "Flight Mechanics -> Performance of airplanes -> Turning flight, load factor"
+        },
+        "concepts": [
+          {
+            "name": "Load factor in maneuvers",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Rigid body kinematics (translational and rotational acceleration)",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Pull-up maneuver dynamics",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Conversion between degrees and radians",
+            "importance": "tertiary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Definition of load factor as ratio of lift to weight and as apparent g-level",
+          "Relation between linear acceleration and load factor: $n = 1 + a_z/g$",
+          "Rigid body kinematics: tangential acceleration $a_t = \\alpha r$",
+          "Unit conversion between degrees and radians"
+        ],
+        "helpful": [
+          "Understanding of pull-up maneuver and pitch motion",
+          "Basic Newtonian dynamics in non-inertial frames"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Definition of load factor and its link to vertical acceleration",
+            "requires: Rigid body rotational kinematics about CG",
+            "enables: Analysis of structural loads at different points on the airframe during maneuvers",
+            "enables: Design of maneuver load envelopes and V-n diagrams"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Medium",
+        "score": 5,
+        "complexity_breakdown": {
+          "conceptual": 6,
+          "mathematical": 4,
+          "problem_solving": 5
+        },
+        "estimated_solve_time_seconds": 150,
+        "expected_accuracy_percent": 55,
+        "difficulty_factors": [
+          "Requires recognizing that load factor varies along the fuselage due to rotational acceleration",
+          "Needs correct use of rigid-body acceleration formula and degree-to-radian conversion"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Introduction to Flight",
+          "author": "John D. Anderson Jr.",
+          "chapter_number": "6",
+          "chapter_title": "Elements of Airplane Performance",
+          "section": "Turning flight, pull-up maneuver and load factor",
+          "page_range": "approx. 350-370",
+          "complexity": "intermediate",
+          "relevance_score": 0.78,
+          "source": "rag_retrieval",
+          "text_snippet": "The pull-up maneuver shows the effect of excess lift. The net upward force causes a curved flight path in the vertical plane. The load factor n is defined as L/W and quantifies the acceleration experienced in g's."
+        },
+        {
+          "source_type": "book",
+          "book": "Aircraft Structures for Engineering Students",
+          "author": "T.H.G. Megson",
+          "chapter_number": "14",
+          "chapter_title": "Airframe loads",
+          "section": "14.3 Load Factor in a Steady Pull-Out",
+          "page_range": "approx. 640-650",
+          "complexity": "intermediate",
+          "relevance_score": 0.7,
+          "source": "rag_retrieval",
+          "text_snippet": "The manoeuvre load factor n for an aircraft performing a steady pull-out from a dive is derived using the normal force balance and centripetal acceleration, showing dependence on V^2 and radius R."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. A.K. Ghosh",
+          "timestamp_start": "00:01:07",
+          "timestamp_end": "00:03:31",
+          "video_url": "https://www.youtube.com/watch?v=aWOLkpHQRmA",
+          "book_reference": "Introduction to Flight by Anderson",
+          "topic_covered": "Pull-up maneuver, load factor and pitch rate",
+          "relevance_score": 0.8,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. Anup Ghosh",
+          "timestamp_start": "00:12:35",
+          "timestamp_end": "00:20:43",
+          "video_url": "https://www.youtube.com/watch?v=smBHK4AQZ9g",
+          "book_reference": "Megson, Aircraft Structures for Engineering Students",
+          "topic_covered": "Aerodynamic loads and load factors in maneuvering flight",
+          "relevance_score": 0.75,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Direct Formula Application",
+        "total_steps": 6,
+        "solution_path": "Use load factor to get CG acceleration \\u2192 use rigid-body kinematics to get additional acceleration at nose \\u2192 recompute load factor at nose",
+        "key_insights": [
+          "Load factor at a point in a rotating rigid body is not uniform because different points have different linear accelerations.",
+          "The extra acceleration at the nose comes purely from angular acceleration about the CG, since the motion is symmetric pull-up."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$n = \\dfrac{L}{W}$",
+          "name": "Definition of load factor",
+          "conditions": "General definition in flight mechanics; L is total lift, W is weight",
+          "type": "equation",
+          "relevance": "Connects aerodynamic forces to apparent g-level"
+        },
+        {
+          "formula": "$n = 1 + \\dfrac{a_z}{g}$",
+          "name": "Load factor and vertical acceleration",
+          "conditions": "For motion in vertical plane where positive $a_z$ is upward",
+          "type": "equation",
+          "relevance": "Used to convert between acceleration and load factor at CG and at point P"
+        },
+        {
+          "formula": "$a_t = \\alpha r$",
+          "name": "Tangential acceleration in rigid body rotation",
+          "conditions": "Rigid body rotating with angular acceleration $\\alpha$ about an axis; r is perpendicular distance from axis",
+          "type": "equation",
+          "relevance": "Gives additional acceleration at nose due to pitch angular acceleration"
+        },
+        {
+          "formula": "$\\alpha_{rad} = \\alpha_{deg} \\dfrac{\\pi}{180}$",
+          "name": "Degree to radian conversion",
+          "conditions": "Converting angular acceleration from deg/s^2 to rad/s^2",
+          "type": "constant",
+          "relevance": "Needed to use SI units in acceleration calculation"
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Structural design of fighter aircraft fuselages must consider higher local load factors at nose and tail during aggressive pull-up maneuvers.",
+          "Flight test instrumentation often measures accelerations at multiple fuselage stations to validate structural models and ensure safety margins."
+        ],
+        "specific_systems": [
+          "Modern combat aircraft like the F-16 or Su-30, which routinely perform high-g pull-ups and must withstand non-uniform load distributions along the fuselage."
+        ],
+        "practical_relevance": "Understanding how load factor varies along the aircraft helps engineers size structural members, place sensors, and define safe maneuver limits to avoid structural failure or pilot injury."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Assuming the load factor is the same at all points on the airplane and directly answering 2.",
+          "why_students_make_it": "They associate load factor only with overall lift/weight and forget rigid-body kinematics.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "very_common",
+          "how_to_avoid": "Always ask: Does the body have angular acceleration? If yes, different points have different linear accelerations and hence different apparent g-levels.",
+          "consequence": "Gives an answer with zero correction, missing the effect of pitch acceleration."
+        },
+        {
+          "mistake": "Using angular acceleration in degrees/s^2 directly in $a = \\alpha r$ without converting to radians.",
+          "why_students_make_it": "They remember the formula but forget that SI units require radians.",
+          "type": "Units",
+          "severity": "Medium",
+          "frequency": "common",
+          "how_to_avoid": "Before plugging into rotational formulas, quickly check: Is $\\alpha$ in rad/s^2? If not, convert using $\\pi/180$.",
+          "consequence": "Underestimates the additional acceleration by a factor of about 57.3, leading to almost no change in load factor."
+        },
+        {
+          "mistake": "Using $n = a_z/g$ instead of $n = 1 + a_z/g$, effectively ignoring the 1g due to weight.",
+          "why_students_make_it": "Confusion between total g-level and excess g over weight.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "occasional",
+          "how_to_avoid": "Remember that even in straight-and-level flight with no acceleration, $n=1$. So any formula for n must give 1 when $a_z=0$.",
+          "consequence": "Produces load factor values that are too small by 1g, giving about 1.07 instead of 2.07."
+        },
+        {
+          "mistake": "Taking the relative acceleration at P as downward instead of upward, leading to $a_P = a_{CG} - a_{rel}$.",
+          "why_students_make_it": "Difficulty visualizing direction of tangential acceleration for nose-up rotation.",
+          "type": "Sign Error",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Sketch the rotation: for nose-up (counterclockwise) angular acceleration, a point ahead of CG moves upward, so its tangential acceleration is upward.",
+          "consequence": "Gives a slightly smaller load factor than at CG instead of larger."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "Load factor n = 1 plus a over g",
+          "concept": "Relation between vertical acceleration and load factor",
+          "effectiveness": "high",
+          "context": "Use whenever converting between measured acceleration and g-level at a point on the aircraft."
+        },
+        {
+          "mnemonic": "RAD before R: use RAdians in a = alpha * Radius",
+          "concept": "Need for radians in rotational kinematics formulas",
+          "effectiveness": "medium",
+          "context": "Before using $a = \\alpha r$, check units of $\\alpha$."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "What is the relation between vertical acceleration $a_z$ and load factor $n$ for motion in the vertical plane?",
+          "back": "$n = 1 + a_z/g$, where $a_z$ is upward linear acceleration of the point and $g$ is gravitational acceleration.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "In a rigid aircraft with pitch angular acceleration, is load factor the same at nose and CG? Why or why not?",
+          "back": "No. Angular acceleration causes different linear accelerations at different distances from the CG ($a_t = \\alpha r$), so the apparent g-level (load factor) varies along the fuselage.",
+          "difficulty": "medium",
+          "time_limit_seconds": 45
+        },
+        {
+          "card_type": "formula_recall",
+          "front": "Write the expression for tangential acceleration of a point at distance r from the rotation axis for angular acceleration $\\alpha$.",
+          "back": "$a_t = \\alpha r$, directed perpendicular to the radius in the sense of increasing angular velocity.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "application",
+          "front": "An aircraft nose is 3 m ahead of CG. Pitch angular acceleration is 10 deg/s² nose-up. What is additional vertical acceleration at the nose?",
+          "back": "Convert: $\\alpha = 10\\pi/180 \\approx 0.1745$ rad/s². Then $a_t = \\alpha r = 0.1745 \\times 3 \\approx 0.5235$ m/s² upward.",
+          "difficulty": "medium",
+          "time_limit_seconds": 60
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "You computed $n = a_z/g$ and got 1.0 for straight-and-level flight. What is wrong?",
+          "back": "You forgot the base 1g from weight. Correct formula is $n = 1 + a_z/g$, which gives $n=1$ when $a_z=0$.",
+          "difficulty": "medium",
+          "time_limit_seconds": 45
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Designing fuselage and cockpit structures for high-g maneuvers",
+          "industry_example": "During a 6g pull-up in a fighter, the nose may experience slightly higher g than the CG due to pitch angular acceleration. Designers must account for this when sizing frames, skins, and mounting avionics.",
+          "why_it_matters": "Underestimating local load factors can lead to structural fatigue, cracking, or catastrophic failure during aggressive maneuvers."
+        },
+        {
+          "application": "Placement and calibration of accelerometers in flight test",
+          "industry_example": "Test aircraft often have accelerometers at CG and at nose/tail. Engineers use rigid-body relations to convert between these readings and validate structural models.",
+          "why_it_matters": "Incorrect interpretation of sensor data can misrepresent actual loads, affecting certification and safety margins."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "Notice it is a short NAT with clear numbers. Identify that you only need CG acceleration from given n, then add $\\alpha r$ term and recompute n. If you remember $n = 1 + a/g$ and $a = \\alpha r$, it is a quick 2–3 line calculation.",
+        "guessing_heuristic": "If stuck, reason that nose-up angular acceleration should slightly increase load factor at the nose above 2, so an answer just above 2 is more plausible than below.",
+        "time_management": "Aim to finish within 2–3 minutes. Do unit conversion and multiplication carefully once; avoid re-checking too many times."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "aircraft load factor pull-up maneuver",
+        "rigid body kinematics aircraft pitch acceleration",
+        "tangential acceleration a = alpha r example",
+        "GATE AE load factor symmetric pull-up",
+        "vertical maneuver load factor variation along fuselage",
+        "Anderson Introduction to Flight pull-up maneuver",
+        "Megson airframe loads pull-out load factor"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Non-inertial frame (aircraft-fixed) approach",
+          "description": "Treat an observer at point P in the accelerating aircraft frame. Write apparent weight as vector sum of true weight and fictitious inertial forces due to translational and rotational accelerations, then compute effective g-level.",
+          "pros_cons": "Pros: Generalizes to more complex 3D motions and non-symmetric maneuvers. Cons: More algebra and vector handling than needed for this simple 2D case.",
+          "when_to_use": "Useful when accelerations are not purely vertical or when multiple rotational components (pitch, roll, yaw) are present."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Engineering Mechanics": "Uses rigid body kinematics (translational and rotational acceleration) and Newton's laws, core topics in dynamics.",
+        "Structures": "Local load factors feed into bending and shear load calculations for fuselage and wing structures.",
+        "Control Systems": "Pitch acceleration is related to control inputs (elevator deflection) and aircraft pitch dynamics models."
+      },
+      "deeper_dive_topics": [
+        "Derivation of full rigid-body acceleration field for a general 6-DOF aircraft motion",
+        "V–n diagram construction and maneuver envelope for different aircraft types",
+        "Pilot physiological limits and g-tolerance in high-g maneuvers",
+        "Aeroelastic effects of non-uniform load factors along wings and fuselage"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2019_AE_Q40",
+        "year": 2019,
+        "marks": 2.0,
+        "negative_marks": 0.0,
+        "time_expected": "2-3 minutes",
+        "success_rate_estimate": "55%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Flight Mechanics",
+        "gate_subsection": "Performance of airplanes; turning flight and maneuvering; load factor",
+        "weightage": "10-15%",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Excellent integrative question linking maneuver load factor with rigid-body dynamics, appropriate for testing deeper understanding beyond simple level-turn formulas."
+      },
+      "rag_quality": {
+        "relevance_score": 0.7,
+        "chunks_used": 4,
+        "sources_distribution": {
+          "books": 2,
+          "videos": 2
+        },
+        "notes": "RAG provided solid background on load factor, pull-up maneuvers, and related formulas (Anderson, Megson, and lecture notes). However, the specific idea of different load factors at different points due to angular acceleration was not explicitly covered, so rigid-body kinematics reasoning came mainly from internal knowledge."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-23T00:00:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Ask for maximum allowable pitch acceleration if structural limit load factor at the nose is specified.",
+        "Extend to find load factor at the tail, located a given distance behind CG, during the same maneuver.",
+        "Combine with V–n diagram: given structural limits, determine maximum speed at which such a pitch acceleration is allowed.",
+        "Include both pitch rate and pitch acceleration to compute total acceleration (centripetal plus tangential) at a point off the CG."
+      ]
+    },
+    "question_id": "GATE_2019_AE_Q40",
+    "year": 2019,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "NAT",
+    "question_text": "The airplane shown in figure starts executing a symmetric pull-up maneuver from steady level attitude with a constant nose-up pitch acceleration of 20 deg/s². The vertical load factor measured at this instant at the centre of gravity (CG) is 2. Given that the acceleration due to gravity is 9.81 m/s², the vertical load factor measured at point P on the nose of the airplane, which is 2 m ahead of the CG, is _____ (round off to 2 decimal places)."
+  },
+  "tokens_used": 16029,
+  "input_tokens": 10728,
+  "output_tokens": 5301,
+  "cost": 0.06642,
+  "time_seconds": 41.94477152824402
+}
