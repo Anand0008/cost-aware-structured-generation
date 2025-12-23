@@ -1,0 +1,411 @@
+{
+  "model_name": "deepseek_r1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "image_based",
+      "combined_type": "numerical_calculation_image_based",
+      "weight_strategy": "MATH_IMAGE_HYBRID",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "This is a numerical calculation problem involving structural mechanics. It requires calculating the reaction force at a support given a distributed load. The image is essential for understanding the beam's support conditions. It involves multiple steps to solve for the reaction force, but it doesn't require derivation or integration of many concepts.",
+      "difficulty_score": 5,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": false,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": false
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "3.75 N",
+        "is_correct": true,
+        "confidence": 1.0,
+        "confidence_type": "single_model",
+        "reasoning": "The beam is a propped cantilever (fixed at one end, simply supported at the other) under UDL. Using the principle of superposition, the reaction at the simple support is found by setting the net deflection at that end to zero. This yields $R_B = \\frac{3wL}{8} = \\frac{3 \\times 10 \\times 1}{8} = 3.75$ N, which matches the answer key range of 3.74-3.76 N."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Step 1: Identify the beam type and unknown reactions. The beam is fixed at left end A (reactions: vertical force $R_A$, moment $M_A$) and simply supported at right end B (vertical reaction $R_B$). Total unknowns: 3. Equilibrium equations: 2 (ΣF_y=0, ΣM=0). Hence, the beam is statically indeterminate to the first degree.",
+          "Step 2: Write equilibrium equations. ΣF_y=0: $R_A + R_B = wL = 10 \\times 1 = 10$ N. ΣM_A=0: $M_A + R_B L = \\frac{wL^2}{2} = \\frac{10 \\times 1^2}{2} = 5$ N·m.",
+          "Step 3: Apply compatibility condition: vertical deflection at B is zero. Use superposition: consider the beam as a cantilever fixed at A. The downward deflection at B due to UDL $w$ is $\\delta_w = \\frac{wL^4}{8EI}$. The upward deflection at B due to reaction $R_B$ (acting upward at the free end) is $\\delta_{R_B} = \\frac{R_B L^3}{3EI}$.",
+          "Step 4: Set net deflection at B to zero: $\\delta_w - \\delta_{R_B} = 0$ (assuming positive deflection upward). So, $\\frac{wL^4}{8EI} = \\frac{R_B L^3}{3EI}$.",
+          "Step 5: Solve for $R_B$: Cancel $EI$ and $L^3$: $R_B = \\frac{3wL}{8} = \\frac{3 \\times 10 \\times 1}{8} = 3.75$ N.",
+          "Step 6: Verify with equilibrium: $R_A = wL - R_B = 10 - 3.75 = 6.25$ N, $M_A = \\frac{wL^2}{2} - R_B L = 5 - 3.75 = 1.25$ N·m."
+        ],
+        "formulas_used": [
+          "$\\sum F_y = 0: R_A + R_B = wL$",
+          "$\\sum M_A = 0: M_A + R_B L = \\frac{wL^2}{2}$",
+          "Cantilever deflection due to UDL: $\\delta_w = \\frac{wL^4}{8EI}$",
+          "Cantilever deflection due to end point load: $\\delta_P = \\frac{PL^3}{3EI}$",
+          "Compatibility: $\\delta_B = 0 = \\delta_w - \\delta_{R_B}$",
+          "Reaction at simple support: $R_B = \\frac{3wL}{8}$"
+        ],
+        "estimated_time_minutes": 2
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Structures",
+          "confidence": 1.0
+        },
+        "topic": {
+          "name": "Beam Deflection and Reactions",
+          "syllabus_ref": "GATE AE: Solid Mechanics / Strength of Materials - Deflection of Beams, Statically Indeterminate Beams"
+        },
+        "concepts": [
+          {
+            "name": "Statically Indeterminate Beams",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Principle of Superposition",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Cantilever Deflection Formulas",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Boundary Conditions (Fixed and Simply Supported)",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Equilibrium Equations",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Static equilibrium of beams (ΣF=0, ΣM=0)",
+          "Deflection formulas for cantilever beams under point load and UDL",
+          "Principle of superposition for linear systems"
+        ],
+        "helpful": [
+          "Understanding of boundary conditions (fixed, simply supported)",
+          "Concept of statically indeterminate structures"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Beam equilibrium equations",
+            "requires: Cantilever deflection formulas",
+            "requires: Superposition principle",
+            "enables: Analysis of propped cantilevers",
+            "enables: Solving higher-degree statically indeterminate beams"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Medium",
+        "score": 6,
+        "complexity_breakdown": {
+          "conceptual": 7,
+          "mathematical": 5,
+          "problem_solving": 6
+        },
+        "estimated_solve_time_seconds": 120,
+        "expected_accuracy_percent": 65,
+        "difficulty_factors": [
+          "Requires recognizing beam as statically indeterminate",
+          "Requires recall of cantilever deflection formulas",
+          "Requires correct application of superposition and compatibility"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Mechanics of Materials",
+          "author": "Beer & Johnston",
+          "chapter_number": "9",
+          "chapter_title": "Deflection of Beams",
+          "section": "9.3 Statically Indeterminate Beams",
+          "complexity": "intermediate",
+          "relevance_score": 0.9,
+          "source": "model_consensus",
+          "text_snippet": "Analysis of propped cantilevers using superposition of deflections."
+        },
+        {
+          "source_type": "book",
+          "book": "Strength of Materials",
+          "author": "Timoshenko",
+          "chapter_number": "5",
+          "chapter_title": "Deflection of Beams",
+          "section": "5.4 Statically Indeterminate Beams",
+          "complexity": "advanced",
+          "relevance_score": 0.85,
+          "source": "model_consensus",
+          "text_snippet": "Use of superposition and boundary conditions to solve for reactions in beams with redundant supports."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. Nachiketa Tiwari",
+          "timestamp_start": "00:04:35",
+          "topic_covered": "Superposition for beam deflection",
+          "relevance_score": 0.5,
+          "source": "rag_retrieval",
+          "notes": "From RAG chunk 1, covers superposition but for simply supported beams, not directly applicable."
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Superposition using Cantilever Deflection Formulas",
+        "total_steps": 6,
+        "solution_path": "Equilibrium → Compatibility (zero deflection at B) → Superposition of cantilever deflections → Solve for $R_B$",
+        "key_insights": [
+          "The propped cantilever can be treated as a cantilever fixed at A with an unknown upward force $R_B$ at B to enforce zero deflection.",
+          "The reaction $R_B = \\frac{3wL}{8}$ is a standard result for a propped cantilever under full UDL."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$R_B = \\frac{3wL}{8}$",
+          "name": "Reaction at simple support of propped cantilever under full UDL",
+          "conditions": "Beam fixed at one end, simply supported at other, uniformly distributed load w over length L",
+          "type": "equation",
+          "relevance": "Direct formula for the required answer"
+        },
+        {
+          "formula": "$\\delta_{cantilever, UDL} = \\frac{wL^4}{8EI}$",
+          "name": "Deflection at free end of cantilever under UDL",
+          "conditions": "Cantilever fixed at one end, full UDL, small deflections, linear elastic material",
+          "type": "equation",
+          "relevance": "Used in superposition to find deflection due to distributed load"
+        },
+        {
+          "formula": "$\\delta_{cantilever, point load} = \\frac{PL^3}{3EI}$",
+          "name": "Deflection at free end of cantilever under end point load",
+          "conditions": "Cantilever fixed at one end, point load P at free end, small deflections, linear elastic material",
+          "type": "equation",
+          "relevance": "Used in superposition to find deflection due to reaction $R_B$"
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Aircraft wing root attachment (fixed) with intermediate support struts",
+          "Bridge decks with fixed abutments and intermediate piers"
+        ],
+        "specific_systems": [
+          "Wing of a small aircraft with a strut-braced configuration",
+          "Cantilevered balcony with a support column at the outer edge"
+        ],
+        "practical_relevance": "Determining support reactions is critical for structural design to ensure stability and avoid excessive deflections."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Treating the beam as statically determinate (simply supported or cantilever only) and solving only with equilibrium equations.",
+          "why_students_make_it": "Overlooking the redundancy of the simple support; not recognizing that deflection condition is needed.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Always count unknowns and equations. If unknowns > equilibrium equations, the beam is statically indeterminate; a compatibility condition (deflection/slope) must be used.",
+          "consequence": "Incorrect reaction value (e.g., might get $R_B = 5$ N assuming symmetry)."
+        },
+        {
+          "mistake": "Using incorrect deflection formulas (e.g., using simply supported beam formulas instead of cantilever formulas).",
+          "why_students_make_it": "Confusion between different beam configurations and their standard formulas.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Clearly identify the base structure for superposition. Here, the beam is considered fixed at A and free at B for the purpose of calculating deflections due to loads. Memorize cantilever deflection formulas: $\\delta_{UDL} = \\frac{wL^4}{8EI}$, $\\delta_{point} = \\frac{PL^3}{3EI}$.",
+          "consequence": "Wrong deflection leads to incorrect $R_B$."
+        },
+        {
+          "mistake": "Sign error in superposition: adding deflections instead of subtracting, or confusing direction of deflection.",
+          "why_students_make_it": "Lack of clear sign convention for deflection (upward positive vs downward positive).",
+          "type": "Calculation",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Adopt a consistent sign convention. For example, assume upward deflection positive. UDL causes downward deflection (negative), so write $\\delta_w = -\\frac{wL^4}{8EI}$. $R_B$ (upward) causes upward deflection (positive), so $\\delta_{R_B} = +\\frac{R_B L^3}{3EI}$. Then set total $\\delta_B = 0$: $-\\frac{wL^4}{8EI} + \\frac{R_B L^3}{3EI} = 0$.",
+          "consequence": "May get $R_B = \\frac{3wL}{8}$ with wrong sign or magnitude."
+        },
+        {
+          "mistake": "Forgetting to cancel EI and L terms correctly, leading to algebraic errors.",
+          "why_students_make_it": "Rushing through algebra, not simplifying step by step.",
+          "type": "Calculation",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Write the equation clearly: $\\frac{wL^4}{8EI} = \\frac{R_B L^3}{3EI}$. Cancel EI from both sides, then $L^3$ to get $\\frac{wL}{8} = \\frac{R_B}{3}$.",
+          "consequence": "Incorrect numerical answer, e.g., $R_B = \\frac{wL^4}{8} \\cdot \\frac{3}{L^3} = \\frac{3wL}{8}$; missing the L power leads to error."
+        },
+        {
+          "mistake": "Using the formula for simply supported beam deflection ($\\delta_{max} = \\frac{5wL^4}{384EI}$) in the compatibility condition.",
+          "why_students_make_it": "Misreading the beam type as simply supported at both ends.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "occasional",
+          "how_to_avoid": "Carefully note the supports: rigid (fixed) at one end, simply supported at the other. It is NOT simply supported at both ends.",
+          "consequence": "Completely wrong approach and answer."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "Propped Cantilever UDL Reaction: \"Three-Eighths Upward\"",
+          "concept": "Reaction at the simple support of a propped cantilever under full UDL is $\\frac{3wL}{8}$ upward.",
+          "effectiveness": "high",
+          "context": "Remembering the standard result for quick calculations."
+        },
+        {
+          "mnemonic": "Cantilever Deflection: \"UDL: 8 down, Point: 3 up\"",
+          "concept": "Cantilever free end deflection: UDL gives denominator 8 ($\\frac{wL^4}{8EI}$), point load gives denominator 3 ($\\frac{PL^3}{3EI}$).",
+          "effectiveness": "medium",
+          "context": "Recalling the denominators for common cantilever deflection formulas."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "What is the reaction at the simple support of a propped cantilever (fixed at one end, simply supported at other) under a full UDL w over length L?",
+          "back": "$R_B = \\frac{3wL}{8}$ (upward).",
+          "difficulty": "medium",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "How many equilibrium equations are available for a 2D beam? When is a beam statically indeterminate?",
+          "back": "Three: ΣFx=0, ΣFy=0, ΣM=0. If number of unknown reactions > number of equilibrium equations, it is statically indeterminate. For a propped cantilever, unknowns: 3 (R_A, M_A, R_B), equations: 2 (ΣFy, ΣM; ΣFx=0 if no horizontal load), so degree = 1.",
+          "difficulty": "easy",
+          "time_limit_seconds": 45
+        },
+        {
+          "card_type": "formula_recall",
+          "front": "What is the deflection at the free end of a cantilever of length L under a UDL w? Under a point load P at the free end?",
+          "back": "UDL: $\\delta = \\frac{wL^4}{8EI}$ (downward). Point load: $\\delta = \\frac{PL^3}{3EI}$ (downward if P is downward).",
+          "difficulty": "medium",
+          "time_limit_seconds": 40
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "What is a common sign error when applying superposition for deflection compatibility?",
+          "back": "Not assigning consistent sign convention. Always define positive direction (e.g., upward positive). Then deflection due to UDL is negative, due to upward reaction is positive. Set sum to zero at support.",
+          "difficulty": "medium",
+          "time_limit_seconds": 50
+        },
+        {
+          "card_type": "application",
+          "front": "For the propped cantilever with UDL, if L=2 m, w=5 N/m, what is R_B?",
+          "back": "$R_B = \\frac{3 \\times 5 \\times 2}{8} = \\frac{30}{8} = 3.75$ N.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Aircraft wing design",
+          "industry_example": "A wing root is often fixed to the fuselage (rigid support), and a strut or landing gear may provide a simple support along the span. The distributed aerodynamic load requires calculating reactions for structural sizing.",
+          "why_it_matters": "Incorrect reaction forces lead to under-designed supports or excessive deflection, risking structural failure."
+        },
+        {
+          "application": "Civil engineering structures",
+          "industry_example": "A balcony slab cantilevered from a building wall (fixed) with a column at the outer edge (simple support). The dead and live loads are distributed.",
+          "why_it_matters": "Accurate reaction forces ensure the column and wall are designed to carry the loads safely."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "Recognize propped cantilever → standard formula $R_B = \\frac{3wL}{8}$ gives quick answer. If formula forgotten, use superposition (2-3 minutes).",
+        "guessing_heuristic": "For a UDL, reaction at simple support is less than half total load. So R_B < wL/2 = 5 N. Among options, 3.75 is plausible.",
+        "time_management": "Spend 2-3 minutes max. If stuck, move on and return."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "propped cantilever reaction",
+        "statically indeterminate beam UDL",
+        "superposition beam deflection",
+        "fixed and simply supported beam",
+        "cantilever deflection formulas",
+        "beam compatibility condition",
+        "GATE AE structures beam",
+        "strength of materials propped cantilever"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Double Integration Method",
+          "description": "Integrate the beam equation $EI \\frac{d^4 y}{dx^4} = w$ with boundary conditions: at fixed end (x=0): y=0, dy/dx=0; at simply supported end (x=L): y=0, M=0 (or d²y/dx²=0 if no moment). Solve for constants and then find reactions.",
+          "pros_cons": "Pros: Fundamental, works for any load. Cons: More time-consuming, prone to integration errors.",
+          "when_to_use": "When superposition formulas are not remembered or for non-standard loads."
+        },
+        {
+          "name": "Moment Area Method",
+          "description": "Use the moment diagram and area-moment theorems to relate slopes and deflections. For propped cantilever, the deviation of B from tangent at A is zero.",
+          "pros_cons": "Pros: Graphical, intuitive for some. Cons: Requires careful calculation of areas and centroids.",
+          "when_to_use": "When moment diagram is simple and you prefer geometric approach."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "subject_name_1": "Structural Analysis",
+        "subject_name_2": "Aircraft Structures",
+        "subject_name_3": "Finite Element Analysis",
+        "subject_name_4": "Mechanical Design"
+      },
+      "deeper_dive_topics": [
+        "Influence lines for statically indeterminate beams",
+        "Energy methods (Castigliano's theorem) for redundant structures",
+        "Effect of support settlement on reactions",
+        "Dynamic analysis of beams under time-varying loads"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2020_AE_Q53",
+        "year": 2020,
+        "marks": 2.0,
+        "negative_marks": 0.0,
+        "time_expected": "2-3 minutes",
+        "success_rate_estimate": "65%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Solid Mechanics",
+        "gate_subsection": "Deflection of Beams, Statically Indeterminate Beams",
+        "weightage": "Approx 10-15% in Structures section",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Well-aligned with GATE AE syllabus topic 'Bending and deflection of beams'."
+      },
+      "rag_quality": {
+        "relevance_score": 0.2,
+        "chunks_used": 1,
+        "sources_distribution": {
+          "books": 0,
+          "videos": 1
+        },
+        "notes": "RAG chunks provided (6) are primarily about simply supported beams with UDL (deflection, SFD/BMD) and cantilever with point loads, but not directly about propped cantilevers. Chunk 1 mentions superposition but for a different configuration. Thus, internal knowledge was used to solve the problem."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-13T10:30:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Ask for the reaction moment at the fixed end for the same beam.",
+        "Change load type to triangular or partial UDL.",
+        "Ask for maximum deflection location and magnitude.",
+        "Make the simply supported end at an intermediate point (overhanging beam)."
+      ]
+    },
+    "question_id": "GATE_2020_AE_Q53",
+    "year": 2020,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "NAT",
+    "question_text": "As shown in the figure, a beam of length 1 m is rigidly supported at one end and simply supported at the other. Under the action of a uniformly distributed load of 10 N/m, the magnitude of the normal reaction force at the simply supported end is __________ N (round off to two decimal places)."
+  },
+  "tokens_used": 18464,
+  "input_tokens": 11283,
+  "output_tokens": 7181,
+  "cost": 0.02193204,
+  "time_seconds": 204.02732682228088
+}
