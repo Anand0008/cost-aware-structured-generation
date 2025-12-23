@@ -1,0 +1,365 @@
+{
+  "model_name": "deepseek_r1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "text_only",
+      "combined_type": "numerical_calculation_text_only",
+      "weight_strategy": "NUMERICAL_WEIGHTED",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "The question requires calculating the pressure gradient from a given stream function, involving partial derivatives and applying the Navier-Stokes equations (or a simplified form). It integrates fluid mechanics concepts and requires multiple steps, making it a medium-hard numerical calculation.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "2.4 N/m³ (within range 2.3-2.5)",
+        "is_correct": true,
+        "confidence": 0.9,
+        "confidence_type": "single_model",
+        "reasoning": "From the given stream function \\psi = xy^3, velocity components are u = \\partial\\psi/\\partial y = 3xy^2 and v = -\\partial\\psi/\\partial x = -y^3. For steady, incompressible flow with constant viscosity and negligible body forces, the x-momentum Navier-Stokes equation reduces to \\rho(u \\partial u/\\partial x + v \\partial u/\\partial y) = -\\partial p/\\partial x + \\mu(\\partial^2 u/\\partial x^2 + \\partial^2 u/\\partial y^2). Evaluating at (1,1) with \\rho=1 kg/m^3, \\mu=0.1 kg/(m s) gives \\partial p/\\partial x = -2.4 N/m^3, so magnitude is 2.4 N/m^3, which falls within the provided answer key range of 2.3-2.5."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Step 1: Extract velocity components from the given stream function. For 2D incompressible flow, u = \\partial\\psi/\\partial y, v = -\\partial\\psi/\\partial x. Given \\psi = x*y^3, compute u = 3xy^2, v = -y^3.",
+          "Step 2: Compute necessary derivatives for the convective acceleration and viscous terms. \\partial u/\\partial x = 3y^2, \\partial u/\\partial y = 6xy, \\partial^2 u/\\partial x^2 = 0, \\partial^2 u/\\partial y^2 = 6x.",
+          "Step 3: Evaluate convective acceleration: u \\partial u/\\partial x + v \\partial u/\\partial y = (3xy^2)*(3y^2) + (-y^3)*(6xy) = 9xy^4 - 6xy^4 = 3xy^4.",
+          "Step 4: Apply the x-momentum Navier-Stokes equation for steady, incompressible flow with constant viscosity and no body forces: \\rho(u \\partial u/\\partial x + v \\partial u/\\partial y) = -\\partial p/\\partial x + \\mu(\\partial^2 u/\\partial x^2 + \\partial^2 u/\\partial y^2).",
+          "Step 5: Substitute values at (x=1, y=1): \\rho=1, \\mu=0.1, convective term = 3*(1)*(1^4)=3, viscous term = \\mu*(0+6*1)=0.6. So equation becomes: 1*3 = -\\partial p/\\partial x + 0.6.",
+          "Step 6: Solve for \\partial p/\\partial x: -\\partial p/\\partial x = 3 - 0.6 = 2.4 \\rightarrow \\partial p/\\partial x = -2.4 N/m^3. The magnitude is 2.4 N/m^3."
+        ],
+        "formulas_used": [
+          "$u = \\frac{\\partial \\psi}{\\partial y}$",
+          "$v = -\\frac{\\partial \\psi}{\\partial x}$",
+          "$\\rho \\left( u \\frac{\\partial u}{\\partial x} + v \\frac{\\partial u}{\\partial y} \\right) = -\\frac{\\partial p}{\\partial x} + \\mu \\left( \\frac{\\partial^2 u}{\\partial x^2} + \\frac{\\partial^2 u}{\\partial y^2} \\right)$",
+          "$\\frac{\\partial p}{\\partial x} = -\\rho \\left( u \\frac{\\partial u}{\\partial x} + v \\frac{\\partial u}{\\partial y} \\right) + \\mu \\left( \\frac{\\partial^2 u}{\\partial x^2} + \\frac{\\partial^2 u}{\\partial y^2} \\right)$"
+        ],
+        "estimated_time_minutes": 5
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Fluid Mechanics",
+          "confidence": 1.0
+        },
+        "topic": {
+          "name": "Navier-Stokes Equations",
+          "syllabus_ref": "Section 2: Fluid Mechanics and Aerodynamics"
+        },
+        "concepts": [
+          {
+            "name": "Stream Function for 2D Incompressible Flow",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Navier-Stokes Equations",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Pressure Gradient Calculation",
+            "importance": "primary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Definition of stream function and relation to velocity components",
+          "Partial differentiation",
+          "Navier-Stokes equations for incompressible flow"
+        ],
+        "helpful": [
+          "Concept of convective acceleration",
+          "Laplacian of velocity component"
+        ],
+        "dependency_tree": {
+          "Pressure Gradient from NS": [
+            "requires: Velocity field from stream function",
+            "requires: Navier-Stokes equation for x-momentum",
+            "enables: Computation of pressure field in viscous flows"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Medium",
+        "score": 6,
+        "complexity_breakdown": {
+          "conceptual": 7,
+          "mathematical": 6,
+          "problem_solving": 7
+        },
+        "estimated_solve_time_seconds": 180,
+        "expected_accuracy_percent": 60,
+        "difficulty_factors": [
+          "Requires knowledge of Navier-Stokes equations",
+          "Multiple steps of partial differentiation",
+          "Careful substitution into the momentum equation"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Intro to Aerodynamics",
+          "author": "J. D. Anderson",
+          "chapter_number": "2",
+          "chapter_title": "Aerodynamics: Some Fundamental Principles and Equations",
+          "section": "2.14",
+          "page_range": null,
+          "complexity": "intermediate",
+          "relevance_score": 0.5,
+          "source": "rag_retrieval",
+          "text_snippet": "Defines stream function for 2D steady flow, velocity components from derivatives."
+        },
+        {
+          "source_type": "book",
+          "book": "Fluid Mechanics",
+          "author": "Frank M. White",
+          "chapter_number": "4",
+          "chapter_title": "Differential Relations for Fluid Flow",
+          "section": "4.9",
+          "page_range": null,
+          "complexity": "intermediate",
+          "relevance_score": 0.9,
+          "source": "model_consensus",
+          "text_snippet": "Covers the Navier-Stokes equations for incompressible flow and their application to pressure gradient calculation."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. K.P. Sinhamahapatra",
+          "timestamp_start": "00:03:08",
+          "timestamp_end": "00:07:20",
+          "video_url": "https://www.youtube.com/watch?v=XSmMj0qQ3Vc",
+          "book_reference": "Anderson, J.D., 'Fundamentals of Aerodynamics'",
+          "topic_covered": "Definition of stream function for 2D incompressible flow and velocity components",
+          "relevance_score": 0.6,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Direct Application of Navier-Stokes Equations",
+        "total_steps": 6,
+        "solution_path": "Stream Function → Velocity Components → Derivatives → Convective Acceleration → Viscous Term → Momentum Equation → Pressure Gradient",
+        "key_insights": [
+          "The stream function automatically satisfies continuity, so we only need momentum equation.",
+          "For constant property incompressible flow, the Navier-Stokes equation simplifies to a balance between convective acceleration, pressure gradient, and viscous diffusion."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$u = \\frac{\\partial \\psi}{\\partial y}$",
+          "name": "x-velocity from stream function",
+          "conditions": "2D incompressible flow",
+          "type": "equation",
+          "relevance": "Obtain velocity field from given stream function"
+        },
+        {
+          "formula": "$v = -\\frac{\\partial \\psi}{\\partial x}$",
+          "name": "y-velocity from stream function",
+          "conditions": "2D incompressible flow",
+          "type": "equation",
+          "relevance": "Obtain velocity field from given stream function"
+        },
+        {
+          "formula": "$\\rho \\left( u \\frac{\\partial u}{\\partial x} + v \\frac{\\partial u}{\\partial y} \\right) = -\\frac{\\partial p}{\\partial x} + \\mu \\left( \\frac{\\partial^2 u}{\\partial x^2} + \\frac{\\partial^2 u}{\\partial y^2} \\right)$",
+          "name": "x-momentum Navier-Stokes equation",
+          "conditions": "Steady, incompressible, constant viscosity, no body forces",
+          "type": "equation",
+          "relevance": "Core equation relating pressure gradient to flow acceleration and viscous forces"
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Calculation of pressure gradients in internal flows like pipes and channels",
+          "Design of aerodynamic surfaces where viscous effects are important"
+        ],
+        "specific_systems": [
+          "Flow over a flat plate with pressure gradient",
+          "Laminar flow in a duct with varying cross-section"
+        ],
+        "practical_relevance": "Pressure gradients affect separation, drag, and heat transfer in aerodynamic and hydrodynamic systems."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Forgetting the viscous term in Navier-Stokes equation, leading to \\partial p/\\partial x = -3 (magnitude 3.0)",
+          "why_students_make_it": "May assume inviscid flow since viscosity is small, or overlook that \\mu is given",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Always check if viscosity is given; if so, viscous term must be included unless explicitly stated otherwise.",
+          "consequence": "Answer off by ~0.6, giving 3.0 instead of 2.4"
+        },
+        {
+          "mistake": "Incorrect sign in the relation between velocity and stream function (e.g., u = -\\partial\\psi/\\partial y, v = \\partial\\psi/\\partial x)",
+          "why_students_make_it": "Different conventions exist; not consistent with the standard used in the question",
+          "type": "Sign Error",
+          "severity": "High",
+          "frequency": "occasional",
+          "how_to_avoid": "Memorize one consistent convention (e.g., u = \\partial\\psi/\\partial y, v = -\\partial\\psi/\\partial x) and stick to it.",
+          "consequence": "Velocity components become negative of correct ones, leading to wrong convective acceleration"
+        },
+        {
+          "mistake": "Errors in partial differentiation, especially with powers of y",
+          "why_students_make_it": "Carelessness in applying chain rule or power rule",
+          "type": "Calculation",
+          "severity": "Medium",
+          "frequency": "common",
+          "how_to_avoid": "Double-check derivatives step by step; maybe compute separately.",
+          "consequence": "Incorrect convective or viscous terms"
+        },
+        {
+          "mistake": "Mixing up the sign in the pressure gradient term: writing -\\partial p/\\partial x as +\\partial p/\\partial x",
+          "why_students_make_it": "Misremembering the Navier-Stokes equation structure",
+          "type": "Sign Error",
+          "severity": "High",
+          "frequency": "occasional",
+          "how_to_avoid": "Recall physical meaning: acceleration is caused by pressure gradient and viscous forces. Pressure gradient force is from high to low pressure, so it appears with a negative sign.",
+          "consequence": "Pressure gradient sign flipped, magnitude might still be correct but sign wrong; but magnitude question unaffected."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "SUV: Stream function gives U from Y-derivative and V from negative X-derivative (for the convention u=\\partial\\psi/\\partial y, v=-\\partial\\psi/\\partial x)",
+          "concept": "Velocity components from stream function",
+          "effectiveness": "medium",
+          "context": "When given a stream function and need to find velocities"
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "For 2D incompressible flow, write the relations between velocity components (u, v) and stream function \\psi.",
+          "back": "$u = \\frac{\\partial \\psi}{\\partial y}$, $v = -\\frac{\\partial \\psi}{\\partial x}$.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "What does the difference in stream function values between two streamlines represent?",
+          "back": "For incompressible flow, the volume flow rate per unit depth between the streamlines.",
+          "difficulty": "medium",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "formula_recall",
+          "front": "Write the x-momentum Navier-Stokes equation for steady, incompressible, constant viscosity flow with no body forces.",
+          "back": "$\\rho \\left( u \\frac{\\partial u}{\\partial x} + v \\frac{\\partial u}{\\partial y} \\right) = -\\frac{\\partial p}{\\partial x} + \\mu \\left( \\frac{\\partial^2 u}{\\partial x^2} + \\frac{\\partial^2 u}{\\partial y^2} \\right)$.",
+          "difficulty": "hard",
+          "time_limit_seconds": 45
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "What is a common mistake when computing pressure gradient from Navier-Stokes if viscosity is given?",
+          "back": "Forgetting the viscous term (\\mu\\nabla^2 u). Always include viscous terms unless flow is explicitly inviscid.",
+          "difficulty": "medium",
+          "time_limit_seconds": 30
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Aerodynamic design of wings and control surfaces",
+          "industry_example": "In designing a wing, engineers compute pressure gradients to predict flow separation points, which affect stall characteristics.",
+          "why_it_matters": "Incorrect pressure gradient estimation can lead to unexpected flow separation, increased drag, loss of lift, and potential loss of control."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Attempt If Time",
+        "triage_tip": "This is a multi-step calculation problem. If you are comfortable with Navier-Stokes and partial derivatives, allocate ~3 minutes. Otherwise, mark for review if time permits.",
+        "guessing_heuristic": "If you remember that pressure gradient often opposes flow acceleration, you might eliminate extreme values. The given viscosity is small (0.1), so answer likely closer to convective term magnitude (3) but slightly less.",
+        "time_management": "Spend no more than 4 minutes on this question."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "stream function velocity components",
+        "Navier-Stokes equation pressure gradient",
+        "incompressible viscous flow",
+        "GATE Aerospace fluid mechanics",
+        "pressure gradient from stream function",
+        "x-momentum equation",
+        "convective acceleration",
+        "viscous term calculation"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Using the full Navier-Stokes in vector form",
+          "description": "Compute the material derivative of velocity vector and take its x-component, then apply the gradient of pressure and Laplacian of velocity.",
+          "pros_cons": "More systematic but requires careful vector calculus. Same result.",
+          "when_to_use": "When dealing with complex flows or in a computational setting."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Mathematics: Partial Differential Equations": "Navier-Stokes is a PDE system; solving requires PDE techniques.",
+        "Physics: Conservation of Momentum": "Navier-Stokes is essentially Newton's second law for fluid elements."
+      },
+      "deeper_dive_topics": [
+        "Computational Fluid Dynamics (CFD) for solving Navier-Stokes numerically",
+        "Boundary layer theory and pressure gradients",
+        "Exact solutions of Navier-Stokes equations (e.g., Couette, Poiseuille flows)"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2019_AE_Q36",
+        "year": 2019,
+        "marks": 2.0,
+        "negative_marks": 0.0,
+        "time_expected": "3-4 minutes",
+        "success_rate_estimate": "60%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 2: Fluid Mechanics and Aerodynamics",
+        "gate_subsection": "Basic Fluid Mechanics; Viscous Flows",
+        "weightage": "Approximately 10-15% of GATE AE paper",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Well-aligned with GATE AE syllabus topics: stream function, Navier-Stokes, pressure gradient."
+      },
+      "rag_quality": {
+        "relevance_score": 0.5,
+        "chunks_used": 3,
+        "sources_distribution": {
+          "books": 2,
+          "videos": 1
+        },
+        "notes": "RAG chunks provided definitions and properties of stream function, which are directly useful for obtaining velocity components. However, the RAG context did not include the Navier-Stokes equations or pressure gradient calculation, which are essential for solving this problem. Therefore, internal knowledge was used for the momentum equation part."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-13T10:30:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Vary the stream function (e.g., \\psi = x^2 y) and ask for pressure gradient at a point.",
+        "Include unsteady term (if \\psi is time-dependent).",
+        "Ask for pressure gradient in y-direction instead of x.",
+        "Combine with energy equation to compute temperature gradient."
+      ]
+    },
+    "question_id": "GATE_2019_AE_Q36",
+    "year": 2019,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "NAT",
+    "question_text": "A two-dimensional, incompressible fluid flow is described by the stream function Psi = xy^3 m²/s on the Cartesian x-y plane. If the density and dynamic viscosity of the fluid are 1 kg/m³ and 0.1 kg/m-s, respectively, the magnitude of the pressure gradient in the x direction at x=1 m and y=1 m is _______ N/m³ (round off to 1 decimal place)."
+  },
+  "tokens_used": 20375,
+  "input_tokens": 9416,
+  "output_tokens": 10959,
+  "cost": 0.029179010000000002,
+  "time_seconds": 339.97905945777893
+}
