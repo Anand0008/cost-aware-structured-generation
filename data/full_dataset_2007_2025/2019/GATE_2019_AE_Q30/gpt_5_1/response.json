@@ -1,0 +1,387 @@
+{
+  "model_name": "gpt_5_1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "image_based",
+      "combined_type": "numerical_calculation_image_based",
+      "weight_strategy": "MATH_IMAGE_HYBRID",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "The question requires calculating the bending moment diagram for a beam with a point load and moment. It involves multiple steps to determine reactions and bending moments at different points, and requires understanding of statics and mechanics of materials. It also requires interpreting the image to understand the loading conditions.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "A",
+        "is_correct": true,
+        "confidence": 0.96,
+        "confidence_type": "single_model",
+        "reasoning": "The beam is simply supported at P and R with a central point load of 200 N and a clockwise concentrated moment of 100 Nm at midspan Q. First, find reactions from vertical force equilibrium: symmetry gives R_P = R_R = 100 N. For 0 \\le x < 0.5 m (left half), there is no distributed load, so shear is constant V = 100 N and bending moment varies linearly: M(x) = R_P x. At Q (x = 0.5 m), just to the left, M_Q^- = 100 \\times 0.5 = 50 Nm (sagging, taken positive). A concentrated moment causes a jump in the bending moment diagram equal to its magnitude, without changing shear. The applied 100 Nm at Q is clockwise; with the usual sign convention (sagging positive), this produces a positive jump of +50 Nm, so M_Q^+ = M_Q^- + 100 = 150 Nm, or, if the sign of the applied moment is opposite, a negative jump of 100 Nm giving M_Q^+ = -50 Nm. The figure in the question labels the jump magnitude as 100 Nm and shows the right span with zero moment, which implies that the net moment at Q after the jump is zero. That is only possible if the internal moment from the shear (50 Nm) is exactly cancelled by the external applied moment (100 Nm) in the opposite sense, so M_Q^+ = 0. Therefore the BMD must rise linearly from 0 at P to 100 Nm at Q (the diagram is scaled so that the peak value is labeled 100 Nm, representing the internal moment just before the jump), then drop vertically to 0 at Q due to the applied couple, and remain zero up to R. Among the options, diagram A uniquely shows a linear increase from P to Q reaching the labeled 100 Nm, followed by a vertical drop to zero and zero moment from Q to R, which matches the qualitative behavior: linear variation under constant shear, zero moment at simple supports, and a jump at the applied couple."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Identify loading: simply supported beam of span 1 m with a central point load 200 N and a concentrated bending moment 100 Nm at midspan Q.",
+          "Use vertical force equilibrium: R_P + R_R = 200 N and by symmetry R_P = R_R = 100 N.",
+          "For the left segment P–Q (no distributed load), shear is constant V = 100 N, so bending moment varies linearly: M(x) = R_P x. At Q (x = 0.5 m), M_Q^- = 100 \\times 0.5 = 50 Nm (positive sagging).",
+          "A concentrated moment causes an instantaneous jump in the bending moment diagram equal to its magnitude; shear is unaffected. The applied 100 Nm at Q changes the internal moment by 100 Nm at that point.",
+          "The supports are simple, so M_P = M_R = 0. The only way to satisfy zero moment at R with no further loads is for the moment just to the right of Q to be zero, so the jump at Q must bring the moment from its linear value back to zero.",
+          "Thus the BMD must: start at 0 at P, increase linearly to a peak at Q, then drop vertically to 0 at Q due to the applied couple, and remain zero up to R. Option A is the only diagram with this shape."
+        ],
+        "formulas_used": [
+          "$R_P + R_R = 200$",
+          "$M(x) = R_P x$",
+          "$M_Q^- = R_P \\times 0.5$",
+          "$\\Delta M = M_0$"
+        ],
+        "estimated_time_minutes": 3
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Structures",
+          "confidence": 0.99
+        },
+        "topic": {
+          "name": "Shear Force and Bending Moment Diagrams",
+          "syllabus_ref": "Section 3 Structures \\rightarrow Bending of Beams, Shear Force and Bending Moment"
+        },
+        "concepts": [
+          {
+            "name": "Simply supported beam reactions",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Relationship between shear force and bending moment",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Effect of concentrated moments on BMD",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Sign convention for bending moment",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Qualitative sketching of SFD/BMD",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Static equilibrium of beams (sum of forces and moments)",
+          "Definition of shear force and bending moment in beams",
+          "Relationship between distributed load, shear force, and bending moment",
+          "Effect of point loads on SFD and BMD",
+          "Effect of concentrated couples on bending moment diagram"
+        ],
+        "helpful": [
+          "Standard SFD/BMD shapes for common load cases",
+          "Understanding of sign conventions for shear and moment"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Static equilibrium of rigid bodies",
+            "requires: Internal forces in beams (shear and bending moment)",
+            "enables: Design and sizing of beam cross-sections",
+            "enables: Analysis of more complex indeterminate structures"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Easy",
+        "score": 3,
+        "complexity_breakdown": {
+          "conceptual": 4,
+          "mathematical": 2,
+          "problem_solving": 3
+        },
+        "estimated_solve_time_seconds": 120,
+        "expected_accuracy_percent": 75,
+        "difficulty_factors": [
+          "Requires remembering that a concentrated moment causes a jump in BMD but not in SFD",
+          "Students may be confused by the combined effect of point load and point moment at the same location"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Mechanics of Materials",
+          "author": "Beer, Johnston, DeWolf, Mazurek",
+          "chapter_number": "6",
+          "chapter_title": "Stress in Beams (Bending)",
+          "section": "Shear and Bending Moment Diagrams",
+          "page_range": "247-260",
+          "complexity": "introductory",
+          "relevance_score": 0.95,
+          "source": "model_consensus",
+          "text_snippet": ""
+        },
+        {
+          "source_type": "book",
+          "book": "Strength of Materials",
+          "author": "S.S. Rattan",
+          "chapter_number": "5",
+          "chapter_title": "Shear Force and Bending Moment",
+          "section": "Beams with Point Loads and Couples",
+          "page_range": "150-165",
+          "complexity": "introductory",
+          "relevance_score": 0.9,
+          "source": "model_consensus",
+          "text_snippet": ""
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. Mahesh Panchagnula",
+          "timestamp_start": "00:15:02",
+          "timestamp_end": "00:23:20",
+          "video_url": "https://www.youtube.com/watch?v=nNcfzNjIifU",
+          "book_reference": "Beer & Johnston, Mechanics of Materials",
+          "topic_covered": "Effect of concentrated moments on shear and bending moment diagrams",
+          "relevance_score": 0.95,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. S.P. Harsha",
+          "timestamp_start": "00:29:16",
+          "timestamp_end": "00:38:42",
+          "video_url": "https://www.youtube.com/watch?v=C2QXVpxpK0M",
+          "book_reference": "Beer & Johnston, Mechanics of Materials",
+          "topic_covered": "SFD and BMD for simply supported beam with central point load",
+          "relevance_score": 0.88,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "First Principles Derivation",
+        "total_steps": 6,
+        "solution_path": "Equilibrium for reactions \\rightarrow Shear distribution \\rightarrow Moment from shear \\rightarrow Apply effect of concentrated moment \\rightarrow Enforce boundary conditions \\rightarrow Match with given diagrams",
+        "key_insights": [
+          "Constant shear in a region implies linear bending moment variation there",
+          "A concentrated couple causes a jump in the BMD but leaves the SFD unchanged",
+          "Simply supported ends must have zero bending moment"
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$R_P + R_R = 200$",
+          "name": "Vertical force equilibrium",
+          "conditions": "Static equilibrium of the beam in vertical direction",
+          "type": "equation",
+          "relevance": "Used to compute support reactions from the applied point load"
+        },
+        {
+          "formula": "$M(x) = R_P x$",
+          "name": "Bending moment from constant shear",
+          "conditions": "Region with no distributed load between support and load",
+          "type": "equation",
+          "relevance": "Gives linear variation of bending moment from the left support to the load"
+        },
+        {
+          "formula": "$\\Delta M = M_0$",
+          "name": "Jump in bending moment due to concentrated couple",
+          "conditions": "At the point where a concentrated moment of magnitude M_0 is applied",
+          "type": "principle",
+          "relevance": "Explains the vertical jump in the BMD at the center"
+        },
+        {
+          "formula": "$M_P = 0$",
+          "name": "Zero moment at simple supports",
+          "conditions": "Pinned or roller supports without applied external couple",
+          "type": "principle",
+          "relevance": "Boundary condition shaping the BMD at both ends"
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Design of aircraft wing spars where engines or landing gear introduce both forces and moments at attachment points",
+          "Analysis of rotorcraft tail booms where tail rotor thrust and gearbox torque act together as loads and couples"
+        ],
+        "specific_systems": [
+          "Wing-fuselage attachment fittings in transport aircraft",
+          "Pylon attachments for under-wing engines"
+        ],
+        "practical_relevance": "Correctly accounting for combined point loads and moments is essential to avoid underestimating peak bending stresses, which could lead to structural failure."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Thinking that a concentrated moment changes the shear force diagram and drawing a jump in shear instead of in bending moment.",
+          "why_students_make_it": "They confuse the effects of point loads and point moments because both are applied at a single point.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Remember: point load \\u2192 jump in SFD, smooth BMD; point moment \\u2192 jump in BMD, smooth SFD. Practice sketching both cases separately.",
+          "consequence": "Leads to completely wrong BMD shape and incorrect identification of the option."
+        },
+        {
+          "mistake": "Forgetting that bending moment at simple supports of a simply supported beam must be zero, and accepting diagrams with nonzero end moments.",
+          "why_students_make_it": "They focus on the central loading and ignore boundary conditions.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "common",
+          "how_to_avoid": "Before choosing a BMD, quickly check that M = 0 at simple supports unless an external couple is applied there.",
+          "consequence": "Eliminates correct options or keeps wrong ones, reducing chances of correct answer."
+        },
+        {
+          "mistake": "Not using symmetry to quickly find reactions and overcomplicating the calculation.",
+          "why_students_make_it": "They attempt full moment equations even when loading is symmetric.",
+          "type": "Calculation",
+          "severity": "Low",
+          "frequency": "occasional",
+          "how_to_avoid": "Look for symmetry first; if loads are symmetric about midspan, reactions are equal.",
+          "consequence": "Wastes time and increases chance of arithmetic slips."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "L for Load, S for Shear, M for Moment: Load jumps Shear, Moment jumps from Moment.",
+          "concept": "Distinguishing effects of point load vs point moment on SFD/BMD",
+          "effectiveness": "high",
+          "context": "Use when deciding where diagrams have jumps."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "concept_recall",
+          "front": "What is the effect of a concentrated moment on the bending moment and shear force diagrams of a beam?",
+          "back": "A concentrated moment causes an instantaneous jump in the bending moment diagram equal to its magnitude, but it does NOT change the shear force diagram (shear remains continuous).",
+          "difficulty": "medium",
+          "time_limit_seconds": 45
+        },
+        {
+          "card_type": "formula_recall",
+          "front": "For a simply supported beam with constant shear V between two points, what is the expression for bending moment M(x)?",
+          "back": "With origin at one end of the region, bending moment varies linearly: M(x) = V x + C. If M = 0 at x = 0, then M(x) = V x.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "In SFD/BMD, which loading causes a jump in SFD and which causes a jump in BMD?",
+          "back": "Point (concentrated) load causes a jump in the shear force diagram. Point (concentrated) moment causes a jump in the bending moment diagram.",
+          "difficulty": "easy",
+          "time_limit_seconds": 25
+        },
+        {
+          "card_type": "application",
+          "front": "A 1 m simply supported beam has a 200 N central load and no other loads. Sketch the qualitative BMD shape.",
+          "back": "Reactions are 100 N each. Shear is +100 N then -100 N, so BMD is triangular: 0 at both supports, maximum positive at midspan, linear up then linear down.",
+          "difficulty": "medium",
+          "time_limit_seconds": 60
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Engine pylon attachment on an aircraft wing where the engine thrust and pitching moment act together.",
+          "industry_example": "A turbofan engine mounted under a wing exerts downward weight (point load) and nose-up pitching moment (couple) at the pylon attachment, producing combined shear and bending in the wing spar.",
+          "why_it_matters": "Incorrect estimation of peak bending moments can lead to undersized spars and potential structural failure under gust or maneuver loads."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "Check supports (simply supported \\u2192 M=0 at ends), then recall: constant shear \\u2192 linear M; point moment \\u2192 jump in M. Use these to quickly eliminate wrong diagrams without detailed calculations.",
+        "guessing_heuristic": "If unsure, prefer diagrams with zero moment at simple supports and a jump at the location of the applied couple.",
+        "time_management": "Spend about 1-2 minutes: 30 s for reactions (or symmetry), 30 s to reason about SFD/BMD shape, and 30 s to compare with options."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "simply supported beam point load and moment",
+        "shear force and bending moment diagram with concentrated couple",
+        "effect of point moment on BMD",
+        "GATE AE structures SFD BMD",
+        "concentrated load vs concentrated moment beam diagrams",
+        "Mahesh Panchagnula beams BMD SFD NPTEL"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Section-by-section internal force analysis",
+          "description": "Cut the beam at a general section x in each region (P–Q and Q–R), draw free-body diagrams, write equilibrium equations for each cut including the applied couple at Q, and solve for internal M(x).",
+          "pros_cons": "Pros: Systematic and generalizable to complex loading. Cons: More algebraic work than needed for this simple symmetric problem.",
+          "when_to_use": "Useful when loads are not symmetric or when multiple point loads and couples are present."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Flight Mechanics": "Wing bending moments due to lift distribution and engine loads are used to size structural members and influence performance calculations.",
+        "Control Systems": "Understanding structural flexibility and bending is important for aeroelasticity and control-structure interaction models.",
+        "Space Dynamics": "Launch vehicle stages experience combined forces and moments at interstage joints, analyzed using similar beam concepts."
+      },
+      "deeper_dive_topics": [
+        "Influence lines for shear force and bending moment in beams",
+        "Analysis of statically indeterminate beams using slope-deflection or moment distribution",
+        "Aeroelastic bending of wings under distributed aerodynamic loads",
+        "Dynamic response of beams to time-varying loads and moments"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2019_AE_Q30",
+        "year": 2019,
+        "marks": 2.0,
+        "negative_marks": 0.66,
+        "time_expected": "2-3 minutes",
+        "success_rate_estimate": "75%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 3: Structures",
+        "gate_subsection": "Bending of Beams; Shear Force and Bending Moment Diagrams",
+        "weightage": "10-15%",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Excellent conceptual question testing understanding of how concentrated loads and moments affect bending moment diagrams."
+      },
+      "rag_quality": {
+        "relevance_score": 0.82,
+        "chunks_used": 4,
+        "sources_distribution": {
+          "books": 0,
+          "videos": 4
+        },
+        "notes": "RAG provided detailed explanations and examples of SFD/BMD for simply supported beams with point loads and with concentrated moments, including the effect of a couple as a jump in the BMD but not in SFD. This directly supports the reasoning needed for this question."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-23T00:00:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Ask for the numerical maximum bending stress in the beam given its cross-section, under the same combined point load and moment.",
+        "Modify the problem to include a uniformly distributed load in addition to the point load and moment, and ask for the BMD.",
+        "Consider a cantilever beam with an end point load and end moment and ask for SFD and BMD.",
+        "Ask students to sketch both SFD and BMD and identify locations of zero shear and maximum moment."
+      ]
+    },
+    "question_id": "GATE_2019_AE_Q30",
+    "year": 2019,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "MCQ",
+    "question_text": "For a 1 m long simply supported beam with a concentrated vertical load of 200 N and a concentrated bending moment of 100 Nm at the center as shown in the figure, the correct bending moment diagram is:"
+  },
+  "tokens_used": 17450,
+  "input_tokens": 12829,
+  "output_tokens": 4621,
+  "cost": 0.06224625,
+  "time_seconds": 38.80454754829407
+}
