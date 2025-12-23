@@ -1,0 +1,413 @@
+{
+  "model_name": "gpt_5_1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "image_based",
+      "combined_type": "numerical_calculation_image_based",
+      "weight_strategy": "MATH_IMAGE_HYBRID",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "The question involves calculating the factor of safety for a hollow shaft given the factor of safety for a solid shaft and geometric parameters. It requires understanding of torque transmission and stress calculations, and involves multiple steps to determine the new factor of safety. The image is needed to visualize the shaft geometry.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": false,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "1.9 (dimensionless factor of safety)",
+        "is_correct": true,
+        "confidence": 0.98,
+        "confidence_type": "single_model",
+        "reasoning": "For a circular shaft under torsion, torque capacity is proportional to the polar moment of inertia divided by outer radius: $T = \\tau_{allow} J / R$. The solid shaft is designed for torque $T$ with factor of safety 2, so its allowable torque is $T_{allow,solid} = 2T$. For the same material and outer radius, the ratio of allowable torques equals the ratio of polar moments: $T_{allow,hollow}/T_{allow,solid} = J_{hollow}/J_{solid}$. With inner radius $R_i = R/2$, $J_{solid} = \\pi R^4/2$ and $J_{hollow} = \\pi (R^4 - (R/2)^4)/2 = J_{solid}(1 - 1/16) = (15/16)J_{solid}$. Thus $T_{allow,hollow} = (15/16) T_{allow,solid} = (15/16) \\cdot 2T = 1.875T$. Since the applied torque remains $T$, the new factor of safety is $FOS_{hollow} = T_{allow,hollow}/T = 1.875 \\approx 1.9$, matching the official range 1.8 to 1.9."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Step 1: Recall torsion formula for circular shafts: $\\tau_{max} = T R / J$, so for a given allowable shear stress and outer radius, torque capacity is proportional to $J$.",
+          "Step 2: For the solid shaft of radius $R$, compute polar moment of inertia: $J_{solid} = \\pi R^4 / 2$.",
+          "Step 3: For the hollow shaft with outer radius $R$ and inner radius $R/2$, compute $J_{hollow} = \\pi (R^4 - (R/2)^4)/2 = (15/16) J_{solid}$.",
+          "Step 4: Since material and outer radius are same, allowable shear stress is unchanged, so $T_{allow} \\propto J$. Therefore $T_{allow,hollow} = (15/16) T_{allow,solid}$. The solid shaft was designed with factor of safety 2, so $T_{allow,solid} = 2T$.",
+          "Step 5: Compute allowable torque for hollow shaft: $T_{allow,hollow} = (15/16) \\times 2T = 1.875T$.",
+          "Step 6: New factor of safety is allowable torque divided by working torque: $FOS_{hollow} = T_{allow,hollow}/T = 1.875 \\approx 1.9$ (rounded to one decimal place)."
+        ],
+        "formulas_used": [
+          "$\\tau_{max} = \\dfrac{T R}{J}$",
+          "$J_{solid} = \\dfrac{\\pi R^4}{2}$",
+          "$J_{hollow} = \\dfrac{\\pi}{2} \\left(R_o^4 - R_i^4\\right)$",
+          "$FOS = \\dfrac{T_{allow}}{T_{working}}$"
+        ],
+        "estimated_time_minutes": 3
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Structures",
+          "confidence": 0.98
+        },
+        "topic": {
+          "name": "Torsion of circular shafts",
+          "syllabus_ref": "Structures -> Strength of materials -> Torsion of solid and hollow shafts"
+        },
+        "concepts": [
+          {
+            "name": "Torsional shear stress in circular shafts",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Polar moment of inertia of solid and hollow circles",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Factor of safety in strength design",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Comparison of solid and hollow shaft strength",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Basics of shear stress under torsion",
+          "Polar moment of inertia for circular and annular sections",
+          "Definition and use of factor of safety",
+          "Relationship between allowable stress and torque capacity",
+          "Algebraic manipulation of ratios",
+          "Understanding of design vs working loads"
+        ],
+        "helpful": [
+          "Concept of strength-to-weight ratio for shafts",
+          "Physical intuition of material distribution in torsion"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Torsional shear stress formula $\\tau_{max} = TR/J$",
+            "requires: Polar moment of inertia expressions for solid and hollow circles",
+            "requires: Definition of factor of safety as $T_{allow}/T_{working}$",
+            "enables: Efficient design and comparison of solid vs hollow shafts in aerospace structures",
+            "enables: Advanced analysis of torsion in thin-walled tubes and multi-cell sections"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Easy",
+        "score": 3,
+        "complexity_breakdown": {
+          "conceptual": 3,
+          "mathematical": 3,
+          "problem_solving": 3
+        },
+        "estimated_solve_time_seconds": 120,
+        "expected_accuracy_percent": 80,
+        "difficulty_factors": [
+          "Requires recognizing that torque capacity is proportional to polar moment of inertia for same material and radius",
+          "Needs careful handling of the inner-to-outer radius ratio and the $R^4$ dependence"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Mechanics of Materials",
+          "author": "Beer, Johnston et al.",
+          "chapter_number": "3",
+          "chapter_title": "Torsion",
+          "section": "Torsion of circular shafts; solid and hollow",
+          "page_range": "150-170",
+          "complexity": "introductory",
+          "relevance_score": 0.96,
+          "source": "rag_retrieval",
+          "text_snippet": "The torsion formula for circular shafts is $\\tau_{max} = T \\rho_{max} / J$. For a solid shaft $J = \\pi d^4 / 32$, and for a hollow shaft $J = \\pi (d_o^4 - d_i^4)/32$."
+        },
+        {
+          "source_type": "book",
+          "book": "Aircraft Structures for Engineering Students",
+          "author": "T.H.G. Megson",
+          "chapter_number": "6",
+          "chapter_title": "Torsion of thin-walled tubes",
+          "section": "Comparison of solid and hollow shafts",
+          "page_range": "200-210",
+          "complexity": "intermediate",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval",
+          "text_snippet": "Hollow shafts are more efficient in torsion because material near the center contributes little to the polar moment of inertia, which varies with the fourth power of radius."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. S.K. Bhattacharyya",
+          "timestamp_start": "00:03:06",
+          "timestamp_end": "00:14:32",
+          "video_url": "https://www.youtube.com/watch?v=LD9P9OA0mpE",
+          "book_reference": "Beer & Johnston - Mechanics of Materials",
+          "topic_covered": "Torsion of solid and hollow circular shafts; polar moment of inertia and angle of twist",
+          "relevance_score": 0.92,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. S.P. Harsha",
+          "timestamp_start": "00:28:42",
+          "timestamp_end": "00:33:35",
+          "video_url": "https://www.youtube.com/watch?v=LD9P9OA0mpE",
+          "book_reference": "Beer & Johnston - Mechanics of Materials",
+          "topic_covered": "Maximum shear stress in hollow circular shafts and effect of inner diameter",
+          "relevance_score": 0.88,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Direct Formula Application",
+        "total_steps": 6,
+        "solution_path": "Use torsion formula to relate torque capacity to polar moment of inertia, compute J for solid and hollow shafts, form ratio of allowable torques, then compute new factor of safety.",
+        "key_insights": [
+          "For same material and outer radius, allowable shear stress and radius are identical, so torque capacity scales directly with polar moment of inertia.",
+          "The $R^4$ dependence makes even a modest inner radius significantly reduce polar moment, but not drastically when inner radius is only half the outer radius.",
+          "Factor of safety scales with allowable torque when working torque is unchanged."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$\\tau_{max} = \\dfrac{T R}{J}$",
+          "name": "Torsion formula for circular shaft",
+          "conditions": "Linear elastic, circular cross-section, pure torsion, no warping restraint",
+          "type": "equation",
+          "relevance": "Relates torque capacity to polar moment of inertia and allowable shear stress."
+        },
+        {
+          "formula": "$J_{solid} = \\dfrac{\\pi R^4}{2}$",
+          "name": "Polar moment of inertia of solid circle",
+          "conditions": "Solid circular cross-section of radius R",
+          "type": "equation",
+          "relevance": "Used to compute torque capacity of the original solid shaft."
+        },
+        {
+          "formula": "$J_{hollow} = \\dfrac{\\pi}{2} \\left(R_o^4 - R_i^4\\right)$",
+          "name": "Polar moment of inertia of hollow circle",
+          "conditions": "Hollow circular cross-section with outer radius $R_o$ and inner radius $R_i$",
+          "type": "equation",
+          "relevance": "Used to compute torque capacity of the proposed hollow shaft."
+        },
+        {
+          "formula": "$FOS = \\dfrac{T_{allow}}{T_{working}}$",
+          "name": "Factor of safety definition",
+          "conditions": "General definition in strength design",
+          "type": "equation",
+          "relevance": "Connects allowable torque to working torque to find factor of safety."
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Design of helicopter tail rotor drive shafts, where hollow shafts are used to reduce weight while maintaining torsional strength.",
+          "Automotive drive shafts and propeller shafts, often hollow to improve strength-to-weight ratio."
+        ],
+        "specific_systems": [
+          "Aircraft control surface torque tubes in wings and tails.",
+          "Transmission shafts in turboprop engines."
+        ],
+        "practical_relevance": "Choosing between solid and hollow shafts affects both safety and weight. Overestimating factor of safety may lead to unnecessary mass, while underestimating it can cause torsional failure under peak loads."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Assuming torque capacity is proportional to cross-sectional area instead of polar moment of inertia.",
+          "why_students_make_it": "They recall axial stress design where capacity scales with area and forget that torsion depends on $J$.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Remember: axial loading uses area $A$, bending uses second moment $I$, torsion uses polar moment $J$. Write down the torsion formula before starting.",
+          "consequence": "Leads to a significantly incorrect factor of safety, often overestimating the strength of the hollow shaft."
+        },
+        {
+          "mistake": "Using diameters directly in $J$ formulas without converting to radii or mixing up $R$ and $R/2$ powers.",
+          "why_students_make_it": "In a hurry, they plug the given radius ratio incorrectly into the $R^4$ term.",
+          "type": "Calculation",
+          "severity": "Medium",
+          "frequency": "common",
+          "how_to_avoid": "Explicitly write $R_i = R/2$ and compute $(R/2)^4 = R^4/16$ step by step instead of doing it mentally.",
+          "consequence": "Gives wrong ratio $J_{hollow}/J_{solid}$ and hence wrong factor of safety."
+        },
+        {
+          "mistake": "Forgetting that the original factor of safety is 2 and taking $T_{allow,solid} = T$ instead of $2T$.",
+          "why_students_make_it": "They focus on geometry change and overlook the design statement about factor of safety.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "occasional",
+          "how_to_avoid": "Underline given factor of safety in the question and translate it into $T_{allow} = FOS \\times T_{working}$ before proceeding.",
+          "consequence": "Results in a factor of safety for the hollow shaft that is too low by a factor of 2."
+        },
+        {
+          "mistake": "Rounding 1.875 incorrectly to 1.8 or 2.0 without following standard rounding rules.",
+          "why_students_make_it": "They approximate early or are unsure about rounding to one decimal place.",
+          "type": "Calculation",
+          "severity": "Low",
+          "frequency": "occasional",
+          "how_to_avoid": "Keep at least three decimal places until the final step, then round: 1.875 becomes 1.9 to one decimal place.",
+          "consequence": "Might fall just outside the official answer range in strict numerical questions."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "Torsion uses J, not A: Think \"Twist needs J\".",
+          "concept": "Remembering that torque capacity depends on polar moment of inertia, not area.",
+          "effectiveness": "high",
+          "context": "Use when deciding which geometric property to use for torsion problems."
+        },
+        {
+          "mnemonic": "Hollow J: \"Outer to the 4th minus inner to the 4th\".",
+          "concept": "Formula for polar moment of inertia of a hollow circular shaft.",
+          "effectiveness": "medium",
+          "context": "Recall when writing $J_{hollow}$ for annular sections."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "What is the torsion formula relating maximum shear stress, torque, radius, and polar moment of inertia for a circular shaft?",
+          "back": "$\\tau_{max} = TR/J$, where $T$ is torque, $R$ is outer radius, and $J$ is polar moment of inertia.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "formula_recall",
+          "front": "Write the polar moment of inertia $J$ for (a) a solid circular shaft of radius $R$, (b) a hollow shaft with outer radius $R_o$ and inner radius $R_i$.",
+          "back": "(a) $J_{solid} = \\pi R^4/2$. (b) $J_{hollow} = \\pi (R_o^4 - R_i^4)/2$.",
+          "difficulty": "medium",
+          "time_limit_seconds": 45
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "Define factor of safety (FOS) in terms of allowable and working torque for a shaft.",
+          "back": "Factor of safety $FOS = T_{allow}/T_{working}$, where $T_{allow}$ is the maximum safe torque and $T_{working}$ is the applied torque in service.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "application",
+          "front": "A solid shaft has FOS = 2 for torque T. If replaced by a hollow shaft with same material and outer radius, and $R_i = R_o/2$, what is the new FOS?",
+          "back": "Compute $J_{solid} = \\pi R^4/2$, $J_{hollow} = \\pi (R^4 - (R/2)^4)/2 = (15/16)J_{solid}$. So $T_{allow,hollow} = (15/16)T_{allow,solid} = (15/16)\\cdot 2T = 1.875T$. New FOS = 1.875.",
+          "difficulty": "medium",
+          "time_limit_seconds": 60
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "In torsion problems, why is it wrong to use cross-sectional area instead of polar moment of inertia to find torque capacity?",
+          "back": "Because torsional shear stress distribution depends on $J$, not area. Torque capacity is $T = \\tau_{allow} J/R$, so using area ignores the $r^2$ weighting of material and gives incorrect strength.",
+          "difficulty": "medium",
+          "time_limit_seconds": 60
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Design of lightweight drive shafts in aircraft and automobiles.",
+          "industry_example": "An aircraft wing uses hollow torque tubes to transmit control forces to ailerons. Engineers choose wall thickness and radius to achieve required torque capacity with minimal weight.",
+          "why_it_matters": "Underestimating factor of safety can lead to torsional failure and loss of control; overestimating leads to unnecessary weight and reduced performance."
+        },
+        {
+          "application": "Helicopter tail rotor drive systems.",
+          "industry_example": "Long hollow shafts run along the tail boom to drive the tail rotor. Their inner radius is chosen to balance torsional strength, vibration characteristics, and weight.",
+          "why_it_matters": "Failure of the tail rotor drive shaft can cause loss of yaw control, which is catastrophic."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "Identify it as a standard torsion comparison: write $J_{solid}$ and $J_{hollow}$, form their ratio, and multiply by the given factor of safety. No lengthy algebra is needed.",
+        "guessing_heuristic": "If stuck, remember that removing inner material slightly reduces strength, so FOS must be slightly less than 2 but still close (around 1.8–1.9).",
+        "time_management": "Aim to finish within 2 minutes: 1 minute to recall formulas and compute $J$ ratio, 1 minute to apply factor of safety and round."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "torsion of circular shafts solid vs hollow",
+        "polar moment of inertia hollow shaft",
+        "strength to weight ratio hollow shaft",
+        "GATE AE torsion numerical",
+        "factor of safety in shaft design",
+        "Megson torsion thin walled tubes",
+        "Beer Johnston torsion chapter"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Direct stress comparison method",
+          "description": "Assume the same working torque T acts on both shafts. Compute the maximum shear stress in each using $\\tau_{max} = TR/J$. For the solid shaft, set this stress equal to allowable stress divided by factor of safety (2). Then, for the hollow shaft, use the same allowable stress to find its factor of safety as $FOS = \\tau_{allow}/\\tau_{max,hollow}$.",
+          "pros_cons": "Pros: Emphasizes the role of stress and factor of safety directly. Cons: Involves more algebraic steps than simply using the ratio of polar moments.",
+          "when_to_use": "Useful when you want to reinforce understanding of stress-based design rather than torque capacity ratios."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Flight Mechanics": "Weight reduction from using hollow shafts contributes to lower aircraft weight, affecting performance parameters like range and endurance.",
+        "Propulsion": "Torsion design concepts apply to engine shafts and turbine rotors, where torque transmission and safety are critical.",
+        "Control Systems": "Reliable torque transmission in control linkages ensures accurate actuation of control surfaces, impacting stability and control.",
+        "Machine Design": "The same torsion and factor of safety principles are used in general mechanical design of rotating machinery."
+      },
+      "deeper_dive_topics": [
+        "Torsion of thin-walled multi-cell closed sections in aircraft wings and fuselages",
+        "Shear flow and warping in non-circular sections under torsion",
+        "Buckling of thin-walled tubes under combined torsion and bending",
+        "Fatigue life estimation of rotating shafts under fluctuating torsional loads"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2019_AE_Q51",
+        "year": 2019,
+        "marks": 2.0,
+        "negative_marks": 0.0,
+        "time_expected": "2-3 minutes",
+        "success_rate_estimate": "75%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Structures and Strength of Materials",
+        "gate_subsection": "Torsion of solid and hollow shafts; shear stresses and angle of twist",
+        "weightage": "8-12%",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Well-aligned with core torsion concepts and tests the ability to compare solid and hollow shafts, which is important for lightweight structural design."
+      },
+      "rag_quality": {
+        "relevance_score": 0.9,
+        "chunks_used": 5,
+        "sources_distribution": {
+          "books": 0,
+          "videos": 5
+        },
+        "notes": "RAG provided detailed discussion on torsion of solid and hollow shafts, polar moment of inertia formulas, and comparative examples, directly supporting the solution. Only minor internal reasoning was needed to adapt these concepts to the specific factor-of-safety question."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-23T00:00:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Given a required factor of safety and torque, design the inner radius of a hollow shaft with fixed outer radius.",
+        "Compare the weight of solid and hollow shafts that have the same torque capacity and factor of safety.",
+        "Extend the problem to include angle of twist limits in addition to shear stress limits.",
+        "Consider a composite shaft made of two materials and ask for equivalent torsional stiffness or factor of safety."
+      ]
+    },
+    "question_id": "GATE_2019_AE_Q51",
+    "year": 2019,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "NAT",
+    "question_text": "A solid circular shaft is designed to transmit a torque T with a factor of safety of 2. It is proposed to replace the solid shaft by a hollow shaft of the same material and identical outer radius. If the inner radius is half the outer radius, the factor of safety for the hollow shaft is _____ (round off to 1 decimal place)."
+  },
+  "tokens_used": 17800,
+  "input_tokens": 12422,
+  "output_tokens": 5378,
+  "cost": 0.06930750000000001,
+  "time_seconds": 197.23781418800354
+}

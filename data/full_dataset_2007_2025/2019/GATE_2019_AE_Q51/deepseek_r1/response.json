@@ -1,0 +1,411 @@
+{
+  "model_name": "deepseek_r1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "image_based",
+      "combined_type": "numerical_calculation_image_based",
+      "weight_strategy": "MATH_IMAGE_HYBRID",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "The question involves calculating the factor of safety for a hollow shaft given the factor of safety for a solid shaft and geometric parameters. It requires understanding of torque transmission and stress calculations, and involves multiple steps to determine the new factor of safety. The image is needed to visualize the shaft geometry.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": false,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "1.9",
+        "is_correct": true,
+        "confidence": 0.98,
+        "confidence_type": "single_model",
+        "reasoning": "The factor of safety (FOS) is the ratio of allowable shear stress to the actual maximum shear stress. The solid shaft is designed with FOS=2, so its maximum stress under torque T is half the allowable stress. For the same outer radius R and applied torque T, the maximum shear stress in the hollow shaft (with inner radius R/2) is higher than in the solid shaft. The new FOS for the hollow shaft is calculated as the ratio of the solid shaft's FOS multiplied by the inverse ratio of their maximum shear stresses: $FOS_{hollow} = FOS_{solid} \\times (\\tau_{max, solid} / \\tau_{max, hollow})$. This calculation yields approximately 1.875, which rounds to 1.9 as per the answer key (1.8 to 1.9)."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Step 1: Identify given data. Solid shaft: outer radius R, Factor of Safety (FOS) = 2 for torque T. Hollow shaft: same material, same outer radius R, inner radius $R_i = R/2$.",
+          "Step 2: Define the governing formula for maximum torsional shear stress in a circular shaft: $\\tau_{max} = \\frac{T \\cdot r_{max}}{J}$, where $r_{max}$ is the outer radius and $J$ is the polar moment of inertia.",
+          "Step 3: Write expressions for polar moment of inertia. Solid shaft: $J_s = \\frac{\\pi R^4}{2}$. Hollow shaft (with $k = R_i/R = 0.5$): $J_h = \\frac{\\pi}{2}(R^4 - R_i^4) = \\frac{\\pi}{2}(R^4 - (R/2)^4) = \\frac{\\pi R^4}{2}(1 - k^4) = \\frac{\\pi R^4}{2}(1 - 0.5^4) = \\frac{\\pi R^4}{2} \\times \\frac{15}{16}$.",
+          "Step 4: Calculate maximum shear stresses for the same torque T. $\\tau_{max,s} = \\frac{T R}{J_s} = \\frac{T R}{(\\pi R^4/2)} = \\frac{2T}{\\pi R^3}$. $\\tau_{max,h} = \\frac{T R}{J_h} = \\frac{T R}{(\\pi R^4/2)(15/16)} = \\frac{32T}{15\\pi R^3}$.",
+          "Step 5: Relate FOS to allowable shear stress $\\tau_{allow}$. For solid shaft: $FOS_s = \\tau_{allow} / \\tau_{max,s} = 2$, so $\\tau_{allow} = 2 \\cdot \\tau_{max,s}$. For hollow shaft: $FOS_h = \\tau_{allow} / \\tau_{max,h}$.",
+          "Step 6: Substitute $\\tau_{allow}$ into the hollow shaft FOS formula. $FOS_h = \\frac{2 \\cdot \\tau_{max,s}}{\\tau_{max,h}} = 2 \\times \\frac{\\tau_{max,s}}{\\tau_{max,h}} = 2 \\times \\frac{(2T/(\\pi R^3))}{(32T/(15\\pi R^3))} = 2 \\times \\frac{2}{32/15} = 2 \\times \\frac{2 \\cdot 15}{32} = \\frac{60}{32} = 1.875$.",
+          "Step 7: Round off to one decimal place: $1.875 \\approx 1.9$."
+        ],
+        "formulas_used": [
+          "$\\tau_{max} = \\frac{T \\cdot r_{max}}{J}$",
+          "$J_{solid} = \\frac{\\pi R^4}{2}$",
+          "$J_{hollow} = \\frac{\\pi}{2}(R_{outer}^4 - R_{inner}^4)$",
+          "$FOS = \\frac{\\tau_{allow}}{\\tau_{max}}$"
+        ],
+        "estimated_time_minutes": 3
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Structures",
+          "confidence": 1.0
+        },
+        "topic": {
+          "name": "Torsion of Circular Shafts",
+          "syllabus_ref": "Section 3: Structures -> Torsion of Shafts"
+        },
+        "concepts": [
+          {
+            "name": "Factor of Safety",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Maximum Shear Stress in Torsion",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Polar Moment of Inertia for Solid and Hollow Shafts",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Comparison of Solid vs Hollow Shafts",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Torsion formula for circular shafts ($\\tau = T\\rho / J$)",
+          "Definition of Factor of Safety (FOS = Allowable Stress / Actual Stress)",
+          "Polar moment of inertia for solid and hollow circular cross-sections"
+        ],
+        "helpful": [
+          "Understanding of material properties (shear modulus, allowable stress)",
+          "Algebraic manipulation of ratios"
+        ],
+        "dependency_tree": {
+          "Factor of Safety for Hollow Shaft": [
+            "requires: Maximum shear stress calculation for both shafts",
+            "requires: Relationship between FOS and allowable stress",
+            "enables: Design selection for weight-optimized shafts",
+            "enables: Comparison of structural efficiency"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Medium",
+        "score": 5,
+        "complexity_breakdown": {
+          "conceptual": 4,
+          "mathematical": 5,
+          "problem_solving": 6
+        },
+        "estimated_solve_time_seconds": 180,
+        "expected_accuracy_percent": 65,
+        "difficulty_factors": [
+          "Requires understanding FOS is inversely proportional to calculated stress",
+          "Must correctly compute J for a hollow section with given radius ratio",
+          "Algebraic simplification to get a clean numerical answer"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Mechanics of Materials",
+          "author": "Beer & Johnston",
+          "chapter_number": "3",
+          "chapter_title": "Torsion",
+          "section": "Design of Circular Shafts; Comparison of Solid and Hollow Shafts",
+          "page_range": "N/A",
+          "complexity": "introductory",
+          "relevance_score": 0.95,
+          "source": "rag_retrieval",
+          "text_snippet": "Design involves ensuring that the maximum shear stress does not exceed the material's allowable limit... The ratio of weights (for same length and material density) is Weight_hollow / Weight_solid = Area_hollow / Area_solid."
+        },
+        {
+          "source_type": "book",
+          "book": "Aircraft Structures for Engineering Students",
+          "author": "Megson, T.H.G.",
+          "chapter_number": "6",
+          "chapter_title": "Torsion of Thin-Walled Tubes",
+          "section": "Efficiency of Hollow Shafts; Weight Optimization in Torsion Design",
+          "page_range": "N/A",
+          "complexity": "intermediate",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval",
+          "text_snippet": "Hollow shafts are generally more material-efficient (lighter for comparable strength/stiffness) because the material removed from the center contributes less to torsional resistance."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. S.K. Bhattacharyya",
+          "timestamp_start": "00:14:32",
+          "timestamp_end": "00:22:57",
+          "video_url": "https://www.youtube.com/watch?v=LD9P9OA0mpE",
+          "book_reference": "Mechanics of Materials",
+          "topic_covered": "Strength-to-Weight Ratio of Solid vs. Hollow Shafts",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. S.K. Bhattacharyya",
+          "timestamp_start": "00:47:02",
+          "timestamp_end": "00:54:35",
+          "video_url": "https://www.youtube.com/watch?v=zET8EKFnHFE",
+          "book_reference": "Megson, T.H.G.",
+          "topic_covered": "Comparative analysis of hollow aluminum tube and equivalent solid shaft under torsion",
+          "relevance_score": 0.85,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Direct Formula Application with Stress Ratio",
+        "total_steps": 7,
+        "solution_path": "Define FOS → Express shear stresses in terms of T, R, J → Calculate J_solid and J_hollow → Compute stress ratio → Derive new FOS → Numerical calculation → Rounding.",
+        "key_insights": [
+          "FOS is inversely proportional to the maximum shear stress for a given allowable stress and applied torque.",
+          "The ratio of polar moments of inertia (or directly stress ratio) determines the change in FOS."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$\\tau_{max} = \\frac{T \\cdot r_{max}}{J}$",
+          "name": "Torsion Formula",
+          "conditions": "Linear elastic material, circular cross-section",
+          "type": "equation",
+          "relevance": "Core formula to calculate maximum shear stress for a given torque"
+        },
+        {
+          "formula": "$J_{solid} = \\frac{\\pi R^4}{2}$",
+          "name": "Polar Moment of Inertia - Solid Shaft",
+          "conditions": "Solid circular cross-section of radius R",
+          "type": "equation",
+          "relevance": "Required to compute stress for the solid shaft"
+        },
+        {
+          "formula": "$J_{hollow} = \\frac{\\pi}{2}(R_o^4 - R_i^4)$",
+          "name": "Polar Moment of Inertia - Hollow Shaft",
+          "conditions": "Hollow circular cross-section with outer radius $R_o$ and inner radius $R_i$",
+          "type": "equation",
+          "relevance": "Required to compute stress for the hollow shaft with $R_o=R$, $R_i=R/2$"
+        },
+        {
+          "formula": "$FOS = \\frac{\\tau_{allow}}{\\tau_{max}}$",
+          "name": "Factor of Safety Definition",
+          "conditions": "Based on maximum shear stress failure criterion",
+          "type": "principle",
+          "relevance": "Links the design parameter (FOS) to the calculated stress and material allowable stress"
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Design of aircraft propeller shafts and helicopter drive shafts where weight reduction is critical.",
+          "Automotive drive shafts and machine tool spindles where space and weight are constraints."
+        ],
+        "specific_systems": [
+          "Airbus A350 main landing gear torsion links",
+          "Robotic arm joints transmitting torque"
+        ],
+        "practical_relevance": "Selecting between solid and hollow shafts is a fundamental design trade-off between weight, material cost, and structural performance, especially in aerospace where weight directly impacts fuel efficiency and payload."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Assuming the factor of safety remains the same (2) because the outer radius is the same.",
+          "why_students_make_it": "Superficial reading of the problem; not recognizing FOS depends on stress, which changes with cross-sectional geometry even for same outer radius.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Always recall that FOS = allowable stress / actual stress. Changing the shaft's internal geometry (making it hollow) changes its polar moment of inertia J, thus changing the actual stress for the same torque.",
+          "consequence": "Answer would be 2.0, which is incorrect."
+        },
+        {
+          "mistake": "Incorrectly calculating the polar moment of inertia for the hollow shaft, e.g., using $J_h = \\frac{\\pi}{2}(R^4 - (R/2)^2)$ (wrong exponent).",
+          "why_students_make_it": "Confusion between area moment of inertia (I) and polar moment of inertia (J), or simple algebraic error.",
+          "type": "Calculation",
+          "severity": "High",
+          "frequency": "occasional",
+          "how_to_avoid": "Remember the formula: $J = \\int \\rho^2 dA$. For a hollow circle, $J = \\frac{\\pi}{2}(R_o^4 - R_i^4)$. Always check the exponent is 4 for diameter/radius terms.",
+          "consequence": "Incorrect J leads to wrong stress and wrong FOS."
+        },
+        {
+          "mistake": "Mixing up the relationship between FOS and stress. Using $FOS_h = FOS_s \\times (\\tau_{max,h} / \\tau_{max,s})$ instead of the inverse.",
+          "why_students_make_it": "Incorrect intuitive reasoning: 'higher stress means higher FOS'.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Derive the relationship step by step from the definition: $FOS = \\tau_{allow}/\\tau_{max}$. Since $\\tau_{allow}$ is constant, $FOS \\propto 1/\\tau_{max}$. Therefore, $FOS_h / FOS_s = \\tau_{max,s} / \\tau_{max,h}$.",
+          "consequence": "Answer would be ~2.13 instead of ~1.88."
+        },
+        {
+          "mistake": "Forgetting to round off to one decimal place as instructed.",
+          "why_students_make_it": "Rushing through the final step.",
+          "type": "Attention",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Always circle or highlight the rounding instruction in the question. After calculation, explicitly write the rounding step.",
+          "consequence": "Losing marks even if the calculation is correct."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "FOS FLIPS with Stress (FFS)",
+          "concept": "Factor of Safety is inversely proportional to maximum stress for constant allowable stress.",
+          "effectiveness": "high",
+          "context": "When comparing designs for the same material and load, if stress increases, FOS decreases, and vice versa."
+        },
+        {
+          "mnemonic": "J for Hollow: Outer^4 minus Inner^4 (OH-MI-4)",
+          "concept": "Polar moment of inertia for a hollow shaft: $J = \\frac{\\pi}{2}(R_o^4 - R_i^4)$.",
+          "effectiveness": "medium",
+          "context": "Remembering the correct formula with the fourth power."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "What is the formula for maximum shear stress in a circular shaft of radius R under torque T?",
+          "back": "$\\tau_{max} = \\frac{T R}{J}$, where $J$ is the polar moment of inertia. For solid shaft: $J = \\pi R^4 / 2$. For hollow shaft (outer radius $R_o$, inner $R_i$): $J = \\frac{\\pi}{2}(R_o^4 - R_i^4)$.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "How is Factor of Safety (FOS) defined for a shaft in torsion based on shear stress?",
+          "back": "$FOS = \\frac{\\tau_{allowable}}{\\tau_{max}}$, where $\\tau_{allowable}$ is the material's allowable shear stress and $\\tau_{max}$ is the calculated maximum shear stress under the applied torque.",
+          "difficulty": "easy",
+          "time_limit_seconds": 20
+        },
+        {
+          "card_type": "application",
+          "front": "A solid shaft of radius R has FOS = n for torque T. If replaced by a hollow shaft of same outer R and inner R/2, what is the new FOS? (Give expression in terms of n and k=R_i/R_o).",
+          "back": "$FOS_{hollow} = FOS_{solid} \\times \\frac{\\tau_{max,solid}}{\\tau_{max,hollow}} = n \\times \\frac{1}{1 - k^4}$. For k=0.5, $FOS_{hollow} = n \\times \\frac{1}{1-0.0625} = n \\times \\frac{1}{0.9375} \\approx n \\times 1.0667$. But careful: This is if the same outer diameter is used and same torque. Actually, the stress ratio is $\\frac{J_h}{J_s} = 1-k^4$, so $\\tau_{max,h} / \\tau_{max,s} = 1/(1-k^4)$. So FOS ratio is $\\frac{1}{1/(1-k^4)} = 1-k^4$. Wait, re-derive: $\\tau \\propto 1/J$, so $\\tau_h / \\tau_s = J_s / J_h = 1/(1-k^4)$. Then $FOS_h / FOS_s = \\tau_s / \\tau_h = 1 - k^4$. For k=0.5, $FOS_h = 2 \\times (1 - 0.5^4) = 2 \\times 0.9375 = 1.875$.",
+          "difficulty": "hard",
+          "time_limit_seconds": 60
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "What is a common pitfall when comparing FOS of solid and hollow shafts with the same outer diameter?",
+          "back": "Assuming FOS remains constant because the outer dimension is the same. In reality, FOS changes because the hollow shaft has less material (smaller J), leading to higher stress for the same torque, thus lower FOS.",
+          "difficulty": "medium",
+          "time_limit_seconds": 25
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Aircraft Engine Design",
+          "industry_example": "In turboprop engines, the propeller shaft transmits high torque. Using a hollow shaft can reduce weight significantly, improving fuel efficiency. However, the factor of safety must be recalculated to ensure structural integrity.",
+          "why_it_matters": "An overestimation of FOS could lead to shaft failure; an underestimation leads to overweight design, reducing aircraft performance."
+        },
+        {
+          "application": "Spacecraft Actuator Systems",
+          "industry_example": "Solar array deployment mechanisms or antenna pointing systems use torsion shafts. Weight savings from hollow shafts directly increase payload capacity.",
+          "why_it_matters": "Every kilogram saved in structural weight can be used for additional scientific instruments or fuel for extended missions."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "This is a standard torsion problem with a clear calculation path. If you remember the formulas for J and the definition of FOS, it's a quick 2-3 minute solve.",
+        "guessing_heuristic": "If unsure, note that making a shaft hollow typically reduces weight but also reduces stiffness/strength for the same outer diameter. So FOS should decrease (value less than 2). Eliminate answers >=2.0.",
+        "time_management": "Budget 3 minutes. If stuck on algebra, move on and return later."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "torsion factor of safety solid hollow shaft",
+        "polar moment of inertia hollow shaft calculation",
+        "GATE AE structures torsion numerical",
+        "maximum shear stress circular shaft formula",
+        "comparison solid hollow shaft weight efficiency",
+        "design of shafts for torsion",
+        "Mechanics of Materials Beer Johnston torsion",
+        "aircraft structures torsion Megson"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Strength-to-Weight Ratio Approach",
+          "description": "Instead of directly computing stresses, consider the torque capacity per unit weight. For the same outer radius, the hollow shaft has lower weight but also lower torque capacity for the same max stress. The factor of safety is proportional to torque capacity for a given applied torque. This leads to the same ratio derived from stress.",
+          "pros_cons": "Pros: Provides deeper insight into design efficiency. Cons: More steps, requires careful definition of 'strength' as torque capacity.",
+          "when_to_use": "When the question explicitly asks about weight savings or efficiency comparisons."
+        },
+        {
+          "name": "Non-Dimensional Parameter (k-ratio) Method",
+          "description": "Define $k = R_i/R_o$. Then $J_h = J_s (1-k^4)$ and $\\tau_{max,h} = \\tau_{max,s} / (1-k^4)$. Therefore, $FOS_h = FOS_s \\times (1-k^4)$. For k=0.5, $FOS_h = 2 \\times (1-0.0625)=1.875$.",
+          "pros_cons": "Pros: Elegant, general formula applicable for any k. Cons: Must remember the relationship correctly (stress ratio is 1/(1-k^4), not (1-k^4)).",
+          "when_to_use": "When inner-to-outer radius ratio is given, this is the fastest method."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "subject_name_1": "Mechanical Design",
+        "subject_name_2": "Aircraft Structures",
+        "subject_name_3": "Machine Design",
+        "subject_name_4": "Automotive Engineering"
+      },
+      "deeper_dive_topics": [
+        "Buckling of thin-walled tubes under torsion (a limiting factor for very high k-ratios)",
+        "Effect of stress concentrations at keyways or sudden changes in cross-section",
+        "Composite material shafts for improved strength-to-weight ratio",
+        "Finite element analysis for torsional stress in non-circular sections"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2019_AE_Q51",
+        "year": 2019,
+        "marks": 2.0,
+        "negative_marks": 0.0,
+        "time_expected": "2-3 minutes",
+        "success_rate_estimate": "65%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 3: Structures",
+        "gate_subsection": "Torsion of Shafts",
+        "weightage": "Approx 5-8% of Structures section",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Well-aligned with core syllabus. Tests understanding of stress distribution, cross-sectional properties, and design factor of safety."
+      },
+      "rag_quality": {
+        "relevance_score": 0.9,
+        "chunks_used": 5,
+        "sources_distribution": {
+          "books": 3,
+          "videos": 2
+        },
+        "notes": "RAG chunks provided highly relevant formulas and concepts for torsion of solid and hollow shafts, including polar moment of inertia, maximum shear stress, and comparison of strength-to-weight ratios. Chunks 1, 3, 4, and 5 were particularly useful for deriving the solution. The context matched the question's requirements closely."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-13T10:30:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Ask for the inner radius that would give the same factor of safety as the solid shaft.",
+        "Include angle of twist constraint in addition to shear stress.",
+        "Combine with bending moment to design a shaft under combined loading.",
+        "Change material and ask for weight saving percentage for the same FOS.",
+        "Consider a stepped shaft with both solid and hollow segments."
+      ]
+    },
+    "question_id": "GATE_2019_AE_Q51",
+    "year": 2019,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "NAT",
+    "question_text": "A solid circular shaft is designed to transmit a torque T with a factor of safety of 2. It is proposed to replace the solid shaft by a hollow shaft of the same material and identical outer radius. If the inner radius is half the outer radius, the factor of safety for the hollow shaft is _____ (round off to 1 decimal place)."
+  },
+  "tokens_used": 19512,
+  "input_tokens": 12362,
+  "output_tokens": 7150,
+  "cost": 0.0224576,
+  "time_seconds": 258.98329401016235
+}
