@@ -1,0 +1,389 @@
+{
+  "model_name": "deepseek_r1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "text_only",
+      "combined_type": "numerical_calculation_text_only",
+      "weight_strategy": "NUMERICAL_WEIGHTED",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "This is a numerical calculation problem involving aerodynamic drag. It requires understanding of induced drag, lift coefficient, and how flight conditions (level flight vs. climb) affect the induced drag coefficient. It requires multiple steps to calculate the induced drag coefficients and then find their ratio, integrating concepts of aerodynamics and flight mechanics.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "1.33",
+        "is_correct": true,
+        "confidence": 0.95,
+        "confidence_type": "single_model",
+        "reasoning": "The ratio of induced drag coefficients is derived from the drag polar and climb equations. For steady level flight, C_L = 0.375. For a 30° climb, lift L = W cos θ, so C_L_climb = C_L_level * cos 30° = 0.375 * (√3/2) ≈ 0.32475. Induced drag coefficient C_{D,i} = C_L^2 / (π e AR), so the ratio = (C_L_level / C_L_climb)^2 = (1/cos 30°)^2 = sec^2 30° = 4/3 ≈ 1.3333. This matches the answer key range of 1.32 to 1.35."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Step 1: Identify given data: weight W = 8000 N, wing area S = 16 m², C_D0 = 0.02, e = 0.8, AR = 6, C_L_level = 0.375 for steady level flight. Climb angle θ = 30°. Same speed and density for both conditions.",
+          "Step 2: Recall that induced drag coefficient is given by the drag polar: $C_{D,i} = \\frac{C_L^2}{\\pi e AR}$. This applies to both flight conditions as e and AR are constant.",
+          "Step 3: For steady level flight, lift equals weight: L = W. The given C_L_level = 0.375 is based on this.",
+          "Step 4: For steady climb at angle θ, the forces perpendicular to flight path require lift to balance the weight component: L = W cos θ. Since speed and density are same, dynamic pressure $q = \\frac{1}{2} \\rho V^2$ is constant, so C_L is proportional to lift. Thus, $C_{L,climb} = C_{L,level} \\cos \\theta$.",
+          "Step 5: Calculate C_L_climb: cos 30° = √3/2 ≈ 0.8660, so C_L_climb = 0.375 * 0.8660 ≈ 0.32475.",
+          "Step 6: Compute induced drag coefficients: $C_{D,i,level} = \\frac{(0.375)^2}{\\pi \\times 0.8 \\times 6}$, $C_{D,i,climb} = \\frac{(0.32475)^2}{\\pi \\times 0.8 \\times 6}$. The ratio simplifies to $\\left( \\frac{C_{L,level}}{C_{L,climb}} \\right)^2 = \\left( \\frac{1}{\\cos 30°} \\right)^2 = \\sec^2 30°$.",
+          "Step 7: Evaluate sec^2 30°: cos 30° = √3/2, sec 30° = 2/√3, sec^2 30° = 4/3 ≈ 1.3333. Round to two decimal places: 1.33."
+        ],
+        "formulas_used": [
+          "$C_{D,i} = \\frac{C_L^2}{\\pi e AR}$",
+          "$L = \\frac{1}{2} \\rho V^2 S C_L$",
+          "$L = W \\cos \\theta$ (for steady climb)",
+          "$\\frac{C_{D,i,level}}{C_{D,i,climb}} = \\left( \\frac{C_{L,level}}{C_{L,climb}} \\right)^2 = \\sec^2 \\theta$"
+        ],
+        "estimated_time_minutes": 3
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Flight Mechanics",
+          "confidence": 0.9
+        },
+        "topic": {
+          "name": "Aircraft Performance in Steady and Climbing Flight",
+          "syllabus_ref": "GATE AE Syllabus: Flight Mechanics - Performance"
+        },
+        "concepts": [
+          {
+            "name": "Induced Drag Coefficient",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Lift in Climb",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Drag Polar",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Forces in Steady Flight",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Drag polar equation: $C_D = C_{D,0} + \\frac{C_L^2}{\\pi e AR}$",
+          "Forces equilibrium for steady level flight: L = W, T = D",
+          "Forces equilibrium for steady climb: L = W cos θ, T = D + W sin θ",
+          "Trigonometry: cosine and secant functions"
+        ],
+        "helpful": [
+          "Understanding of dynamic pressure and lift equation",
+          "Concept of induced drag and its dependence on lift coefficient"
+        ],
+        "dependency_tree": {
+          "Main Concept: Ratio of Induced Drag Coefficients": [
+            "requires: Drag polar and induced drag formula",
+            "requires: Lift variation in climb",
+            "enables: Analysis of climb performance effects on drag",
+            "enables: Optimization of flight paths for efficiency"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Easy",
+        "score": 3,
+        "complexity_breakdown": {
+          "conceptual": 4,
+          "mathematical": 3,
+          "problem_solving": 4
+        },
+        "estimated_solve_time_seconds": 120,
+        "expected_accuracy_percent": 70,
+        "difficulty_factors": [
+          "Requires recognizing that lift in climb is W cos θ, not W",
+          "Simple algebraic manipulation after setting up equations"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Introduction to Flight",
+          "author": "John D. Anderson Jr.",
+          "chapter_number": "6",
+          "chapter_title": "Elements of Airplane Performance",
+          "section": "§6.14",
+          "page_range": "Not specified",
+          "complexity": "introductory",
+          "relevance_score": 0.8,
+          "source": "rag_retrieval",
+          "text_snippet": "This section explores the relationships between zero-lift drag and induced drag under conditions that maximize lift-to-drag ratio."
+        },
+        {
+          "source_type": "book",
+          "book": "Introduction to Flight",
+          "author": "John D. Anderson Jr.",
+          "chapter_number": "6",
+          "chapter_title": "Elements of Airplane Performance",
+          "section": "General formulas",
+          "page_range": "Not specified",
+          "complexity": "introductory",
+          "relevance_score": 0.7,
+          "source": "rag_retrieval",
+          "text_snippet": "Drag coefficient: $C_D = C_{D,0} + \\frac{C_L^2}{\\pi e AR}$. Thrust required: $T_R = \\frac{W}{L/D}$."
+        },
+        {
+          "source_type": "book",
+          "book": "Intro to Aerodynamics",
+          "author": "J. D. Anderson",
+          "chapter_number": "6",
+          "chapter_title": "Three-Dimensional Incompressible Flow",
+          "section": "§6",
+          "page_range": "Not specified",
+          "complexity": "intermediate",
+          "relevance_score": 0.6,
+          "source": "rag_retrieval",
+          "text_snippet": "This section provides a foundational model for estimating total drag, including the parabolic drag polar and Oswald efficiency factor."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. A.K. Ghosh",
+          "timestamp_start": "00:21:00",
+          "timestamp_end": "00:28:40",
+          "video_url": "https://www.youtube.com/watch?v=nGdl2cy9Zy4",
+          "book_reference": "Perkins & Hage",
+          "topic_covered": "Equations of Motion Static Performance, Minimum Thrust Required",
+          "relevance_score": 0.5,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Direct Formula Application",
+        "total_steps": 7,
+        "solution_path": "Use drag polar for C_{D,i}, relate lift in climb to level flight via cos θ, compute ratio.",
+        "key_insights": [
+          "Induced drag coefficient depends only on C_L^2 for fixed e and AR.",
+          "In climb, lift is reduced by cos θ, so C_L is reduced proportionally.",
+          "Ratio simplifies to sec^2 θ, independent of other parameters given same speed and density."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$C_{D,i} = \\frac{C_L^2}{\\pi e AR}$",
+          "name": "Induced Drag Coefficient",
+          "conditions": "Applies to incompressible flow, parabolic drag polar",
+          "type": "equation",
+          "relevance": "Core formula for calculating induced drag coefficient in both flight conditions"
+        },
+        {
+          "formula": "$L = W \\cos \\theta$",
+          "name": "Lift in Steady Climb",
+          "conditions": "For steady climb at angle θ, no acceleration perpendicular to flight path",
+          "type": "equation",
+          "relevance": "Relates lift force to weight component in climb, essential for finding C_L_climb"
+        },
+        {
+          "formula": "$\\frac{C_{D,i,level}}{C_{D,i,climb}} = \\sec^2 \\theta$",
+          "name": "Ratio of Induced Drag Coefficients",
+          "conditions": "When speed and density are same, and e, AR constant",
+          "type": "equation",
+          "relevance": "Simplified result for this problem, directly gives answer from climb angle"
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Aircraft climb performance analysis after takeoff",
+          "Fuel efficiency calculations during climb phases"
+        ],
+        "specific_systems": [
+          "Commercial aircraft like Boeing 737 during climb-out",
+          "General aviation planes during steady climbs"
+        ],
+        "practical_relevance": "Understanding how induced drag changes during climb helps optimize climb schedules for fuel savings and operational efficiency."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Assuming lift in climb equals weight (L = W) instead of L = W cos θ",
+          "why_students_make_it": "Overgeneralization from level flight condition, forgetting to resolve weight components",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Always draw a free-body diagram for aircraft in climb, showing weight, lift, thrust, and drag vectors.",
+          "consequence": "Incorrect C_L_climb, leading to wrong ratio (e.g., ratio of 1 instead of 1.33)"
+        },
+        {
+          "mistake": "Confusing induced drag coefficient with total drag coefficient, including C_D0",
+          "why_students_make_it": "Not reading the question carefully; the question specifically asks for induced drag coefficient ratio",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Highlight key terms in the question: 'induced drag coefficient'. Recall that C_{D,i} is only the lift-dependent part.",
+          "consequence": "Unnecessary calculation of total drag, complicating the problem"
+        },
+        {
+          "mistake": "Using sin θ instead of cos θ for lift in climb",
+          "why_students_make_it": "Mixing up trigonometric functions for perpendicular and parallel components",
+          "type": "Calculation",
+          "severity": "High",
+          "frequency": "occasional",
+          "how_to_avoid": "Remember: lift is perpendicular to flight path, so it balances the component of weight perpendicular to flight path, which is W cos θ.",
+          "consequence": "Incorrect C_L_climb, ratio error"
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "Lift Costs Less in Climb",
+          "concept": "In climb, lift force is reduced by cosine of climb angle: L = W cos θ",
+          "effectiveness": "medium",
+          "context": "When solving climb performance problems"
+        },
+        {
+          "mnemonic": "Induced Drag Depends on Lift Squared",
+          "concept": "C_{D,i} ∝ C_L^2, so changes in C_L have quadratic effect",
+          "effectiveness": "high",
+          "context": "Recall drag polar for induced drag"
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "What is the formula for induced drag coefficient in terms of C_L, e, and AR?",
+          "back": "$C_{D,i} = \\frac{C_L^2}{\\pi e AR}$",
+          "difficulty": "easy",
+          "time_limit_seconds": 15
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "In a steady climb at angle θ, what is the relationship between lift and weight?",
+          "back": "Lift equals the component of weight perpendicular to flight path: L = W cos θ.",
+          "difficulty": "medium",
+          "time_limit_seconds": 20
+        },
+        {
+          "card_type": "application",
+          "front": "If C_L in level flight is 0.5 and climb angle is 45°, what is C_L in climb (same speed/density)?",
+          "back": "C_L_climb = C_L_level * cos 45° = 0.5 * 0.7071 ≈ 0.3536.",
+          "difficulty": "medium",
+          "time_limit_seconds": 25
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "What common mistake do students make regarding lift in climb?",
+          "back": "Assuming L = W instead of L = W cos θ. Always draw free-body diagram.",
+          "difficulty": "easy",
+          "time_limit_seconds": 20
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Aircraft climb phase after takeoff",
+          "industry_example": "Pilots follow climb schedules to optimize fuel burn; induced drag reduction at lower climb angles can improve efficiency.",
+          "why_it_matters": "Understanding drag changes during climb helps in flight planning for economic and environmental benefits."
+        },
+        {
+          "application": "Glider performance",
+          "industry_example": "Gliders use climb in thermals to gain altitude; minimizing induced drag is crucial for staying aloft.",
+          "why_it_matters": "Induced drag is a major component at low speeds, so climb angle affects sink rate and range."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "Recognize that ratio simplifies to sec^2 θ if you know C_{D,i} ∝ C_L^2 and L ∝ cos θ. Quick mental calculation for 30° gives 4/3 ≈ 1.33.",
+        "guessing_heuristic": "If unsure, remember that for small angles, ratio ≈ 1, but for 30°, cos 30° < 1, so ratio > 1; likely around 1.3.",
+        "time_management": "Spend 2-3 minutes max; it's a straightforward calculation once concepts are clear."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "induced drag coefficient calculation",
+        "lift in climb flight mechanics",
+        "Oswald efficiency factor aspect ratio",
+        "steady climb performance aircraft",
+        "drag polar parabolic",
+        "GATE aerospace performance questions",
+        "ratio of induced drag climb vs level",
+        "aircraft climb angle effect on drag"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Energy Method Derivation",
+          "description": "Start from power required for climb: P = T V = (D + W sin θ) V, and relate to induced drag via drag polar. Then find C_{D,i} from energy balance.",
+          "pros_cons": "More fundamental but longer; useful for understanding energy trade-offs.",
+          "when_to_use": "When asked for power or energy aspects, not just coefficient ratio."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Aerodynamics": "Drag polar and induced drag concepts from wing theory.",
+        "Physics": "Vector resolution of forces in inclined plane motion.",
+        "Mathematics": "Trigonometric functions and algebraic manipulation."
+      },
+      "deeper_dive_topics": [
+        "Effect of climb angle on range and endurance: Breguet equations modified for climb.",
+        "Optimal climb angles for minimum fuel or time: variational calculus in flight mechanics.",
+        "High-altitude climb considerations: compressibility effects on drag polar."
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2019_AE_Q41",
+        "year": 2019,
+        "marks": 2.0,
+        "negative_marks": 0.0,
+        "time_expected": "2-3 minutes",
+        "success_rate_estimate": "70%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Flight Mechanics",
+        "gate_subsection": "Performance",
+        "weightage": "Approx 10-15% of Flight Mechanics section",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Well-aligned with core performance concepts: steady flight and climb analysis."
+      },
+      "rag_quality": {
+        "relevance_score": 0.6,
+        "chunks_used": 5,
+        "sources_distribution": {
+          "books": 4,
+          "videos": 1
+        },
+        "notes": "RAG chunks provided foundational formulas for drag polar and induced drag (e.g., $C_D = C_{D,0} + \\frac{C_L^2}{\\pi e AR}$) and discussions on L/D max, which are relevant. However, specific equations for climb performance (L = W cos θ) were not included in the retrieved chunks, so internal knowledge of flight mechanics was used to complete the analysis."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-13T10:30:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Vary climb angle (e.g., 45° or 15°) and ask for ratio.",
+        "Include thrust required calculation in climb vs level flight.",
+        "Combine with altitude changes affecting density.",
+        "Ask for climb angle that minimizes total drag or fuel consumption."
+      ]
+    },
+    "question_id": "GATE_2019_AE_Q41",
+    "year": 2019,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "NAT",
+    "question_text": "Consider an airplane with a weight of 8000 N, wing area of 16 m², wing zero-lift drag coefficient of 0.02, Oswald’s efficiency factor of 0.8, and wing aspect ratio of 6, in steady level flight with wing lift coefficient of 0.375. Considering the same flight speed and ambient density, the ratio of the induced drag coefficient during steady level flight to that during a 30 degree climb is _______ (round off to 2 decimal places)."
+  },
+  "tokens_used": 16550,
+  "input_tokens": 8609,
+  "output_tokens": 7941,
+  "cost": 0.02212574,
+  "time_seconds": 272.77776408195496
+}
