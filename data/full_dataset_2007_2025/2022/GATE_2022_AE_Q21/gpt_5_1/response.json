@@ -1,0 +1,399 @@
+{
+  "model_name": "gpt_5_1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "conceptual_application",
+      "media_type": "image_based",
+      "combined_type": "conceptual_application_image_based",
+      "weight_strategy": "VISION_WEIGHTED",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "This question requires applying statics and truss analysis concepts to determine the force in a member. It involves multiple steps to analyze the forces and determine if the member is in tension or compression, and requires understanding of equilibrium.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "B",
+        "is_correct": true,
+        "confidence": 0.96,
+        "confidence_type": "single_model",
+        "reasoning": "The truss has three members: PQ (vertical), QR (horizontal), and PR (diagonal at 45° to QR). Supports: Q is a pin (reactions Qx, Qy), R is a roller on horizontal ground (reaction Ry only). A horizontal force F acts at joint P to the right.\n\n1) Global equilibrium of the whole truss:\n- Sum of vertical forces: Qy + Ry = 0. There is no external vertical load, so Qy + Ry = 0. (1)\n- Sum of moments about Q (taking counter-clockwise positive). Let the vertical distance QP = h and horizontal distance QR = h (since PR is at 45°, triangle is isosceles right):\n  External forces creating moment about Q: F at P (horizontal) and reaction Ry at R (vertical). The line of action of F is horizontal at height h above Q, so its moment arm is h; F tends to rotate the structure clockwise about Q, so its moment is -F h. Ry acts at R, horizontal distance h from Q, giving moment +Ry·h. Thus:\n  Ry·h - F·h = 0 ⇒ Ry = F.\n  Using (1): Qy + F = 0 ⇒ Qy = -F (i.e., downward at Q).\n- Sum of horizontal forces: Qx + F = 0 ⇒ Qx = -F (reaction at Q to the left).\n\n2) Joint R equilibrium to find member force in QR:\nAt joint R, there is only the vertical reaction Ry (upward) and the forces in members QR and PR. Member QR is horizontal, so its force has only horizontal component along QR. Member PR is at 45°, so its force has both horizontal and vertical components.\n\nLet the internal axial force in QR be N_QR, assumed tension (pulling away from joint R, i.e., to the left on joint R). Let the force in PR at joint R be N_PR, assumed tension (along member from R towards P, i.e., up-left).\n\nResolve equilibrium at joint R:\n- Horizontal: Components to the right positive. N_QR acts to the left on joint R if tensile, so -N_QR. N_PR has horizontal component N_PR cos45° to the left, so -N_PR/\\sqrt{2}. No external horizontal reaction at R. Thus:\n  -N_QR - N_PR/\\sqrt{2} = 0. (2)\n- Vertical: Upward positive. External Ry = F upward. N_PR has vertical component N_PR sin45° upward (since it is along PR towards P, which is up-left), so +N_PR/\\sqrt{2}. Thus:\n  F + N_PR/\\sqrt{2} = 0 ⇒ N_PR = -\\sqrt{2} F (compression in PR). (3)\n\nSubstitute (3) into (2):\n  -N_QR - ( -\\sqrt{2} F )/\\sqrt{2} = 0 ⇒ -N_QR + F = 0 ⇒ N_QR = F.\n\nSince N_QR is positive in the assumed tensile sense, member QR carries a tensile force of magnitude F. Hence option B, F (tensile), is correct."
+      },
+      "explanation": {
+        "question_nature": "Application",
+        "step_by_step": [
+          "Identify the truss geometry: three members PQ (vertical), QR (horizontal), PR (diagonal at 45°), with Q as pin support and R as roller support.",
+          "Apply global equilibrium to the entire truss: sum of moments about Q to find Ry, then use vertical and horizontal force balance to find Qy and Qx.",
+          "Isolate joint R and draw its free-body diagram, including reaction Ry and member forces in QR and PR (assume both in tension initially).",
+          "Write horizontal and vertical equilibrium equations at joint R, using the 45° angle for member PR to resolve its components.",
+          "Solve the vertical equilibrium to find the force in PR (which comes out negative, indicating compression).",
+          "Substitute the force in PR into the horizontal equilibrium to obtain the axial force in QR, interpret the sign to determine that QR is in tension with magnitude F."
+        ],
+        "formulas_used": [
+          "$\\sum F_x = 0$",
+          "$\\sum F_y = 0$",
+          "$\\sum M = 0$",
+          "$\\cos 45^\\circ = \\sin 45^\\circ = \\frac{1}{\\sqrt{2}}$"
+        ],
+        "estimated_time_minutes": 3
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Structures",
+          "confidence": 0.99
+        },
+        "topic": {
+          "name": "Analysis of Trusses (Method of Joints and Global Equilibrium)",
+          "syllabus_ref": "Structures -> Trusses: analysis of determinate trusses"
+        },
+        "concepts": [
+          {
+            "name": "Static equilibrium of plane structures",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Method of joints for truss analysis",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Tension and compression in two-force members",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Support reactions for pin and roller supports",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Force components using trigonometry",
+            "importance": "tertiary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Understanding of support types: pin and roller reactions in 2D",
+          "Static equilibrium equations in two dimensions ($\\sum F_x=0$, $\\sum F_y=0$, $\\sum M=0$)",
+          "Concept of truss as an assembly of two-force members",
+          "Resolution of forces into components using basic trigonometry"
+        ],
+        "helpful": [
+          "Method of joints for solving truss internal forces",
+          "Sign convention for tension (positive) and compression (negative) in members"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Static equilibrium of rigid bodies in 2D",
+            "requires: Understanding of truss members as axial-force-only elements",
+            "enables: Efficient analysis of more complex trusses using method of joints or sections",
+            "enables: Design and safety assessment of aircraft structural truss-like components"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Easy",
+        "score": 3,
+        "complexity_breakdown": {
+          "conceptual": 3,
+          "mathematical": 2,
+          "problem_solving": 3
+        },
+        "estimated_solve_time_seconds": 120,
+        "expected_accuracy_percent": 80,
+        "difficulty_factors": [
+          "Requires careful identification of support reactions and their directions",
+          "Students may mis-handle the 45° member components or sign convention at joint R"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Aircraft Structures for Engineering Students",
+          "author": "T.H.G. Megson",
+          "chapter_number": "4",
+          "chapter_title": "Virtual Work and Energy Methods (includes truss examples)",
+          "section": "4.x Analysis of pin-jointed frames (trusses)",
+          "page_range": "approx. 120-150",
+          "complexity": "introductory",
+          "relevance_score": 0.78,
+          "source": "rag_retrieval",
+          "text_snippet": "The method of joints is applied by isolating each joint and applying equilibrium equations to the forces acting at that joint. For a two-force member, the internal force acts along the member axis."
+        },
+        {
+          "source_type": "book",
+          "book": "Mechanics of Materials",
+          "author": "Beer, Johnston et al.",
+          "chapter_number": "6",
+          "chapter_title": "Analysis of Statically Determinate Trusses",
+          "section": "Method of joints",
+          "page_range": "approx. 260-290",
+          "complexity": "introductory",
+          "relevance_score": 0.9,
+          "source": "model_consensus",
+          "text_snippet": ""
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. Nachiketa Tiwari",
+          "timestamp_start": "00:09:42",
+          "timestamp_end": "00:14:24",
+          "video_url": "https://www.youtube.com/watch?v=LNi1JE5ahl4",
+          "book_reference": "Shames, Engineering Mechanics",
+          "topic_covered": "Method of joints and identification of tension/compression in truss members",
+          "relevance_score": 0.82,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. K. Ramesh",
+          "timestamp_start": "00:22:36",
+          "timestamp_end": "00:48:38",
+          "video_url": "https://www.youtube.com/watch?v=UsMyQ7yPHk8",
+          "book_reference": "Beer & Johnston, Mechanics of Materials",
+          "topic_covered": "Truss analysis and interpretation of sign of member forces",
+          "relevance_score": 0.78,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "First Principles Equilibrium Analysis",
+        "total_steps": 6,
+        "solution_path": "Global equilibrium for reactions → Joint equilibrium at R → Solve for member forces → Interpret sign for tension/compression",
+        "key_insights": [
+          "Using global moment equilibrium about one support quickly gives the vertical reaction at the other support.",
+          "At a joint with known external reaction and only two unknown member forces, two scalar equilibrium equations are sufficient to solve for both.",
+          "A negative member force relative to an assumed tension direction indicates compression."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$\\sum F_x = 0$",
+          "name": "Horizontal force equilibrium",
+          "conditions": "Applies to any rigid body or joint in static equilibrium in 2D",
+          "type": "equation",
+          "relevance": "Used to find horizontal reactions and relate member forces at joint R"
+        },
+        {
+          "formula": "$\\sum F_y = 0$",
+          "name": "Vertical force equilibrium",
+          "conditions": "Applies to any rigid body or joint in static equilibrium in 2D",
+          "type": "equation",
+          "relevance": "Used to find vertical reactions and the vertical component of force in PR"
+        },
+        {
+          "formula": "$\\sum M = 0$",
+          "name": "Moment equilibrium",
+          "conditions": "Static equilibrium of the entire truss about a chosen point",
+          "type": "equation",
+          "relevance": "Used about point Q to determine the vertical reaction at R"
+        },
+        {
+          "formula": "$\\cos 45^\\circ = \\sin 45^\\circ = \\frac{1}{\\sqrt{2}}$",
+          "name": "Trigonometric components at 45 degrees",
+          "conditions": "For members inclined at 45° to the horizontal or vertical",
+          "type": "constant",
+          "relevance": "Used to resolve the diagonal member PR force into horizontal and vertical components"
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Determining axial forces in simple truss-like substructures of aircraft fuselage frames or landing gear linkages under lateral loads.",
+          "Analyzing ground support trusses for test rigs or wind tunnel models where loads are applied at joints."
+        ],
+        "specific_systems": [
+          "Triangular bracing elements in aircraft tail structures subjected to side loads.",
+          "Support frames for avionics racks where lateral accelerations induce horizontal forces."
+        ],
+        "practical_relevance": "Correctly identifying tension and compression in truss members is essential for sizing cross-sections, preventing buckling in compression members, and ensuring safe, lightweight structural design."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Assuming there is a horizontal reaction at the roller support R and including it in equilibrium equations.",
+          "why_students_make_it": "Students sometimes memorize that supports give two reactions without distinguishing between pin and roller types.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Remember that a roller on a horizontal surface can only provide a vertical reaction; draw the support symbol and think about which direction motion is prevented.",
+          "consequence": "Leads to an indeterminate system of equations and incorrect member forces."
+        },
+        {
+          "mistake": "Incorrectly resolving the diagonal member PR components, e.g., taking both components equal to the full force instead of multiplying by $1/\\sqrt{2}$.",
+          "why_students_make_it": "Rushing trigonometric calculations or forgetting the special values at 45°.",
+          "type": "Calculation",
+          "severity": "Medium",
+          "frequency": "common",
+          "how_to_avoid": "Write explicitly $F_x = F \\cos 45^\\circ$, $F_y = F \\sin 45^\\circ$ and recall that both equal $F/\\sqrt{2}$.",
+          "consequence": "Gives wrong numerical values and may change which option seems correct."
+        },
+        {
+          "mistake": "Misinterpreting the sign of member forces and thus labeling a tensile member as compressive or vice versa.",
+          "why_students_make_it": "Not following a consistent sign convention or forgetting the initial assumption direction.",
+          "type": "Sign Error",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Always assume unknown member forces in tension when drawing joint FBDs and interpret a positive result as tension, negative as compression.",
+          "consequence": "Even if magnitude is correct, the chosen option (tension vs compression) may be wrong."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "PR at 45: Parts are equal (P for PR, 45 for equal components).",
+          "concept": "For a 45° member, horizontal and vertical components of axial force are equal in magnitude.",
+          "effectiveness": "medium",
+          "context": "Use when resolving forces in members inclined at 45° in truss problems."
+        },
+        {
+          "mnemonic": "Roller = One Reaction Only (RO).",
+          "concept": "A roller support on a flat surface provides only one reaction, perpendicular to the surface.",
+          "effectiveness": "high",
+          "context": "Use when identifying support reactions in 2D structures."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "concept_recall",
+          "front": "In a 2D truss, what reactions can a pin support and a roller support on horizontal ground provide?",
+          "back": "Pin support: two reactions (horizontal and vertical). Roller on horizontal ground: one vertical reaction only.",
+          "difficulty": "easy",
+          "time_limit_seconds": 40
+        },
+        {
+          "card_type": "formula_recall",
+          "front": "For a member inclined at 45° to the horizontal with axial force N, what are its horizontal and vertical components?",
+          "back": "Both components are $N/\\sqrt{2}$ in magnitude: $N_x = N \\cos 45^\\circ = N/\\sqrt{2}$, $N_y = N \\sin 45^\\circ = N/\\sqrt{2}$.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "application",
+          "front": "You assume a truss member force as tension in the joint FBD and solve to get -10 kN. What does this mean physically?",
+          "back": "The member is actually in 10 kN compression; the negative sign indicates the real force direction is opposite to the assumed tension.",
+          "difficulty": "medium",
+          "time_limit_seconds": 45
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "Why is it wrong to include a horizontal reaction at a roller support on a flat surface?",
+          "back": "A roller can move freely along the surface and only resists motion perpendicular to it, so it cannot provide a horizontal reaction on a horizontal surface.",
+          "difficulty": "medium",
+          "time_limit_seconds": 45
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Design of simple truss frames supporting lateral loads, such as side-bracing in aircraft fuselage or hangar roofs.",
+          "industry_example": "A triangular side-brace in a fuselage frame resists cabin pressurization or gust loads; engineers compute member forces to ensure braces are not overstressed or prone to buckling.",
+          "why_it_matters": "Incorrectly estimating whether a member is in tension or compression can lead to under-designed compression members that buckle under load, compromising structural safety."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "Recognize it as a small determinate truss: quickly find reactions using moments, then analyze the joint with fewest unknowns (here joint R) to get the required member force.",
+        "guessing_heuristic": "If unsure, note that the horizontal load must be carried by horizontal components of member forces; QR is the only purely horizontal member, so its force magnitude is likely comparable to F.",
+        "time_management": "Limit yourself to about 2 minutes: 1 minute for reactions, 1 minute for joint R equilibrium. Skip detailed joint P/Q analysis since they are not needed."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "method of joints truss example",
+        "GATE AE truss analysis QR member force",
+        "pin and roller support reactions 2D",
+        "tension vs compression in truss members",
+        "triangular truss with horizontal load",
+        "static equilibrium of plane trusses"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Method of Joints Starting from Joint P",
+          "description": "Instead of using joint R first, one could start at joint P, where the external load F is applied, write equilibrium for that joint to relate forces in members PQ and PR, then move to joint Q or R to solve for QR.",
+          "pros_cons": "Pros: Systematic and aligns with standard teaching of method of joints. Cons: Slightly longer because it introduces more unknowns before reaching QR.",
+          "when_to_use": "Useful when the joint with the fewest unknowns is not obvious or when you want to practice full method-of-joints workflow."
+        },
+        {
+          "name": "Method of Sections",
+          "description": "Cut the truss through members PQ, PR, and QR and consider equilibrium of one side of the cut. Choose the cut and moment center cleverly to isolate the force in QR directly.",
+          "pros_cons": "Pros: Can be very efficient in larger trusses when only one member force is needed. Cons: Overkill for a 3-member truss and requires careful selection of section and moment point.",
+          "when_to_use": "Better for larger, more complex trusses where you need only a few member forces."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Engineering Mechanics": "Uses the same 2D equilibrium principles and support reaction concepts taught in statics.",
+        "Aerospace Structures": "Truss analysis underpins understanding of idealized aircraft structural members and load paths.",
+        "Strength of Materials": "Knowing whether a member is in tension or compression is essential for stress, strain, and buckling calculations.",
+        "Mechanical Vibrations": "Member axial stiffness and connectivity in trusses influence natural frequencies of structural systems."
+      },
+      "deeper_dive_topics": [
+        "Analysis of statically indeterminate trusses using force and displacement methods",
+        "Use of virtual work and unit load method to compute truss deflections",
+        "Buckling analysis of compression members in lightweight aerospace trusses",
+        "Finite element modeling of truss and frame structures"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2022_AE_Q21",
+        "year": 2022,
+        "marks": 1.0,
+        "negative_marks": 0.33,
+        "time_expected": "1.5-2.0 minutes",
+        "success_rate_estimate": "80%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Structures and Structural Dynamics",
+        "gate_subsection": "Trusses: analysis of statically determinate trusses",
+        "weightage": "5-10%",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "The question aligns well with the core requirement of being able to analyze simple trusses using equilibrium and identify member forces and their nature."
+      },
+      "rag_quality": {
+        "relevance_score": 0.55,
+        "chunks_used": 3,
+        "sources_distribution": {
+          "books": 2,
+          "videos": 3
+        },
+        "notes": "RAG provided general explanations of truss analysis, method of joints, tension/compression interpretation, and unit load method, which are conceptually relevant. However, the specific geometry and solution steps for this exact 3-member truss were derived using internal knowledge rather than directly from RAG examples."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-24T00:00:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Ask for the force in member PR and classify it as tension or compression under the same loading.",
+        "Modify the loading to a vertical force at P and ask for the new force in QR.",
+        "Introduce an additional member or support making the truss statically indeterminate and ask for internal forces using force method.",
+        "Ask for the horizontal displacement of joint P using the unit load method, given member areas and modulus of elasticity."
+      ]
+    },
+    "question_id": "GATE_2022_AE_Q21",
+    "year": 2022,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "MCQ",
+    "question_text": "A three-member truss is simply supported at Q and R, and loaded at P by a horizontal force F as shown. The force in QR is"
+  },
+  "tokens_used": 16294,
+  "input_tokens": 11099,
+  "output_tokens": 5195,
+  "cost": 0.06582375,
+  "time_seconds": 75.38303256034851
+}
