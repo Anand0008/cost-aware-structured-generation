@@ -1,0 +1,410 @@
+{
+  "model_name": "gemini_2.5_pro",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "text_only",
+      "combined_type": "numerical_calculation_text_only",
+      "weight_strategy": "NUMERICAL_WEIGHTED",
+      "classification_confidence": 1.0,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "The question requires a numerical calculation of induced drag coefficient using the given aspect ratio and angle of attack. It's a straightforward application of a formula.",
+      "difficulty_score": 4,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": false,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": false,
+        "approximation_needed": false
+      },
+      "use_gpt51": false
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "0.007",
+        "is_correct": true,
+        "confidence": 0.98,
+        "confidence_type": "single_model",
+        "reasoning": "The problem asks for the induced drag coefficient ($C_{D,i}$) for a finite wing with an elliptic planform and a symmetric airfoil. For an elliptic wing, the Oswald efficiency factor ($e$) is 1, and the induced drag coefficient is given by the formula $C_{D,i} = \\frac{C_L^2}{\\pi AR}$. For a symmetric airfoil, the zero-lift angle of attack ($\\alpha_{L0}$) is 0, and the 2D lift curve slope ($a_0$) for a thin symmetric airfoil is $2\\pi$ per radian.\n\n1.  **Convert angle of attack to radians**: $\\alpha = 5^\\circ \\times \\frac{\\pi}{180^\\circ} = \\frac{\\pi}{36}$ radians.\n2.  **Identify 2D lift curve slope**: For a thin symmetric airfoil, $a_0 = 2\\pi$ per radian.\n3.  **Calculate finite wing lift curve slope ($a$)**: For an elliptic wing (from RAG Chunk 2, 5):\n    $a = \\frac{a_0}{1 + a_0 / (\\pi AR)} = \\frac{2\\pi}{1 + (2\\pi) / (\\pi \\times 10)} = \\frac{2\\pi}{1 + 2/10} = \\frac{2\\pi}{1.2} = \\frac{5\\pi}{3}$ per radian.\n4.  **Calculate lift coefficient ($C_L$)**: For a symmetric airfoil, $C_L = a \\times (\\alpha - \\alpha_{L0}) = a \\times \\alpha$.\n    $C_L = \\frac{5\\pi}{3} \\times \\frac{\\pi}{36} = \\frac{5\\pi^2}{108}$.\n5.  **Calculate induced drag coefficient ($C_{D,i}$)**: For an elliptic wing (from RAG Chunk 2, 3):\n    $C_{D,i} = \\frac{C_L^2}{\\pi AR} = \\frac{(\\frac{5\\pi^2}{108})^2}{\\pi \\times 10} = \\frac{25\\pi^4 / 108^2}{10\\pi} = \\frac{25\\pi^3}{108^2 \\times 10} = \\frac{5\\pi^3}{23328}$.\n6.  **Numerical Calculation and Rounding**: $C_{D,i} \\approx \\frac{5 \\times (3.14159)^3}{23328} \\approx \\frac{5 \\times 31.006}{23328} \\approx 0.006645$.\n    Rounding to three decimal places gives $0.007$. This value falls within the acceptable range of 0.005 to 0.009 provided in the answer key."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Step 1: Identify the key characteristics of the wing. The problem states an 'elliptic planform' and 'symmetric airfoil'. These imply that the Oswald efficiency factor ($e$) is 1, the zero-lift angle of attack ($\\alpha_{L0}$) is 0, and the 2D lift curve slope ($a_0$) for a thin symmetric airfoil is $2\\pi$ per radian.",
+          "Step 2: Convert the given angle of attack from degrees to radians. Most aerodynamic formulas, especially those involving $2\\pi$, require angles in radians for consistency.",
+          "Step 3: Calculate the finite wing lift curve slope ($a$). Use the specific formula for an elliptic wing, which relates the finite wing slope to the 2D airfoil slope ($a_0$) and the aspect ratio (AR).",
+          "Step 4: Determine the wing's lift coefficient ($C_L$). For a symmetric airfoil, the lift coefficient is directly proportional to the angle of attack, using the finite wing lift curve slope calculated in the previous step.",
+          "Step 5: Compute the induced drag coefficient ($C_{D,i}$). Apply the formula for induced drag specific to an elliptic wing, which depends on the lift coefficient and aspect ratio.",
+          "Step 6: Round the final numerical answer to three decimal places as specified in the question."
+        ],
+        "formulas_used": [
+          "$\\alpha_{rad} = \\alpha_{deg} \\times \\frac{\\pi}{180}$",
+          "$a_0 = 2\\pi \\text{ (for thin symmetric airfoil)}$",
+          "$a = \\frac{a_0}{1 + a_0 / (\\pi AR)}$",
+          "$C_L = a \\times (\\alpha - \\alpha_{L0})$",
+          "$C_{D,i} = \\frac{C_L^2}{\\pi AR}$"
+        ],
+        "estimated_time_minutes": 3
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Aerodynamics",
+          "confidence": 1.0
+        },
+        "topic": {
+          "name": "Finite Wing Theory",
+          "syllabus_ref": "GATE AE Syllabus -> Aerodynamics -> Finite Wing Theory"
+        },
+        "concepts": [
+          {
+            "name": "Induced Drag",
+            "importance": "primary"
+          },
+          {
+            "name": "Elliptic Lift Distribution",
+            "importance": "primary"
+          },
+          {
+            "name": "Lift Coefficient",
+            "importance": "secondary"
+          },
+          {
+            "name": "Aspect Ratio",
+            "importance": "secondary"
+          },
+          {
+            "name": "Lift Curve Slope",
+            "importance": "secondary"
+          },
+          {
+            "name": "Symmetric Airfoil",
+            "importance": "tertiary"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Basic understanding of finite wing aerodynamics principles",
+          "Knowledge of lift and drag coefficients and their definitions",
+          "Understanding of aspect ratio and its significance",
+          "Knowledge of 2D airfoil characteristics, specifically lift curve slope and zero-lift angle of attack for symmetric airfoils",
+          "Ability to perform unit conversions (degrees to radians)"
+        ],
+        "helpful": [
+          "Conceptual understanding of Oswald efficiency factor and downwash"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Finite Wing Theory Fundamentals",
+            "requires: Airfoil Aerodynamics (2D lift curve slope)",
+            "requires: Unit Conversion (Degrees to Radians)",
+            "enables: Wing Design Optimization",
+            "enables: Aircraft Performance Prediction"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Medium",
+        "score": 6,
+        "complexity_breakdown": {
+          "conceptual": 6,
+          "mathematical": 5,
+          "problem_solving": 6
+        },
+        "estimated_solve_time_seconds": 180,
+        "expected_accuracy_percent": 65,
+        "difficulty_factors": [
+          "Requires recalling the fundamental 2D lift curve slope for a thin symmetric airfoil ($2\\pi$ per radian).",
+          "Involves a sequence of formula applications, requiring careful calculation and unit consistency.",
+          "Understanding the specific implications of an 'elliptic planform' (e.g., $e=1$) is crucial."
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Intro to Aerodynamics",
+          "author": "J. D. Anderson",
+          "chapter_number": "5",
+          "chapter_title": "Incompressible Flow over Finite Wings",
+          "section": "§5",
+          "complexity": "intermediate",
+          "relevance_score": 0.95,
+          "source": "rag_retrieval",
+          "text_snippet": "This section examines the specific case of a finite wing with an elliptical lift distribution... establishes two of the most critical formulas in wing theory: the relationships for induced angle of attack and induced drag coefficient..."
+        },
+        {
+          "source_type": "book",
+          "book": "Intro to Aerodynamics",
+          "author": "J. D. Anderson",
+          "chapter_number": "5",
+          "chapter_title": "Incompressible Flow over Finite Wings",
+          "complexity": "intermediate",
+          "relevance_score": 0.98,
+          "source": "rag_retrieval",
+          "text_snippet": "Induced Angle of Attack (Elliptic Wing) `$\\alpha_i = \\frac{{C_L}}{{\\pi AR}}$` ... Induced Drag Coefficient (Elliptic Wing) `C_{{D,i}} = \\frac{{C_L^2}}{{\\pi AR}}$` ... Finite Wing Lift Slope (Elliptic Wing) `a = \\frac{{a_0}}{{1 + a_0 / (\\pi AR)}}$`"
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. Arnab Roy",
+          "timestamp_start": "00:01:31",
+          "timestamp_end": "00:03:41",
+          "video_url": "https://www.youtube.com/watch?v=GJTpSf9wnb8",
+          "book_reference": "Anderson, J.D., 'Fundamentals of Aerodynamics'",
+          "topic_covered": "Elliptic Lift Distribution and Minimum Induced Drag",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. Arnab Roy",
+          "timestamp_start": "00:12:16",
+          "timestamp_end": "00:18:00",
+          "video_url": "https://www.youtube.com/watch?v=GJTpSf9wnb8",
+          "book_reference": "Anderson, J.D., 'Fundamentals of Aerodynamics'",
+          "topic_covered": "Finite Wing Lift and Induced Drag Calculation; Aerodynamic Performance Estimation",
+          "relevance_score": 0.85,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Direct Formula Application",
+        "total_steps": 6,
+        "solution_path": "Identify Wing Type -> Convert Units -> Calculate 2D Airfoil Slope -> Calculate Finite Wing Slope -> Calculate Lift Coefficient -> Calculate Induced Drag Coefficient",
+        "key_insights": [
+          "The elliptic planform simplifies induced drag calculation by implying an Oswald efficiency factor ($e$) of 1.",
+          "A symmetric airfoil simplifies lift calculation as its zero-lift angle of attack ($\\alpha_{L0}$) is 0.",
+          "The 2D lift curve slope for a thin symmetric airfoil ($2\\pi$ per radian) is a fundamental value that must be known or recalled."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$\\alpha_{rad} = \\alpha_{deg} \\times \\frac{\\pi}{180}$",
+          "name": "Angle Conversion",
+          "conditions": "For converting angles from degrees to radians, essential for most aerodynamic formulas.",
+          "type": "equation",
+          "relevance": "Essential for correct calculation of lift coefficient."
+        },
+        {
+          "formula": "$a_0 = 2\\pi$",
+          "name": "2D Lift Curve Slope for Thin Symmetric Airfoil",
+          "conditions": "Applies to thin symmetric airfoils in incompressible flow. Angle in radians.",
+          "type": "constant",
+          "relevance": "Fundamental value required for calculating the finite wing lift curve slope."
+        },
+        {
+          "formula": "$a = \\frac{a_0}{1 + a_0 / (\\pi AR)}$",
+          "name": "Finite Wing Lift Curve Slope (Elliptic Wing)",
+          "conditions": "Applies to untwisted elliptic wings in incompressible flow. $a_0$ and $a$ are per radian.",
+          "type": "equation",
+          "relevance": "Core formula to determine the finite wing's lift characteristics from its 2D airfoil properties."
+        },
+        {
+          "formula": "$C_L = a \\times (\\alpha - \\alpha_{L0})$",
+          "name": "Lift Coefficient",
+          "conditions": "For finite wings, where $a$ is the finite wing lift curve slope and $\\alpha$ is the angle of attack in radians. For symmetric airfoils, $\\alpha_{L0}=0$.",
+          "type": "equation",
+          "relevance": "Used to calculate the total lift generated by the wing, which is a prerequisite for induced drag."
+        },
+        {
+          "formula": "$C_{D,i} = \\frac{C_L^2}{\\pi AR}$",
+          "name": "Induced Drag Coefficient (Elliptic Wing)",
+          "conditions": "Applies specifically to wings with an elliptic lift distribution, where the Oswald efficiency factor $e=1$.",
+          "type": "equation",
+          "relevance": "The primary formula for directly calculating the induced drag coefficient, which is the final answer."
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "The Supermarine Spitfire, a famous WWII fighter, utilized an elliptical wing planform to achieve low induced drag, contributing to its exceptional maneuverability and performance.",
+          "High-performance gliders often feature high aspect ratio wings with lift distributions that closely approximate the elliptic ideal to minimize induced drag and maximize glide ratio for extended flight."
+        ],
+        "specific_systems": [
+          "Long-range commercial aircraft (e.g., Boeing 747, Airbus A380) incorporate design features like high aspect ratios and optimized wing planforms to reduce induced drag, improving fuel efficiency and operational range."
+        ],
+        "practical_relevance": "Minimizing induced drag is a fundamental goal in aircraft design, as it directly impacts fuel consumption, range, endurance, and overall aerodynamic efficiency. Understanding and applying concepts related to elliptic lift distribution helps engineers design more efficient wings."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Forgetting to convert the angle of attack from degrees to radians before using it in formulas involving $a_0$ or $a$.",
+          "why_students_make_it": "Aerodynamic formulas often assume angles are in radians, but problem statements frequently provide them in degrees. Students might overlook this critical unit conversion.",
+          "type": "Units",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Always explicitly write down the unit conversion step. Develop a habit of checking units for all input variables in aerodynamic calculations. If a formula contains $\\pi$, it's a strong indicator that angles should be in radians.",
+          "consequence": "The calculated lift coefficient and subsequently the induced drag coefficient will be incorrect, often by a large factor, leading to a completely wrong answer."
+        },
+        {
+          "mistake": "Not knowing or incorrectly recalling the 2D lift curve slope ($a_0$) for a thin symmetric airfoil.",
+          "why_students_make_it": "This value ($2\\pi$ per radian) is a theoretical constant derived from thin airfoil theory and is often assumed knowledge rather than explicitly given in problems.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Memorize fundamental theoretical constants and properties, such as $a_0 = 2\\pi$ for thin airfoils and $\\alpha_{L0}=0$ for symmetric airfoils. Create a cheat sheet for these core values.",
+          "consequence": "Inability to correctly calculate the finite wing lift curve slope, which is a crucial intermediate step, making the entire problem unsolvable."
+        },
+        {
+          "mistake": "Using the general induced drag formula $C_{D,i} = \\frac{C_L^2}{\\pi e AR}$ with an incorrect Oswald efficiency factor ($e$).",
+          "why_students_make_it": "Students might forget that for an *elliptic* planform, the Oswald efficiency factor ($e$) is exactly 1. They might mistakenly use a typical value for real wings (e.g., 0.8 or 0.9) or assume it needs to be calculated.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Clearly associate 'elliptic planform' with 'ideal lift distribution' and 'Oswald efficiency factor $e=1$'. Understand that this is a special, ideal case.",
+          "consequence": "A slightly incorrect induced drag coefficient, which might still be within a numerical range but indicates a conceptual misunderstanding."
+        },
+        {
+          "mistake": "Algebraic errors, especially when dealing with fractions and squaring terms involving $\\pi$.",
+          "why_students_make_it": "The multi-step calculation involves several fractions and squaring operations, which can be prone to arithmetic errors, especially under exam pressure.",
+          "type": "Calculation",
+          "severity": "Low",
+          "frequency": "common",
+          "how_to_avoid": "Break down complex calculations into smaller, manageable steps. Use a calculator carefully and double-check intermediate results. Keep terms in $\\pi$ as long as possible to maintain precision until the final numerical evaluation.",
+          "consequence": "A numerical error in the final answer, potentially leading to it falling outside the acceptable range."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "Elliptic means 'E'fficient (e=1)",
+          "concept": "Remembering that an elliptic wing has the ideal Oswald efficiency factor of 1.",
+          "effectiveness": "high",
+          "context": "When identifying wing planform types and their associated efficiency factors."
+        },
+        {
+          "mnemonic": "Symmetric means 'S'traight (Zero-Lift Angle is Zero)",
+          "concept": "Remembering that for a symmetric airfoil, the zero-lift angle of attack ($\\alpha_{L0}$) is 0.",
+          "effectiveness": "high",
+          "context": "When calculating lift coefficient for symmetric airfoils."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "What is the induced drag coefficient formula for an elliptic wing?",
+          "back": "`$C_{D,i} = \\frac{C_L^2}{\\pi AR}$`",
+          "difficulty": "easy"
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "What is the Oswald efficiency factor ($e$) for an elliptic wing?",
+          "back": "$e=1$",
+          "difficulty": "easy"
+        },
+        {
+          "card_type": "formula_recall",
+          "front": "What is the 2D lift curve slope ($a_0$) for a thin symmetric airfoil?",
+          "back": "$a_0 = 2\\pi$ per radian",
+          "difficulty": "medium"
+        },
+        {
+          "card_type": "application",
+          "front": "How do you calculate the finite wing lift curve slope ($a$) for an elliptic wing given $a_0$ and AR?",
+          "back": "`$a = \\frac{a_0}{1 + a_0 / (\\pi AR)}$`",
+          "difficulty": "medium"
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "What is a common unit mistake when using angle of attack in aerodynamic formulas, and how to avoid it?",
+          "back": "Forgetting to convert degrees to radians. Always convert angles to radians unless the formula is explicitly designed for degrees. Look for $\\pi$ in formulas as a hint for radians.",
+          "difficulty": "easy"
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Aircraft wing design and optimization for fuel efficiency and performance.",
+          "industry_example": "Aircraft designers strive to achieve lift distributions that closely approximate the elliptic ideal to minimize induced drag. While a perfectly elliptic wing is structurally complex and not always practical, the theoretical understanding guides the design of tapered wings and the use of winglets to mimic its benefits.",
+          "why_it_matters": "Induced drag is a major component of total drag, especially at lower speeds and higher altitudes. Reducing it directly leads to lower fuel consumption, increased range, and improved climb performance for aircraft."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "Immediately identify 'elliptic planform' (implies $e=1$) and 'symmetric airfoil' (implies $\\alpha_{L0}=0$ and $a_0=2\\pi$) to simplify the problem. Check for angle units (degrees vs. radians) right away.",
+        "guessing_heuristic": "If stuck, remember that induced drag is inversely proportional to AR and proportional to $C_L^2$. A higher AR (like 10 in this case) generally means lower induced drag. The answer should be a small positive number.",
+        "time_management": "This problem involves a sequence of formula applications. Allocate 2-3 minutes. Perform calculations systematically, keeping $\\pi$ terms until the final step to maintain precision."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "Elliptic wing induced drag calculation",
+        "Finite wing lift curve slope derivation",
+        "Oswald efficiency factor definition",
+        "Thin airfoil theory lift curve slope",
+        "Prandtl's lifting line theory explained",
+        "Aerodynamic drag components finite wing",
+        "Wing planform effects on induced drag"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Using Oswald Efficiency Factor (e) explicitly",
+          "description": "Although for an elliptic wing $e=1$, one could use the more general induced drag formula $C_{D,i} = \\frac{C_L^2}{\\pi e AR}$ and then substitute $e=1$. This approach is identical in result but reinforces the general formula's structure.",
+          "pros_cons": "Pros: Helps remember the general formula for non-elliptic wings. Cons: Adds an unnecessary step if the property $e=1$ for elliptic wings is already well understood.",
+          "when_to_use": "Useful for students who are still learning the general formula or when comparing elliptic wings to non-elliptic wings where $e<1$."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Fluid Mechanics": "The underlying principles of fluid flow, circulation, vortex theory (e.g., Kutta-Joukowski theorem, Helmholtz's vortex theorems), and boundary layer theory are fundamental to understanding how lift is generated and how induced drag arises from wingtip vortices.",
+        "Aircraft Performance": "Induced drag is a critical component in aircraft performance calculations, directly influencing parameters such as range, endurance, climb rate, and maximum speed. Minimizing induced drag is essential for optimizing aircraft efficiency.",
+        "Aircraft Design": "Wing planform selection, aspect ratio determination, and the design of wing twist and camber distribution are key design choices that are heavily influenced by the goal of minimizing induced drag and achieving an efficient lift distribution."
+      },
+      "deeper_dive_topics": [
+        "Prandtl's Lifting Line Theory: Explore the theoretical framework that provides the basis for induced drag and finite wing lift calculations.",
+        "Vortex Lattice Method (VLM): A more advanced numerical method for analyzing finite wing aerodynamics, extending beyond the limitations of lifting line theory.",
+        "Wing Twist and Camber Distribution: Investigate how these design parameters can be used to achieve a near-elliptic lift distribution on non-elliptic wing planforms.",
+        "Non-planar Wings (e.g., winglets, box wings): Study advanced wing configurations designed to further reduce induced drag beyond what is achievable with conventional planar wings."
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2021_AE_Q41",
+        "year": 2021,
+        "marks": 2.0,
+        "negative_marks": 0.0,
+        "time_expected": "2-3 minutes",
+        "success_rate_estimate": "65%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 1: Aerodynamics",
+        "gate_subsection": "Finite Wing Theory",
+        "weightage": "Typically 10-15% of Aerodynamics section in GATE AE",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "This question is an excellent and direct assessment of core concepts within finite wing theory, specifically induced drag for an ideal (elliptic) wing. It aligns perfectly with the GATE AE syllabus."
+      },
+      "rag_quality": {
+        "relevance_score": 0.95,
+        "chunks_used": 3,
+        "sources_distribution": {
+          "books": 2,
+          "videos": 1
+        },
+        "notes": "RAG chunks 1, 2, and 3 provided highly relevant and direct formulas for induced drag coefficient, induced angle of attack, and finite wing lift slope specifically for elliptic wings. These chunks were instrumental in solving the problem. Chunk 5 also reinforced the general lift slope formula which applies to elliptic wings when $\\tau=0$. The RAG context was very helpful and sufficient."
+      },
+      "model_meta": {
+        "timestamp": "2024-07-29T12:00:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Calculate the induced angle of attack for the same wing under the given conditions.",
+        "Compare the induced drag of this elliptic wing with a rectangular wing of the same aspect ratio and lift coefficient, given its Oswald efficiency factor.",
+        "Given the total drag coefficient and profile drag coefficient, calculate the Oswald efficiency factor for a non-elliptic wing.",
+        "Analyze the effect of changing aspect ratio on induced drag for a given lift coefficient, illustrating the trade-offs in wing design.",
+        "Calculate the total drag coefficient for this wing if the profile drag coefficient ($C_{d,0}$) is also provided."
+      ]
+    },
+    "question_id": "GATE_2021_AE_Q41",
+    "year": 2021,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "NAT",
+    "question_text": "A finite wing of elliptic planform with aspect ratio 10, whose section is a symmetric airfoil, is placed in a uniform flow at 5 degrees angle of attack. The induced drag coefficient for the wing is ______ (round off to three decimal places)."
+  },
+  "tokens_used": 16376,
+  "input_tokens": 9946,
+  "output_tokens": 6430,
+  "cost": 0.0053498999999999994,
+  "time_seconds": 60.22234034538269
+}
