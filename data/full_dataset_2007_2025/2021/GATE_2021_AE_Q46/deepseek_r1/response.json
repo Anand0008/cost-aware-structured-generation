@@ -1,0 +1,399 @@
+{
+  "model_name": "deepseek_r1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "image_based",
+      "combined_type": "numerical_calculation_image_based",
+      "weight_strategy": "MATH_IMAGE_HYBRID",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "This is a numerical calculation problem involving axial compressor velocity triangles. It requires understanding of multiple concepts related to compressor aerodynamics and several steps to solve, making it a medium-hard problem. The image is essential for visualizing the velocity triangles.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "277.12 m/s (within 274 to 282)",
+        "is_correct": true,
+        "confidence": 0.98,
+        "confidence_type": "single_model",
+        "reasoning": "The blade speed U is found by solving the exit velocity triangle with correct sign convention: the relative velocity's tangential component is opposite to blade motion. Using V2 = U + W2, with W2 having components W2 cos β2 (axial) and -W2 sin β2 (tangential, since β2=30° is measured from axial and opposite to U), the equation V2^2 = (W2 cos β2)^2 + (U - W2 sin β2)^2 yields U ≈ 277.12 m/s, matching the official answer range."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Step 1: Understand the vector relationship for axial compressor velocity triangles: Absolute velocity (V) = Blade speed (U) + Relative velocity (W). U is purely tangential.",
+          "Step 2: Identify given data: At rotor exit, blade angle (relative flow angle) β2 = 30°, absolute velocity magnitude V2 = 240 m/s, relative velocity magnitude W2 = 140 m/s.",
+          "Step 3: Resolve W2 into components. For a compressor, the relative velocity's tangential component is opposite to U. Thus, axial component: W2a = W2 cos β2 = 140 cos30° = 140*(√3/2) ≈ 121.24 m/s. Tangential component: W2θ = -W2 sin β2 = -140 sin30° = -70 m/s.",
+          "Step 4: Apply vector addition at exit: V2θ = U + W2θ = U - 70. The axial component of V2 equals W2a (since U has no axial component): V2a = W2a = 121.24 m/s.",
+          "Step 5: Use magnitude: V2^2 = V2a^2 + V2θ^2 => 240^2 = (121.24)^2 + (U - 70)^2. Compute: (121.24)^2 = 14700, so 57600 = 14700 + (U - 70)^2 => (U - 70)^2 = 42900 => U - 70 = √42900 ≈ 207.12 (positive since U > 70).",
+          "Step 6: Solve: U = 70 + 207.12 = 277.12 m/s (rounded to two decimal places). Verify with inlet triangle for consistency: using V1=140, W1=240, and similar sign convention yields a consistent β1."
+        ],
+        "formulas_used": [
+          "Vector relation: $\\vec{V} = \\vec{U} + \\vec{W}$",
+          "Component decomposition: $V_a = W \\cos\\beta$, $V_\\theta = U + W \\sin\\beta$ (with sign convention)",
+          "Magnitude: $V^2 = V_a^2 + V_\\theta^2$"
+        ],
+        "estimated_time_minutes": 4
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Propulsion",
+          "confidence": 0.9
+        },
+        "topic": {
+          "name": "Axial Compressor Aerodynamics",
+          "syllabus_ref": "Section 6 Propulsion -> Turbomachinery -> Axial Flow Compressors"
+        },
+        "concepts": [
+          {
+            "name": "Velocity Triangles",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Relative and Absolute Velocities",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Blade Speed Calculation",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Sign Convention for Flow Angles",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Vector addition and resolution",
+          "Trigonometry (sine, cosine)",
+          "Velocity triangles in turbomachinery"
+        ],
+        "helpful": [
+          "Euler's turbomachinery equation",
+          "Axial compressor stage design"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Vector kinematics",
+            "requires: Velocity triangle construction",
+            "enables: Work done calculation in compressor",
+            "enables: Degree of reaction analysis"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Medium",
+        "score": 6,
+        "complexity_breakdown": {
+          "conceptual": 7,
+          "mathematical": 5,
+          "problem_solving": 6
+        },
+        "estimated_solve_time_seconds": 180,
+        "expected_accuracy_percent": 60,
+        "difficulty_factors": [
+          "Sign convention for tangential components is critical and often overlooked",
+          "Requires careful interpretation of blade angle and flow direction"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Gas Turbines",
+          "author": "V. Ganesan",
+          "chapter_number": "9",
+          "chapter_title": "Axial Flow Compressors",
+          "section": "§9.3",
+          "page_range": "",
+          "complexity": "intermediate",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval",
+          "text_snippet": "Velocity Triangle: A vector diagram that represents the kinematic relationship c = u + w at a specific point, typically the rotor inlet or outlet. It is the fundamental tool for analyzing the flow angles and velocities within a turbomachine stage."
+        },
+        {
+          "source_type": "book",
+          "book": "Gas Turbines",
+          "author": "V. Ganesan",
+          "chapter_number": "11",
+          "chapter_title": "Turbine Stages and Performance",
+          "section": "",
+          "page_range": "",
+          "complexity": "intermediate",
+          "relevance_score": 0.7,
+          "source": "rag_retrieval",
+          "text_snippet": "The performance of a gas turbine stage is fundamentally determined by the change in momentum of the working fluid... analyzed using velocity triangles."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. V. Babu",
+          "timestamp_start": "00:38:49",
+          "timestamp_end": "00:46:11",
+          "video_url": "https://www.youtube.com/watch?v=30-FdRgygI0",
+          "book_reference": "Hill & Peterson",
+          "topic_covered": "Velocity Triangles in Axial Compressors",
+          "relevance_score": 0.85,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. A. Sameen",
+          "timestamp_start": "00:12:15",
+          "timestamp_end": "00:15:27",
+          "video_url": "https://www.youtube.com/watch?v=3bhoVSI6VoI",
+          "book_reference": "Anderson, J.D.",
+          "topic_covered": "Axial Flow Compressor Velocity Triangles",
+          "relevance_score": 0.8,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Vector Component Method with Sign Convention",
+        "total_steps": 6,
+        "solution_path": "Exit triangle analysis → Component resolution with correct sign → Solve quadratic for U → Verify with inlet triangle",
+        "key_insights": [
+          "The relative velocity's tangential component is opposite to blade motion in a compressor rotor.",
+          "Using the correct sign in W sin β is crucial; otherwise, U will be half the correct value."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$\\vec{V} = \\vec{U} + \\vec{W}$",
+          "name": "Velocity Triangle Vector Relation",
+          "conditions": "For a rotating blade row, absolute velocity equals blade speed plus relative velocity.",
+          "type": "equation",
+          "relevance": "Fundamental kinematic relationship for turbomachinery."
+        },
+        {
+          "formula": "$V_a = W \\cos\\beta$",
+          "name": "Axial Velocity Component",
+          "conditions": "Assuming no radial component, axial velocity is conserved if density changes are neglected.",
+          "type": "equation",
+          "relevance": "Links relative flow angle to axial component."
+        },
+        {
+          "formula": "$V_\\theta = U + W \\sin\\beta$",
+          "name": "Tangential Velocity Component",
+          "conditions": "Sign of sin β depends on convention: negative if relative tangential velocity opposes U.",
+          "type": "equation",
+          "relevance": "Core equation for solving U; sign choice determines correct answer."
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Design of axial compressor stages in jet engines (e.g., CFM56, GE90)",
+          "Performance analysis of industrial gas turbine compressors"
+        ],
+        "specific_systems": [
+          "High-pressure compressor section of turbofan engines",
+          "Auxiliary power unit (APU) compressors"
+        ],
+        "practical_relevance": "Accurate velocity triangle analysis ensures efficient compression, avoiding flow separation and excessive losses, directly impacting engine efficiency and fuel burn."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Taking W sin β as positive, leading to U ≈ 137 m/s (half the correct value).",
+          "why_students_make_it": "Forgetting that in compressors, the relative velocity's tangential component is opposite to blade rotation.",
+          "type": "Sign Error",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Remember: For compressor rotors, work input increases absolute tangential velocity, so relative tangential velocity is opposite to U. Always sketch the triangle with U in the direction of rotation, and W inclined opposite to U.",
+          "consequence": "Answer off by a factor of ~2, outside the accepted range."
+        },
+        {
+          "mistake": "Assuming constant axial velocity without checking given data.",
+          "why_students_make_it": "Constant axial velocity is a common simplification in textbook examples, but here it is not given.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Use given magnitudes directly via vector equations; do not impose extra assumptions unless stated.",
+          "consequence": "May lead to inconsistent equations or incorrect U."
+        },
+        {
+          "mistake": "Misinterpreting 'blade angle' as absolute flow angle or angle from tangential direction.",
+          "why_students_make_it": "Ambiguity in terminology; blade angle usually means metal angle, which equals relative flow angle at design condition.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "In axial turbomachinery, 'blade angle' typically refers to the angle between blade chord and axial direction. Assume zero incidence at design.",
+          "consequence": "Using wrong angle (e.g., 60° instead of 30°) yields incorrect U."
+        },
+        {
+          "mistake": "Algebraic error in solving (U ± constant)^2 = value, forgetting ± sign.",
+          "why_students_make_it": "Rushing through quadratic solution.",
+          "type": "Calculation",
+          "severity": "Low",
+          "frequency": "rare",
+          "how_to_avoid": "Check physically: U must be positive and greater than W sin β if tangential component is opposite.",
+          "consequence": "May select negative or unrealistic U."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "CURL: Compressor, U, Relative opposite, Left (or Less) – In compressor, Relative velocity opposes U, leading to Larger U.",
+          "concept": "Sign of relative tangential component in compressor",
+          "effectiveness": "medium",
+          "context": "When setting up velocity triangle equations for compressor rotor."
+        },
+        {
+          "mnemonic": "V = U + W, Watch the Wiggle – Wiggles (sign) of W’s tangential component matter.",
+          "concept": "Vector addition with direction",
+          "effectiveness": "low",
+          "context": "Reminder to consider direction of vectors, not just magnitudes."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "Write the vector equation relating absolute (V), blade (U), and relative (W) velocities in turbomachinery.",
+          "back": "$\\vec{V} = \\vec{U} + \\vec{W}$. U is purely tangential. Components: $V_a = W_a = W \\cos\\beta$, $V_\\theta = U + W_\\theta$, with $W_\\theta = W \\sin\\beta$ (sign depends on convention).",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "In an axial compressor rotor, what is the typical direction of the relative velocity's tangential component compared to blade speed U?",
+          "back": "Opposite to U. The rotor does work on the fluid, increasing absolute tangential velocity, so relative tangential velocity is reduced or opposite.",
+          "difficulty": "medium",
+          "time_limit_seconds": 20
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "If you compute U ≈ 137 m/s for this problem, what likely error did you make?",
+          "back": "You took $W \\sin\\beta$ as positive. Correct approach: $W_\\theta$ is opposite to U, so use negative sign: $V_\\theta = U - W \\sin\\beta$.",
+          "difficulty": "hard",
+          "time_limit_seconds": 25
+        },
+        {
+          "card_type": "application",
+          "front": "Given V2=240 m/s, W2=140 m/s, β2=30°, and opposite tangential relative flow, how do you set up the equation for U?",
+          "back": "$V_2^2 = (W_2 \\cos30°)^2 + (U - W_2 \\sin30°)^2$. Plug numbers: $240^2 = (140 \\cos30°)^2 + (U - 70)^2$, solve for U.",
+          "difficulty": "medium",
+          "time_limit_seconds": 40
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Axial compressor design for jet engines",
+          "industry_example": "In the CFM56 engine, compressor blade speeds at mean radius are around 300-400 m/s. Accurate velocity triangle analysis ensures efficient pressure rise per stage.",
+          "why_it_matters": "Incorrect blade speed estimation leads to mismatched blade angles, causing flow separation, reduced efficiency, and potential compressor surge."
+        },
+        {
+          "application": "Performance testing of gas turbines",
+          "industry_example": "During engine testing, velocity triangles are reconstructed from measured flow angles and speeds to verify design and diagnose issues.",
+          "why_it_matters": "Validating U ensures the compressor operates at its design point, optimizing fuel economy and thrust."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "This is a standard velocity triangle problem. If you recall the sign convention, it's a quick 2-3 minute calculation. If stuck, sketch the triangle with U to the right, W inclined opposite.",
+        "guessing_heuristic": "If you compute U around 137, double it (~274) as a guess due to sign error. The answer is likely in the 270s.",
+        "time_management": "Budget 3-4 minutes; if not solved in 2 minutes, guess within 274-282 and move on."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "axial compressor velocity triangle solved problems",
+        "blade speed calculation GATE AE",
+        "relative velocity sign convention compressor",
+        "velocity triangle blade angle 30 degree",
+        "axial flow compressor numerical problems",
+        "turbomachinery velocity triangles examples",
+        "GATE propulsion turbomachinery questions",
+        "how to find U from velocity triangle"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Cosine Rule Method",
+          "description": "Apply cosine rule directly to the exit triangle: V2^2 = U^2 + W2^2 - 2U W2 cos φ, where φ is the angle between U and W2. For compressor, φ = 90° + β2 (if β2 is positive and measured from axial opposite to U). Then cos φ = cos(90°+β2) = -sin β2, leading to the same equation.",
+          "pros_cons": "Avoids component resolution but requires careful angle identification. Good for geometric intuition.",
+          "when_to_use": "When angles between vectors are known directly."
+        },
+        {
+          "name": "Graphical Construction",
+          "description": "Draw the velocity triangles to scale using given magnitudes and angle, measure U. Useful for verification.",
+          "pros_cons": "Intuitive but less accurate for numerical answers; time-consuming in exam.",
+          "when_to_use": "During study to build intuition, not in exam."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "subject_name_1": "Vector Mechanics",
+        "subject_name_2": "Fluid Dynamics",
+        "subject_name_3": "Engineering Drawing"
+      },
+      "deeper_dive_topics": [
+        "Degree of reaction and its relation to velocity triangles",
+        "Effect of radial equilibrium on velocity triangles at different radii",
+        "Three-dimensional flow effects and secondary losses in compressors",
+        "Compressor cascade testing and deviation angle"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2021_AE_Q46",
+        "year": 2021,
+        "marks": 2.0,
+        "negative_marks": 0.0,
+        "time_expected": "3-4 minutes",
+        "success_rate_estimate": "60%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 6: Propulsion",
+        "gate_subsection": "Turbomachinery: Axial Flow Compressors and Fans",
+        "weightage": "8-10%",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Well-aligned: tests core concept of velocity triangles with numerical application."
+      },
+      "rag_quality": {
+        "relevance_score": 0.85,
+        "chunks_used": 6,
+        "sources_distribution": {
+          "books": 3,
+          "videos": 3
+        },
+        "notes": "RAG provided excellent foundational material on velocity triangles in axial compressors, including vector relationships, component decomposition, and physical intuition. All chunks were relevant, though none explicitly discussed the sign convention for tangential components, which is critical for this problem. Internal knowledge supplemented the sign convention."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-13T10:30:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Vary blade angles at inlet and exit to compute degree of reaction",
+        "Given U and velocities, find the power input or temperature rise",
+        "Include axial velocity change due to density variation",
+        "Combine with stator velocity triangles for stage analysis"
+      ]
+    },
+    "question_id": "GATE_2021_AE_Q46",
+    "year": 2021,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "NAT",
+    "question_text": "At the design conditions, the velocity triangle at the mean radius of a single stage axial compressor is such that the blade angle at the rotor exit is equal to 30°. The absolute velocities at the rotor inlet and exit are equal to 140 m/s and 240 m/s, respectively. The flow velocities relative to the rotor at inlet and exit of the rotor are equal to 240 m/s and 140 m/s, respectively. The blade speed (U) at the mean radius of the rotor is __________ m/s (round off to two decimal places)."
+  },
+  "tokens_used": 25096,
+  "input_tokens": 9691,
+  "output_tokens": 15405,
+  "cost": 0.039067000000000005,
+  "time_seconds": 544.4328815937042
+}
