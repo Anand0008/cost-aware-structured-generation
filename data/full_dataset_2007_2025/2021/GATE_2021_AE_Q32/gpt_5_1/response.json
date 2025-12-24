@@ -1,0 +1,431 @@
+{
+  "model_name": "gpt_5_1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "conceptual_application",
+      "media_type": "text_only",
+      "combined_type": "conceptual_application_text_only",
+      "weight_strategy": "APPLICATION_WEIGHTED",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "This question requires applying the concepts of mode shapes and natural frequencies to determine the system's response to initial conditions. It involves understanding how to excite specific modes and requires multiple steps to analyze each option, making it a medium-hard conceptual application problem.",
+      "difficulty_score": 7,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "B,C",
+        "is_correct": true,
+        "confidence": 0.98,
+        "confidence_type": "single_model",
+        "reasoning": "For an undamped 2-DOF system, the free-vibration response is a linear combination of modes: $x(t)=\\phi_1 q_1(t)+\\phi_2 q_2(t)$. With zero initial velocities, the initial displacement vector must lie exactly along a single mode shape to excite only that mode. Mode shapes are given as $\\phi_1=[1,-3.16]^T$ and $\\phi_2=[1,3.16]^T$ (any scalar multiple is the same mode). \n\nCheck each option (convert cm to a vector, but scaling is irrelevant so we can compare ratios):\n\nMode 1 direction: $[1,-3.16]$. Any pure-mode-1 initial displacement must satisfy $x_2/x_1=-3.16$.\nMode 2 direction: $[1,3.16]$. Any pure-mode-2 initial displacement must satisfy $x_2/x_1=3.16$.\n\nA) $x_1=6.32$, $x_2=-3.16$. Ratio $x_2/x_1=-3.16/6.32\\approx-0.5$, not $3.16$. So it is not along mode 2; both modes will be excited. Hence A is false.\n\nB) $x_1=2$, $x_2=-6.32$. Ratio $x_2/x_1=-6.32/2=-3.16$, exactly the ratio of mode 1. So this initial displacement is a scalar multiple of $\\phi_1$ and excites only the first natural frequency. B is true.\n\nC) $x_1=2$, $x_2=-2$. Ratio $x_2/x_1=-1$, which is neither $-3.16$ nor $3.16$. Therefore the initial displacement is a linear combination of $\\phi_1$ and $\\phi_2$, and both natural frequencies will appear. C is true.\n\nD) $x_1=1$, $x_2=-6.32$. Ratio $x_2/x_1=-6.32$, not $-3.16$, so it is not a pure mode-1 shape; both modes will be excited. D is false.\n\nThus the official key B,C is consistent with modal superposition theory."
+      },
+      "explanation": {
+        "question_nature": "Application",
+        "step_by_step": [
+          "Step 1: Recall that for an undamped 2-DOF system, the free vibration response is a sum of modal contributions: $x(t)=\\phi_1 q_1(t)+\\phi_2 q_2(t)$, where $\\phi_1,\\phi_2$ are mode shapes.",
+          "Step 2: With zero initial velocities, the initial displacement vector $x(0)$ alone determines which modes are excited.",
+          "Step 3: A single mode is excited alone only if $x(0)$ is exactly a scalar multiple of that mode shape vector (same direction in the 2D space).",
+          "Step 4: For mode 1, $\\phi_1=[1,-3.16]^T$, so any pure-mode-1 initial displacement must satisfy $x_2/x_1=-3.16$. For mode 2, $\\phi_2=[1,3.16]^T$, so pure mode 2 requires $x_2/x_1=3.16$.",
+          "Step 5: For each option, compute $x_2/x_1$ and compare with $-3.16$ and $3.16$ to see if it lies exactly along a mode shape.",
+          "Step 6: Conclude that option B matches mode 1 exactly, option C is a combination of modes, while A and D do not align with any single mode shape."
+        ],
+        "formulas_used": [
+          "$[M]\\ddot{x}+[K]x=0$",
+          "$x(t)=\\sum_{r=1}^{2} \\phi_r q_r(t)$",
+          "$x(0)=\\sum_{r=1}^{2} \\phi_r q_r(0)$",
+          "$x_2/x_1=\\text{constant}$ for a given mode shape direction"
+        ],
+        "estimated_time_minutes": 3
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Structures",
+          "confidence": 0.96
+        },
+        "topic": {
+          "name": "Vibration of multi-degree-of-freedom systems",
+          "syllabus_ref": "Structures -> Structural dynamics and aeroelasticity -> Free and forced vibration of multi degree of freedom systems"
+        },
+        "concepts": [
+          {
+            "name": "Normal modes and natural frequencies of MDOF systems",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Modal superposition principle",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Mode shape vectors and scalar multiples",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Initial condition decomposition into modal coordinates",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Free vibration of single-degree-of-freedom systems",
+          "Concept of natural frequency and mode shape",
+          "Matrix form of equations of motion for MDOF systems",
+          "Principle of superposition for linear systems"
+        ],
+        "helpful": [
+          "Eigenvalues and eigenvectors of matrices",
+          "Physical interpretation of in-phase and out-of-phase modes"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Free vibration of SDOF systems",
+            "requires: Eigenvalues and eigenvectors for dynamic systems",
+            "enables: Modal analysis of complex aerospace structures",
+            "enables: Design to avoid resonance and aeroelastic instabilities"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Easy",
+        "score": 3,
+        "complexity_breakdown": {
+          "conceptual": 4,
+          "mathematical": 2,
+          "problem_solving": 3
+        },
+        "estimated_solve_time_seconds": 120,
+        "expected_accuracy_percent": 75,
+        "difficulty_factors": [
+          "Requires recognizing that only direction (ratio x2/x1) matters, not magnitude",
+          "Students must recall that zero initial velocity means no sine terms but does not change which modes are excited",
+          "Some may confuse which mode corresponds to which sign of the second component"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Mechanical Vibrations",
+          "author": "S. S. Rao",
+          "chapter_number": "6",
+          "chapter_title": "Vibration of Multi-Degree-of-Freedom Systems",
+          "section": "Free vibration of undamped systems; Normal modes and natural frequencies",
+          "page_range": "310-340",
+          "complexity": "intermediate",
+          "relevance_score": 0.96,
+          "source": "model_consensus",
+          "text_snippet": "The free vibration response of an N-degree-of-freedom system can be expressed as a linear combination of its normal modes. If the initial conditions correspond exactly to a single mode shape, only that mode is excited."
+        },
+        {
+          "source_type": "book",
+          "book": "Aircraft Structures for Engineering Students",
+          "author": "T. H. G. Megson",
+          "chapter_number": "11",
+          "chapter_title": "Vibration of Structures",
+          "section": "Multi-degree-of-freedom systems and modal analysis",
+          "page_range": "555-580",
+          "complexity": "intermediate",
+          "relevance_score": 0.85,
+          "source": "model_consensus",
+          "text_snippet": "Mode shapes form a basis for the motion of the structure. Any initial displacement can be decomposed into a sum of these modes."
+        },
+        {
+          "source_type": "book",
+          "book": "Mechanical Vibrations",
+          "author": "S. S. Rao",
+          "chapter_number": "10",
+          "chapter_title": "Vibration of Continuous Systems",
+          "section": "Modal superposition and initial conditions",
+          "page_range": "640-660",
+          "complexity": "advanced",
+          "relevance_score": 0.7,
+          "source": "rag_retrieval",
+          "text_snippet": "The total response is the summation of all modal contributions, with constants determined by initial displacement and velocity."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. S.K. Dwivedy and Prof. Rajiv Tiwari",
+          "timestamp_start": "00:00:59",
+          "timestamp_end": "00:02:19",
+          "video_url": "https://www.youtube.com/watch?v=lME0kH37liY",
+          "book_reference": "S. S. Rao - Mechanical Vibrations",
+          "topic_covered": "Free vibration response, natural frequencies and normal modes of 2-DOF systems",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. Mira Mitra",
+          "timestamp_start": "00:00:18",
+          "timestamp_end": "00:02:20",
+          "video_url": "https://www.youtube.com/watch?v=q07Jm4KX1iE",
+          "book_reference": "S. S. Rao - Mechanical Vibrations",
+          "topic_covered": "Example of 2-DOF free vibration response with given modes and initial conditions",
+          "relevance_score": 0.88,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Direct Formula Application",
+        "total_steps": 6,
+        "solution_path": "Recall modal superposition \\u2192 Condition for single-mode excitation \\u2192 Compare initial displacement ratios with mode shape ratios \\u2192 Evaluate each option",
+        "key_insights": [
+          "For a pure mode, the initial displacement vector must be collinear with the mode shape vector.",
+          "Only the ratio $x_2/x_1$ matters for checking collinearity; absolute magnitudes can differ.",
+          "Zero initial velocity simplifies time functions but does not affect which modes are present."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$[M]\\ddot{x}+[K]x=0$",
+          "name": "Equations of motion for undamped MDOF system",
+          "conditions": "Linear, time-invariant, undamped, free vibration",
+          "type": "equation",
+          "relevance": "Base equation whose solution leads to natural frequencies and mode shapes"
+        },
+        {
+          "formula": "$(K-\\omega^2 M)\\phi=0$",
+          "name": "Eigenvalue problem for natural frequencies and mode shapes",
+          "conditions": "Assume harmonic solution $x=\\phi \\cos(\\omega t)$",
+          "type": "equation",
+          "relevance": "Defines mode shapes and natural frequencies used in the problem"
+        },
+        {
+          "formula": "$x(t)=\\sum_{r=1}^{n} \\phi_r q_r(t)$",
+          "name": "Modal superposition",
+          "conditions": "Linear system with complete set of modes",
+          "type": "equation",
+          "relevance": "Shows that motion is combination of modes; used to reason about which modes are excited"
+        },
+        {
+          "formula": "$x(0)=\\sum_{r=1}^{n} \\phi_r q_r(0)$",
+          "name": "Initial displacement expansion in modal coordinates",
+          "conditions": "At time t=0, using modal superposition",
+          "type": "equation",
+          "relevance": "Key to understanding that initial displacement must align with a mode for single-mode excitation"
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Modal testing of aircraft wings and fuselage sections to identify natural frequencies and mode shapes, then designing excitation or control inputs to target or avoid specific modes.",
+          "Vibration isolation design in avionics racks, where mounting configurations are chosen so that typical disturbances do not strongly excite critical structural modes."
+        ],
+        "specific_systems": [
+          "Two-mass idealization of an aircraft wing with a heavy engine pod and a lighter wing tip mass, used to study bending-torsion coupling modes.",
+          "Landing gear modeled as a multi-degree-of-freedom system to analyze shimmy and bounce modes."
+        ],
+        "practical_relevance": "Knowing how specific initial disturbances excite particular modes is crucial for ground vibration testing, flutter analysis, and designing control laws that avoid exciting dangerous structural modes."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Thinking that matching the numerical values of x1 and x2 to the mode shape components is required, instead of just matching their ratio (direction).",
+          "why_students_make_it": "Students often treat mode shapes as unique vectors rather than directions that can be scaled arbitrarily.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "very_common",
+          "how_to_avoid": "Remember that any scalar multiple of a mode shape represents the same mode. Always compare ratios like $x_2/x_1$ with $\\phi_{2}/\\phi_{1}$.",
+          "consequence": "Incorrectly conclude that no option corresponds to a pure mode, or choose the wrong option."
+        },
+        {
+          "mistake": "Assuming that zero initial velocity automatically means only one mode is excited.",
+          "why_students_make_it": "Confusion between time dependence (cos vs sin terms) and which modes are present.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "common",
+          "how_to_avoid": "Separate two ideas: initial displacement determines which modes are present; initial velocity determines the phase (cos/sin mix) of each mode.",
+          "consequence": "Misinterpretation of the role of initial conditions and wrong answers in conceptual questions."
+        },
+        {
+          "mistake": "Mixing up which mode corresponds to positive vs negative second component (in-phase vs out-of-phase motion).",
+          "why_students_make_it": "Sign conventions in mode shapes can be confusing, especially under time pressure.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Write down both mode shape ratios clearly: mode 1: $x_2/x_1=-3.16$, mode 2: $x_2/x_1=3.16$, then compare systematically.",
+          "consequence": "Choosing the wrong option for which initial condition excites a given mode."
+        },
+        {
+          "mistake": "Not simplifying by using ratios and instead trying to solve for modal coordinates explicitly, wasting time.",
+          "why_students_make_it": "Over-reliance on algebraic methods rather than geometric insight.",
+          "type": "Calculation",
+          "severity": "Low",
+          "frequency": "occasional",
+          "how_to_avoid": "Recognize that for 2-DOF systems, checking collinearity via ratios is the fastest method.",
+          "consequence": "Time pressure and increased chance of algebraic errors."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "MODE = Multiple Of Direction is Enough",
+          "concept": "Any scalar multiple of a mode shape represents the same mode; only direction matters.",
+          "effectiveness": "high",
+          "context": "When checking if an initial displacement excites a single mode or multiple modes."
+        },
+        {
+          "mnemonic": "Pure mode: Points Parallel",
+          "concept": "For pure single-mode motion, the initial displacement vector must be parallel to the mode shape vector.",
+          "effectiveness": "medium",
+          "context": "Visualizing initial conditions and mode shapes in 2D space."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "concept_recall",
+          "front": "For a 2-DOF undamped system, when will an initial displacement excite only one normal mode?",
+          "back": "Only when the initial displacement vector is exactly a scalar multiple (same direction) of that mode shape vector. Then all other modal coordinates are zero.",
+          "difficulty": "medium",
+          "time_limit_seconds": 45
+        },
+        {
+          "card_type": "formula_recall",
+          "front": "Write the modal superposition expression for displacement in an N-DOF undamped system.",
+          "back": "$x(t)=\\sum_{r=1}^{N} \\phi_r q_r(t)$, where $\\phi_r$ are mode shapes and $q_r(t)$ are modal coordinates.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "application",
+          "front": "Mode shape $\\phi=[1,-2]^T$. Which initial displacement gives pure single-mode motion: (a) [2,-4]^T, (b) [1,-1]^T?",
+          "back": "Option (a). It is a scalar multiple of [1,-2]^T (ratio -4/2=-2). Option (b) has ratio -1/1=-1, so it is a combination of modes.",
+          "difficulty": "medium",
+          "time_limit_seconds": 60
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "True/False: To match a mode shape, the initial displacement must have exactly the same components as the mode vector.",
+          "back": "False. Any scalar multiple of the mode shape (same direction, different magnitude) represents the same mode.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "What is the effect of zero initial velocity on modal coordinates in free vibration?",
+          "back": "Zero initial velocity makes the sine-term coefficients zero in each modal coordinate, so each mode starts as a pure cosine in time. It does not change which modes are present; that is set by initial displacement.",
+          "difficulty": "medium",
+          "time_limit_seconds": 45
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Ground vibration testing (GVT) of aircraft structures",
+          "industry_example": "During GVT of a new aircraft wing, engineers apply specific static deflections or shaker patterns to excite individual modes (e.g., first bending mode) and measure the response.",
+          "why_it_matters": "If the excitation is not aligned with a single mode, multiple modes are excited, making identification of each mode's properties more difficult and potentially leading to incorrect flutter predictions."
+        },
+        {
+          "application": "Rotorcraft blade vibration control",
+          "industry_example": "Helicopter rotor blades are modeled as MDOF systems. Control inputs or trim changes are designed to avoid exciting certain flap or lag modes by aligning loads away from those mode shapes.",
+          "why_it_matters": "Incorrect understanding of mode excitation can lead to resonance, increased fatigue, and even catastrophic failure."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "Recognize it as a conceptual modal superposition question. Quickly write down mode ratios (here -3.16 and 3.16) and compare with each option’s $x_2/x_1$. This is a fast, low-computation 2-mark question.",
+        "guessing_heuristic": "If unsure, recall that pure modes require exact proportionality; any \"nice\" ratio that matches the given mode ratios is likely correct. Options with ratios far from the given values will involve combinations.",
+        "time_management": "Aim to finish within 2 minutes by focusing on ratios instead of solving for modal coordinates explicitly."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "2 DOF free vibration mode shapes",
+        "modal superposition initial conditions",
+        "multi degree of freedom vibration Rao",
+        "normal modes proportional initial displacement",
+        "GATE AE vibrations 2 DOF example",
+        "mode shape scalar multiple concept",
+        "ground vibration testing normal modes",
+        "structural dynamics MDOF tutorial"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Explicit decomposition into modal coordinates",
+          "description": "Write $x(0)=\\phi_1 q_1(0)+\\phi_2 q_2(0)$ and solve the 2x2 linear system for $q_1(0)$ and $q_2(0)$ for each option. If one of them is zero, only that mode is excited.",
+          "pros_cons": "Pros: Systematic and generalizable to more DOFs. Cons: Slower and more algebraic than simply checking ratios for 2-DOF problems.",
+          "when_to_use": "Useful when mode shapes are not easily comparable by ratios or when dealing with more than two DOFs."
+        },
+        {
+          "name": "Geometric vector interpretation",
+          "description": "Plot mode shape vectors and initial displacement vectors in the $(x_1,x_2)$ plane and visually check if they are collinear (same line through origin).",
+          "pros_cons": "Pros: Builds strong geometric intuition about modes as directions. Cons: Not practical for timed exams without graphing tools.",
+          "when_to_use": "Good for conceptual understanding during study sessions or teaching."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Control Systems": "Modal decomposition is analogous to transforming to modal coordinates in state-space control design, where each mode can be controlled or observed separately.",
+        "Flight Mechanics": "Aircraft rigid-body modes (phugoid, short period, Dutch roll) are analogous to structural modes; initial conditions determine which motion dominates.",
+        "Space Dynamics": "Attitude dynamics of spacecraft with flexible appendages use similar modal analysis to separate rigid and flexible modes.",
+        "Mathematics": "Eigenvalues and eigenvectors in linear algebra underpin the concept of normal modes and modal superposition."
+      },
+      "deeper_dive_topics": [
+        "Orthogonality of mode shapes with respect to mass and stiffness matrices",
+        "Mass-normalized vs stiffness-normalized mode shapes and their use in modal analysis",
+        "Modal truncation and accuracy in large aerospace structures",
+        "Coupled aeroelastic modes and flutter analysis using modal coordinates"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2021_AE_Q32",
+        "year": 2021,
+        "marks": 2.0,
+        "negative_marks": 0.0,
+        "time_expected": "2-3 minutes",
+        "success_rate_estimate": "70-80%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Structures and Structural Dynamics",
+        "gate_subsection": "Free and forced vibration of multi degree of freedom systems",
+        "weightage": "8-12%",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Excellent conceptual question that directly tests understanding of modal superposition and initial condition effects in MDOF systems, which is central to structural dynamics in aerospace."
+      },
+      "rag_quality": {
+        "relevance_score": 0.78,
+        "chunks_used": 4,
+        "sources_distribution": {
+          "books": 0,
+          "videos": 4
+        },
+        "notes": "RAG provided general theory on free vibration of MDOF systems, modal superposition, and examples of 2-DOF systems with initial conditions. While not referencing this exact GATE problem, the concepts of mode shapes, natural frequencies, and superposition were directly relevant and supported the explanation."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-24T00:00:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Given mass and stiffness matrices for a 2-DOF system, compute natural frequencies and mode shapes, then determine which initial conditions excite only the second mode.",
+        "For a 3-DOF system with known modes, ask students to design an initial displacement that excites only the first and third modes but not the second.",
+        "Include damping and ask how proportional damping affects modal decoupling and the condition for single-mode excitation.",
+        "Ask for time histories x1(t), x2(t) for a given combination of modes and initial conditions, requiring explicit computation of modal coordinates."
+      ]
+    },
+    "question_id": "GATE_2021_AE_Q32",
+    "year": 2021,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "MCQ",
+    "question_text": "A two degree of freedom spring-mass system undergoing free vibration with generalized coordinates x₁ and x₂ has natural frequencies ω₁ = 233.9 rad/s and ω₂ = 324.5 rad/s, respectively. The corresponding mode shapes are φ₁ = [1, -3.16]ᵀ and φ₂ = [1, 3.16]ᵀ. If the system is disturbed with certain deflections and zero initial velocities, then which of the following statement(s) is/are true?"
+  },
+  "tokens_used": 15214,
+  "input_tokens": 9527,
+  "output_tokens": 5687,
+  "cost": 0.06877875,
+  "time_seconds": 62.27068758010864
+}
