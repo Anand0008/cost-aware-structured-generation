@@ -1,0 +1,407 @@
+{
+  "model_name": "deepseek_r1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "image_based",
+      "combined_type": "numerical_calculation_image_based",
+      "weight_strategy": "MATH_IMAGE_HYBRID",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "The question requires numerical calculation of eccentricity using strain gauge readings and involves concepts of stress, strain, and bending moment. It requires multiple steps to relate the strain readings to the eccentricity, making it a medium-hard problem.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "1.0 mm",
+        "is_correct": true,
+        "confidence": 0.95,
+        "confidence_type": "single_model",
+        "reasoning": "The correct answer is approximately 1 mm (0.95 to 1.05 mm per answer key). Using superposition of axial and bending stresses from an eccentric tensile load, and given strains at top and bottom, the eccentricity magnitude is calculated as 1.0 mm. The sign indicates direction, but the question likely expects the magnitude."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Step 1: Identify the problem as combined axial and bending stress. An eccentric axial load P can be replaced by a concentric axial force P and a bending moment M = P * e about the centroid. Strain gauges measure normal strains at top and bottom surfaces.",
+          "Step 2: Write the stress-strain relations. Assuming linear elasticity, stress $\\sigma = E \\epsilon$, where E is Young's modulus. For top ($\\epsilon_1=0.0016$) and bottom ($\\epsilon_2=0.0004$): $\\sigma_1 = E \\times 0.0016$, $\\sigma_2 = E \\times 0.0004$.",
+          "Step 3: Write the combined stress formulas at a point y from the neutral axis: $\\sigma = \\frac{P}{A} + \\frac{M y}{I}$. With M = -P e (internal moment sign convention), this becomes $\\sigma = \\frac{P}{A} - \\frac{P e y}{I}$.",
+          "Step 4: Apply to top and bottom. For square cross-section side b=0.01 m: area $A = b^2 = 10^{-4} m^2$, moment of inertia $I = \\frac{b^4}{12} = \\frac{10^{-8}}{12} = 8.3333 \\times 10^{-10} m^4$. Distances: $y_{top} = +b/2 = 0.005 m$, $y_{bottom} = -0.005 m$.",
+          "Step 5: Write equations: $\\sigma_1 = \\frac{P}{A} - \\frac{P e y_{top}}{I}$, $\\sigma_2 = \\frac{P}{A} - \\frac{P e y_{bottom}}{I}$.",
+          "Step 6: Subtract equations to eliminate P/A: $\\sigma_1 - \\sigma_2 = -\\frac{P e}{I}(y_{top} - y_{bottom}) = -\\frac{P e}{I} b$. Substitute strains: $E(0.0016 - 0.0004) = -\\frac{P e}{I} b$.",
+          "Step 7: Add equations to eliminate e: $\\sigma_1 + \\sigma_2 = 2\\frac{P}{A}$. So $E(0.0016+0.0004) = 2\\frac{P}{A} \\Rightarrow E = \\frac{2P}{0.002 A} = \\frac{1000 P}{A}$.",
+          "Step 8: Substitute E into the difference equation: $\\frac{1000 P}{A} \\times 0.0012 = -\\frac{P e}{I} b$. Cancel P and solve: $e = -\\frac{1.2 I}{A b} = -\\frac{1.2 \\times 8.3333\\times10^{-10}}{10^{-4} \\times 0.01} = -0.001 m = -1.0 mm$. Magnitude is 1.0 mm."
+        ],
+        "formulas_used": [
+          "$\\sigma = E \\epsilon$",
+          "$\\sigma = \\frac{P}{A} + \\frac{M y}{I}$",
+          "$M = P \\cdot e$",
+          "$A = b^2$",
+          "$I = \\frac{b^4}{12}$"
+        ],
+        "estimated_time_minutes": 5
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Structures",
+          "confidence": 0.98
+        },
+        "topic": {
+          "name": "Combined Stresses",
+          "syllabus_ref": "Section 4: Solid Mechanics and Structures, Subsection: Bending and shear stresses, Combined stresses"
+        },
+        "concepts": [
+          {
+            "name": "Eccentric Loading",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Superposition of Stresses",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Flexure Formula",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Strain Measurement",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Stress and strain relationship (Hooke's Law)",
+          "Axial stress formula $\\sigma = P/A$",
+          "Bending stress formula $\\sigma = My/I$",
+          "Moment of inertia for simple cross-sections"
+        ],
+        "helpful": [
+          "Sign conventions for bending moments and stresses",
+          "Superposition principle"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Axial stress and strain",
+            "requires: Bending stress and moment-curvature relationship",
+            "enables: Analysis of combined loading in aircraft structures",
+            "enables: Design of strain gauge configurations for load measurement"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Medium",
+        "score": 6,
+        "complexity_breakdown": {
+          "conceptual": 6,
+          "mathematical": 7,
+          "problem_solving": 6
+        },
+        "estimated_solve_time_seconds": 180,
+        "expected_accuracy_percent": 60,
+        "difficulty_factors": [
+          "Requires careful sign handling in combined stress equations",
+          "Need to eliminate Young's modulus E by using both strain readings",
+          "Geometry calculations must be accurate (square cross-section)"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Aircraft Structures for Engineering Students",
+          "author": "T.H.G. Megson",
+          "chapter_number": "Ch. 27",
+          "chapter_title": "Open section beams",
+          "section": "Combined axial and bending stresses",
+          "page_range": "",
+          "complexity": "intermediate",
+          "relevance_score": 0.7,
+          "source": "rag_retrieval",
+          "text_snippet": "Figures and diagrams related to beam cross-sections and loading."
+        },
+        {
+          "source_type": "book",
+          "book": "Mechanics of Materials",
+          "author": "Beer & Johnston",
+          "chapter_number": "4",
+          "chapter_title": "Pure Bending",
+          "section": "4.2 Stress due to bending",
+          "page_range": "",
+          "complexity": "introductory",
+          "relevance_score": 0.9,
+          "source": "model_consensus",
+          "text_snippet": "Formulas for bending stress and combined axial and bending stresses."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. S.K. Bhattacharyya",
+          "timestamp_start": "00:25:16",
+          "timestamp_end": "00:33:57",
+          "video_url": "https://www.youtube.com/watch?v=uNu3hatDzo8",
+          "book_reference": "Timoshenko",
+          "topic_covered": "Eccentric axial load stress distribution, converting eccentric load to axial and bending",
+          "relevance_score": 0.8,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. Arnab Roy",
+          "timestamp_start": "00:19:13",
+          "timestamp_end": "00:23:16",
+          "video_url": "",
+          "book_reference": "Anderson, J.D., 'Fundamentals of Aerodynamics'",
+          "topic_covered": "Cantilever beam mechanics for strain gauge calculation, flexural stress formula",
+          "relevance_score": 0.7,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Direct Formula Application with Superposition",
+        "total_steps": 8,
+        "solution_path": "Combine axial and bending stress equations using given strains, eliminate Young's modulus by using both strain readings, solve for eccentricity.",
+        "key_insights": [
+          "Eccentric load produces both axial stress and bending stress.",
+          "Young's modulus cancels out when using both strain measurements.",
+          "The difference in strains gives the bending component, the sum gives the axial component."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$\\sigma = \\frac{P}{A} - \\frac{P e y}{I}$",
+          "name": "Combined Axial and Bending Stress (Eccentric Tensile Load)",
+          "conditions": "Linear elastic material, small deformations, eccentricity e measured from centroid, y from neutral axis.",
+          "type": "equation",
+          "relevance": "Core formula for stress at a point due to eccentric load."
+        },
+        {
+          "formula": "$\\sigma = E \\epsilon$",
+          "name": "Hooke's Law",
+          "conditions": "Uniaxial stress, linear elastic region.",
+          "type": "equation",
+          "relevance": "Converts measured strains to stresses."
+        },
+        {
+          "formula": "$I = \\frac{b^4}{12}$",
+          "name": "Moment of Inertia for Square Cross-Section",
+          "conditions": "About centroidal axis, side length b.",
+          "type": "equation",
+          "relevance": "Needed for bending stress calculation."
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Strain gauge measurements on aircraft structural components to monitor loads.",
+          "Design of load cells and force transducers using eccentric loading principles."
+        ],
+        "specific_systems": [
+          "Wind tunnel sting balances for aerodynamic force measurement.",
+          "Structural health monitoring of wings and fuselage."
+        ],
+        "practical_relevance": "Accurate determination of load eccentricity is critical to avoid unexpected bending stresses that can lead to failure. Strain gauges are widely used for experimental stress analysis."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Incorrect sign in bending stress formula, leading to wrong direction of eccentricity.",
+          "why_students_make_it": "Confusion between internal moment sign convention and applied moment.",
+          "type": "Sign Error",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Clearly define coordinate system and internal moment equilibrium. Use physical reasoning: if load is above centroid, top fibers experience more compression (or less tension) than bottom.",
+          "consequence": "Eccentricity sign wrong, magnitude may still be correct if absolute value taken."
+        },
+        {
+          "mistake": "Forgetting to convert units consistently (cm to m, kN to N).",
+          "why_students_make_it": "Hasty calculation without unit check.",
+          "type": "Units",
+          "severity": "Medium",
+          "frequency": "common",
+          "how_to_avoid": "Convert all dimensions to meters and forces to Newtons before plugging into formulas.",
+          "consequence": "Answer off by orders of magnitude (e.g., 1000x)."
+        },
+        {
+          "mistake": "Assuming Young's modulus is needed and trying to look up a value, rather than eliminating it using both strain readings.",
+          "why_students_make_it": "Not recognizing that two equations can eliminate the unknown E.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Always write equations for both strain gauges and see if unknowns can be eliminated by addition/subtraction.",
+          "consequence": "Cannot solve without material property, or introduces unnecessary approximation."
+        },
+        {
+          "mistake": "Using wrong moment of inertia formula (e.g., $I = b^4/12$ for square about centroid, but using $b$ as side length incorrectly).",
+          "why_students_make_it": "Misremembering formula or confusing with other cross-sections.",
+          "type": "Formula Recall",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Derive or memorize: for rectangle about centroid, $I = \\frac{b h^3}{12}$. For square, $b=h$.",
+          "consequence": "Incorrect I leads to wrong eccentricity."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "ACE: Axial + Combined Eccentric = Axial stress + Bending stress (with sign Care).",
+          "concept": "Superposition for eccentric loading.",
+          "effectiveness": "medium",
+          "context": "Remembering to add both components with proper sign."
+        },
+        {
+          "mnemonic": "Top Minus Bottom gives Bending (TMB): Difference in strains relates to bending moment.",
+          "concept": "Using strain difference to find bending component.",
+          "effectiveness": "high",
+          "context": "When two strain gauges are on opposite sides."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "Write the combined stress formula for an eccentric axial load P (tensile) with eccentricity e.",
+          "back": "$\\sigma = \\frac{P}{A} - \\frac{P e y}{I}$ (assuming internal moment M = -Pe). More generally: $\\sigma = \\frac{P}{A} \\pm \\frac{Pe y}{I}$, sign depends on sign conventions.",
+          "difficulty": "medium",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "How can you eliminate Young's modulus when two strain readings are given on opposite sides?",
+          "back": "Add the two stress equations to get axial component, subtract to get bending component. E cancels in the ratio or when substituting.",
+          "difficulty": "easy",
+          "time_limit_seconds": 20
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "What is a common sign error when calculating eccentricity from strain gauges?",
+          "back": "Mixing up the sign of the bending moment. Remember: internal moment balances the moment due to eccentric load. If load is above centroid, internal moment causes compression on top.",
+          "difficulty": "hard",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "application",
+          "front": "In a square cross-section of side b, what is the distance from neutral axis to top fiber and the moment of inertia?",
+          "back": "$y_{top} = +b/2$, $I = \\frac{b^4}{12}$ about the centroidal axis.",
+          "difficulty": "easy",
+          "time_limit_seconds": 15
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Aircraft structural testing",
+          "industry_example": "Strain gauges attached to wing spar to measure bending and axial loads during flight tests. Eccentric loading can occur due to off-center fuel tanks or payload.",
+          "why_it_matters": "Accurate load measurement ensures structural integrity and fatigue life predictions."
+        },
+        {
+          "application": "Wind tunnel force balance",
+          "industry_example": "A sting balance with strain gauges measures aerodynamic forces on a model. Eccentricities in mounting can introduce errors that need to be calibrated.",
+          "why_it_matters": "Precise force and moment data are critical for aerodynamic coefficient determination."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "This is a standard combined stress problem. If you know the formulas, it's a straightforward 3-4 minute calculation.",
+        "guessing_heuristic": "If stuck, guess around 1 mm (since cross-section is 1 cm, eccentricity is often a fraction of that).",
+        "time_management": "Budget 4-5 minutes: 2 min to set up equations, 2 min to calculate, 1 min to verify units."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "eccentric loading combined stress",
+        "strain gauge calculation eccentric axial load",
+        "superposition axial and bending stress",
+        "square cross-section moment of inertia",
+        "eliminate Young's modulus from strain readings",
+        "cantilever beam eccentric load strain",
+        "GATE AE structures numerical",
+        "stress strain relationship Hooke's law"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Direct Stress Superposition with Sign Convention from First Principles",
+          "description": "Draw free-body diagram, compute internal axial force and bending moment at the strain gauge section. Use equilibrium to find internal moment = -P*e. Then apply flexure formula with correct y signs.",
+          "pros_cons": "Pros: Physically clear, minimizes sign errors. Cons: Slightly longer.",
+          "when_to_use": "When unsure about sign conventions in combined stress formula."
+        },
+        {
+          "name": "Dimensional Analysis and Formula Derivation",
+          "description": "Derive the formula for e in terms of given strains, P, A, I, b without substituting numbers until the end. This reduces numerical errors.",
+          "pros_cons": "Pros: More systematic, easier to check. Cons: Requires algebraic manipulation.",
+          "when_to_use": "When you want to minimize calculation mistakes."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "subject_name_1": "Experimental Stress Analysis",
+        "subject_name_2": "Aircraft Structures",
+        "subject_name_3": "Mechanics of Materials",
+        "subject_name_4": "Sensor Technology"
+      },
+      "deeper_dive_topics": [
+        "Shear center and torsional effects in open sections under eccentric loads.",
+        "Strain gauge rosettes for full stress state determination.",
+        "Nonlinear material behavior beyond elastic limit.",
+        "Finite element analysis of eccentric loading."
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2022_AE_Q60",
+        "year": 2022,
+        "marks": 2.0,
+        "negative_marks": 0.0,
+        "time_expected": "4-5 minutes",
+        "success_rate_estimate": "60%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 4: Solid Mechanics and Structures",
+        "gate_subsection": "Bending and shear stresses, Combined stresses",
+        "weightage": "Approx 10-15% in Structures",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Well-aligned with core structures syllabus, tests application of fundamental principles."
+      },
+      "rag_quality": {
+        "relevance_score": 0.7,
+        "chunks_used": 3,
+        "sources_distribution": {
+          "books": 1,
+          "videos": 2
+        },
+        "notes": "RAG provided relevant chunks on combined stresses (Chunk 1, 2) and strain gauge application (Chunk 6). Chunk 1 specifically discusses decomposition of inclined load into axial and bending components, which is analogous to eccentric loading. Chunk 2 gives theory of eccentric axial load. However, the specific problem of eliminating Young's modulus using two strain gauges was not explicitly covered in RAG. Internal knowledge was used for that part."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-13T10:30:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Change cross-section to circle or I-section.",
+        "Include temperature effects on strain gauges.",
+        "Ask for maximum permissible eccentricity to avoid yielding.",
+        "Given eccentricity and strain, find Young's modulus or load."
+      ]
+    },
+    "question_id": "GATE_2022_AE_Q60",
+    "year": 2022,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "NAT",
+    "question_text": "A 10 kN axial load is applied eccentrically on a rod of square cross-section (1 cm x 1 cm) as shown in the figure. The strains measured by the two strain gages attached to the top and bottom surfaces at a distance of 0.5 m from the tip are epsilon1 = 0.0016 and epsilon2 = 0.0004, respectively. The eccentricity in loading, e is _________mm."
+  },
+  "tokens_used": 20331,
+  "input_tokens": 10943,
+  "output_tokens": 9388,
+  "cost": 0.02657837,
+  "time_seconds": 276.2331476211548
+}

@@ -1,0 +1,205 @@
+{
+  "model_name": "gemini_2.5_pro",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "image_based",
+      "combined_type": "numerical_calculation_image_based",
+      "weight_strategy": "MATH_IMAGE_HYBRID",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classification_reasoning": "The question requires numerical calculation of eccentricity using strain gauge readings and involves concepts of stress, strain, and bending moment. It requires multiple steps to relate the strain readings to the eccentricity, making it a medium-hard problem.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "1.0 mm",
+        "is_correct": true,
+        "confidence": 1.0,
+        "confidence_type": "single_model",
+        "reasoning": "The problem involves an eccentrically applied axial load, which induces both direct axial stress and bending stress. The total normal stress at any point on the cross-section is the superposition of these two stresses.\n\n1.  **Calculate cross-sectional properties:**\n    *   Side length `b = 1 cm = 10 mm`.\n    *   Cross-sectional area `A = b^2 = (10 \\text{ mm})^2 = 100 \\text{ mm}^2`.\n    *   Moment of inertia `I = b^4 / 12 = (10 \\text{ mm})^4 / 12 = 10000 / 12 = 833.33 \\text{ mm}^4`.\n    *   Distance from neutral axis to outer fiber `y_{max} = b / 2 = 10 \\text{ mm} / 2 = 5 \\text{ mm}`.\n\n2.  **Define stress components:**\n    *   Axial stress `$\\sigma_a = P / A = (10 \\times 10^3 \\text{ N}) / (100 \\text{ mm}^2) = 100 \\text{ MPa}$` (tensile).\n    *   Bending moment `M = P \\times e`.\n    *   Bending stress `$\\sigma_b = (M \\times y) / I = (P \\times e \\times y) / I$`.\n\n3.  **Superposition of stresses and strains:** The total normal stress `$\\sigma_x = \\sigma_a \\pm \\sigma_b$`. The sign of `$\\sigma_b$` depends on the direction of eccentricity `e` and the position `y`.\n    Given `$\\epsilon_1 = 0.0016$` (top surface) and `$\\epsilon_2 = 0.0004$` (bottom surface), both are positive, indicating tensile strains. Since the axial stress `$\\sigma_a$` is tensile, the bending stress must contribute to tension on the top surface and either reduce tension or cause compression on the bottom surface. This implies the eccentricity `e` is downwards from the centroid (opposite to what's visually depicted in the diagram, but consistent with the given strain values). This downward eccentricity creates a bending moment `M = P \\times e` that causes tension on the top surface (where `y` is positive, `y = +5 mm`) and compression on the bottom surface (where `y` is negative, `y = -5 mm`).\n\n    Therefore, the stress equations are:\n    *   Top surface (`y = +5 \\text{ mm}`): `$\\sigma_1 = \\sigma_a + (P \\times e \\times y_{max}) / I$`\n    *   Bottom surface (`y = -5 \\text{ mm}`): `$\\sigma_2 = \\sigma_a - (P \\times e \\times y_{max}) / I$`\n\n    Using Hooke's Law, `$\\epsilon = \\sigma / E$`:\n    *   `$E \\times \\epsilon_1 = P/A + (P \\times e \\times y_{max}) / I$` (Equation 1)\n    *   `$E \\times \\epsilon_2 = P/A - (P \\times e \\times y_{max}) / I$` (Equation 2)\n\n4.  **Substitute known values:**\n    *   `$P/A = 100 \\text{ MPa}$`\n    *   `$(P \\times y_{max}) / I = (10 \\times 10^3 \\text{ N} \\times 5 \\text{ mm}) / (833.33 \\text{ mm}^4) = 60 \\text{ MPa/mm}$`\n    *   So, the bending stress term `$(P \\times e \\times y_{max}) / I = 60e \\text{ MPa}$`.\n\n    The equations become:\n    *   `$E \\times 0.0016 = 100 + 60e$` (Equation 1')\n    *   `$E \\times 0.0004 = 100 - 60e$` (Equation 2')\n\n5.  **Solve for `e`:**\n    Add Equation 1' and Equation 2':\n    `$E \\times (0.0016 + 0.0004) = (100 + 60e) + (100 - 60e)$`\n    `$E \\times 0.0020 = 200$`\n    `$E = 200 / 0.0020 = 100,000 \\text{ MPa} = 100 \\text{ GPa}$`.\n\n    Substitute `E = 100,000 \\text{ MPa}` into Equation 2':\n    `$100,000 \\times 0.0004 = 100 - 60e$`\n    `$40 = 100 - 60e$`\n    `$60e = 100 - 40$`\n    `$60e = 60$`\n    `$e = 1 \\text{ mm}$`.\n\n    This value is consistent with the given strains. The question asks for the magnitude of eccentricity, so `1 mm` is the correct answer."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "**Step 1: Identify Given Data and Convert Units.** The axial load `P = 10 kN = 10 \\times 10^3 N`. The square cross-section is `1 cm \\times 1 cm`, so the side length `b = 10 mm`. The strains are `$\\epsilon_1 = 0.0016$` (top surface) and `$\\epsilon_2 = 0.0004$` (bottom surface). The distance of strain gauges from the tip (0.5 m) is irrelevant for axial and bending stresses caused by an eccentric axial load, as these stresses are constant along the length.",
+          "**Step 2: Calculate Cross-sectional Properties.** Determine the cross-sectional area `A = b^2 = (10 \\text{ mm})^2 = 100 \\text{ mm}^2`. Calculate the moment of inertia `I` about the bending axis (which is the horizontal centroidal axis for bending due to vertical eccentricity): `I = b^4 / 12 = (10 \\text{ mm})^4 / 12 = 833.33 \\text{ mm}^4`. The distance from the neutral axis to the outer fibers is `y_{max} = b / 2 = 5 \\text{ mm}`.",
+          "**Step 3: Formulate Combined Stress Equation.** An eccentric axial load `P` creates two types of normal stress: a uniform axial stress `$\\sigma_a = P/A$` and a linearly varying bending stress `$\\sigma_b = (M \\times y) / I = (P \\times e \\times y) / I$`. The total normal stress `$\\sigma_x$` at any point `y` from the neutral axis is the algebraic sum of these two: `$\\sigma_x = \\sigma_a \\pm \\sigma_b$`.",
+          "**Step 4: Establish Sign Convention and Apply to Strain Gages.** Calculate the axial stress: `$\\sigma_a = (10 \\times 10^3 \\text{ N}) / (100 \\text{ mm}^2) = 100 \\text{ MPa}$` (tensile). Since both `$\\epsilon_1$` and `$\\epsilon_2$` are positive (tensile), the bending moment must contribute to tension on the top surface and compression on the bottom surface to result in `$\\epsilon_1 > \\epsilon_2$`. This implies that the eccentricity `e` is downwards from the centroid (even though the diagram might suggest otherwise). With `e` downwards, the bending moment `M = P \\times e` causes tension at `y = +y_{max}` (top) and compression at `y = -y_{max}` (bottom). The stress equations are: \n    *   Top surface (`y = +5 \\text{ mm}`): `$\\sigma_1 = P/A + (P \\times e \\times y_{max}) / I$` \n    *   Bottom surface (`y = -5 \\text{ mm}`): `$\\sigma_2 = P/A - (P \\times e \\times y_{max}) / I$`",
+          "**Step 5: Relate Stress to Strain.** Use Hooke's Law, `$\\sigma = E \\epsilon$`, where `E` is Young's Modulus. Substitute the given strain values: \n    *   `$E \\times 0.0016 = 100 + (10 \\times 10^3 \\times e \\times 5) / 833.33$` \n    *   `$E \\times 0.0004 = 100 - (10 \\times 10^3 \\times e \\times 5) / 833.33$` \n    Simplify the bending term: `$(10 \\times 10^3 \\times 5) / 833.33 = 60 \\text{ MPa/mm}`. So, the equations become: \n    *   `$E \\times 0.0016 = 100 + 60e$` (Equation A) \n    *   `$E \\times 0.0004 = 100 - 60e$` (Equation B)",
+          "**Step 6: Solve the System of Equations.** We have two linear equations with two unknowns (`E` and `e`). Add Equation A and Equation B: \n    `$E \\times (0.0016 + 0.0004) = (100 + 60e) + (100 - 60e)$` \n    `$E \\times 0.0020 = 200$` \n    `$E = 200 / 0.0020 = 100,000 \\text{ MPa} = 100 \\text{ GPa}$`. \n    Substitute this value of `E` into Equation B: \n    `$100,000 \\times 0.0004 = 100 - 60e$` \n    `$40 = 100 - 60e$` \n    `$60e = 100 - 40$` \n    `$60e = 60$` \n    `$e = 1 \\text{ mm}$`.",
+          "**Step 7: Verify Consistency.** Check if the calculated `e = 1 \\text{ mm}` and `E = 100 \\text{ GPa}` yield the given strains. \n    *   `$\\sigma_1 = 100 + 60(1) = 160 \\text{ MPa}$`, `$\\epsilon_1 = 160 / 100,000 = 0.0016$` (Matches) \n    *   `$\\sigma_2 = 100 - 60(1) = 40 \\text{ MPa}$`, `$\\epsilon_2 = 40 / 100,000 = 0.0004$` (Matches) \n    The solution is consistent, and `e = 1 \\text{ mm}` is the magnitude of eccentricity."
+        ],
+        "formulas_used": [
+          "$A = b^2$",
+          "$I = b^4 / 12$",
+          "$\\sigma_a = P / A$",
+          "$\\sigma_b = (P \\times e \\times y) / I$",
+          "$\\sigma_x = \\sigma_a \\pm \\sigma_b$",
+          "$\\epsilon = \\sigma / E$"
+        ],
+        "estimated_time_minutes": 4
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Structures",
+          "confidence": 0.99
+        },
+        "topic": {
+          "name": "Combined Stresses",
+          "syllabus_ref": "GATE AE Syllabus -> Section 3: Structures -> Stress and Strain -> Combined Stresses"
+        },
+        "concepts": [
+          {
+            "name": "Eccentric Axial Loading",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Superposition of Stresses",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Flexural Stress",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Hooke's Law",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Moment of Inertia",
+            "importance": "tertiary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Stress and Strain Definitions",
+          "Hooke's Law",
+          "Axial Loading",
+          "Beam Bending Theory (Flexural Formula)",
+          "Moment of Inertia Calculation",
+          "Superposition Principle"
+        ],
+        "helpful": [
+          "Unit Conversions",
+          "Solving Simultaneous Equations"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Stress and Strain Definitions",
+            "requires: Hooke's Law",
+            "requires: Axial Loading",
+            "requires: Beam Bending Theory (Flexural Formula)",
+            "enables: Design of structural elements under complex loading",
+            "enables: Analysis of aerospace components"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Medium",
+        "score": 6,
+        "complexity_breakdown": {
+          "conceptual": 7,
+          "mathematical": 5,
+          "problem_solving": 6
+        },
+        "estimated_solve_time_seconds": 240,
+        "expected_accuracy_percent": 50,
+        "difficulty_factors": [
+          "Requires correct interpretation of eccentric loading and bending moment direction, especially when the diagram might be misleading.",
+          "Correctly applying sign conventions for bending stress based on moment direction and 'y' coordinate.",
+          "Simultaneous solution of two linear equations involving Young's Modulus (E) and eccentricity (e)."
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Mechanics of Materials",
+          "author": "Beer and Johnston",
+          "chapter_title": "Combined Loadings",
+          "section": "4.16 Eccentric Axial Loading",
+          "complexity": "intermediate",
+          "relevance_score": 0.95,
+          "source": "model_consensus"
+        },
+        {
+          "source_type": "book",
+          "book": "Aircraft Structures for Engineering Students",
+          "author": "T.H.G. Megson",
+          "chapter_title": "Combined Stresses",
+          "section": "Chapter 27: Open section beams (General context)",
+          "complexity": "intermediate",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval",
+          "text_snippet": "The cross-section consists of a vertical web of height `d` connecting two horizontal flanges. Each end of the two flanges terminates in a semicircular arc of radius `R`. The entire section has a constant thickness `t`. This shape is symmetric about both horizontal and vertical axes."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. S.K. Bhattacharyya",
+          "timestamp_start": "00:25:16",
+          "timestamp_end": "00:33:57",
+          "video_url": "https://www.youtube.com/watch?v=uNu3hatDzo8",
+          "topic_covered": "Eccentric axial load stress distribution",
+          "relevance_score": 0.95,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. S.K. Bhattacharyya",
+          "timestamp_start": "00:41:00",
+          "timestamp_end": "00:51:25",
+          "topic_covered": ""
+        }
+      ]
+    },
+    "question_id": "GATE_2022_AE_Q60",
+    "year": 2022,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "NAT",
+    "question_text": "A 10 kN axial load is applied eccentrically on a rod of square cross-section (1 cm x 1 cm) as shown in the figure. The strains measured by the two strain gages attached to the top and bottom surfaces at a distance of 0.5 m from the tip are epsilon1 = 0.0016 and epsilon2 = 0.0004, respectively. The eccentricity in loading, e is _________mm.",
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2022_AE_Q60",
+        "year": 2022,
+        "marks": 2.0
+      },
+      "syllabus_mapping": {
+        "gate_section": "General"
+      },
+      "rag_quality": {
+        "relevance_score": 0.5,
+        "notes": "Auto-generated",
+        "sources_distribution": {}
+      },
+      "model_meta": {
+        "timestamp": "2025-12-25T01:38:00.962981",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": []
+    }
+  },
+  "tokens_used": 16154,
+  "input_tokens": 11996,
+  "output_tokens": 4158,
+  "cost": 0.0042942,
+  "time_seconds": 69.25543999671936
+}
