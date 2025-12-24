@@ -1,0 +1,378 @@
+{
+  "model_name": "deepseek_r1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "image_based",
+      "combined_type": "numerical_calculation_image_based",
+      "weight_strategy": "MATH_IMAGE_HYBRID",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "This is a numerical calculation problem involving fluid mechanics (viscosity, shear stress) and torque. It requires understanding the relationship between viscosity, shear rate, and shear stress, and then integrating over the surface area to find the total torque. Approximation of linear velocity profile is needed. It involves multiple steps and integration of concepts.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": true
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "1.26 Nm (within 1.24 to 1.28 Nm as per answer key)",
+        "is_correct": true,
+        "confidence": 0.95,
+        "confidence_type": "single_model",
+        "reasoning": "The driving moment is calculated using Newton's law of viscosity for a linear velocity profile in the narrow gap. Tangential velocity at inner cylinder surface: $v = \\omega R = 5 \\, \\text{rad/s} \\times 1 \\, \\text{m} = 5 \\, \\text{m/s}$. Since outer cylinder is stationary and gap is small (5 mm), velocity gradient is $\\Delta v / \\Delta r = 5 \\, \\text{m/s} / 0.005 \\, \\text{m} = 1000 \\, \\text{s}^{-1}$. Shear stress $\\tau = \\mu (\\Delta v / \\Delta r) = 10^{-4} \\, \\text{Pa} \\cdot \\text{s} \\times 1000 \\, \\text{s}^{-1} = 0.1 \\, \\text{Pa}$. Area of inner cylinder lateral surface: $A = 2\\pi R H = 2\\pi \\times 1 \\, \\text{m} \\times 2 \\, \\text{m} = 4\\pi \\, \\text{m}^2 \\approx 12.566 \\, \\text{m}^2$. Shear force $F = \\tau A = 0.1 \\, \\text{N/m}^2 \\times 12.566 \\, \\text{m}^2 = 1.2566 \\, \\text{N}$. Torque $M = F R = 1.2566 \\, \\text{N} \\times 1 \\, \\text{m} = 1.2566 \\, \\text{Nm} \\approx 1.26 \\, \\text{Nm}$, which falls within the provided range."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Step 1: Convert all units to SI. Gap width: 5 mm = 0.005 m, viscosity: $10^{-4}$ Pa·s, angular speed: 5 rad/s, radius: 1 m, height: 2 m.",
+          "Step 2: Find tangential velocity at inner cylinder surface using $v = \\omega R = 5 \\times 1 = 5$ m/s.",
+          "Step 3: Assume linear velocity profile in the radial gap. Velocity gradient = (velocity difference) / (gap width) = (5 m/s - 0) / (0.005 m) = 1000 s⁻¹.",
+          "Step 4: Apply Newton's law of viscosity: shear stress $\\tau = \\mu \\times \\text{velocity gradient} = 10^{-4} \\times 1000 = 0.1$ Pa.",
+          "Step 5: Calculate wetted area where shear stress acts: lateral surface area of inner cylinder $A = 2\\pi R H = 2\\pi \\times 1 \\times 2 = 4\\pi \\approx 12.566$ m².",
+          "Step 6: Total shear force $F = \\tau \\times A = 0.1 \\times 12.566 = 1.2566$ N.",
+          "Step 7: Driving moment (torque) required to overcome viscous shear: $M = F \\times R = 1.2566 \\times 1 = 1.2566$ Nm.",
+          "Step 8: Round to two decimal places: 1.26 Nm, which matches the answer key range of 1.24 to 1.28 Nm."
+        ],
+        "formulas_used": [
+          "$v = \\omega R$",
+          "$\\tau = \\mu \\frac{\\Delta u}{\\Delta r}$",
+          "$A = 2\\pi R H$",
+          "$F = \\tau A$",
+          "$M = F R$"
+        ],
+        "estimated_time_minutes": 3
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Aerodynamics",
+          "confidence": 0.9
+        },
+        "topic": {
+          "name": "Viscous Flow",
+          "syllabus_ref": "Section 2: Aerodynamics, Viscous Flows and Boundary Layers"
+        },
+        "concepts": [
+          {
+            "name": "Shear Stress in Viscous Flow",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Linear Velocity Profile Approximation",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Torque Calculation from Viscous Forces",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "No-Slip Condition",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Newton's Law of Viscosity: $\\tau = \\mu \\frac{du}{dy}$",
+          "Tangential velocity in rotational motion: $v = \\omega r$",
+          "Surface area of a cylinder: $A = 2\\pi r h$",
+          "Torque as force times moment arm: $M = F \\times r$"
+        ],
+        "helpful": [
+          "Concept of Couette flow",
+          "Small gap approximation for cylindrical coordinates"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Newton's Law of Viscosity",
+            "requires: Rotational kinematics",
+            "enables: Calculation of viscous damping in bearings",
+            "enables: Design of viscometers"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Easy",
+        "score": 3,
+        "complexity_breakdown": {
+          "conceptual": 2,
+          "mathematical": 4,
+          "problem_solving": 3
+        },
+        "estimated_solve_time_seconds": 120,
+        "expected_accuracy_percent": 80,
+        "difficulty_factors": [
+          "Unit conversion from mm to m",
+          "Identifying correct area for shear force"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Intro to Aerodynamics",
+          "author": "J. D. Anderson",
+          "chapter_number": "16",
+          "chapter_title": "A Special Case: Couette Flow",
+          "section": "§16.3",
+          "page_range": null,
+          "complexity": "introductory",
+          "relevance_score": 0.7,
+          "source": "rag_retrieval",
+          "text_snippet": "The shear stress is constant: $\\tau = \\mu \\frac{u_e}{D}$ for linear velocity profile."
+        },
+        {
+          "source_type": "book",
+          "book": "Fluid Mechanics",
+          "author": "Frank M. White",
+          "chapter_number": "4",
+          "chapter_title": "Differential Relations for Fluid Flow",
+          "section": "Viscous Flow in Ducts",
+          "page_range": null,
+          "complexity": "intermediate",
+          "relevance_score": 0.6,
+          "source": "model_consensus",
+          "text_snippet": "For narrow gaps, cylindrical Couette flow approximates planar Couette flow."
+        }
+      ],
+      "video_references": [],
+      "step_by_step_solution": {
+        "approach_type": "Direct Formula Application",
+        "total_steps": 8,
+        "solution_path": "Convert units → Find tangential velocity → Assume linear profile → Calculate shear stress → Calculate area → Calculate force → Calculate torque → Report answer",
+        "key_insights": [
+          "The small gap (5 mm) compared to radius (1 m) justifies the linear velocity profile assumption.",
+          "Shear stress is uniform across the gap for constant viscosity and linear profile."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$\\tau = \\mu \\frac{\\Delta u}{\\Delta r}$",
+          "name": "Newton's Law of Viscosity for Linear Profile",
+          "conditions": "Constant viscosity, linear velocity gradient, narrow gap",
+          "type": "equation",
+          "relevance": "Core formula for shear stress calculation"
+        },
+        {
+          "formula": "$v = \\omega R$",
+          "name": "Tangential Velocity",
+          "conditions": "Rigid body rotation",
+          "type": "equation",
+          "relevance": "To find velocity at inner cylinder surface"
+        },
+        {
+          "formula": "$A = 2\\pi R H$",
+          "name": "Lateral Surface Area of Cylinder",
+          "conditions": "Right circular cylinder",
+          "type": "equation",
+          "relevance": "Area over which shear stress acts"
+        },
+        {
+          "formula": "$M = F R = \\tau A R$",
+          "name": "Torque due to Viscous Shear",
+          "conditions": "Shear force acting tangentially at radius R",
+          "type": "equation",
+          "relevance": "Final formula for driving moment"
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Design of journal bearings in engines",
+          "Viscometers for fluid viscosity measurement"
+        ],
+        "specific_systems": [
+          "Rotating shafts in lubricated bearings",
+          "Cylindrical Couette flow devices in rheology"
+        ],
+        "practical_relevance": "Accurate torque calculation is essential for sizing motors and understanding energy losses in rotating machinery."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Forgetting to convert gap width from mm to m, leading to incorrect velocity gradient.",
+          "why_students_make_it": "Unit oversight common in pressure situations; 5 mm seems small but must be 0.005 m.",
+          "type": "Units",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Always write units explicitly and convert all parameters to SI units before calculation.",
+          "consequence": "Answer off by factor of 1000 if used 5 instead of 0.005."
+        },
+        {
+          "mistake": "Using the wrong area, e.g., using cross-sectional area or total surface area including ends.",
+          "why_students_make_it": "Confusion about which surface experiences shear stress; the problem states friction at bottom surfaces ignored, so only lateral surface matters.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "occasional",
+          "how_to_avoid": "Visualize the flow: viscous shear acts on the cylindrical side surface, not on the flat ends.",
+          "consequence": "Incorrect torque calculation by factor of 2 or more."
+        },
+        {
+          "mistake": "Misapplying the velocity gradient; using radial velocity instead of tangential velocity.",
+          "why_students_make_it": "Not recognizing that the flow is Couette-type in the tangential direction due to rotation.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Remember that for rotating cylinders, the relevant velocity is tangential, and gradient is in radial direction.",
+          "consequence": "Wrong shear stress calculation."
+        },
+        {
+          "mistake": "Forgetting to multiply by radius for torque after calculating shear force.",
+          "why_students_make_it": "Mistaking force for moment or skipping final step.",
+          "type": "Calculation",
+          "severity": "Medium",
+          "frequency": "rare",
+          "how_to_avoid": "Clearly define torque as force times moment arm; write M = F × R explicitly.",
+          "consequence": "Answer off by factor of 1 m, giving 1.2566 N instead of Nm."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "VORTEX: Viscous Oil Rotates Torque Equals X (where X is τAR)",
+          "concept": "Torque formula for viscous rotation: M = τ A R",
+          "effectiveness": "medium",
+          "context": "Remembering the sequence for torque calculation in cylindrical Couette flow."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "What is Newton's law of viscosity for a linear velocity profile?",
+          "back": "$\\tau = \\mu \\frac{\\Delta u}{\\Delta y}$, where τ is shear stress, μ is viscosity, Δu is velocity difference, Δy is gap width.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "Why can we assume a linear velocity profile in the narrow gap between cylinders?",
+          "back": "Because the gap is very small compared to the radius (5 mm vs 1 m), so curvature effects are negligible, and flow approximates planar Couette flow with linear profile.",
+          "difficulty": "medium",
+          "time_limit_seconds": 45
+        },
+        {
+          "card_type": "application",
+          "front": "Calculate shear stress for inner cylinder radius 1 m, ω=5 rad/s, gap=5 mm, μ=10⁻⁴ Pa·s.",
+          "back": "Tangential velocity v = ωR = 5 m/s. Velocity gradient = v/gap = 5/0.005 = 1000 s⁻¹. τ = μ × gradient = 10⁻⁴ × 1000 = 0.1 Pa.",
+          "difficulty": "medium",
+          "time_limit_seconds": 60
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "What common unit mistake must be avoided in this problem?",
+          "back": "Always convert gap width from mm to m: 5 mm = 0.005 m. Using 5 instead of 0.005 gives error of 1000x.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "formula_recall",
+          "front": "What is the torque formula for viscous shear on a rotating cylinder?",
+          "back": "M = F × R = (τ × A) × R, where A = 2πRH is lateral surface area, R is radius, τ is shear stress.",
+          "difficulty": "medium",
+          "time_limit_seconds": 45
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Journal bearings in rotating machinery",
+          "industry_example": "In internal combustion engines, the crankshaft rotates within bearings lubricated with oil. The viscous torque calculated similarly determines frictional losses and lubrication requirements.",
+          "why_it_matters": "Overestimating torque can lead to oversized motors; underestimating can cause overheating and failure."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "This is a straightforward numerical calculation with clear steps. If you know viscous shear stress formula, you can solve quickly.",
+        "guessing_heuristic": "If unsure, compute order of magnitude: μ=10⁻⁴, v=5, gap=0.005, so τ~0.1, area~12, torque~1.2 Nm, so answer around 1.25.",
+        "time_management": "Spend no more than 3 minutes; it's a 2-mark question."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "cylindrical Couette flow",
+        "viscous torque calculation rotating cylinder",
+        "Newtonian fluid shear stress",
+        "narrow gap approximation",
+        "journal bearing friction torque",
+        "viscometer principle",
+        "Taylor-Couette flow",
+        "GATE AE viscous flow questions"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Exact Solution for Cylindrical Couette Flow",
+          "description": "Solve the Navier-Stokes equation in cylindrical coordinates for viscous flow between concentric cylinders without small gap approximation: $v_{\\theta}(r) = Ar + \\frac{B}{r}$, with constants from boundary conditions.",
+          "pros_cons": "More accurate for larger gaps; involves solving for constants A and B. For small gaps, it reduces to linear approximation.",
+          "when_to_use": "When gap is not small compared to radius, or for precise calculations in academic settings."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Mechanics of Materials": "Shear stress and strain concepts are analogous, though fluids have continuous deformation.",
+        "Thermodynamics": "Viscous dissipation converts mechanical energy to heat, relevant in energy losses.",
+        "Control Systems": "Torque requirements affect motor selection and control in rotational systems."
+      },
+      "deeper_dive_topics": [
+        "Taylor-Couette instability and flow regimes",
+        "Non-Newtonian fluids in cylindrical gaps",
+        "Effect of temperature on viscosity and torque",
+        "Numerical simulation of viscous flows using CFD"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2022_AE_Q52",
+        "year": 2022,
+        "marks": 2.0,
+        "negative_marks": 0.0,
+        "time_expected": "2-3 minutes",
+        "success_rate_estimate": "75%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 2: Aerodynamics",
+        "gate_subsection": "Viscous Flows and Boundary Layers",
+        "weightage": "Approximately 10-15% of Aerodynamics section",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Well-aligned with core concepts of viscous flow and practical applications in aerospace engineering."
+      },
+      "rag_quality": {
+        "relevance_score": 0.6,
+        "chunks_used": 4,
+        "sources_distribution": {
+          "books": 4,
+          "videos": 0
+        },
+        "notes": "RAG provided excellent background on planar Couette flow principles, including shear stress and linear velocity profile, which are directly applicable. However, the question involves cylindrical geometry, which is not covered in the RAG chunks. I adapted the planar concepts to cylindrical coordinates using small gap approximation."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-13T10:30:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Vary the fluid viscosity or gap width and ask for new torque.",
+        "Include temperature dependence of viscosity and calculate torque change.",
+        "Ask for power required to maintain rotation, given torque and speed.",
+        "Consider non-linear velocity profile or turbulent flow conditions."
+      ]
+    },
+    "question_id": "GATE_2022_AE_Q52",
+    "year": 2022,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "NAT",
+    "question_text": "Consider a solid cylinder housed inside another cylinder as shown in the figure. Radius of the inner cylinder is 1 m and its height is 2 m. The gap between the cylinders is 5 mm and is filled with a fluid of viscosity 10^-4 Pa-s. The inner cylinder is rotating at a constant angular speed of 5 rad/s while the outer cylinder is stationary. Friction at the bottom surfaces can be ignored. Velocity profile in the vertical gap between the cylinders can be assumed to be linear. The driving moment required for the rotating motion of the inner cylinder is ____________ Nm (rounded off to two decimal places)."
+  },
+  "tokens_used": 22137,
+  "input_tokens": 10321,
+  "output_tokens": 11816,
+  "cost": 0.03155359,
+  "time_seconds": 324.43002104759216
+}
