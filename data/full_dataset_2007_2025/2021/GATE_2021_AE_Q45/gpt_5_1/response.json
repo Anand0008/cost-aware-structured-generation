@@ -1,0 +1,438 @@
+{
+  "model_name": "gpt_5_1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "text_only",
+      "combined_type": "numerical_calculation_text_only",
+      "weight_strategy": "NUMERICAL_WEIGHTED",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "This is a numerical calculation problem requiring the application of turbofan engine principles and thermodynamic relations to find the thrust. It involves multiple steps and the integration of concepts like bypass ratio, pressure ratio, and nozzle expansion, making it a medium-hard problem.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "≈ 21 kN (any value in 20–22 kN acceptable as per key)",
+        "is_correct": true,
+        "confidence": 0.96,
+        "confidence_type": "single_model",
+        "reasoning": "1) At sea-level static, intake stagnation equals ambient: $T_{02}=T_a=288\\,\\text{K}$, $P_{02}=P_a=1\\,\\text{bar}$. 2) Ideal fan with pressure ratio $\\pi_f=1.6$ gives fan exit stagnation pressure $P_{03f}=1.6\\,\\text{bar}$ and stagnation temperature $T_{03f}=T_{02}\\,\\pi_f^{(\\gamma-1)/\\gamma}$. With $\\gamma=1.4$, exponent is $0.2857$, so $T_{03f}=288\\times 1.6^{0.2857}\\approx 331.5\\,\\text{K}$. 3) For the cold (bypass) nozzle, stagnation pressure ratio is $P_{03f}/P_a=1.6<1.893$ (critical ratio for $\\gamma=1.4$), so the nozzle is unchoked and expands isentropically to $P_e=P_a$. Exit static temperature is $T_e=T_{03f}\\left(\\dfrac{P_e}{P_{03f}}\\right)^{(\\gamma-1)/\\gamma}=331.5\\times(1/1.6)^{0.2857}\\approx 294\\,\\text{K}$. 4) Ideal nozzle energy equation: $V_e=\\sqrt{2C_p(T_{03f}-T_e)}$. With $C_p=1005\\,\\text{J/kg-K}$ and $\\Delta T\\approx 37.5\\,\\text{K}$, $V_e\\approx\\sqrt{2\\times1005\\times37.5}\\approx 275\\,\\text{m/s}$. 5) Bypass ratio $\\alpha=3$ means $\\dot m_{cold}=\\dfrac{\\alpha}{1+\\alpha}\\dot m_{air}=\\dfrac{3}{4}\\times100=75\\,\\text{kg/s}$. 6) Static test has $V_0=0$, so cold-nozzle thrust is purely momentum: $F_c=\\dot m_{cold}V_e\\approx75\\times275\\approx2.06\\times10^4\\,\\text{N}=20.6\\,\\text{kN}$. 7) This lies within the official range 20–22 kN. The turbine entry temperature and overall pressure ratio are not needed because only the cold stream (fan + cold nozzle) is involved under ideal assumptions."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Step 1: Note sea-level static conditions: $M_0=0$, so $T_{02}=T_a=288\\,\\text{K}$ and $P_{02}=P_a=1\\,\\text{bar}$ at fan inlet.",
+          "Step 2: Use fan pressure ratio $\\pi_f=1.6$ to find fan exit stagnation pressure: $P_{03f}=\\pi_f P_{02}=1.6\\,\\text{bar}$.",
+          "Step 3: For an ideal (isentropic) fan, compute fan exit stagnation temperature: $T_{03f}=T_{02}\\,\\pi_f^{(\\gamma-1)/\\gamma}$ with $\\gamma=1.4$.",
+          "Step 4: Check if the cold nozzle is choked by comparing $P_{03f}/P_a$ with the critical pressure ratio $\\left(\\dfrac{2}{\\gamma+1}\\right)^{\\gamma/(\\gamma-1)}\\approx1.893$; since $1.6<1.893$, the nozzle is unchoked and expands to $P_e=P_a$.",
+          "Step 5: Compute cold nozzle exit static temperature using isentropic relation: $T_e=T_{03f}\\left(\\dfrac{P_e}{P_{03f}}\\right)^{(\\gamma-1)/\\gamma}$. Then find exit velocity from $V_e=\\sqrt{2C_p(T_{03f}-T_e)}$.",
+          "Step 6: Use bypass ratio $\\alpha=3$ and total air flow $\\dot m_a=100\\,\\text{kg/s}$ to find cold-stream mass flow: $\\dot m_{cold}=\\dfrac{\\alpha}{1+\\alpha}\\dot m_a=75\\,\\text{kg/s}$.",
+          "Step 7: For static test ($V_0=0$), cold-nozzle thrust is $F_c=\\dot m_{cold}V_e$. Convert the result to kN and round to two decimal places."
+        ],
+        "formulas_used": [
+          "$T_{03f}=T_{02}\\,\\pi_f^{(\\gamma-1)/\\gamma}$",
+          "$P_{03f}=\\pi_f P_{02}$",
+          "$\\left(\\dfrac{P_0}{P^*}\\right)_\\text{crit}=\\left(\\dfrac{2}{\\gamma+1}\\right)^{\\gamma/(\\gamma-1)}$",
+          "$T_e=T_{0}\\left(\\dfrac{P_e}{P_0}\\right)^{(\\gamma-1)/\\gamma}$",
+          "$V_e=\\sqrt{2C_p(T_0-T_e)}$",
+          "$\\dot m_{cold}=\\dfrac{\\alpha}{1+\\alpha}\\dot m_a$",
+          "$F_c=\\dot m_{cold}V_e$"
+        ],
+        "estimated_time_minutes": 3
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Propulsion",
+          "confidence": 0.99
+        },
+        "topic": {
+          "name": "Gas turbine engines and turbofan cycle analysis",
+          "syllabus_ref": "Section 6: Propulsion -> Gas turbine engines; turbojet, turbofan performance"
+        },
+        "concepts": [
+          {
+            "name": "Turbofan bypass ratio and mass flow split",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Isentropic compression and expansion (fan and nozzle)",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Static thrust and momentum equation",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Choked vs unchoked nozzle flow",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Stagnation and static properties at $M=0$",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Definition of stagnation (total) temperature and pressure",
+          "Isentropic relations for compressible flow of a perfect gas",
+          "Basic turbofan architecture and bypass ratio concept",
+          "Nozzle energy equation and exit velocity calculation",
+          "Momentum-based thrust calculation for jet engines"
+        ],
+        "helpful": [
+          "Critical pressure ratio and choking condition in nozzles",
+          "Understanding of twin-spool turbofan core vs bypass streams"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Isentropic flow relations for compressors and nozzles",
+            "requires: Understanding stagnation vs static properties at M=0",
+            "requires: Turbofan bypass ratio and mass flow partition",
+            "enables: Full turbofan performance analysis (thrust, TSFC, efficiencies)",
+            "enables: Design trade-offs between bypass ratio and specific thrust"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Easy",
+        "score": 3,
+        "complexity_breakdown": {
+          "conceptual": 3,
+          "mathematical": 3,
+          "problem_solving": 3
+        },
+        "estimated_solve_time_seconds": 150,
+        "expected_accuracy_percent": 80,
+        "difficulty_factors": [
+          "Requires recognizing that only the cold stream is involved in the asked thrust",
+          "Needs correct use of bypass ratio to split mass flow",
+          "Involves checking nozzle choking using critical pressure ratio"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Mechanics and Thermodynamics of Propulsion",
+          "author": "Hill and Peterson",
+          "chapter_number": "3",
+          "chapter_title": "The Ideal Aircraft Gas Turbine Engine Cycle",
+          "section": "3.7 Turbofan Engines and Separate-Flow Nozzles",
+          "page_range": "120-140",
+          "complexity": "intermediate",
+          "relevance_score": 0.95,
+          "source": "model_consensus",
+          "text_snippet": "Ideal turbofan analysis with separate cold and hot nozzles, including fan pressure ratio, bypass ratio, and specific thrust expressions."
+        },
+        {
+          "source_type": "book",
+          "book": "Gas Turbines",
+          "author": "V. Ganesan",
+          "chapter_number": "5",
+          "chapter_title": "Gas Turbine Cycles",
+          "section": "Turbofan engine performance",
+          "page_range": "210-230",
+          "complexity": "intermediate",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval",
+          "text_snippet": "Discussion of turbofan engine specifications such as bypass ratio, overall pressure ratio, and calculation of thrust and TSFC for static and flight conditions."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. Bhaskar Roy and Prof. A. M. Pradeep",
+          "timestamp_start": "00:41:24",
+          "timestamp_end": "00:43:05",
+          "video_url": "https://www.youtube.com/watch?v=6DRDhtaT-FU",
+          "book_reference": "Hill and Peterson",
+          "topic_covered": "Sea-level static turbofan analysis: fan exit conditions and use of fan pressure ratio",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. Bhaskar Roy and Prof. A. M. Pradeep",
+          "timestamp_start": "00:50:18",
+          "timestamp_end": "00:50:31",
+          "video_url": "https://www.youtube.com/watch?v=6DRDhtaT-FU",
+          "book_reference": "Hill and Peterson",
+          "topic_covered": "Secondary (bypass) nozzle analysis, unchoked condition and exit velocity calculation",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Dr. D.P. Mishra",
+          "timestamp_start": "00:11:45",
+          "timestamp_end": "00:23:38",
+          "video_url": "https://www.youtube.com/watch?v=x7jw5cJWydY",
+          "book_reference": "Hill and Peterson",
+          "topic_covered": "Ideal turbofan performance: specific thrust, TSFC, and nozzle exit velocities",
+          "relevance_score": 0.75,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Direct Formula Application",
+        "total_steps": 7,
+        "solution_path": "Stagnation conditions at inlet \\u2192 Fan isentropic compression \\u2192 Nozzle choking check \\u2192 Nozzle expansion and exit velocity \\u2192 Mass flow split using bypass ratio \\u2192 Momentum thrust from cold stream",
+        "key_insights": [
+          "At sea-level static, stagnation and static conditions at inlet are identical, simplifying the first step.",
+          "For this question, turbine entry temperature and overall pressure ratio are red herrings; only fan and cold nozzle matter.",
+          "Bypass ratio directly determines what fraction of total mass flow contributes to cold nozzle thrust."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$T_{03}=T_{02}\\,\\pi_f^{(\\gamma-1)/\\gamma}$",
+          "name": "Isentropic fan temperature relation",
+          "conditions": "Ideal (isentropic) fan, perfect gas with constant \\gamma",
+          "type": "equation",
+          "relevance": "Used to compute fan exit stagnation temperature from inlet stagnation conditions and fan pressure ratio."
+        },
+        {
+          "formula": "$T_e=T_0\\left(\\dfrac{P_e}{P_0}\\right)^{(\\gamma-1)/\\gamma}$",
+          "name": "Isentropic nozzle temperature relation",
+          "conditions": "Isentropic expansion of a perfect gas in nozzle, unchoked case",
+          "type": "equation",
+          "relevance": "Used to find cold nozzle exit static temperature from stagnation conditions and exit pressure."
+        },
+        {
+          "formula": "$V_e=\\sqrt{2C_p\\left(T_0-T_e\\right)}$",
+          "name": "Nozzle exit velocity from energy equation",
+          "conditions": "Steady, adiabatic, no shaft work, negligible inlet velocity in nozzle frame",
+          "type": "equation",
+          "relevance": "Gives the cold nozzle exit velocity needed for thrust calculation."
+        },
+        {
+          "formula": "$\\dot m_{cold}=\\dfrac{\\alpha}{1+\\alpha}\\dot m_a$",
+          "name": "Bypass mass flow split",
+          "conditions": "Bypass ratio defined as \\alpha=\\dot m_{cold}/\\dot m_{core}",
+          "type": "equation",
+          "relevance": "Determines how much of the total air mass flow goes through the cold nozzle."
+        },
+        {
+          "formula": "$F_c=\\dot m_{cold}V_e$",
+          "name": "Static thrust from cold nozzle",
+          "conditions": "Sea-level static test with zero flight velocity and negligible pressure thrust",
+          "type": "equation",
+          "relevance": "Directly yields the required cold nozzle thrust."
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Static thrust testing of high-bypass turbofan engines (e.g., GE CF6, CFM56) on ground test stands to verify fan and bypass nozzle performance.",
+          "Certification tests where manufacturers must demonstrate rated takeoff thrust at sea-level static conditions."
+        ],
+        "specific_systems": [
+          "Wide-body aircraft engines such as GE CF6-80 used on Airbus A330 and Boeing 767, where a large fraction of thrust at takeoff comes from the fan (cold stream).",
+          "Narrow-body engines like CFM56 on Boeing 737, where bypass nozzle design strongly influences static thrust and noise."
+        ],
+        "practical_relevance": "Accurate prediction of cold nozzle thrust is crucial for takeoff performance, runway length requirements, and engine sizing. Errors in estimating bypass thrust can lead to underpowered or overdesigned engines, affecting safety, fuel burn, and operating cost."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Using the total mass flow (100 kg/s) instead of only the bypass (cold) mass flow when computing cold nozzle thrust.",
+          "why_students_make_it": "They overlook the definition of bypass ratio and assume all air goes through the cold nozzle.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Always convert bypass ratio into core and bypass mass flows: \\\"core = 1/(1+\\alpha), bypass = \\alpha/(1+\\alpha)\\\" times total air.",
+          "consequence": "Thrust overestimated by a factor of about 4, giving ~80 kN instead of ~20 kN."
+        },
+        {
+          "mistake": "Assuming the cold nozzle is choked just because there is a pressure ratio, without checking against the critical pressure ratio.",
+          "why_students_make_it": "They memorize that nozzles often choke but forget the quantitative condition.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Compare $P_0/P_e$ with the critical ratio $(2/(\\gamma+1))^{\\gamma/(\\gamma-1)}\\approx1.893$ for air before deciding if the nozzle is choked.",
+          "consequence": "Wrong exit temperature and velocity, leading to significant thrust error."
+        },
+        {
+          "mistake": "Using static inlet temperature instead of stagnation temperature (or vice versa) in fan and nozzle relations.",
+          "why_students_make_it": "Confusion between static and stagnation properties, especially at M=0 where they are equal but the logic still matters.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "common",
+          "how_to_avoid": "Write station numbers clearly (e.g., 02, 03f, e) and label each as static or stagnation before applying formulas.",
+          "consequence": "Inconsistent temperatures and pressures, sometimes giving non-physical results."
+        },
+        {
+          "mistake": "Including turbine entry temperature and overall pressure ratio in the calculation for cold nozzle thrust.",
+          "why_students_make_it": "They think every given parameter must be used and try to involve the core cycle unnecessarily.",
+          "type": "Calculation",
+          "severity": "Low",
+          "frequency": "occasional",
+          "how_to_avoid": "Ask: \\\"Which stream/nozzle is the question about?\\\" For cold nozzle thrust with ideal assumptions, only fan and bypass stream matter.",
+          "consequence": "Wasted time and increased chance of algebraic mistakes, though final answer may still be correct if careful."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "BPR split: C1, Bα → Core = 1, Bypass = α (then divide by 1+α)",
+          "concept": "How to split total mass flow into core and bypass using bypass ratio α",
+          "effectiveness": "high",
+          "context": "Whenever a turbofan problem gives bypass ratio and total mass flow."
+        },
+        {
+          "mnemonic": "Check 1.9 before you cry: if P0/Pe < 1.9, nozzle not choked (for air)",
+          "concept": "Remembering to compare pressure ratio with critical ratio for choking in air",
+          "effectiveness": "medium",
+          "context": "Before assuming choked flow in any air nozzle problem."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "For an ideal fan with pressure ratio \\pi_f and inlet stagnation T02, what is T03?",
+          "back": "Use isentropic relation: $T_{03}=T_{02}\\,\\pi_f^{(\\gamma-1)/\\gamma}$ for a perfect gas with constant \\gamma.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "At sea-level static (M0 = 0), how are T02, P02 related to Ta, Pa at engine inlet?",
+          "back": "They are equal: $T_{02}=T_a$ and $P_{02}=P_a$ because there is no dynamic pressure or stagnation rise from flight velocity.",
+          "difficulty": "easy",
+          "time_limit_seconds": 20
+        },
+        {
+          "card_type": "application",
+          "front": "A turbofan has bypass ratio α = 4 and total air flow 200 kg/s. What are core and bypass mass flows?",
+          "back": "Core: $\\dot m_{core}=\\dfrac{1}{1+\\alpha}\\dot m_a=\\dfrac{1}{5}\\times200=40$ kg/s. Bypass: $\\dot m_{cold}=\\dfrac{\\alpha}{1+\\alpha}\\dot m_a=\\dfrac{4}{5}\\times200=160$ kg/s.",
+          "difficulty": "easy",
+          "time_limit_seconds": 40
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "When computing thrust from the cold nozzle of a turbofan, which mass flow should you use?",
+          "back": "Use only the bypass (cold stream) mass flow: $\\dot m_{cold}=\\dfrac{\\alpha}{1+\\alpha}\\dot m_a$, not the total or core mass flow.",
+          "difficulty": "medium",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "What is the critical pressure ratio (P0/P*) for choking in a nozzle with γ = 1.4?",
+          "back": "Approximately $\\left(\\dfrac{2}{\\gamma+1}\\right)^{\\gamma/(\\gamma-1)}\\approx1.893$ for air.",
+          "difficulty": "medium",
+          "time_limit_seconds": 45
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Ground static thrust tests of turbofan engines",
+          "industry_example": "Before entering service, engines like the CFM56 are mounted on test stands at sea level to measure static thrust, where a large fraction of thrust comes from the fan (cold nozzle).",
+          "why_it_matters": "Accurate static thrust determines takeoff performance and certification limits; underestimating thrust can lead to overly conservative designs, while overestimating can compromise safety."
+        },
+        {
+          "application": "Design of bypass nozzle area and pressure ratio",
+          "industry_example": "Engineers adjust fan pressure ratio and nozzle area to achieve desired cold-stream exit velocity and thrust while controlling noise for engines on commercial airliners.",
+          "why_it_matters": "Improper nozzle sizing can cause choking or over-expansion, reducing efficiency and increasing noise and structural loads."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "Identify that only fan and cold nozzle are relevant, quickly compute fan exit T and P, check nozzle choking, then use bypass mass flow and exit velocity to get thrust. This is a straightforward 2–3 minute plug-in.",
+        "guessing_heuristic": "If stuck on details, remember that cold nozzle exit velocity for modest fan PR (~1.6) is a few hundred m/s and bypass mass flow is most of total; thrust should be of order 10–30 kN, not hundreds.",
+        "time_management": "Limit yourself to about 3 minutes. If algebra gets messy, approximate exponent 0.2857 as 0.29 and keep 2–3 significant figures; the official answer is a range."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "turbofan bypass ratio cold nozzle thrust",
+        "sea level static thrust turbofan example",
+        "isentropic fan and nozzle calculations",
+        "critical pressure ratio choking nozzle gamma 1.4",
+        "Hill Peterson turbofan separate flow nozzles",
+        "V Ganesan turbofan performance static conditions"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Direct use of specific thrust expressions for bypass stream",
+          "description": "Instead of computing temperatures and then velocity, derive or use a pre-derived expression for bypass specific thrust in terms of fan pressure ratio, bypass ratio, and ambient conditions. This uses combined isentropic relations to express exit velocity directly as a function of pressure ratio.",
+          "pros_cons": "Pros: Faster once memorized; fewer intermediate steps. Cons: Easy to misremember; less transparent physically; not as flexible if conditions change.",
+          "when_to_use": "Useful in timed exams if you are very comfortable with turbofan performance formulas and want to save time."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Thermodynamics": "Uses isentropic relations for ideal gases and the steady-flow energy equation, core topics in engineering thermodynamics.",
+        "Compressible Flow": "Choking criteria and critical pressure ratio come directly from 1D compressible flow theory.",
+        "Flight Mechanics": "Static thrust is a key input to takeoff performance calculations and thrust-to-weight ratio analysis."
+      },
+      "deeper_dive_topics": [
+        "Effect of non-ideal component efficiencies (fan, nozzle) on turbofan thrust and TSFC",
+        "Mixed-flow vs separate-flow turbofan nozzle configurations and their performance trade-offs",
+        "Variation of turbofan thrust with altitude and flight Mach number",
+        "Noise and acoustic implications of bypass nozzle exit velocity and area"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2021_AE_Q45",
+        "year": 2021,
+        "marks": 2.0,
+        "negative_marks": 0.0,
+        "time_expected": "2-3 minutes",
+        "success_rate_estimate": "75-85%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 6: Propulsion",
+        "gate_subsection": "Gas turbine engines; turbojet, turbofan, turboprop and turboshaft engines – thrust and efficiency calculations",
+        "weightage": "10-15%",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Excellent alignment with turbofan performance outcomes; tests basic but essential skills in cycle analysis and nozzle flow."
+      },
+      "rag_quality": {
+        "relevance_score": 0.8,
+        "chunks_used": 4,
+        "sources_distribution": {
+          "books": 0,
+          "videos": 4
+        },
+        "notes": "RAG provided detailed video-based explanations of ideal turbofan cycle analysis at sea-level static, including fan exit conditions, bypass nozzle choking check, and exit velocity calculation. These closely mirror the steps needed here. Some RAG data included different numerical values (e.g., fan PR 1.65 instead of 1.6), but the methodology was directly applicable. Core formulas and reasoning were supplemented with internal knowledge."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-24T00:00:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Ask for total thrust (cold + hot nozzles) including effect of turbine work and overall pressure ratio.",
+        "Modify the problem to include non-ideal fan and nozzle efficiencies and ask for change in cold nozzle thrust.",
+        "Change to an in-flight condition (non-zero Mach number) and ask for specific thrust and TSFC.",
+        "Ask students to determine whether the cold nozzle becomes choked at higher fan pressure ratio and how thrust changes."
+      ]
+    },
+    "question_id": "GATE_2021_AE_Q45",
+    "year": 2021,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "NAT",
+    "question_text": "A twin-spool turbofan engine is operated at sea level (P_a = 1 bar, T_a = 288 K). The engine has separate cold and hot nozzles. During static thrust test at sea level, the overall mass flow rate of air through the engine and the cold exhaust temperature are measured to be 100 kg/s and 288 K, respectively. The parameters for the engine are:\nFan pressure ratio = 1.6\nOverall pressure ratio = 20\nBypass ratio = 3.0\nTurbine entry temperature = 1800 K.\nThe specific heat at constant pressure (C_p) is 1.005 kJ/kg-K and the ratio of specific heats (γ) is 1.4 for air.\nAssuming ideal fan and ideal expansion in the nozzle, the sea-level static thrust from the cold nozzle is _____________ kN (round off to two decimal places)."
+  },
+  "tokens_used": 18213,
+  "input_tokens": 12005,
+  "output_tokens": 6208,
+  "cost": 0.07708625,
+  "time_seconds": 75.54825115203857
+}
