@@ -1,0 +1,417 @@
+{
+  "model_name": "deepseek_r1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "conceptual_application",
+      "media_type": "text_only",
+      "combined_type": "conceptual_application_text_only",
+      "weight_strategy": "APPLICATION_WEIGHTED",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "The question requires applying knowledge of aircraft stability derivatives and their impact on flight dynamics. It involves understanding multiple concepts related to aircraft stability and control, making it a conceptual application with medium difficulty.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "A;C;D",
+        "is_correct": true,
+        "confidence": 0.98,
+        "confidence_type": "single_model",
+        "reasoning": "Based on RAG context and standard aircraft stability theory: (A) Cmα directly sets the 'stiffness' of the short period mode. A more negative Cmα increases the natural frequency (ω_n_SP). (B) Cmq is the pitch damping derivative; a more negative Cmq increases the damping ratio (ζ_SP), improving damping. Therefore, this statement is false. (C) The primary aerodynamic surface contributing to roll damping derivative Clp is the wing, as its spanwise lift distribution changes with roll rate. (D) Yaw damping derivative Cnr is primarily increased by a larger vertical tail area, as it provides a larger stabilizing moment due to yaw rate."
+      },
+      "explanation": {
+        "question_nature": "Conceptual Application",
+        "step_by_step": [
+          "Step 1: Identify the key stability derivatives and their roles. Cmα (pitching moment derivative w.r.t α) affects static longitudinal stability and short period frequency. Cmq (pitch damping derivative) affects short period damping. Clp (roll damping derivative) primarily comes from the wing. Cnr (yaw damping derivative) is influenced by the vertical tail.",
+          "Step 2: Analyze Statement A. The short period natural frequency squared (ω_n_SP²) is proportional to -Cmα (from the characteristic equation). A more negative Cmα increases ω_n_SP², hence frequency increases. RAG Chunk 4 and 6 support this.",
+          "Step 3: Analyze Statement B. The damping ratio ζ_SP is approximately proportional to -Cmq. A more negative Cmq increases ζ_SP, leading to higher damping, not decreased. RAG Chunk 1, 2, and 6 clarify that Cmq is negative for damping. Thus, statement B is false.",
+          "Step 4: Analyze Statement C. Roll damping (Clp) arises because during a roll, wings experience differential changes in local angle of attack, creating an opposing rolling moment. The wing is the dominant contributor due to its large span and lift distribution. The tail contribution is secondary. This is standard knowledge.",
+          "Step 5: Analyze Statement D. Yaw damping (Cnr) is primarily provided by the vertical tail. A larger vertical fin (increased area and moment arm) increases the yaw damping derivative, making the Dutch roll mode better damped. This is a fundamental design principle.",
+          "Step 6: Conclude that statements A, C, and D are true."
+        ],
+        "formulas_used": [
+          "$\\omega_{n,SP}^2 \\propto -C_{m\\alpha}$",
+          "$\\zeta_{SP} \\propto -C_{mq}$",
+          "$C_{mq} = -2 \\eta_T \\frac{S_t}{S} C_{L\\alpha,t} \\left(\\frac{l_t}{\\bar{c}}\\right)^2$ (from RAG)",
+          "$C_{m\\alpha} = -\\text{static margin} \\times C_{L\\alpha}$ (from RAG)"
+        ],
+        "estimated_time_minutes": 3
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Flight Mechanics",
+          "confidence": 0.99
+        },
+        "topic": {
+          "name": "Aircraft Stability and Control",
+          "syllabus_ref": "Section 4: Flight Mechanics -> Stability and Control"
+        },
+        "concepts": [
+          {
+            "name": "Longitudinal Dynamic Stability",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Stability Derivatives (Cmα, Cmq)",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Lateral-Directional Derivatives (Clp, Cnr)",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Short Period Mode",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Definition of pitching moment coefficient (Cm) and stability derivatives",
+          "Concept of aircraft dynamic modes (short period, Dutch roll)",
+          "Basic understanding of how control surfaces and aerodynamic surfaces generate moments"
+        ],
+        "helpful": [
+          "Derivation of short period characteristic equation",
+          "Physical intuition for damping derivatives"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Static longitudinal stability (Cmα)",
+            "requires: Pitch damping (Cmq)",
+            "requires: Roll and yaw damping derivatives (Clp, Cnr)",
+            "enables: Design of stability augmentation systems",
+            "enables: Prediction of handling qualities"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Medium",
+        "score": 6,
+        "complexity_breakdown": {
+          "conceptual": 7,
+          "mathematical": 3,
+          "problem_solving": 6
+        },
+        "estimated_solve_time_seconds": 180,
+        "expected_accuracy_percent": 65,
+        "difficulty_factors": [
+          "Multiple true/false statements require broad knowledge",
+          "Understanding the sign and effect of stability derivatives is critical",
+          "RAG context provides partial but not complete coverage"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Flight Stability and Automatic Control",
+          "author": "Nelson, R.C.",
+          "chapter_number": "4",
+          "chapter_title": "Longitudinal Dynamics and Control",
+          "section": "Pitch Damping Derivative",
+          "complexity": "intermediate",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval",
+          "text_snippet": "Cmq represents the change in pitching moment coefficient with respect to non-dimensional pitch rate... typically negative for stable aircraft."
+        },
+        {
+          "source_type": "book",
+          "book": "Perkins & Hage",
+          "author": "Perkins, C.D., and Hage, R.E.",
+          "chapter_number": "3",
+          "chapter_title": "Static Longitudinal Stability",
+          "section": "Static Margin",
+          "complexity": "intermediate",
+          "relevance_score": 0.8,
+          "source": "rag_retrieval",
+          "text_snippet": "Static margin relates CM_alpha and CL_alpha: CM_alpha = -sm * CL_alpha."
+        },
+        {
+          "source_type": "book",
+          "book": "Aircraft Dynamics and Automatic Control",
+          "author": "McRuer, D., Ashkenas, I., and Graham, D.",
+          "chapter_number": "5",
+          "chapter_title": "Lateral-Directional Dynamics",
+          "section": "Roll and Yaw Damping",
+          "complexity": "advanced",
+          "relevance_score": 0.7,
+          "source": "model_consensus",
+          "text_snippet": "Roll damping derivative Clp is primarily due to wing, while yaw damping Cnr is dominated by vertical tail."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. A.K. Ghosh",
+          "timestamp_start": "00:10:17",
+          "timestamp_end": "00:12:32",
+          "video_url": "https://www.youtube.com/watch?v=GbGmmo3Q5pM",
+          "book_reference": "Nelson, R.C.",
+          "topic_covered": "Pitch damping derivative Cmq",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. A.K. Ghosh",
+          "timestamp_start": "00:10:12",
+          "timestamp_end": "00:12:37",
+          "video_url": "https://www.youtube.com/watch?v=H9t3nr7j0eg",
+          "book_reference": "Perkins & Hage",
+          "topic_covered": "CM_alpha and static margin relation",
+          "relevance_score": 0.85,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Conceptual Reasoning with Stability Derivative Definitions",
+        "total_steps": 6,
+        "solution_path": "Evaluate each statement independently using definitions of stability derivatives and their influence on dynamic modes.",
+        "key_insights": [
+          "Short period frequency depends on -Cmα; damping depends on -Cmq.",
+          "Wing dominates roll damping (Clp); vertical tail dominates yaw damping (Cnr)."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$\\omega_{n,SP}^2 \\approx -M_\\alpha + \\frac{Z_\\alpha M_q}{U_1}$",
+          "name": "Short Period Natural Frequency Approximation",
+          "conditions": "Simplified short period approximation neglecting some cross-couplings",
+          "type": "equation",
+          "relevance": "Shows dependence on Cmα (Mα) and Cmq (Mq)"
+        },
+        {
+          "formula": "$\\zeta_{SP} \\approx \\frac{-M_q - \\frac{Z_\\alpha}{U_1} - M_{\\dot{\\alpha}}}{2 \\omega_{n,SP}}$",
+          "name": "Short Period Damping Ratio Approximation",
+          "conditions": "From characteristic equation coefficients",
+          "type": "equation",
+          "relevance": "Shows that a more negative Mq (Cmq) increases damping"
+        },
+        {
+          "formula": "$C_{m\\alpha} = -\\text{sm} \\cdot C_{L\\alpha}$",
+          "name": "Relation between Cmα and Static Margin",
+          "conditions": "For a conventional aircraft, sm = static margin",
+          "type": "equation",
+          "relevance": "Links static stability to dynamic mode frequency"
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Aircraft designers adjust horizontal tail size and position to achieve desired Cmα and Cmq.",
+          "Flight control systems use yaw dampers that effectively increase Cnr via rudder feedback."
+        ],
+        "specific_systems": [
+          "Boeing 737 uses a yaw damper to improve Dutch roll damping.",
+          "Fighter aircraft with relaxed static stability have less negative Cmα, requiring fly-by-wire for stability."
+        ],
+        "practical_relevance": "Understanding these derivatives is essential for predicting handling qualities, designing stability augmentation systems, and certifying aircraft for safe flight."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Confusing the effect of Cmq on damping: thinking more negative Cmq reduces damping.",
+          "why_students_make_it": "Mistaking 'negative' for 'bad' or misinterpreting 'damping' as always positive.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Remember: damping derivative opposes motion. A more negative Cmq generates a larger opposing moment, increasing damping ratio.",
+          "consequence": "Incorrectly rejecting statement B as true or misjudging stability."
+        },
+        {
+          "mistake": "Thinking that Cmα only affects static stability, not dynamic frequency.",
+          "why_students_make_it": "Overlooking the connection between static and dynamic stability.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Link Cmα to the restoring moment in the short period mode; recall that ω_n² depends on -Cmα.",
+          "consequence": "Misjudging statement A."
+        },
+        {
+          "mistake": "Assuming the vertical tail contributes significantly to roll damping (Clp).",
+          "why_students_make_it": "Confusing lateral and directional axes; tail provides yaw damping, not roll damping.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "common",
+          "how_to_avoid": "Recall: wing is primary for roll damping; vertical tail is primary for yaw damping. Use mnemonic: 'Roll with Wings, Yaw with Tail'.",
+          "consequence": "Incorrectly rejecting statement C."
+        },
+        {
+          "mistake": "Forgetting that increasing vertical fin size also increases weathercock stability (Cnβ) and damping (Cnr).",
+          "type": "Conceptual",
+          "severity": "Low",
+          "how_to_avoid": "Visualize: larger fin provides larger side force for a given yaw rate, creating a larger opposing yaw moment.",
+          "consequence": "Misjudging statement D."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "SPF: Short Period Frequency depends on -Cmα (SPF = Short Period, Frequency).",
+          "concept": "Relationship between Cmα and short period frequency",
+          "effectiveness": "high",
+          "context": "When analyzing longitudinal dynamics"
+        },
+        {
+          "mnemonic": "Negative Cmq Damps Quicker",
+          "concept": "More negative Cmq increases damping",
+          "effectiveness": "medium",
+          "context": "Remembering pitch damping effect"
+        },
+        {
+          "mnemonic": "Roll with Wings, Yaw with Tail",
+          "concept": "Primary contributors to roll and yaw damping",
+          "effectiveness": "high",
+          "context": "Lateral-directional derivatives"
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "concept_recall",
+          "front": "How does making Cmα more negative affect the short period mode frequency?",
+          "back": "It increases the natural frequency because ω_n_SP² is proportional to -Cmα.",
+          "difficulty": "medium",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "True or False: A more negative Cmq decreases short period damping.",
+          "back": "False. A more negative Cmq increases the damping ratio (ζ_SP ∝ -Cmq).",
+          "difficulty": "medium",
+          "time_limit_seconds": 25
+        },
+        {
+          "card_type": "definition",
+          "front": "What is the primary aerodynamic surface contributing to Clp (roll damping derivative)?",
+          "back": "The wing, due to differential lift changes along the span during roll.",
+          "difficulty": "easy",
+          "time_limit_seconds": 20
+        },
+        {
+          "card_type": "application",
+          "front": "How can an aircraft designer increase yaw damping?",
+          "back": "Increase the size (area) and/or moment arm of the vertical fin, which increases Cnr.",
+          "difficulty": "easy",
+          "time_limit_seconds": 25
+        },
+        {
+          "card_type": "formula_recall",
+          "front": "Write the approximate relationship between Cmα and static margin.",
+          "back": "$C_{m\\alpha} = -\\text{sm} \\cdot C_{L\\alpha}$",
+          "difficulty": "medium",
+          "time_limit_seconds": 30
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Aircraft handling qualities certification",
+          "industry_example": "FAA regulations require adequate damping in all modes. For example, short period damping ratio must be above 0.3 for Level 1 flying qualities.",
+          "why_it_matters": "Insufficient damping can lead to pilot-induced oscillations or difficulty controlling the aircraft."
+        },
+        {
+          "application": "Design of unmanned aerial vehicles (UAVs)",
+          "industry_example": "Small UAVs with small vertical tails may exhibit poor yaw damping, requiring electronic stabilization.",
+          "why_it_matters": "Poor yaw damping can cause Dutch roll oscillations, affecting sensor pointing and flight path accuracy."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "This is a multi-select conceptual question. Quickly recall definitions and effects of stability derivatives. Eliminate obviously wrong statements (like B).",
+        "guessing_heuristic": "If unsure, remember: Cmα affects frequency, Cmq affects damping; wing for roll, tail for yaw. Statements A, C, D are often true in standard textbooks.",
+        "time_management": "Spend 2-3 minutes maximum. If stuck, mark based on confidence in each statement."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "pitch damping derivative Cmq",
+        "short period mode frequency Cmalpha",
+        "roll damping derivative Clp wing contribution",
+        "yaw damping vertical tail Cnr",
+        "aircraft stability derivatives",
+        "longitudinal dynamic stability short period",
+        "lateral directional damping",
+        "static margin and Cmalpha relationship"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Full State-Space Analysis",
+          "description": "Instead of using simplified approximations, set up the full longitudinal state-space matrix (u, w, q, θ) and compute eigenvalues to precisely find short period frequency and damping.",
+          "pros_cons": "More accurate; captures all couplings. Cons: Computationally heavy, not suitable for quick conceptual analysis.",
+          "when_to_use": "In detailed design or simulation studies."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Control Systems": "Stability derivatives are used in state-space models for designing feedback control systems (e.g., pitch rate feedback for SAS).",
+        "Aerodynamics": "Derivatives like Cmα and Cmq depend on aerodynamic center, downwash, and Mach number effects.",
+        "Structural Dynamics": "Aircraft flexibility can modify effective stability derivatives (aeroelastic effects)."
+      },
+      "deeper_dive_topics": [
+        "Effect of Mach number on Cmα and Cmq (compressibility)",
+        "Aeroelastic contributions to damping derivatives",
+        "Influence of canard or tailless configurations on pitch damping",
+        "Relationship between Dutch roll damping and dihedral effect (Clβ)"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2021_AE_Q34",
+        "year": 2021,
+        "marks": 2.0,
+        "negative_marks": 0.0,
+        "time_expected": "2-3 minutes",
+        "success_rate_estimate": "65%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 4: Flight Mechanics",
+        "gate_subsection": "Stability and Control",
+        "weightage": "Approx 10-15% of Flight Mechanics",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Well-aligned with core stability derivative concepts tested in GATE."
+      },
+      "rag_quality": {
+        "relevance_score": 0.7,
+        "chunks_used": 4,
+        "sources_distribution": {
+          "books": 2,
+          "videos": 4
+        },
+        "notes": "RAG chunks 1,2,4,6 provided excellent coverage for statements A and B (Cmα and Cmq). Chunks 3 and 5 were less directly relevant. RAG had no information on lateral-directional derivatives (Clp, Cnr) for statements C and D, so internal knowledge was used. Overall, RAG was helpful for about 50% of the question."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-13T10:30:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "How does increasing wing sweep affect Clp?",
+        "Given Cmα and Cmq values, calculate approximate short period frequency and damping ratio.",
+        "Which derivative is most influenced by the horizontal tail size? (Cmα or Cmq?)",
+        "Explain how a yaw damper works using the derivative Cnr."
+      ]
+    },
+    "question_id": "GATE_2021_AE_Q34",
+    "year": 2021,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "MCQ",
+    "question_text": "For a conventional fixed-wing aircraft, which of the following statements are true?"
+  },
+  "tokens_used": 15715,
+  "input_tokens": 10229,
+  "output_tokens": 5486,
+  "cost": 0.01764029,
+  "time_seconds": 174.27471256256104
+}
