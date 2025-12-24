@@ -1,0 +1,427 @@
+{
+  "model_name": "gpt_5_1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "image_based",
+      "combined_type": "numerical_calculation_image_based",
+      "weight_strategy": "MATH_IMAGE_HYBRID",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "This question requires calculating the bending stress in two different cantilever beam configurations and then finding the ratio. It involves understanding bending stress, cantilever beams, and the effect of support conditions. The image is essential for understanding the problem setup, and the problem requires multiple steps to solve.",
+      "difficulty_score": 7,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "2.6 to 2.7",
+        "is_correct": true,
+        "confidence": 0.93,
+        "confidence_type": "single_model",
+        "reasoning": "We must compare maximum bending stress at the fixed end P for two configurations of the same prismatic cantilever PQ (total length 2l) with a transverse load F at the mid-point R. Since the cross-section is the same, the ratio of bending stresses equals the ratio of bending moments at P.\n\nCase I (Q free): A standard cantilever of length 2l with a point load F at distance l from the fixed end. Reaction at P is F upward and a fixed-end moment M_P1 = F \\times l (taking moments about P). Thus maximum bending stress at P is proportional to F l.\n\nCase II (Q simply supported): Now P is still fixed, Q is a simple support, and the load F acts at mid-span R (distance l from each support). This is a propped cantilever. Let R_P and R_Q be vertical reactions at P and Q, and M_P2 the fixed-end moment at P. Static equilibrium gives:\n1) Vertical forces: R_P + R_Q = F.\n2) Moments about P: M_P2 + R_Q (2l) - F l = 0.\n\nWe need a third equation from compatibility: vertical deflection at Q must be zero. The deflection at any point is the superposition of deflections due to each load acting on a simple cantilever of length 2l fixed at P and free at Q. Using the given standard results for a tip-loaded cantilever (tip deflection N L^3 / 3EI and tip slope N L^2 / 2EI), we treat each load as applied at its own position and express deflection at Q.\n\nTake positive downward deflection. Contributions at Q:\n- Due to R_P at P: zero (load at fixed end causes no deflection at that point).\n- Due to F at R (distance l from P): Equivalent to a point load at distance l from fixed end on a cantilever of length 2l. The deflection at the free end (Q) equals deflection at a point at distance 2l from the fixed end due to a load at l. Using standard beam deflection formulas (or by superposition of two tip-loaded segments), this gives downward deflection of magnitude (5 F l^3)/(6 EI).\n- Due to R_Q at Q (distance 2l from P): This is a tip load at the free end of a cantilever of length 2l, so deflection at Q is upward with magnitude R_Q (2l)^3 / (3 EI) = 8 R_Q l^3 / (3 EI).\n\nCompatibility (net deflection at Q zero):\n(5 F l^3)/(6 EI) - 8 R_Q l^3 / (3 EI) = 0 \\Rightarrow 5F/6 = 8 R_Q/3 \\Rightarrow R_Q = (5/16) F.\nThen from force equilibrium, R_P = F - R_Q = (11/16) F.\nFrom moment equilibrium about P: M_P2 + R_Q (2l) - F l = 0 \\Rightarrow M_P2 = F l - 2 l R_Q = F l - 2 l (5F/16) = F l (1 - 5/8) = (3/8) F l.\n\nThus the maximum bending moment at P in Case II is M_P2 = (3/8) F l, much smaller than in Case I (F l). The ratio of maximum bending stresses is therefore:\n\\[ \\frac{\\sigma_{\\max, I}}{\\sigma_{\\max, II}} = \\frac{M_{P1}}{M_{P2}} = \\frac{F l}{(3/8) F l} = \\frac{8}{3} \\approx 2.67. \\]\nThis lies in the official answer range 2.6 to 2.7."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Identify that maximum bending stress at P is proportional to the bending moment at P because the cross-section is the same in both cases: \\(\\sigma_{\\max} = M c / I\\). So the required ratio equals \\(M_{P,\\text{Case I}} / M_{P,\\text{Case II}}\\).",
+          "Case I: Treat PQ as a simple cantilever of length 2l fixed at P and free at Q with a point load F at R (distance l from P). Taking moments about P, the fixed-end moment is \\(M_{P1} = F l\\).",
+          "Case II: P is fixed, Q is simply supported, and load F is at mid-span R. Let vertical reactions at P and Q be \\(R_P\\) and \\(R_Q\\), and fixed-end moment at P be \\(M_{P2}\\). From equilibrium: (i) \\(R_P + R_Q = F\\); (ii) taking moments about P: \\(M_{P2} + 2 l R_Q - F l = 0\\).",
+          "Introduce compatibility: vertical deflection at Q must be zero because Q is a simple support. Use superposition on an equivalent cantilever of length 2l fixed at P and free at Q, loaded by F at R and reaction \\(R_Q\\) at Q. The given formulas for a tip-loaded cantilever (deflection \\(N L^3 / 3EI\\)) allow us to compute deflections due to these loads.",
+          "Compute deflection at Q due to F at R: using standard cantilever deflection relations (or by segment superposition), the downward deflection at Q is \\(\\delta_F = (5 F l^3)/(6 EI)\\). Compute deflection at Q due to \\(R_Q\\) at Q: this is a tip load on a cantilever of length 2l, giving upward deflection \\(\\delta_{R_Q} = 8 R_Q l^3 / (3 EI)\\).",
+          "Apply compatibility: net deflection at Q is zero, so \\(\\delta_F - \\delta_{R_Q} = 0\\). This yields \\( (5 F l^3)/(6 EI) = 8 R_Q l^3 / (3 EI) \\Rightarrow R_Q = (5/16) F\\). Then \\(R_P = F - R_Q = (11/16) F\\).",
+          "Use moment equilibrium about P to find \\(M_{P2}\\): \\(M_{P2} + 2 l R_Q - F l = 0 \\Rightarrow M_{P2} = F l - 2 l R_Q = F l - 2 l (5F/16) = (3/8) F l\\).",
+          "Form the ratio of maximum bending stresses: \\(\\sigma_{\\max,I} / \\sigma_{\\max,II} = M_{P1} / M_{P2} = (F l) / ((3/8) F l) = 8/3 \\approx 2.67\\), which rounds to about 2.7 and lies within the given correct range."
+        ],
+        "formulas_used": [
+          "$\\sigma = \\dfrac{M c}{I}$",
+          "$\\delta_{\\text{tip}} = \\dfrac{N L^3}{3 E I}$",
+          "$\\theta_{\\text{tip}} = \\dfrac{N L^2}{2 E I}$",
+          "$\\sum F_y = 0$",
+          "$\\sum M = 0$",
+          "$\\delta_{\\text{net}}(Q) = 0$"
+        ],
+        "estimated_time_minutes": 4
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Structures",
+          "confidence": 0.99
+        },
+        "topic": {
+          "name": "Deflection and stress in beams",
+          "syllabus_ref": "Solid Mechanics and Structures -> Bending of beams, shear force and bending moment, deflection of beams"
+        },
+        "concepts": [
+          {
+            "name": "Bending stress in beams",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Cantilever and propped cantilever behavior",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Superposition of beam deflections",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Compatibility conditions in statically indeterminate beams",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Use of standard deflection formulas",
+            "importance": "tertiary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Basic beam theory: relation between bending moment and bending stress",
+          "Shear force and bending moment diagrams for cantilever and simply supported beams",
+          "Standard deflection formulas for cantilever beams with point loads",
+          "Static equilibrium of beams (force and moment balance)",
+          "Concept of compatibility for statically indeterminate structures"
+        ],
+        "helpful": [
+          "Moment-area or integration methods for beam deflection",
+          "Superposition principle in linear elasticity"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Basic beam theory and bending stress formula",
+            "requires: Ability to compute reactions using static equilibrium",
+            "requires: Knowledge of standard cantilever deflection expressions",
+            "enables: Analysis of propped cantilevers and continuous beams",
+            "enables: Design of structural members to limit stress and deflection"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Medium",
+        "score": 6,
+        "complexity_breakdown": {
+          "conceptual": 6,
+          "mathematical": 6,
+          "problem_solving": 6
+        },
+        "estimated_solve_time_seconds": 180,
+        "expected_accuracy_percent": 55,
+        "difficulty_factors": [
+          "Requires recognizing that stress ratio equals bending moment ratio since cross-section is same",
+          "Involves a statically indeterminate beam (propped cantilever) needing compatibility",
+          "Needs correct use of standard deflection formulas and superposition"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Mechanics of Materials",
+          "author": "Beer, Johnston et al.",
+          "chapter_number": "9",
+          "chapter_title": "Deflection of Beams",
+          "section": "Cantilever beams and propped cantilevers",
+          "page_range": "450-470",
+          "complexity": "intermediate",
+          "relevance_score": 0.9,
+          "source": "model_consensus",
+          "text_snippet": ""
+        },
+        {
+          "source_type": "book",
+          "book": "Aircraft Structures for Engineering Students",
+          "author": "T.H.G. Megson",
+          "chapter_number": "4",
+          "chapter_title": "Bending of beams",
+          "section": "Deflection of statically indeterminate beams",
+          "page_range": "160-190",
+          "complexity": "intermediate",
+          "relevance_score": 0.85,
+          "source": "model_consensus",
+          "text_snippet": ""
+        },
+        {
+          "source_type": "book",
+          "book": "Strength of Materials",
+          "author": "S.P. Harsha (NPTEL notes)",
+          "chapter_number": "",
+          "chapter_title": "Deflection of Beams",
+          "section": "Cantilever with point load at free end",
+          "page_range": "",
+          "complexity": "introductory",
+          "relevance_score": 0.8,
+          "source": "rag_retrieval",
+          "text_snippet": "Maximum deflection (at free end): y_max = W L^3 / (3 E I); Maximum slope (at free end): theta_max = W L^2 / (2 E I)."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. S.P. Harsha",
+          "timestamp_start": "00:10:02",
+          "timestamp_end": "00:19:02",
+          "video_url": "https://www.youtube.com/watch?v=Fiow5dsizqI",
+          "book_reference": "Beer & Johnston - Mechanics of Materials",
+          "topic_covered": "Derivation of slope and deflection for a cantilever beam with end point load using direct integration",
+          "relevance_score": 0.85,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. S.P. Harsha",
+          "timestamp_start": "00:43:52",
+          "timestamp_end": "00:46:28",
+          "video_url": "https://www.youtube.com/watch?v=Fch-rpGuFGY",
+          "book_reference": "Beer & Johnston - Mechanics of Materials",
+          "topic_covered": "Moment-area method for cantilever with tip load; standard slope and deflection formulas",
+          "relevance_score": 0.8,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "First Principles Derivation",
+        "total_steps": 8,
+        "solution_path": "Relate stress to bending moment at fixed end -> Analyze Case I by statics -> Analyze Case II as propped cantilever using equilibrium + compatibility via deflection at Q -> Compute reaction at Q and fixed-end moment -> Take ratio of moments",
+        "key_insights": [
+          "Because the cross-section is identical, stress ratio equals bending moment ratio.",
+          "Case II is statically indeterminate; compatibility (zero deflection at Q) is essential.",
+          "Given cantilever tip deflection formula allows quick computation of compatibility equation without full integration."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$\\sigma = \\dfrac{M c}{I}$",
+          "name": "Flexural (bending) stress formula",
+          "conditions": "Valid for linear elastic bending of beams with small deflections and plane sections remaining plane",
+          "type": "equation",
+          "relevance": "Relates bending moment at P to maximum bending stress; since c and I are same, stress ratio equals moment ratio."
+        },
+        {
+          "formula": "$\\delta = \\dfrac{N L^3}{3 E I}$",
+          "name": "Tip deflection of cantilever with tip load",
+          "conditions": "Cantilever of length L, fixed at one end, point load N at free end, constant EI",
+          "type": "equation",
+          "relevance": "Used as a building block to compute deflection at Q due to loads in the propped cantilever via superposition."
+        },
+        {
+          "formula": "$\\theta = \\dfrac{N L^2}{2 E I}$",
+          "name": "Tip slope of cantilever with tip load",
+          "conditions": "Same as previous: cantilever with tip load and constant EI",
+          "type": "equation",
+          "relevance": "Supports constructing deflection expressions along the cantilever if needed."
+        },
+        {
+          "formula": "$R_P + R_Q = F$",
+          "name": "Vertical force equilibrium",
+          "conditions": "Static equilibrium of the propped cantilever in Case II",
+          "type": "equation",
+          "relevance": "One of the equations needed to solve for reactions and fixed-end moment."
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Design of aircraft wing root and fuselage attachments where one end is fixed to the fuselage and the other supported by landing gear or struts, creating propped cantilever behavior.",
+          "Structural design of overhanging balconies or crane jibs where additional supports reduce bending moments at the fixed connection."
+        ],
+        "specific_systems": [
+          "Over-wing fairings and pylons in transport aircraft, where local supports change bending moment distribution.",
+          "Cantilevered control surfaces with hinge and additional support points."
+        ],
+        "practical_relevance": "Understanding how adding a support (propping a cantilever) reduces bending moment and stress at the fixed end is crucial for weight-efficient structural design and for preventing fatigue or failure at critical joints."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Assuming the maximum bending stress ratio equals the ratio of applied loads F, ignoring the change in support conditions.",
+          "why_students_make_it": "They focus only on the magnitude of the external load and forget that internal moments depend strongly on boundary conditions and reaction forces.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Always draw or at least mentally visualize the bending moment diagram for each support condition before comparing stresses.",
+          "consequence": "Leads to an incorrect ratio of 1 instead of about 2.7."
+        },
+        {
+          "mistake": "Treating Case II as a simply supported beam (both ends pinned) and ignoring the fixed-end moment at P.",
+          "why_students_make_it": "The presence of a roller at Q and a load at mid-span resembles a standard simply supported case, so they overlook that P is fixed, not pinned.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Check the boundary conditions carefully: a fixed end can resist moment and rotation, unlike a pin.",
+          "consequence": "Underestimates the bending moment at P and gives a wrong stress ratio."
+        },
+        {
+          "mistake": "Trying to solve Case II using only static equilibrium without applying compatibility (zero deflection at Q).",
+          "why_students_make_it": "They may not recognize that the structure is statically indeterminate and requires deformation compatibility.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "occasional",
+          "how_to_avoid": "Count unknown reactions vs. equilibrium equations; if unknowns exceed equations, introduce compatibility using deflection or slope conditions.",
+          "consequence": "System of equations is underdetermined, leading to arbitrary or inconsistent reaction values."
+        },
+        {
+          "mistake": "Misusing the given cantilever tip deflection formula, e.g., plugging in wrong length or load position when computing deflection at Q.",
+          "why_students_make_it": "They memorize formulas but do not visualize which length L and load N correspond to the specific segment.",
+          "type": "Calculation",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Sketch a small equivalent cantilever for each load and clearly label L and N before substituting into the formula.",
+          "consequence": "Gives incorrect compatibility equation and hence wrong reaction and moment values."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "Same section, Same c and I, So Stress ratio = Moment ratio",
+          "concept": "Relating bending stress ratio to bending moment ratio when cross-section is unchanged",
+          "effectiveness": "high",
+          "context": "Use whenever comparing stresses at the same location of a prismatic beam under different load/support conditions."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "What are the tip deflection and tip slope for a cantilever of length L with a point load N at the free end?",
+          "back": "Tip deflection: $\\delta = N L^3 / (3 E I)$; Tip slope: $\\theta = N L^2 / (2 E I)$.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "For the same cross-section at a point in a beam, how is bending stress related to bending moment?",
+          "back": "They are proportional: $\\sigma = M c / I$. If c and I are unchanged, stress ratio equals moment ratio at that point.",
+          "difficulty": "easy",
+          "time_limit_seconds": 20
+        },
+        {
+          "card_type": "application",
+          "front": "Why is a propped cantilever (fixed at one end, simply supported at the other) statically indeterminate?",
+          "back": "Because it has more reaction unknowns (two reactions plus a fixed-end moment) than equilibrium equations. Compatibility of deflections (e.g., zero deflection at the prop) is needed to solve it.",
+          "difficulty": "medium",
+          "time_limit_seconds": 45
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "In a beam problem, how do you quickly check if compatibility equations are needed?",
+          "back": "Count unknown reactions and compare with the three static equilibrium equations in 2D. If unknowns exceed 3, the beam is statically indeterminate and needs compatibility (deflection/slope) conditions.",
+          "difficulty": "medium",
+          "time_limit_seconds": 45
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Adding props or supports to overhanging structures",
+          "industry_example": "A balcony originally cantilevered from a building may be later supported by columns at its edge to reduce bending moment and stress at the wall connection.",
+          "why_it_matters": "If the reduction in bending moment is not correctly estimated, the connection may still be overstressed, leading to cracking or failure."
+        },
+        {
+          "application": "Aircraft wing root design with additional supports or struts",
+          "industry_example": "High-wing aircraft sometimes use wing struts to reduce bending moment at the wing-fuselage joint, similar to propping a cantilever.",
+          "why_it_matters": "Accurate stress prediction is crucial for fatigue life and structural safety of the wing root."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "Notice that only a ratio of stresses is asked and cross-section is same, so focus on bending moments at P. Recognize Case II as a propped cantilever and quickly set up equilibrium plus one compatibility equation using standard deflection formulas.",
+        "guessing_heuristic": "If stuck, remember that adding a support reduces fixed-end moment significantly; expect the ratio to be greater than 1, typically between 2 and 3 for mid-span propping.",
+        "time_management": "Allocate about 3 minutes: 1 minute to analyze both cases and write equilibrium equations, 1 minute to apply compatibility, and 1 minute to compute the ratio and round."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "propped cantilever beam deflection",
+        "GATE AE structures bending stress ratio",
+        "cantilever tip deflection NL^3 3EI",
+        "statically indeterminate beams compatibility",
+        "superposition method beam deflection",
+        "moment-area method cantilever point load",
+        "fixed and simply supported beam under mid-span load"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Moment-area method for compatibility",
+          "description": "Use the moment-area theorems to compute the rotation and deflection at Q due to each load (F at R and R_Q at Q) on an equivalent cantilever, then enforce zero deflection at Q to solve for R_Q and the fixed-end moment.",
+          "pros_cons": "Pros: Provides visual understanding via M/EI diagrams and often simpler integrals. Cons: Requires comfort with drawing and integrating M/EI diagrams; slightly longer than using memorized formulas.",
+          "when_to_use": "Useful when standard deflection formulas are not readily available or when dealing with varying EI."
+        },
+        {
+          "name": "Direct integration of beam differential equation",
+          "description": "Write the bending moment as a function of x for each loading case, integrate the Euler-Bernoulli beam equation twice, apply boundary and compatibility conditions to determine constants and reactions, then compute moments.",
+          "pros_cons": "Pros: Systematic and general; works for arbitrary loading. Cons: Algebraically heavier and time-consuming for exam problems.",
+          "when_to_use": "Best for studying the theory or for complex loadings where standard formulas or moment-area become cumbersome."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Flight Mechanics": "Wing bending moments under lift and fuel loads are analyzed using similar beam concepts to ensure structural integrity during maneuvers.",
+        "Control Systems": "The flexibility of control surfaces and structural modes influences dynamic response and can be modeled using beam deflection theory.",
+        "Space Dynamics": "Satellite solar panels and booms behave like cantilever beams; accurate prediction of deflection and stress is important for pointing accuracy."
+      },
+      "deeper_dive_topics": [
+        "Analysis of continuous beams and frames using slope-deflection and moment distribution methods",
+        "Energy methods for beams (Castigliano's theorem) to compute deflections and redundants",
+        "Effect of shear deformation and rotary inertia on beam behavior (Timoshenko beam theory)",
+        "Fatigue analysis of fixed joints subjected to fluctuating bending moments"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2022_AE_Q57",
+        "year": 2022,
+        "marks": 2.0,
+        "negative_marks": 0.0,
+        "time_expected": "2-4 minutes",
+        "success_rate_estimate": "55%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Solid Mechanics and Structures",
+        "gate_subsection": "Bending of beams, shear force and bending moment, deflection of beams",
+        "weightage": "10-15%",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Excellent question integrating bending stress, standard deflection formulas, and statically indeterminate beam analysis; very relevant for aerospace structural design."
+      },
+      "rag_quality": {
+        "relevance_score": 0.7,
+        "chunks_used": 4,
+        "sources_distribution": {
+          "books": 0,
+          "videos": 4
+        },
+        "notes": "RAG provided detailed derivations and standard formulas for cantilever beams with tip loads and variable EI, including deflection and slope expressions. These were directly useful for recalling the given tip deflection and slope formulas and for understanding superposition. However, RAG did not cover the specific propped cantilever configuration, so the statically indeterminate analysis relied mainly on internal knowledge."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-24T00:00:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Ask for the vertical reaction at the simple support Q in Case II and compare it with the applied load F.",
+        "Modify the problem so that the load is not at mid-span and ask for the location that minimizes bending moment at P.",
+        "Consider variable flexural rigidity EI along the length and ask for the new stress ratio using moment-area or energy methods.",
+        "Extend to dynamic loading: estimate the fundamental natural frequency of the cantilever in both cases and compare."
+      ]
+    },
+    "question_id": "GATE_2022_AE_Q57",
+    "year": 2022,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "NAT",
+    "question_text": "Given: The tip deflection and tip slope for a tip loaded cantilever of length l are: Nl^3/3EI and Nl^2/2EI, respectively, where N is the tip force and EI is the flexural rigidity. A cantilever PQ of rectangular cross-section is subjected to transverse load, F, at its mid-point. Two cases are considered as shown in the figure. In Case I, the end Q is free and in Case II, Q is simply supported. The ratio of the magnitude of the maximum bending stress at P in Case I to that in Case II is ________ (rounded off to one decimal place)."
+  },
+  "tokens_used": 19004,
+  "input_tokens": 12754,
+  "output_tokens": 6250,
+  "cost": 0.0784425,
+  "time_seconds": 67.36119818687439
+}
