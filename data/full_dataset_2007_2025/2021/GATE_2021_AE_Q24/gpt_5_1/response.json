@@ -1,0 +1,418 @@
+{
+  "model_name": "gpt_5_1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "text_only",
+      "combined_type": "numerical_calculation_text_only",
+      "weight_strategy": "NUMERICAL_WEIGHTED",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "This is a numerical calculation problem that requires applying concepts of aerodynamics (sideslip, rudder effectiveness) and engine failure scenarios to calculate the required rudder deflection. It involves multiple steps and integration of concepts, making it a medium-hard problem.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "6.55 deg (any value in 6.50–6.60 is accepted)",
+        "is_correct": true,
+        "confidence": 0.98,
+        "confidence_type": "single_model",
+        "reasoning": "With one engine inoperative on a twin-engine aircraft, the operating engine produces a yawing moment about the CG equal to thrust times its lateral offset. The rudder must generate an equal and opposite yawing moment. For symmetric engines separated by 10 m, each engine is 5 m from the centerline. The yawing moment from the live engine is N_thrust = 8000 N × 5 m = 40000 N·m. The rudder yawing moment is N_rudder = C_n_{\\delta_r} \\delta_r q S b, where q = 0.5 \\rho V^2, S = 50 m^2, b = 10 m, C_n_{\\delta_r} = -0.002 per degree, and V = 100 m/s. At sea level, q = 0.5 × 1.225 × 100^2 = 6125 N/m^2. Then q S b = 6125 × 50 × 10 = 3.0625 × 10^6 N·m. The dimensional yawing moment from rudder is N_rudder = C_n_{\\delta_r} \\delta_r q S b = (-0.002/deg) × \\delta_r(deg) × 3.0625 × 10^6 = -6125 × \\delta_r N·m. Setting N_thrust + N_rudder = 0 gives 40000 - 6125 \\delta_r = 0, so \\delta_r = 40000 / 6125 ≈ 6.535 deg. Rounded to two decimal places, this is 6.54 deg, which lies within the official answer range 6.50–6.60. The method matches the standard engine-out yaw control derivation given in the RAG context."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Step 1: Identify the yawing moment due to asymmetric thrust. With one engine failed, the operating engine thrust T = 8000 N acts at a lateral distance of 5 m from the aircraft centerline (half of the 10 m spanwise separation). So the thrust yawing moment is N_thrust = T y_engine.",
+          "Step 2: Compute N_thrust. Here, y_engine = 10 / 2 = 5 m, so N_thrust = 8000 × 5 = 40000 N·m.",
+          "Step 3: Write the rudder yawing moment expression. The dimensional yawing moment from rudder is N_rudder = C_n_{\\delta_r} \\delta_r q S b, where q = 0.5 \\rho V^2 is dynamic pressure, S is wing area, and b is wingspan (moment reference length in yaw).",
+          "Step 4: Compute dynamic pressure and q S b. At sea level, \\rho = 1.225 kg/m^3 and V = 100 m/s, so q = 0.5 × 1.225 × 100^2 = 6125 N/m^2. Then q S b = 6125 × 50 × 10 = 3.0625 × 10^6 N·m.",
+          "Step 5: Express N_rudder in terms of \\delta_r (in degrees). Given C_n_{\\delta_r} = -0.002 per degree, N_rudder = (-0.002/deg) × \\delta_r(deg) × 3.0625 × 10^6 = -6125 \\delta_r N·m.",
+          "Step 6: Apply yawing moment equilibrium for zero sideslip: N_thrust + N_rudder = 0. So 40000 - 6125 \\delta_r = 0, giving \\delta_r = 40000 / 6125 ≈ 6.535 deg.",
+          "Step 7: Round to two decimal places: \\delta_r ≈ 6.54°, which is within the official accepted range 6.50–6.60°."
+        ],
+        "formulas_used": [
+          "$N_\\text{thrust} = T \\, y_\\text{engine}$",
+          "$q = \\tfrac{1}{2} \\, \\rho \\, V^2$",
+          "$N_\\text{rudder} = C_{n_{\\delta_r}} \\, \\delta_r \\, q \\, S \\, b$",
+          "$N_\\text{thrust} + N_\\text{rudder} = 0$",
+          "$\\delta_r = - \\dfrac{N_\\text{thrust}}{C_{n_{\\delta_r}} \\, q \\, S \\, b}$"
+        ],
+        "estimated_time_minutes": 3
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Flight Mechanics",
+          "confidence": 0.98
+        },
+        "topic": {
+          "name": "Static Lateral-Directional Stability and Control",
+          "syllabus_ref": "Flight Mechanics -> Static stability and control in longitudinal, lateral, and directional modes"
+        },
+        "concepts": [
+          {
+            "name": "Engine-out yaw control in multi-engine aircraft",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Rudder control effectiveness $C_{n_{\\delta_r}}$",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Yawing moment equilibrium",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Dynamic pressure and aerodynamic moment scaling",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Twin-engine asymmetric thrust",
+            "importance": "tertiary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Understanding of aerodynamic forces and moments (lift, drag, side force, pitching, rolling, yawing moments)",
+          "Concept of dynamic pressure $q = \\tfrac{1}{2} \\rho V^2$",
+          "Definition and use of stability/control derivatives such as $C_{n_{\\delta_r}}$",
+          "Static equilibrium of moments about an axis",
+          "Basic geometry of multi-engine aircraft (engine lateral offset from CG)"
+        ],
+        "helpful": [
+          "Familiarity with lateral-directional stability derivatives like $C_{n_\\beta}$",
+          "Concept of minimum control speed $V_{MC}$ in engine-out conditions"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Understanding of aerodynamic forces and moments",
+            "requires: Concept of dynamic pressure $q$ and reference quantities $S$, $b$",
+            "requires: Definition and physical meaning of $C_{n_{\\delta_r}}$",
+            "enables: Analysis of engine-out controllability and rudder sizing",
+            "enables: Design and certification calculations for $V_{MC}$ and crosswind limits"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Easy",
+        "score": 3,
+        "complexity_breakdown": {
+          "conceptual": 3,
+          "mathematical": 3,
+          "problem_solving": 3
+        },
+        "estimated_solve_time_seconds": 150,
+        "expected_accuracy_percent": 80,
+        "difficulty_factors": [
+          "Requires recognizing that each engine is half the spanwise separation from the centerline",
+          "Needs correct use of dimensional moment expression $N = C_n q S b$ with $C_{n_{\\delta_r}}$ per degree",
+          "Sign convention can confuse some students, though magnitude is straightforward"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Flight Stability and Automatic Control",
+          "author": "Robert C. Nelson",
+          "chapter_number": "4",
+          "chapter_title": "Lateral-Directional Static Stability and Control",
+          "section": "Engine-out control and rudder sizing",
+          "page_range": "120-135",
+          "complexity": "intermediate",
+          "relevance_score": 0.96,
+          "source": "model_consensus",
+          "text_snippet": ""
+        },
+        {
+          "source_type": "book",
+          "book": "Introduction to Flight",
+          "author": "John D. Anderson Jr.",
+          "chapter_number": "7",
+          "chapter_title": "Principles of Stability and Control",
+          "section": "Directional stability and control surfaces",
+          "page_range": "480-500",
+          "complexity": "introductory",
+          "relevance_score": 0.85,
+          "source": "rag_retrieval",
+          "text_snippet": "Directional control, primarily provided by the rudder, is essential for maintaining control and trim in situations that generate unwanted yawing moments, such as asymmetric power conditions."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. A.K. Ghosh",
+          "timestamp_start": "00:23:03",
+          "timestamp_end": "00:26:01",
+          "video_url": "https://www.youtube.com/watch?v=yjfwB7zUhvI",
+          "book_reference": "Nelson, Flight Stability and Automatic Control",
+          "topic_covered": "Directional control under asymmetric power and engine-out rudder requirement",
+          "relevance_score": 0.95,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. A.K. Ghosh",
+          "timestamp_start": "00:12:13",
+          "timestamp_end": "00:15:52",
+          "video_url": "https://www.youtube.com/watch?v=yjfwB7zUhvI",
+          "book_reference": "Nelson, Flight Stability and Automatic Control",
+          "topic_covered": "Derivation of rudder deflection required to balance asymmetric thrust yawing moment",
+          "relevance_score": 0.96,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Direct Formula Application",
+        "total_steps": 7,
+        "solution_path": "Identify asymmetric thrust moment → Compute dynamic pressure → Use rudder moment formula with control derivative → Apply moment equilibrium → Solve for rudder deflection",
+        "key_insights": [
+          "For a symmetric twin-engine layout, the lateral distance of each engine from the centerline is half the spanwise separation between engines.",
+          "Yawing moment coefficient derivatives become dimensional moments via multiplication by $q S b$.",
+          "The sign of $C_{n_{\\delta_r}}$ indicates direction of generated moment, but for magnitude we can work with absolute values and then infer direction."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$N_\\text{thrust} = T \\, y_\\text{engine}$",
+          "name": "Yawing moment due to asymmetric thrust",
+          "conditions": "Applies when one engine on a multi-engine aircraft fails and the remaining engine thrust line is offset laterally by $y_\\text{engine}$ from the CG.",
+          "type": "equation",
+          "relevance": "Core to compute the disturbing yawing moment that rudder must balance."
+        },
+        {
+          "formula": "$q = \\tfrac{1}{2} \\, \\rho \\, V^2$",
+          "name": "Dynamic pressure",
+          "conditions": "Incompressible or low-speed compressible flow approximation; used for aerodynamic force and moment scaling.",
+          "type": "equation",
+          "relevance": "Needed to convert non-dimensional yawing moment coefficient into dimensional moment."
+        },
+        {
+          "formula": "$N_\\text{rudder} = C_{n_{\\delta_r}} \\, \\delta_r \\, q \\, S \\, b$",
+          "name": "Rudder-induced yawing moment",
+          "conditions": "Small-angle linear control derivative model; $\\delta_r$ in degrees if $C_{n_{\\delta_r}}$ is per degree.",
+          "type": "equation",
+          "relevance": "Gives the restoring yawing moment produced by rudder deflection."
+        },
+        {
+          "formula": "$\\delta_r = - \\, \\dfrac{T \\, y_\\text{engine}}{C_{n_{\\delta_r}} \\, q \\, S \\, b}$",
+          "name": "Required rudder deflection for engine-out equilibrium",
+          "conditions": "Steady, level flight with zero net yawing moment; linear aerodynamics; one engine inoperative.",
+          "type": "equation",
+          "relevance": "Direct formula used to compute the numerical answer."
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Certification of transport aircraft such as the Airbus A320 or Boeing 737 requires demonstrating adequate rudder authority to maintain directional control after an engine failure at critical speeds.",
+          "Design of vertical tail and rudder size for regional twin turboprops like the ATR-72 is strongly influenced by engine-out yaw control requirements."
+        ],
+        "specific_systems": [
+          "Boeing 737 NG rudder sizing and hydraulic power system are designed to provide sufficient control power for worst-case engine-out at takeoff.",
+          "Airbus A320 family uses fly-by-wire laws that include automatic rudder trim to counter asymmetric thrust, but the underlying sizing still follows these moment-balance principles."
+        ],
+        "practical_relevance": "Ensuring that the rudder can counteract asymmetric thrust is critical for safety during takeoff and climb, when engine failures are most hazardous and airspeed (hence dynamic pressure) is relatively low. Insufficient rudder authority can lead to loss of directional control and runway excursions or in-flight upsets."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Using the full spanwise distance between engines (10 m) as the lever arm instead of half (5 m) from the centerline.",
+          "why_students_make_it": "They read 'spanwise distance between the two engines' and directly plug that into the moment arm without visualizing the symmetric layout about the fuselage centerline.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Sketch a simple top view of the aircraft showing the fuselage centerline and engines at ±5 m. Always identify the distance from CG, not between engines.",
+          "consequence": "The yawing moment is overestimated by a factor of 2, leading to a rudder deflection about twice the correct value."
+        },
+        {
+          "mistake": "Treating $C_{n_{\\delta_r}}$ as per radian while it is given per degree, or mixing degrees and radians in the calculation.",
+          "why_students_make_it": "They are used to derivatives being per radian and forget to check the units explicitly stated in the problem.",
+          "type": "Units",
+          "severity": "High",
+          "frequency": "occasional",
+          "how_to_avoid": "Always read the units of control derivatives carefully. If $C_{n_{\\delta_r}}$ is per degree, keep $\\delta_r$ in degrees in the formula, or convert both to per radian and radians consistently.",
+          "consequence": "If incorrectly converted, the computed rudder deflection can be off by a factor of about 57.3, giving a nonsensical answer."
+        },
+        {
+          "mistake": "Forgetting to multiply by both S and b when converting from coefficient to dimensional moment, using $N = C_n q S$ instead of $N = C_n q S b$.",
+          "why_students_make_it": "They remember the lift formula $L = C_L q S$ and analogously apply it to moments without including the reference length.",
+          "type": "Calculation",
+          "severity": "Medium",
+          "frequency": "common",
+          "how_to_avoid": "Recall that forces use area as reference, while moments use area times a reference length (span or chord). For yawing moment, always include $b$.",
+          "consequence": "Underestimates the rudder moment by a factor of $b$, leading to an overestimated required deflection."
+        },
+        {
+          "mistake": "Getting confused by the negative sign of $C_{n_{\\delta_r}}$ and trying to enforce sign consistency instead of focusing on magnitude.",
+          "why_students_make_it": "They worry about sign conventions (nose-left vs nose-right) and may incorrectly add moments instead of balancing them.",
+          "type": "Sign Error",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Set up the scalar equilibrium as 'magnitude of rudder moment = magnitude of thrust moment' and then infer the direction of rudder deflection qualitatively.",
+          "consequence": "Can lead to a negative numerical answer or an incorrect interpretation of which way the rudder should deflect, though the magnitude may still be correct."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "FAR: Force → Area, moment → Area × span (or chord)",
+          "concept": "Remembering that yawing moment uses $q S b$ while lift uses $q S$",
+          "effectiveness": "high",
+          "context": "Use when converting non-dimensional coefficients to dimensional forces and moments."
+        },
+        {
+          "mnemonic": "Half the gap, not the gap: engine arm = half the engine separation",
+          "concept": "Using half the spanwise distance between engines as the lever arm from the centerline",
+          "effectiveness": "medium",
+          "context": "Use whenever a problem gives distance between engines on a symmetric twin."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "How do you convert a yawing moment coefficient $C_n$ into dimensional yawing moment $N$ for an aircraft?",
+          "back": "Use $N = C_n \\, q \\, S \\, b$, where $q = \\tfrac{1}{2} \\rho V^2$, $S$ is wing reference area, and $b$ is wingspan (yaw reference length).",
+          "difficulty": "easy",
+          "time_limit_seconds": 40
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "In a symmetric twin-engine aircraft, if the spanwise distance between engines is 12 m, what is the lateral distance of each engine from the centerline?",
+          "back": "Each engine is 6 m from the centerline (half of the distance between engines).",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "application",
+          "front": "A twin-engine aircraft has one engine failed. Explain qualitatively how the rudder is used to maintain zero sideslip.",
+          "back": "The operating engine produces a yawing moment about the CG toward the dead engine. The pilot deflects the rudder so that it generates an equal and opposite yawing moment, aligning the nose with the flight path and maintaining zero sideslip.",
+          "difficulty": "medium",
+          "time_limit_seconds": 60
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "Why must you check whether $C_{n_{\\delta_r}}$ is given per degree or per radian before using it?",
+          "back": "Because $\\delta_r$ must be in the same angular unit as the derivative. If $C_{n_{\\delta_r}}$ is per degree and you use radians (or vice versa) without conversion, the computed moment and required deflection will be off by a factor of about 57.3.",
+          "difficulty": "medium",
+          "time_limit_seconds": 50
+        },
+        {
+          "card_type": "formula_recall",
+          "front": "Write the formula for required rudder deflection $\\delta_r$ to balance an engine-out yawing moment $T y_\\text{engine}$.",
+          "back": "$\\delta_r = -\\dfrac{T \\, y_\\text{engine}}{C_{n_{\\delta_r}} \\, q \\, S \\, b}$, with $\\delta_r$ in the same angular units as used in $C_{n_{\\delta_r}}$.",
+          "difficulty": "medium",
+          "time_limit_seconds": 60
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Engine-out control during takeoff and climb in transport aircraft",
+          "industry_example": "For a Boeing 737, certification requires demonstrating that with one engine failed at V1 (decision speed), the aircraft can continue the takeoff while maintaining directional control using rudder alone.",
+          "why_it_matters": "If rudder authority is insufficient, the aircraft may veer off the runway or become uncontrollable after an engine failure, posing severe safety risks."
+        },
+        {
+          "application": "Rudder sizing and vertical tail design in aircraft development",
+          "industry_example": "Designers of regional turboprops like the ATR-72 must ensure that the vertical tail and rudder are large enough to counter the high asymmetric thrust from wing-mounted turboprop engines at low speeds.",
+          "why_it_matters": "Oversizing the tail increases weight and drag, reducing efficiency; undersizing compromises safety and may fail certification."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "Identify it as a straightforward plug-in problem: compute engine moment (T × half separation), compute q, then use $N = C_{n_{\\delta_r}} \\delta_r q S b$ and balance moments. If you can recall these formulas, it is a quick 2–3 minute question.",
+        "guessing_heuristic": "If stuck on the exact formula but you know that higher speed increases rudder effectiveness, expect a moderate deflection (a few degrees, not tens). Eliminate any extreme values if options are given.",
+        "time_management": "Allocate about 2–3 minutes. Do the dynamic pressure and q S b calculation carefully once; avoid redoing arithmetic. If the algebra is clear but arithmetic is long, approximate to one decimal place—GATE usually accepts a small range."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "engine out yaw control twin engine aircraft",
+        "rudder effectiveness Cn_delta_r example",
+        "lateral directional stability Nelson engine failure",
+        "minimum control speed Vmc rudder sizing",
+        "Prof A K Ghosh directional control asymmetric power",
+        "yawing moment coefficient to dimensional moment q S b"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Coefficient-level balance before dimensionalization",
+          "description": "Instead of directly computing dimensional moments, first write the equilibrium in terms of non-dimensional coefficients: $C_{n_\\text{thrust}} + C_{n_{\\delta_r}} \\delta_r = 0$. Compute $C_{n_\\text{thrust}} = N_\\text{thrust} / (q S b)$, then solve $\\delta_r = -C_{n_\\text{thrust}} / C_{n_{\\delta_r}}$. Finally, plug in numbers for $C_{n_\\text{thrust}}$ and $C_{n_{\\delta_r}}$.",
+          "pros_cons": "Pros: Emphasizes the meaning of coefficients and can be generalized to other disturbances. Cons: Adds an extra step (computing $C_{n_\\text{thrust}}$) compared to directly equating dimensional moments.",
+          "when_to_use": "Useful when multiple yawing moment contributions (e.g., sideslip, fin, fuselage) are given in coefficient form and you want a unified coefficient-based balance."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Control Systems": "Engine-out yaw control is a classic disturbance-rejection problem; rudder deflection acts as the control input to cancel a disturbance moment.",
+        "Aircraft Design": "Vertical tail and rudder sizing in preliminary design use these moment-balance equations as constraints, linking stability and control to configuration layout.",
+        "Flight Testing": "Determination of minimum control speed VMC involves flight tests where engine-out yaw behavior and rudder effectiveness are measured and compared with predictions."
+      },
+      "deeper_dive_topics": [
+        "Determination of minimum control speed VMC and its dependence on rudder effectiveness and engine thrust",
+        "Nonlinear rudder effectiveness and saturation at large deflections",
+        "Coupled lateral-directional dynamics (Dutch roll) with asymmetric thrust",
+        "Design trade-offs between vertical tail size, drag, and engine-out controllability"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2021_AE_Q24",
+        "year": 2021,
+        "marks": 1.0,
+        "negative_marks": 0.0,
+        "time_expected": "2-3 minutes",
+        "success_rate_estimate": "80%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Flight Mechanics: Static stability and control",
+        "gate_subsection": "Lateral, directional stability and control; control derivatives and engine-out conditions",
+        "weightage": "8-12%",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "The question nicely integrates control derivatives with a realistic engine-out scenario, directly reflecting the GATE AE emphasis on static stability and control."
+      },
+      "rag_quality": {
+        "relevance_score": 0.9,
+        "chunks_used": 2,
+        "sources_distribution": {
+          "books": 0,
+          "videos": 2
+        },
+        "notes": "RAG chunks 1 and 2 directly discussed engine-out yaw control and provided the exact balance equation between asymmetric thrust moment and rudder-induced yawing moment, including the form $N_\\text{thrust} + N_\\text{rudder} = 0$ and the expression for $\\delta_r$. This was highly relevant and aligned with the solution. Other chunks were about elevator trim, propulsion, range, and crosswind, which were not needed here."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-24T00:00:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Ask for the minimum control speed VMC given maximum rudder deflection and engine thrust, requiring solving for V instead of delta_r.",
+        "Extend the problem to include a nonzero sideslip derivative Cn_beta and ask for both sideslip angle and rudder deflection at equilibrium.",
+        "Include altitude effects by changing air density and ask how required rudder deflection varies with altitude for the same engine-out condition.",
+        "Ask for the required vertical tail area or rudder area given a target maximum engine-out yawing moment and a specified maximum rudder deflection."
+      ]
+    },
+    "question_id": "GATE_2021_AE_Q24",
+    "year": 2021,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "NAT",
+    "question_text": "An aircraft with twin jet engines has the following specifications:\nThrust produced (per engine) = 8000 N\nSpanwise distance between the two engines = 10 m\nWing area = 50 m², Wing span = 10 m\nRudder effectiveness, C_{n_{δr}} = -0.002 /deg\nDensity of air at sea level = 1.225 kg/m³\nThe rudder deflection, in degrees, required to maintain zero sideslip at 100 m/s in steady and level flight at sea level with a non-functional right engine is ________ (round off to two decimal places)."
+  },
+  "tokens_used": 17530,
+  "input_tokens": 11318,
+  "output_tokens": 6212,
+  "cost": 0.07626749999999999,
+  "time_seconds": 58.02668809890747
+}
