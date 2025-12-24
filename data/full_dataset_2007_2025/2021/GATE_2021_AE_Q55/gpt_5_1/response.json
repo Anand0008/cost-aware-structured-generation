@@ -1,0 +1,396 @@
+{
+  "model_name": "gpt_5_1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "text_only",
+      "combined_type": "numerical_calculation_text_only",
+      "weight_strategy": "NUMERICAL_WEIGHTED",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "This is a numerical calculation problem involving aircraft stability. It requires using multiple given parameters and formulas related to lift curve slopes, areas, and distances to calculate the pitching moment coefficient. It involves multiple steps and integration of concepts, making it a medium-hard problem.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "-0.024 \\text{ per deg (within the key range -0.025 to -0.023)}",
+        "is_correct": true,
+        "confidence": 0.97,
+        "confidence_type": "single_model",
+        "reasoning": "We need the slope of pitching-moment coefficient with respect to wing-body angle of attack, including wing-body and tail contributions. From Anderson and the RAG chunks, for a conventional tail-aft configuration (no elevator deflection), the pitching-moment coefficient about CG can be written as:\n\n$C_{m,cg} = C_{m,ac,wb} + C_{L,wb}(h - h_{ac,wb}) - V_H C_{L,t}$.\n\nDifferentiating with respect to $\\alpha_{wb}$ and using $C_{L,wb} = a_{wb}\\,\\alpha_{wb}$ and $C_{L,t} = a_t(\\alpha_{wb} - \\epsilon)$ with $\\epsilon = (d\\epsilon/d\\alpha)\\,\\alpha_{wb}$ gives:\n\n$C_{m_\\alpha} = \\dfrac{\\partial C_{m,cg}}{\\partial \\alpha_{wb}} = a_{wb}(h - h_{ac,wb}) - V_H a_t(1 - d\\epsilon/d\\alpha)$.\n\nGiven data:\n- $a_{wb} = 0.1$/deg\n- $a_t = 0.068$/deg\n- $S_t = 80\\,\\text{m}^2$, $S = 350\\,\\text{m}^2$\n- $\\bar{l}_t = 28\\,\\text{m}$, $\\bar{c} = 9\\,\\text{m}$\n- $\\epsilon = 0.4\\alpha \\Rightarrow d\\epsilon/d\\alpha = 0.4$\n- $x_{ac}/\\bar{c} = 0.25$, $x_{cg}/\\bar{c} = 0.30$ so $h - h_{ac,wb} = 0.30 - 0.25 = 0.05$.\n\nTail volume ratio:\n$V_H = \\dfrac{l_t S_t}{\\bar{c} S} = \\dfrac{28 \\times 80}{9 \\times 350} = \\dfrac{2240}{3150} \\approx 0.7111$.\n\nNow compute:\n1) Wing-body contribution:\n$a_{wb}(h - h_{ac,wb}) = 0.1 \\times 0.05 = 0.005$/deg.\n\n2) Tail contribution:\n$V_H a_t (1 - d\\epsilon/d\\alpha) = 0.7111 \\times 0.068 \\times (1 - 0.4)$\n$= 0.7111 \\times 0.068 \\times 0.6$\n$= 0.7111 \\times 0.0408 \\approx 0.0290$/deg.\n\nTail gives a stabilizing (nose-down) moment, so it appears with a negative sign in $C_{m_\\alpha}$:\n\n$C_{m_\\alpha} = 0.005 - 0.0290 \\approx -0.024$/deg.\n\nThis lies within the official answer range of -0.025 to -0.023, confirming the key."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Step 1: Identify that the question asks for the slope of pitching-moment coefficient with respect to angle of attack, i.e., longitudinal static stability derivative $C_{m_\\alpha}$ for a tail-aft airplane.",
+          "Step 2: Recall the standard expression for $C_{m,cg}$ of a wing-body plus tail and then differentiate with respect to $\\alpha_{wb}$ to obtain $C_{m_\\alpha}$.",
+          "Step 3: Compute the geometric tail volume ratio $V_H = \\dfrac{l_t S_t}{\\bar{c} S}$ from the given geometry.",
+          "Step 4: Compute the non-dimensional CG offset from the wing-body aerodynamic center, $h - h_{ac,wb} = x_{cg}/\\bar{c} - x_{ac}/\\bar{c}$. Use the given lift-curve slopes and downwash derivative.",
+          "Step 5: Evaluate the wing-body term $a_{wb}(h - h_{ac,wb})$ and the tail term $V_H a_t (1 - d\\epsilon/d\\alpha)$ numerically, taking care of the sign convention.",
+          "Step 6: Combine the contributions to obtain $C_{m_\\alpha} = a_{wb}(h - h_{ac,wb}) - V_H a_t(1 - d\\epsilon/d\\alpha)$ and round to three decimal places."
+        ],
+        "formulas_used": [
+          "$V_H = \\dfrac{l_t S_t}{\\bar{c} S}$",
+          "$h = \\dfrac{x_{cg}}{\\bar{c}},\\; h_{ac,wb} = \\dfrac{x_{ac}}{\\bar{c}}$",
+          "$C_{m,cg} = C_{m,ac,wb} + C_{L,wb}(h - h_{ac,wb}) - V_H C_{L,t}$",
+          "$C_{L,wb} = a_{wb} \\, \\alpha_{wb}$",
+          "$C_{L,t} = a_t(\\alpha_{wb} - \\epsilon)$",
+          "$\\epsilon = \\left(\\dfrac{d\\epsilon}{d\\alpha}\\right) \\alpha_{wb}$",
+          "$C_{m_\\alpha} = \\dfrac{\\partial C_{m,cg}}{\\partial \\alpha_{wb}} = a_{wb}(h - h_{ac,wb}) - V_H a_t(1 - d\\epsilon/d\\alpha)$"
+        ],
+        "estimated_time_minutes": 3
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Flight Mechanics",
+          "confidence": 0.98
+        },
+        "topic": {
+          "name": "Longitudinal static stability and control derivatives",
+          "syllabus_ref": "Flight Mechanics -> Static stability and control -> Longitudinal stability, neutral point, control derivatives"
+        },
+        "concepts": [
+          {
+            "name": "Longitudinal static stability derivative $C_{m_\\alpha}$",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Tail volume ratio $V_H$",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Downwash and its effect on tail lift",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Lift-curve slope of wing and tail",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "CG and aerodynamic center locations",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Understanding of pitching moment coefficient and sign convention (nose-up positive, nose-down negative)",
+          "Concept of lift-curve slope $a = \\partial C_L / \\partial \\alpha$ for wing and tail",
+          "Definition and use of tail volume ratio $V_H$ in longitudinal stability",
+          "Concept of aerodynamic center and center of gravity locations along the chord",
+          "Effect of downwash on tail angle of attack and tail lift"
+        ],
+        "helpful": [
+          "Basic derivation of neutral point and static margin for conventional aircraft",
+          "Familiarity with Anderson's longitudinal stability equations for wing-body-tail configurations"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Concept of pitching moment about center of gravity",
+            "requires: Lift-curve slopes and tail volume ratio",
+            "enables: Calculation of static margin and neutral point",
+            "enables: Preliminary longitudinal stability sizing of tail surfaces"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Medium",
+        "score": 5,
+        "complexity_breakdown": {
+          "conceptual": 6,
+          "mathematical": 4,
+          "problem_solving": 5
+        },
+        "estimated_solve_time_seconds": 150,
+        "expected_accuracy_percent": 60,
+        "difficulty_factors": [
+          "Requires recalling the correct combined wing-body-tail pitching moment expression",
+          "Needs careful handling of sign conventions for stabilizing (tail) vs destabilizing (wing) terms",
+          "Involves using downwash derivative correctly in the tail contribution"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Introduction to Flight",
+          "author": "John D. Anderson Jr.",
+          "chapter_number": "7",
+          "chapter_title": "Principles of Stability and Control",
+          "section": "7.7-7.8",
+          "page_range": "approx. 430-450",
+          "complexity": "intermediate",
+          "relevance_score": 0.96,
+          "source": "rag_retrieval",
+          "text_snippet": "The tail contribution to the pitching moment coefficient is $C_{M,cgt} = -V_H C_{L,t}$ and, including wing-body and CG offset, $C_{M,cg} = C_{M,acwb} + a\\alpha(h - h_{acwb}) - V_H a_t(1 - d\\epsilon/d\\alpha)\\alpha + V_H a_t(i_t + \\epsilon_0)$."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. E.G. Tulapurkara (NPTEL)",
+          "timestamp_start": "00:20:00",
+          "timestamp_end": "00:40:00",
+          "video_url": "https://www.youtube.com/watch?v=Q0v3bXQnqf4",
+          "book_reference": "Anderson - Introduction to Flight, Chapter 7",
+          "topic_covered": "Longitudinal static stability, neutral point, and tail contribution to pitching moment",
+          "relevance_score": 0.9,
+          "source": "model_consensus"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Direct Formula Application",
+        "total_steps": 6,
+        "solution_path": "Recall longitudinal stability formula for wing-body-tail -> Differentiate to get Cm_alpha -> Compute tail volume ratio and CG offset -> Plug numerical values -> Combine wing and tail contributions -> Round result",
+        "key_insights": [
+          "The stabilizing tail contribution appears with a negative sign in $C_{m_\\alpha}$ because tail lift produces a nose-down moment.",
+          "Downwash reduces the effective angle of attack at the tail, so only $(1 - d\\epsilon/d\\alpha)$ of the wing-body angle-of-attack change is seen by the tail.",
+          "The CG being ahead of the wing-body aerodynamic center ($h > h_{ac}$) gives a destabilizing positive contribution to $C_{m_\\alpha}$."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$V_H = \\dfrac{l_t S_t}{\\bar{c} S}$",
+          "name": "Horizontal tail volume ratio",
+          "conditions": "Conventional tail-aft configuration, using mean aerodynamic chord and planform areas",
+          "type": "equation",
+          "relevance": "Core geometric parameter that scales the tail contribution to pitching moment."
+        },
+        {
+          "formula": "$C_{m,cg} = C_{m,ac,wb} + C_{L,wb}(h - h_{ac,wb}) - V_H C_{L,t}$",
+          "name": "Pitching moment coefficient about CG for wing-body-tail",
+          "conditions": "Small angles, linear aerodynamics, tail lift dominates tail drag, negligible tail aerodynamic center moment",
+          "type": "equation",
+          "relevance": "Starting point to derive the slope $C_{m_\\alpha}$."
+        },
+        {
+          "formula": "$C_{L,wb} = a_{wb} \\, \\alpha_{wb}$",
+          "name": "Wing-body lift-curve relation",
+          "conditions": "Linear lift regime, small angles, subsonic flow",
+          "type": "equation",
+          "relevance": "Needed to express how wing-body lift changes with angle of attack."
+        },
+        {
+          "formula": "$C_{m_\\alpha} = a_{wb}(h - h_{ac,wb}) - V_H a_t (1 - d\\epsilon/d\\alpha)$",
+          "name": "Longitudinal static stability derivative for tail-aft configuration",
+          "conditions": "No elevator deflection, small angles, linear downwash relation $\\epsilon = (d\\epsilon/d\\alpha)\\alpha$",
+          "type": "equation",
+          "relevance": "Direct formula used to compute the requested slope."
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Preliminary sizing of the horizontal tail for transport aircraft such as Airbus A320 or Boeing 737 to ensure adequate static stability margin.",
+          "Determining how a CG shift due to fuel burn or payload changes affects the stability and trim of a commercial jet."
+        ],
+        "specific_systems": [
+          "Boeing 777 longitudinal stability analysis during design to meet certification requirements for static margin and control authority.",
+          "Regional jets (e.g., Embraer E-Jets) where tail volume ratio and $C_{m_\\alpha}$ are key in ensuring safe handling qualities."
+        ],
+        "practical_relevance": "Accurate estimation of $C_{m_\\alpha}$ is critical for ensuring that an aircraft naturally tends to return to its trimmed angle of attack after a disturbance. If misestimated, the aircraft could be marginally stable or unstable, leading to unsafe handling and certification issues."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Using $C_{m_\\alpha} = -V_H a_t$ directly and ignoring the $(1 - d\\epsilon/d\\alpha)$ factor from downwash.",
+          "why_students_make_it": "Students remember a simplified formula and forget that the tail does not see the full change in wing angle of attack due to downwash.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Always write $\\alpha_t = \\alpha_{wb} - \\epsilon$ and then differentiate, so you automatically get the $(1 - d\\epsilon/d\\alpha)$ term.",
+          "consequence": "Overestimates the stabilizing effect of the tail, giving a more negative $C_{m_\\alpha}$ than correct."
+        },
+        {
+          "mistake": "Taking $h - h_{ac,wb} = 0.25 - 0.30$ instead of $0.30 - 0.25$, thus reversing the sign of the wing-body contribution.",
+          "why_students_make_it": "Confusion about whether to subtract CG from AC or AC from CG.",
+          "type": "Sign Error",
+          "severity": "Medium",
+          "frequency": "common",
+          "how_to_avoid": "Memorize the form $C_{m,cg} = C_{m,ac} + C_L(h - h_{ac})$ and explicitly write $h = x_{cg}/c$, $h_{ac} = x_{ac}/c$ before substituting.",
+          "consequence": "Changes the sign of the wing-body term, possibly flipping the overall stability assessment."
+        },
+        {
+          "mistake": "Forgetting the minus sign in the tail contribution and writing $+ V_H a_t(1 - d\\epsilon/d\\alpha)$ in $C_{m_\\alpha}$.",
+          "why_students_make_it": "They know the tail is stabilizing but lose track of sign conventions when differentiating.",
+          "type": "Sign Error",
+          "severity": "High",
+          "frequency": "occasional",
+          "how_to_avoid": "Physically reason: a positive increase in $\\alpha$ increases tail downforce, which is nose-down (negative moment). So the tail term must reduce $C_{m}$, i.e., appear with a negative sign.",
+          "consequence": "Predicts destabilizing tail effect, giving a positive $C_{m_\\alpha}$ and implying instability."
+        },
+        {
+          "mistake": "Computing tail volume ratio $V_H$ incorrectly, e.g., using $S/S_t$ instead of $S_t/S$ or forgetting to divide by $\\bar{c}$.",
+          "why_students_make_it": "Mixing up the formula due to similar-looking ratios in stability theory.",
+          "type": "Calculation",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Remember the physical meaning: $V_H$ scales with tail area and tail arm, and inversely with wing area and chord: $V_H = l_t S_t / (\\bar{c} S)$.",
+          "consequence": "Wrong magnitude of tail contribution, leading to incorrect $C_{m_\\alpha}$."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "Cm-alpha = Wing shift MINUS Tail help",
+          "concept": "Sign structure of $C_{m_\\alpha} = a_{wb}(h - h_{ac}) - V_H a_t(1 - d\\epsilon/d\\alpha)$",
+          "effectiveness": "high",
+          "context": "Use when recalling which term is positive and which is negative in the longitudinal stability derivative."
+        },
+        {
+          "mnemonic": "VH: Volume = l times tail area over c times wing area",
+          "concept": "Formula for tail volume ratio $V_H = l_t S_t / (\\bar{c} S)$",
+          "effectiveness": "medium",
+          "context": "Helpful during quick formula recall in exams."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "Write the expression for the horizontal tail volume ratio $V_H$ for a conventional tail-aft airplane.",
+          "back": "$V_H = \\dfrac{l_t S_t}{\\bar{c} S}$, where $l_t$ is tail arm, $S_t$ tail area, $\\bar{c}$ wing mean aerodynamic chord, and $S$ wing area.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "Physically, why does the tail contribution appear with a negative sign in $C_{m_\\alpha}$ for a stable tail-aft aircraft?",
+          "back": "An increase in $\\alpha$ increases tail downforce (negative lift), creating a nose-down (negative) pitching moment. This opposes the disturbance, so the tail term reduces $C_m$ with increasing $\\alpha$, hence a negative sign.",
+          "difficulty": "medium",
+          "time_limit_seconds": 45
+        },
+        {
+          "card_type": "formula_recall",
+          "front": "Give the formula for $C_{m_\\alpha}$ of a wing-body-tail system (no elevator deflection) including downwash.",
+          "back": "$C_{m_\\alpha} = a_{wb}(h - h_{ac,wb}) - V_H a_t(1 - d\\epsilon/d\\alpha)$, with $a_{wb}$ and $a_t$ in consistent units.",
+          "difficulty": "hard",
+          "time_limit_seconds": 60
+        },
+        {
+          "card_type": "application",
+          "front": "If $d\\epsilon/d\\alpha$ increases, what happens to the magnitude of the stabilizing tail contribution to $C_{m_\\alpha}$ and why?",
+          "back": "The stabilizing tail contribution $-V_H a_t(1 - d\\epsilon/d\\alpha)$ decreases in magnitude because the tail sees less change in effective angle of attack as downwash increases, reducing its ability to generate restoring moment.",
+          "difficulty": "medium",
+          "time_limit_seconds": 60
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "In $C_{m,cg} = C_{m,ac} + C_L(h - h_{ac})$, which is $h$ and which is $h_{ac}$ in terms of $x/c$?",
+          "back": "$h = x_{cg}/c$ is the CG location as a fraction of chord, and $h_{ac} = x_{ac}/c$ is the aerodynamic center location as a fraction of chord. The term is always $(h - h_{ac})$.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Sizing the horizontal tail of a commercial jet for adequate static stability and trim capability.",
+          "industry_example": "During the design of an Airbus A320, engineers compute $C_{m_\\alpha}$ for various CG positions (forward and aft limits) to ensure the aircraft remains statically stable and controllable throughout the flight envelope.",
+          "why_it_matters": "If $C_{m_\\alpha}$ is not sufficiently negative, the aircraft may feel 'twitchy' or even unstable, making it difficult or unsafe to fly and potentially failing certification."
+        },
+        {
+          "application": "Assessing the effect of payload and fuel distribution on aircraft stability.",
+          "industry_example": "Airlines use loading manuals that restrict passenger and cargo placement so that the CG stays within a range where $C_{m_\\alpha}$ remains acceptably negative for aircraft like the Boeing 737.",
+          "why_it_matters": "Improper loading can move the CG too far aft, reducing stability and making stall recovery more difficult."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "Scan for given lift-curve slopes, areas, tail arm, and CG/AC locations. If you recognize the standard $C_{m_\\alpha}$ formula, this is a quick plug-in calculation with basic arithmetic.",
+        "guessing_heuristic": "If stuck on signs, remember that for a stable tail-aft aircraft $C_{m_\\alpha}$ must be negative and typically small in magnitude (order of -0.01 to -0.1 per deg). Eliminate positive or very large-magnitude options.",
+        "time_management": "Allocate about 2–3 minutes: 1 minute to recall/write the formula, 1 minute to compute $V_H$ and $h - h_{ac}$, and 1 minute to plug numbers and check signs."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "longitudinal static stability Cm_alpha",
+        "tail volume ratio VH Anderson",
+        "downwash effect on tail lift",
+        "neutral point and static margin aircraft",
+        "wing body tail pitching moment coefficient",
+        "GATE AE longitudinal stability problems",
+        "Anderson Introduction to Flight Chapter 7 stability"
+      ],
+      "alternative_methods": [
+        {
+          "name": "First-principles moment summation about CG",
+          "description": "Instead of using the compact formula, write the lift forces on wing-body and tail explicitly, include their moment arms about CG, and sum moments. Express $L_{wb}$ and $L_t$ in terms of $C_L$ and dynamic pressure, then non-dimensionalize by $q S \\bar{c}$ to obtain $C_m$. Differentiate this expression with respect to $\\alpha_{wb}$ to get $C_{m_\\alpha}$.",
+          "pros_cons": "Pros: Builds deeper physical understanding and clarifies sign conventions. Cons: More algebraic steps, slower in an exam setting.",
+          "when_to_use": "Useful when deriving formulas for the first time or when you are unsure about the sign of each term."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Aerodynamics": "Uses lift-curve slopes and downwash, which are derived from wing aerodynamics and lifting-line theory.",
+        "Control Systems": "The static stability derivative $C_{m_\\alpha}$ appears in the linearized longitudinal dynamics model and influences eigenvalues and control design.",
+        "Aircraft Design": "Tail volume ratio and $C_{m_\\alpha}$ are central in conceptual and preliminary design sizing of tail surfaces.",
+        "Space Dynamics": "Similar stability derivative concepts apply to reentry vehicles and launch vehicles in atmospheric flight phases."
+      },
+      "deeper_dive_topics": [
+        "Derivation of downwash gradient $d\\epsilon/d\\alpha$ using lifting-line theory",
+        "Neutral point calculation and static margin for multi-surface configurations",
+        "Effect of Mach number and compressibility on lift-curve slope and stability derivatives",
+        "Nonlinear longitudinal stability and post-stall behavior"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2021_AE_Q55",
+        "year": 2021,
+        "marks": 2.0,
+        "negative_marks": 0.0,
+        "time_expected": "2-3 minutes",
+        "success_rate_estimate": "60%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Flight Mechanics: Static and dynamic stability and control",
+        "gate_subsection": "Longitudinal static stability, control derivatives, neutral point and static margin",
+        "weightage": "10-15%",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "The question is well-aligned with the GATE AE syllabus, testing both conceptual understanding of longitudinal stability and the ability to perform a concise numerical calculation using standard design formulas."
+      },
+      "rag_quality": {
+        "relevance_score": 0.9,
+        "chunks_used": 6,
+        "sources_distribution": {
+          "books": 6,
+          "videos": 0
+        },
+        "notes": "RAG provided Anderson-based derivations for tail contribution to pitching moment, definition of tail volume ratio, and an almost identical worked example for total pitching moment including downwash. This directly supported recalling the correct $C_{m,cg}$ expression and its derivative. No propulsion or unrelated content; all chunks were relevant to longitudinal stability."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-24T00:00:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Ask for the neutral point location using the same data and then compute the static margin for a given CG.",
+        "Include elevator deflection and ask for the control derivative $C_{m_{\\delta_e}}$ or trim elevator angle for a given $C_L$.",
+        "Modify downwash relation or tail arm and ask how $C_{m_\\alpha}$ and static margin change qualitatively and quantitatively.",
+        "Consider a canard configuration and ask students to derive and compute the corresponding $C_{m_\\alpha}$ expression."
+      ]
+    },
+    "question_id": "GATE_2021_AE_Q55",
+    "year": 2021,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "NAT",
+    "question_text": "Consider a jet transport airplane with the following specifications:\nLift curve slope for wing-body ∂C_{L_{wb}}/∂α_{wb} = 0.1 /deg\nLift curve slope for tail ∂C_{L_t}//∂α_t = 0.068 /deg\nTail area S_t = 80 m²\nWing area S = 350 m²\nDistance between mean aerodynamic centers of tail and wing-body l̅_t = 28 m\nMean aerodynamic chord c̅ = 9 m\nDownwash ε = 0.4α\nAxial location of the wing-body mean aerodynamic center x_{ac}/c̅ = 0.25\nAxial location of the center of gravity x_{cg}/c̅ = 0.3\nAll axial locations are with respect to the leading edge of the root chord and along the body x-axis. Ignore propulsive effects.\nThe pitching-moment-coefficient curve slope (C_{m_α}) is ________ /deg (round off to three decimal places)."
+  },
+  "tokens_used": 15497,
+  "input_tokens": 9285,
+  "output_tokens": 6212,
+  "cost": 0.07372625,
+  "time_seconds": 74.53075242042542
+}
