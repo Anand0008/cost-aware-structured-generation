@@ -1,0 +1,383 @@
+{
+  "model_name": "deepseek_r1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "image_based",
+      "combined_type": "numerical_calculation_image_based",
+      "weight_strategy": "MATH_IMAGE_HYBRID",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "This is a numerical calculation problem involving compressible flow through a nozzle. It requires understanding of Prandtl-Meyer expansion waves, isentropic relations, and how reservoir pressure affects the exit conditions. The image is essential for understanding the wave pattern, and the problem requires multiple steps to solve, making it a difficulty score of 7.",
+      "difficulty_score": 7,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": true,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "-50% (magnitude 50%)",
+        "is_correct": true,
+        "confidence": 0.98,
+        "confidence_type": "single_model",
+        "reasoning": "The nozzle is designed for exit Mach 2.3. Expansion waves indicate underexpansion: exit pressure > ambient pressure (1 bar). For perfect expansion (no waves), exit pressure must equal ambient pressure. Using isentropic relation with γ=1.4, p_exit/p0 = (1+0.2*M^2)^(-3.5). For M=2.3, p_exit/p0 ≈ 0.07993. Setting p_exit=1 bar gives required p0 ≈ 12.51 bar. Initial p0=25 bar, so percentage change = ((12.51-25)/25)*100 ≈ -49.96%, matching answer key range 49 to 51 or -51 to -49."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Step 1: Identify the condition for no waves: Perfect expansion where nozzle exit static pressure (p_e) equals ambient pressure (p_amb = 1 bar).",
+          "Step 2: Recognize that for a fixed nozzle geometry (designed for M=2.3), the exit Mach number remains M_e=2.3 under isentropic supersonic flow, regardless of reservoir pressure changes (as long as flow is shock-free and choked).",
+          "Step 3: Apply isentropic relation for pressure: p_e/p0 = (1 + ((γ-1)/2) * M_e^2)^(-γ/(γ-1)), with γ=1.4, M_e=2.3.",
+          "Step 4: Compute p_e/p0: (1 + 0.2*(2.3^2))^(-3.5) = (1+0.2*5.29)^(-3.5) = (2.058)^(-3.5). Calculate (2.058)^3.5 ≈ 12.51, so p_e/p0 ≈ 1/12.51 ≈ 0.07993.",
+          "Step 5: For perfect expansion, p_e = 1 bar, so required reservoir pressure p0_req = p_e / (p_e/p0) = 1 bar / 0.07993 ≈ 12.51 bar.",
+          "Step 6: Compute percentage change from initial p0_initial=25 bar: % change = ((p0_req - p0_initial) / p0_initial) * 100 = ((12.51 - 25)/25)*100 ≈ -49.96%.",
+          "Step 7: Interpret: A decrease of about 50% in reservoir pressure eliminates expansion waves."
+        ],
+        "formulas_used": [
+          "$\\dfrac{p}{p_0} = \\left(1+\\dfrac{\\gamma-1}{2}M^2\\right)^{-\\frac{\\gamma}{\\gamma-1}}$",
+          "$\\% \\text{ change} = \\dfrac{p_{0,\\text{new}} - p_{0,\\text{initial}}}{p_{0,\\text{initial}}} \\times 100$"
+        ],
+        "estimated_time_minutes": 4
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Aerodynamics",
+          "confidence": 0.9
+        },
+        "topic": {
+          "name": "Compressible Flow",
+          "syllabus_ref": "Section 2: Aerodynamics -> Compressible Flow"
+        },
+        "concepts": [
+          {
+            "name": "Isentropic Flow Relations",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Nozzle Flow (Convergent-Divergent)",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Perfect Expansion vs Underexpansion",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Prandtl-Meyer Expansion Waves",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Isentropic flow relations for pressure, temperature, density",
+          "Concept of stagnation (reservoir) conditions",
+          "Nozzle operation: choked flow, area-Mach number relation"
+        ],
+        "helpful": [
+          "Prandtl-Meyer function and expansion fans",
+          "Method of Characteristics for nozzle design"
+        ],
+        "dependency_tree": {
+          "Perfect Expansion Condition": [
+            "requires: Isentropic pressure ratio formula",
+            "requires: Nozzle exit Mach number fixed by area ratio",
+            "enables: Calculation of required reservoir pressure",
+            "enables: Understanding of wave elimination in supersonic nozzles"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Medium",
+        "score": 6,
+        "complexity_breakdown": {
+          "conceptual": 7,
+          "mathematical": 5,
+          "problem_solving": 6
+        },
+        "estimated_solve_time_seconds": 180,
+        "expected_accuracy_percent": 65,
+        "difficulty_factors": [
+          "Interpreting image data: must recognize that exit temperature given is likely ambient, not actual static temperature",
+          "Understanding that exit Mach number remains constant for isentropic flow in fixed geometry",
+          "Applying correct isentropic relation for pressure ratio"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Fundamentals of Aerodynamics",
+          "author": "J.D. Anderson",
+          "chapter_number": "10",
+          "chapter_title": "Compressible Flow Through Nozzles, Diffusers, and Wind Tunnels",
+          "section": "10.4 Isentropic Flow Relations",
+          "page_range": "approx. 600-620",
+          "complexity": "intermediate",
+          "relevance_score": 0.9,
+          "source": "model_consensus",
+          "text_snippet": "For isentropic flow, the static to stagnation pressure ratio is given by p/p0 = (1 + (γ-1)/2 * M^2)^(-γ/(γ-1))."
+        },
+        {
+          "source_type": "book",
+          "book": "Gas Dynamics",
+          "author": "E. Rathakrishnan",
+          "chapter_number": "12",
+          "chapter_title": "Method of Characteristics",
+          "section": "12.6",
+          "page_range": "approx. 400-410",
+          "complexity": "advanced",
+          "relevance_score": 0.7,
+          "source": "rag_retrieval",
+          "text_snippet": "Worked example on underexpanded nozzle exit flow using Prandtl-Meyer expansion."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. T.M. Muruganandam",
+          "timestamp_start": "00:18:46",
+          "timestamp_end": "00:29:29",
+          "video_url": "https://www.youtube.com/watch?v=zNc0OzQnyeM",
+          "book_reference": "Anderson, Fundamentals of Aerodynamics",
+          "topic_covered": "Supersonic Flow Expansion at a Sharp Corner and Property Calculation",
+          "relevance_score": 0.8,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Direct Formula Application",
+        "total_steps": 7,
+        "solution_path": "Perfect Expansion Condition → Isentropic Pressure Ratio → Solve for New Reservoir Pressure → Compute Percentage Change",
+        "key_insights": [
+          "Exit Mach number is fixed by nozzle area ratio, not reservoir pressure, for isentropic supersonic flow.",
+          "Expansion waves appear due to pressure mismatch; elimination requires p_exit = p_ambient."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$\\dfrac{p}{p_0} = \\left(1+\\dfrac{\\gamma-1}{2}M^2\\right)^{-\\frac{\\gamma}{\\gamma-1}}$",
+          "name": "Isentropic Pressure Ratio",
+          "conditions": "Isentropic, calorically perfect gas, constant γ",
+          "type": "equation",
+          "relevance": "Core formula to relate exit static pressure to reservoir pressure for given Mach number."
+        },
+        {
+          "formula": "$\\%\\Delta = \\dfrac{p_{0,\\text{new}} - p_{0,\\text{old}}}{p_{0,\\text{old}}} \\times 100$",
+          "name": "Percentage Change",
+          "conditions": "General formula for relative change",
+          "type": "equation",
+          "relevance": "Computes the required percentage change in reservoir pressure."
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Rocket nozzle design: Adjusting chamber pressure to match exit pressure with ambient for optimal thrust.",
+          "Supersonic wind tunnels: Varying reservoir pressure to achieve shock-free flow in test section."
+        ],
+        "specific_systems": [
+          "Space Shuttle Main Engine (SSME) nozzle",
+          "Ludwieg tube wind tunnels"
+        ],
+        "practical_relevance": "Prevents performance loss due to waves/shocks, ensures uniform flow in test sections, maximizes thrust efficiency."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Using exit temperature Te=300 K in isentropic relations (it is ambient temperature, not actual exit static temperature).",
+          "why_students_make_it": "Misinterpreting the image labels; assuming all given numbers are for the flow itself.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Remember: For isentropic flow, static temperature at exit is T0/(1+0.2*M^2). Compute to check inconsistency.",
+          "consequence": "Incorrect p_exit/p0 ratio, leading to wrong reservoir pressure."
+        },
+        {
+          "mistake": "Assuming exit Mach number changes with reservoir pressure for a fixed nozzle.",
+          "why_students_make_it": "Confusion with variable geometry or subsonic flow behavior.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "occasional",
+          "how_to_avoid": "Recall: For choked supersonic flow in a fixed C-D nozzle, exit Mach number is determined by area ratio A_exit/A_throat, invariant to reservoir pressure (as long as flow remains isentropic and supersonic).",
+          "consequence": "Incorrect p_exit/p0 ratio and wrong percentage change."
+        },
+        {
+          "mistake": "Calculating percentage change as (25-12.5)/12.5*100 ≈ 100% instead of (12.5-25)/25*100 ≈ -50%.",
+          "why_students_make_it": "Mixing up reference value (initial vs final) for denominator.",
+          "type": "Calculation",
+          "severity": "Medium",
+          "frequency": "common",
+          "how_to_avoid": "Always use initial value as reference: % change = (new - old)/old * 100.",
+          "consequence": "Sign and magnitude error; answer off by factor of 2."
+        },
+        {
+          "mistake": "Forgetting that expansion waves indicate underexpansion (p_exit > p_ambient) and thus require decrease in p0.",
+          "why_students_make_it": "Lack of physical intuition about wave generation.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Link: Expansion waves → underexpansion → p_exit too high → need lower p0 to reduce p_exit.",
+          "consequence": "Wrong sign of percentage change."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "PEMDAS for Nozzles: Perfect Expansion Means p_exit = p_ambient, Determine p0, Apply isentropic, Solve.",
+          "concept": "Steps to solve perfect expansion problems",
+          "effectiveness": "medium",
+          "context": "When given nozzle Mach number and ambient pressure"
+        },
+        {
+          "mnemonic": "UNDER expanded → p_exit OVER ambient → need to UNDER press reservoir.",
+          "concept": "Underexpansion requires decreasing reservoir pressure",
+          "effectiveness": "high",
+          "context": "Remembering direction of change"
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "Write the isentropic pressure ratio formula for a calorically perfect gas (γ=1.4).",
+          "back": "$p/p_0 = (1 + 0.2 M^2)^{-3.5}$",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "What does the presence of Prandtl-Meyer expansion waves at a nozzle exit indicate?",
+          "back": "Underexpansion: exit static pressure > ambient pressure. Flow expands further outside.",
+          "difficulty": "medium",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "application",
+          "front": "For a C-D nozzle fixed geometry designed for M=2.3, if p0=25 bar and p_amb=1 bar, what is p_exit? Is it under/overexpanded?",
+          "back": "p_exit/p0 ≈ 0.07993, so p_exit ≈ 2 bar > 1 bar → underexpanded.",
+          "difficulty": "medium",
+          "time_limit_seconds": 45
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "Why is the given exit temperature Te=300 K likely not the actual static temperature?",
+          "back": "Because for M=2.3 and T0=300 K, isentropic relation gives Te ≈ 146 K. 300 K is probably ambient temperature.",
+          "difficulty": "hard",
+          "time_limit_seconds": 45
+        },
+        {
+          "card_type": "calculation",
+          "front": "Compute percentage change from 25 bar to 12.5 bar (use correct reference).",
+          "back": "(12.5-25)/25 * 100 = -50%.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Rocket Nozzle Optimization",
+          "industry_example": "SpaceX Merlin engine: Chamber pressure adjusted via turbopump to optimize expansion at different altitudes (ambient pressure changes).",
+          "why_it_matters": "Mismatch causes thrust loss and possible flow separation."
+        },
+        {
+          "application": "Supersonic Wind Tunnel Operation",
+          "industry_example": "Aeronautical testing facilities like NASA Ames: Reservoir pressure varied to achieve perfect expansion in test section for clean data.",
+          "why_it_matters": "Waves/shocks disrupt flow uniformity, leading to inaccurate aerodynamic measurements."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "Quickly check: Is it a perfect expansion problem? Use isentropic pressure ratio formula. Should take 3-4 minutes.",
+        "guessing_heuristic": "If unsure, magnitude ~50% is plausible because p_exit/p0 ≈ 0.08, so p0 needed ≈ 12.5 bar from 25 bar is roughly half.",
+        "time_management": "Budget 4 minutes; if stuck, compute p_exit/p0 and guess 50% decrease."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "isentropic flow pressure ratio",
+        "perfect expansion nozzle",
+        "underexpanded nozzle calculation",
+        "Prandtl-Meyer expansion waves",
+        "convergent-divergent nozzle design",
+        "reservoir pressure change percentage",
+        "nozzle exit Mach number fixed area ratio",
+        "GATE AE compressible flow nozzle"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Using Area-Mach Number Relation",
+          "description": "First find area ratio A_exit/A_throat from M=2.3 using A/A* = (1/M)*((1+0.2M^2)/1.2)^3. Then use same area ratio to find Mach number for new reservoir pressure? Not direct, because Mach number remains same for fixed geometry. This method reinforces that M is fixed.",
+          "pros_cons": "Pros: Confirms exit Mach invariance. Cons: Extra steps, not necessary for pressure ratio.",
+          "when_to_use": "When area ratio is given instead of Mach number."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Thermodynamics": "Isentropic process assumptions (reversible, adiabatic), stagnation properties.",
+        "Propulsion": "Nozzle performance, thrust equation, rocket engine design.",
+        "Fluid Mechanics": "Compressible flow equations, choked flow conditions."
+      },
+      "deeper_dive_topics": [
+        "Method of Characteristics for nozzle contour design",
+        "Overexpanded nozzle flow with shocks",
+        "Effect of back pressure variation on nozzle flow patterns",
+        "Real gas effects at high temperatures"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2022_AE_Q55",
+        "year": 2022,
+        "marks": 2.0,
+        "negative_marks": 0.0,
+        "time_expected": "3-4 minutes",
+        "success_rate_estimate": "65%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 2: Aerodynamics",
+        "gate_subsection": "Compressible Flow",
+        "weightage": "Approx 10-15%",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Well-aligned: tests isentropic relations and nozzle flow concepts, key for propulsion and high-speed aerodynamics."
+      },
+      "rag_quality": {
+        "relevance_score": 0.7,
+        "chunks_used": 4,
+        "sources_distribution": {
+          "books": 3,
+          "videos": 1
+        },
+        "notes": "RAG chunks provided relevant background on Prandtl-Meyer expansion, nozzle design, and isentropic flow examples (Chunks 1, 2, 3, 4). However, they did not explicitly cover the perfect expansion condition calculation for reservoir pressure change. The core formula had to be derived from internal knowledge of isentropic relations. RAG was helpful for conceptual context but not for direct solution steps."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-13T10:30:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Vary ambient pressure instead of reservoir pressure to eliminate waves.",
+        "Include temperature change in reservoir (non-adiabatic walls).",
+        "Ask for throat area given mass flow rate and reservoir conditions.",
+        "Combine with oblique shocks if overexpanded."
+      ]
+    },
+    "question_id": "GATE_2022_AE_Q55",
+    "year": 2022,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "NAT",
+    "question_text": "A convergent-divergent nozzle with adiabatic walls is designed for an exit Mach number of 2.3. It is discharging air to atmosphere under the conditions indicated in the figure. Flow through the nozzle is inviscid, the characteristic gas constant for air is 287 J/(kg-K), and gamma = 1.4. When the reservoir pressure is 25 bar (absolute), and temperature is 300 K, Prandtl-Meyer expansion waves appear at the nozzle exit as shown. The minimum percentage change in the reservoir pressure required to eliminate the wave system at the nozzle exit under steady state is _______%."
+  },
+  "tokens_used": 17830,
+  "input_tokens": 10991,
+  "output_tokens": 6839,
+  "cost": 0.02102246,
+  "time_seconds": 188.83253979682922
+}
