@@ -1,0 +1,383 @@
+{
+  "model_name": "deepseek_r1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "text_only",
+      "combined_type": "numerical_calculation_text_only",
+      "weight_strategy": "NUMERICAL_WEIGHTED",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "This is a numerical calculation problem involving energy balance and mass flow rates in a turbojet engine. It requires multiple steps to solve and integrates concepts from thermodynamics and propulsion, making it a medium-hard problem.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "606.86 m/s (within 605 to 607)",
+        "is_correct": true,
+        "confidence": 0.99,
+        "confidence_type": "single_model",
+        "reasoning": "Applying the steady-flow energy equation (First Law of Thermodynamics) to the entire engine control volume accounts for enthalpy, kinetic energy, fuel chemical energy input, and heat loss. The calculation yields V_ex ≈ 606.86 m/s, which falls within the official answer range of 605-607 m/s. Key steps: 1) Compute total energy input per kg of air (including fuel chemical energy). 2) Subtract heat loss. 3) Equate to energy output (enthalpy + kinetic of exhaust gases, scaled by (1+f)). 4) Solve for V_ex. Unit consistency (kJ to J) is critical."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Step 1: Define the control volume around the entire turbojet engine (inlet to nozzle exit). Apply the steady-flow energy equation (First Law) for a reacting system: Energy In = Energy Out + Heat Loss.",
+          "Step 2: Express energy terms per unit mass of air flow (take ṁ_a = 1 kg/s for convenience). Incoming air brings enthalpy (h_in) and kinetic energy (V_in²/2). Fuel adds chemical energy equal to f * Q_f, where f = ṁ_f/ṁ_a. Heat loss Q_loss is given per kg of air.",
+          "Step 3: Outgoing exhaust gases (mass flow ṁ_a + ṁ_f = ṁ_a(1+f)) carry enthalpy (h_ex) and kinetic energy (V_ex²/2).",
+          "Step 4: Write the energy balance: ṁ_a*(h_in + V_in²/2) + ṁ_f*Q_f = (ṁ_a+ṁ_f)*(h_ex + V_ex²/2) + ṁ_a*Q_loss. Divide by ṁ_a: (h_in + V_in²/2) + f*Q_f = (1+f)*(h_ex + V_ex²/2) + Q_loss.",
+          "Step 5: Convert all units to consistent J/kg: h_in=260,000 J/kg, h_ex=912,000 J/kg, Q_f=44,500,000 J/kg, Q_loss=25,000 J/kg, V_in=270 m/s so V_in²/2 = 36,450 J/kg, f=0.019.",
+          "Step 6: Plug values: (260,000 + 36,450) + 0.019*44,500,000 = (1.019)*(912,000 + V_ex²/2) + 25,000 → 1,141,950 = 1.019*(912,000 + V_ex²/2) + 25,000.",
+          "Step 7: Solve: 1,141,950 - 25,000 = 1,116,950 = 1.019*(912,000 + V_ex²/2). Divide by 1.019: 912,000 + V_ex²/2 = 1,116,950 / 1.019 ≈ 1,096,123.65. Then V_ex²/2 = 1,096,123.65 - 912,000 = 184,123.65 → V_ex² = 368,247.3 → V_ex = √368,247.3 ≈ 606.86 m/s."
+        ],
+        "formulas_used": [
+          "$\\dot{m}_a (h_{in} + \\frac{V_{in}^2}{2}) + \\dot{m}_f Q_f = (\\dot{m}_a + \\dot{m}_f)(h_{ex} + \\frac{V_{ex}^2}{2}) + \\dot{m}_a Q_{loss}$",
+          "$f = \\frac{\\dot{m}_f}{\\dot{m}_a}$",
+          "$h_{ex} + \\frac{V_{ex}^2}{2} = \\frac{(h_{in} + \\frac{V_{in}^2}{2}) + f Q_f - Q_{loss}}{1+f}$"
+        ],
+        "estimated_time_minutes": 3
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Propulsion",
+          "confidence": 1.0
+        },
+        "topic": {
+          "name": "Turbojet Performance and Energy Balance",
+          "syllabus_ref": "Section 6 Propulsion -> Combustion and thermochemistry, Cycle analysis"
+        },
+        "concepts": [
+          {
+            "name": "Steady-flow energy equation (First Law)",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Fuel-air ratio",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Heat loss in engines",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Enthalpy and kinetic energy",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "First Law of Thermodynamics for open systems (steady flow)",
+          "Concept of enthalpy and specific heat",
+          "Understanding of fuel heating value and fuel-air ratio"
+        ],
+        "helpful": [
+          "Turbojet engine components and their functions",
+          "Unit conversion (kJ to J, m/s to J/kg)"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: First Law of Thermodynamics",
+            "requires: Definition of enthalpy and kinetic energy",
+            "requires: Fuel-air ratio and heating value",
+            "enables: Thrust calculation from exhaust velocity",
+            "enables: Engine performance analysis with losses"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Medium",
+        "score": 5,
+        "complexity_breakdown": {
+          "conceptual": 4,
+          "mathematical": 6
+        },
+        "estimated_solve_time_seconds": 180,
+        "expected_accuracy_percent": 65,
+        "difficulty_factors": [
+          "Requires careful unit conversion (kJ vs J)",
+          "Must account for heat loss term correctly",
+          "Must use (1+f) factor for exhaust mass flow"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Gas Turbines",
+          "author": "V. Ganesan",
+          "chapter_number": "7",
+          "chapter_title": "Jet Propulsion Cycles and Their Analysis",
+          "section": "Energy balance in turbojet components",
+          "complexity": "intermediate",
+          "relevance_score": 0.7,
+          "source": "rag_retrieval",
+          "text_snippet": "Nozzle efficiency is introduced to account for real-world losses... The jet velocity is calculated from the actual enthalpy drop across the nozzle using the steady-flow energy equation."
+        },
+        {
+          "source_type": "book",
+          "book": "Mechanics and Thermodynamics of Propulsion",
+          "author": "Hill & Peterson",
+          "chapter_number": "4",
+          "chapter_title": "Airbreathing Propulsion Cycle Analysis",
+          "section": "Combustor Energy Balance",
+          "complexity": "intermediate",
+          "relevance_score": 0.8,
+          "source": "model_consensus",
+          "text_snippet": "The fuel-air ratio is determined by applying the steady-state energy equation to the combustor, balancing enthalpy increase with heat released by combustion."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Dr. D.P. Mishra",
+          "timestamp_start": "00:11:31",
+          "timestamp_end": "00:12:41",
+          "video_url": "https://www.youtube.com/watch?v=HhZ_xV-eT5o",
+          "book_reference": "Hill & Peterson",
+          "topic_covered": "Fuel-air ratio calculation for turbojet with burner efficiency",
+          "relevance_score": 0.7,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Dr. D.P. Mishra",
+          "timestamp_start": "00:38:52",
+          "timestamp_end": "00:41:59",
+          "video_url": "https://www.youtube.com/watch?v=UY8bRT98iN0",
+          "book_reference": "Hill & Peterson",
+          "topic_covered": "Fuel-air ratio determination for ideal turbojet",
+          "relevance_score": 0.7,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Direct Formula Application from First Principles",
+        "total_steps": 7,
+        "solution_path": "Energy Balance → Substitute given values with unit conversion → Solve for V_ex",
+        "key_insights": [
+          "The heat loss is per kg of air, not per kg of fuel or exhaust.",
+          "The exhaust mass flow is (1+f) times air mass flow, crucial for energy out."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$\\dot{m}_a h_{in} + \\dot{m}_a \\frac{V_{in}^2}{2} + \\dot{m}_f Q_f = (\\dot{m}_a + \\dot{m}_f) h_{ex} + (\\dot{m}_a + \\dot{m}_f) \\frac{V_{ex}^2}{2} + \\dot{m}_a Q_{loss}$",
+          "name": "Overall Engine Energy Balance",
+          "conditions": "Steady flow, no shaft work, ideal combustion (all chemical energy released), heat loss specified per kg air",
+          "type": "equation",
+          "relevance": "Core governing equation for this problem"
+        },
+        {
+          "formula": "$f = \\frac{\\dot{m}_f}{\\dot{m}_a}$",
+          "name": "Fuel-air ratio",
+          "conditions": "Constant mass flow rates",
+          "type": "definition",
+          "relevance": "Given parameter linking fuel and air flows"
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Performance testing of turbojet engines on test stands",
+          "Estimating exhaust velocity for thrust calculation in aircraft like early jet fighters (e.g., MiG-15, F-86)"
+        ],
+        "specific_systems": [
+          "Turbojet engines in military aircraft and some business jets"
+        ],
+        "practical_relevance": "Accurate exhaust velocity prediction is essential for thrust and specific fuel consumption calculations, impacting aircraft design and performance certification."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Forgetting to multiply the exhaust enthalpy and kinetic energy by (1+f), i.e., using only ṁ_a instead of ṁ_a+ṁ_f.",
+          "why_students_make_it": "Overlooking that the fuel mass adds to the exhaust flow; thinking only air mass exits.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Always remember: what goes in (air + fuel) must come out. Write mass balance: ṁ_out = ṁ_a + ṁ_f.",
+          "consequence": "V_ex will be overestimated significantly (by ~1-2%)."
+        },
+        {
+          "mistake": "Unit inconsistency: using kJ for enthalpies and Q_f but J for kinetic energy (V²/2) without converting all to same unit (J/kg).",
+          "why_students_make_it": "Mixing units because inputs are given in mixed units (kJ and MJ).",
+          "type": "Calculation",
+          "severity": "High",
+          "frequency": "very_common",
+          "how_to_avoid": "Convert all energy terms to consistent units (preferably J/kg) at the beginning. Note: 1 kJ/kg = 1000 J/kg, 1 MJ/kg = 10^6 J/kg.",
+          "consequence": "Answer wrong by orders of magnitude (e.g., 1000x off)."
+        },
+        {
+          "mistake": "Misplacing the heat loss term: adding it to energy input side or subtracting from wrong side.",
+          "why_students_make_it": "Confusion about whether heat loss is an input or output in the energy balance.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Recall: Heat loss is energy leaving the control volume to the surroundings, so it appears on the output side. If you write Energy In = Energy Out, then heat loss is part of Energy Out.",
+          "consequence": "V_ex error of ~10-20 m/s."
+        },
+        {
+          "mistake": "Neglecting the kinetic energy of the incoming air (V_in²/2 term).",
+          "why_students_make_it": "Assuming incoming air is stagnant (test stand condition) but here flight speed is given.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Always include kinetic energy terms unless explicitly stated 'static' or 'stagnation' enthalpies are given. Here, enthalpies are static, so kinetic energy must be added separately.",
+          "consequence": "V_ex underestimated by ~20 m/s."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "CHEF: Control Volume, Heat loss, Energy balance, Fuel-air ratio.",
+          "concept": "Steps for solving turbojet energy balance problems.",
+          "effectiveness": "medium",
+          "context": "When starting a propulsion energy balance question."
+        },
+        {
+          "mnemonic": "In + Fuel = Out + Loss",
+          "concept": "Energy balance structure for engines with heat loss.",
+          "effectiveness": "high",
+          "context": "Quick recall of equation form."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "What is the steady-flow energy equation for a turbojet with heat loss Q_loss (per kg air)?",
+          "back": "$(h_{in} + \\frac{V_{in}^2}{2}) + f Q_f = (1+f)(h_{ex} + \\frac{V_{ex}^2}{2}) + Q_{loss}$, where f = fuel-air ratio.",
+          "difficulty": "medium",
+          "time_limit_seconds": 45
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "Why must exhaust terms be multiplied by (1+f) in the energy balance?",
+          "back": "Because the exhaust mass flow is air mass flow plus fuel mass flow. Fuel burns and adds mass to the flow; conservation of mass requires ṁ_ex = ṁ_a + ṁ_f.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "What is the most common unit mistake in this problem? How to avoid it?",
+          "back": "Mixing kJ and J. Convert all enthalpies and heating values to J/kg (1 kJ/kg = 1000 J/kg, 1 MJ/kg = 1e6 J/kg) before calculation.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "application",
+          "front": "Given: h_in=260 kJ/kg, V_in=270 m/s, f=0.019, Q_f=44.5 MJ/kg, Q_loss=25 kJ/kg, h_ex=912 kJ/kg. What is the first calculation step?",
+          "back": "Convert units: h_in=260,000 J/kg, h_ex=912,000 J/kg, Q_f=44,500,000 J/kg, Q_loss=25,000 J/kg, compute V_in²/2 = 270²/2 = 36,450 J/kg.",
+          "difficulty": "medium",
+          "time_limit_seconds": 60
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Engine testing and performance evaluation",
+          "industry_example": "On a test stand, engineers measure temperatures and pressures to compute thrust and efficiency. Heat loss accounts for cooling and radiation losses.",
+          "why_it_matters": "Accurate performance prediction ensures engine meets design thrust and fuel consumption targets."
+        },
+        {
+          "application": "Aircraft mission analysis",
+          "industry_example": "For a jet aircraft, exhaust velocity directly affects thrust and specific impulse, impacting range and payload.",
+          "why_it_matters": "Optimizing exhaust velocity improves fuel economy and operational cost."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "This is a standard 2-mark NAT: if you know the energy balance formula, it's a straightforward plug-and-chug. Allocate 2-3 minutes.",
+        "guessing_heuristic": "If stuck, guess around 600 m/s (typical turbojet exhaust velocities are 500-700 m/s).",
+        "time_management": "Solve within 3 minutes; if taking longer, note the unit conversions and (1+f) factor."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "turbojet energy balance heat loss",
+        "exhaust velocity calculation first law",
+        "fuel-air ratio enthalpy kinetic energy",
+        "GATE propulsion numerical problems",
+        "steady flow energy equation turbojet",
+        "heat loss per kg air engine",
+        "turbojet performance calculation"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Stagnation Enthalpy Method",
+          "description": "Use stagnation enthalpies (h0 = h + V²/2) directly if given. Here, static enthalpies are given, so compute h0_in and h0_ex from given static values and velocities. Then energy balance: h0_in + f Q_f = (1+f) h0_ex + Q_loss. Solve for V_ex from h0_ex.",
+          "pros_cons": "Pros: Cleaner formulation. Cons: Requires same unit conversions.",
+          "when_to_use": "When stagnation values are not given, compute them as intermediate step."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Thermodynamics": "First Law of Thermodynamics for open systems (steady flow) is the core principle.",
+        "Fluid Mechanics": "Conservation of mass (mass flow rates) and Bernoulli's concept (enthalpy + kinetic energy).",
+        "Combustion": "Fuel heating value and ideal combustion assumption relate to chemical energy release."
+      },
+      "deeper_dive_topics": [
+        "Effect of altitude (changing ambient pressure and temperature) on energy balance.",
+        "Including combustion efficiency (not ideal) and specific heat variation with temperature.",
+        "Extension to turbofan engines: how bypass ratio affects overall energy balance."
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2021_AE_Q43",
+        "year": 2021,
+        "marks": 2.0,
+        "negative_marks": 0.0,
+        "time_expected": "2-3 minutes",
+        "success_rate_estimate": "65%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 6: Propulsion",
+        "gate_subsection": "Combustion and thermochemistry, Cycle analysis",
+        "weightage": "Approx 12-15% of Propulsion section",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Well-aligned with GATE AE syllabus: tests application of thermodynamics to propulsion systems with realistic losses."
+      },
+      "rag_quality": {
+        "relevance_score": 0.6,
+        "chunks_used": 3,
+        "sources_distribution": {
+          "books": 1,
+          "videos": 2
+        },
+        "notes": "RAG chunks (3, 4, 5) provided relevant background on fuel-air ratio calculation and combustor energy balance, which are key components of the overall energy balance. However, none of the chunks explicitly cover the overall engine energy balance with heat loss, nor the inclusion of kinetic energy terms. Thus, internal knowledge was primarily used to construct the solution, with RAG providing supportive context on fuel-air ratio."
+      },
+      "model_meta": {
+        "timestamp": "2025-07-20T10:30:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Vary heat loss per kg of fuel instead of per kg of air.",
+        "Include combustion efficiency less than 1.",
+        "Ask for thrust instead of exhaust velocity, given nozzle exit area.",
+        "Change flight condition (altitude) affecting ambient pressure and temperature."
+      ]
+    },
+    "question_id": "GATE_2021_AE_Q43",
+    "year": 2021,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "NAT",
+    "question_text": "An aircraft with a turbojet engine is flying at 270 m/s. The enthalpy of the incoming air at the intake is 260 kJ/kg and the enthalpy of the exhaust gases at the nozzle exit is 912 kJ/kg. The ratio of mass flow rates of fuel and air is equal to 0.019. The chemical energy (heating value) of fuel is 44.5 MJ/kg and the combustion process is ideal. The total loss of heat from the engine to the ambient is 25 kJ per kg of air. The velocity of the exhaust jet is __________m/s (round off to two decimal places)."
+  },
+  "tokens_used": 18465,
+  "input_tokens": 10244,
+  "output_tokens": 8221,
+  "cost": 0.023638189999999996,
+  "time_seconds": 281.8154547214508
+}
