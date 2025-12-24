@@ -1,0 +1,408 @@
+{
+  "model_name": "deepseek_r1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "image_based",
+      "combined_type": "numerical_calculation_image_based",
+      "weight_strategy": "MATH_IMAGE_HYBRID",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "This is a numerical calculation problem involving bending stress due to wind pressure and yield strength. It requires multiple steps to calculate the bending moment and then relate it to the dimensions of the hollow square pole. It integrates concepts from mechanics of materials and fluid mechanics.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "235 mm",
+        "is_correct": true,
+        "confidence": 0.9,
+        "confidence_type": "single_model",
+        "reasoning": "The wind load on the signboard creates a bending moment at the base of the cantilever pole. The maximum bending stress must not exceed the yield strength. Using the bending stress formula for a hollow square section and solving for the inner dimension d yields approximately 235 mm, which falls within the official answer range of 232-238 mm. The calculation assumes the moment arm is from the base to the centroid of the signboard (pole length + half signboard height = 6.0 m), as per typical engineering practice and hints from RAG context."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Step 1: Identify given data: Signboard area A = 3 m × 1 m = 3 m². Wind pressure q = 7.5 kPa = 7.5 kN/m². Pole outer dimension b = 250 mm = 0.25 m. Pole length L_pole = 5.5 m (from image). Yield strength σ_y = 240 MPa = 240 N/mm². Neglect transverse shear and wind on pole.",
+          "Step 2: Calculate wind force P = q × A = 7.5 kN/m² × 3 m² = 22.5 kN = 22500 N.",
+          "Step 3: Determine the moment arm for bending at the base. The wind force acts at the centroid of the signboard. Assuming the signboard is mounted at the top of the pole and its centroid is at half its height above the attachment, the distance from ground to centroid L = L_pole + (signboard height)/2 = 5.5 m + 0.5 m = 6.0 m = 6000 mm.",
+          "Step 4: Compute bending moment at base M = P × L = 22500 N × 6000 mm = 1.35×10⁸ N·mm.",
+          "Step 5: Write bending stress formula for hollow square section: σ = M × y / I, where y = b/2 = 125 mm, and I = (b⁴ - d⁴)/12. Thus σ = (M × b/2) × 12 / (b⁴ - d⁴) = (6 M b) / (b⁴ - d⁴).",
+          "Step 6: Set σ = σ_y and solve for d: d⁴ = b⁴ - (6 M b)/σ_y.",
+          "Step 7: Substitute values: b⁴ = 250⁴ = 3.90625×10⁹, 6 M b = 6 × 1.35×10⁸ × 250 = 2.025×10¹¹, (6 M b)/σ_y = 2.025×10¹¹ / 240 = 8.4375×10⁸. So d⁴ = 3.90625×10⁹ - 8.4375×10⁸ = 3.0625×10⁹.",
+          "Step 8: Compute d = (3.0625×10⁹)^{1/4} ≈ 235.25 mm. Round to nearest integer: 235 mm."
+        ],
+        "formulas_used": [
+          "$P = q \\times A$",
+          "$M = P \\times L$",
+          "$\\sigma = \\frac{M \\, y}{I}$",
+          "$I = \\frac{b^4 - d^4}{12}$ for hollow square",
+          "$\\sigma = \\frac{6 M b}{b^4 - d^4}$ (combined)"
+        ],
+        "estimated_time_minutes": 5
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Structures",
+          "confidence": 0.95
+        },
+        "topic": {
+          "name": "Beam Bending and Stress Analysis",
+          "syllabus_ref": "Section 4: Structures -> Bending and Shear Stresses"
+        },
+        "concepts": [
+          {
+            "name": "Bending stress in beams",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Wind load conversion to point force",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Section modulus of hollow square section",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Yield strength as design limit",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Bending stress formula: $\\sigma = My/I$",
+          "Moment of inertia for square sections",
+          "Conversion of distributed load to equivalent point load",
+          "Cantilever beam bending moment calculation"
+        ],
+        "helpful": [
+          "Stress transformation principles",
+          "Shear stress distribution in beams"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Statics and equilibrium",
+            "requires: Geometric properties of areas",
+            "enables: Design of structural members under combined loads",
+            "enables: Failure criteria application"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Medium",
+        "score": 6,
+        "complexity_breakdown": {
+          "conceptual": 5,
+          "mathematical": 7,
+          "problem_solving": 6
+        },
+        "estimated_solve_time_seconds": 180,
+        "expected_accuracy_percent": 65,
+        "difficulty_factors": [
+          "Interpreting the image to determine the correct moment arm",
+          "Handling unit conversions consistently (kPa, MPa, mm, m)",
+          "Solving fourth-order equation for d"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Mechanics of Materials",
+          "author": "Beer & Johnston",
+          "chapter_number": "5",
+          "chapter_title": "Analysis and Design of Beams for Bending",
+          "section": "5.4 Design of Prismatic Beams for Bending",
+          "page_range": "325-340",
+          "complexity": "intermediate",
+          "relevance_score": 0.8,
+          "source": "model_consensus",
+          "text_snippet": "The design of a beam is controlled by the absolute maximum value of the bending moment and shear, and the allowable normal and shearing stresses."
+        },
+        {
+          "source_type": "book",
+          "book": "Aircraft Structures for Engineering Students",
+          "author": "Megson, T.H.G.",
+          "chapter_number": "10",
+          "chapter_title": "Combined Loadings",
+          "section": "10.1 Combined bending and torsion",
+          "page_range": "350-360",
+          "complexity": "advanced",
+          "relevance_score": 0.6,
+          "source": "rag_retrieval",
+          "text_snippet": "Wind load on an eccentric surface is a classic example of combined loading leading to bending, torsion, and shear."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. S.K. Bhattacharyya",
+          "timestamp_start": "00:24:14",
+          "timestamp_end": "00:34:57",
+          "video_url": "https://www.youtube.com/watch?v=XWGL23XAoic",
+          "book_reference": "Megson, T.H.G.",
+          "topic_covered": "Combined Stresses in Signboard Post under Wind Load",
+          "relevance_score": 0.7,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. S.K. Bhattacharyya",
+          "timestamp_start": "00:50:38",
+          "timestamp_end": "00:53:38",
+          "video_url": "https://www.youtube.com/watch?v=9Mm5YJkma-0",
+          "book_reference": "Beer & Johnston",
+          "topic_covered": "Sizing a circular pole considering bending and shear stress",
+          "relevance_score": 0.5,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Direct Formula Application",
+        "total_steps": 8,
+        "solution_path": "Wind Force → Bending Moment → Bending Stress Equation → Solve for Inner Dimension",
+        "key_insights": [
+          "The wind load is converted to a point force acting at the centroid of the signboard.",
+          "The critical section is at the base of the cantilever pole.",
+          "Only bending stress is considered; shear and torsion are neglected as per problem statement."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$P = q \\, A$",
+          "name": "Wind Force",
+          "conditions": "Uniform pressure over area A",
+          "type": "equation",
+          "relevance": "Converts distributed wind pressure to equivalent concentrated load"
+        },
+        {
+          "formula": "$M = P \\, L$",
+          "name": "Bending Moment at Base",
+          "conditions": "Cantilever with point load at distance L from fixed end",
+          "type": "equation",
+          "relevance": "Calculates the maximum bending moment"
+        },
+        {
+          "formula": "$\\sigma = \\dfrac{6 M b}{b^4 - d^4}$",
+          "name": "Maximum Bending Stress for Hollow Square Section",
+          "conditions": "Pure bending, symmetric hollow square cross-section, outer dimension b, inner d",
+          "type": "equation",
+          "relevance": "Core formula linking stress to geometry and moment, solved for d"
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Design of street light poles with attached signage",
+          "Support structures for advertising boards",
+          "Masts for antennas and flags"
+        ],
+        "specific_systems": [
+          "Highway sign supports",
+          "Wind turbine tower design (similar principle)"
+        ],
+        "practical_relevance": "Ensuring structural integrity under environmental loads like wind is critical for safety and longevity of outdoor structures."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Using incorrect moment arm (e.g., taking pole length only without accounting for signboard centroid)",
+          "why_students_make_it": "Overlooking that the wind force acts at the centroid, not necessarily at the pole top",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Always sketch the setup and mark the line of action of the resultant force. For a uniformly loaded rectangular area, the resultant acts at the geometric center.",
+          "consequence": "Answer can be off by ~5-10%, possibly outside the range"
+        },
+        {
+          "mistake": "Unit inconsistency (mixing mm, m, kPa, MPa without conversion)",
+          "why_students_make_it": "Rushing and not paying attention to units",
+          "type": "Calculation",
+          "severity": "High",
+          "frequency": "very_common",
+          "how_to_avoid": "Convert all quantities to a consistent system (e.g., N and mm) before plugging into formulas. Note: 1 MPa = 1 N/mm².",
+          "consequence": "Answer wrong by orders of magnitude"
+        },
+        {
+          "mistake": "Using wrong moment of inertia formula (e.g., for solid section or circular section)",
+          "why_students_make_it": "Memorizing only common formulas without adapting to hollow square",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "occasional",
+          "how_to_avoid": "Remember that for a hollow square, I = (outer^4 - inner^4)/12. Derive from first principles if unsure.",
+          "consequence": "Incorrect stress calculation, wrong d"
+        },
+        {
+          "mistake": "Forgetting to take the fourth root when solving d⁴",
+          "why_students_make_it": "Algebraic error after isolating d⁴",
+          "type": "Calculation",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "After computing d⁴, explicitly write d = (d⁴)^{1/4} or take square root twice.",
+          "consequence": "Answer may be d² instead of d, giving much larger value"
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "WIND: Wind force Is at centroid, Note the arm, Design for bending",
+          "concept": "Steps for wind load bending problems",
+          "effectiveness": "medium",
+          "context": "When solving signboard/pole problems"
+        },
+        {
+          "mnemonic": "BEND: Bending stress Equals My over I, No shear, Design inner dimension",
+          "concept": "Key formula and what to neglect",
+          "effectiveness": "medium",
+          "context": "For cantilever bending with hollow square section"
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "What is the bending stress formula for a hollow square beam of outer side b and inner side d under moment M?",
+          "back": "$\\sigma = \\frac{6 M b}{b^4 - d^4}$ (derived from $\\sigma = M y / I$ with $y=b/2$, $I=(b^4-d^4)/12$).",
+          "difficulty": "medium",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "Where does the resultant wind force act on a rectangular signboard?",
+          "back": "At the centroid (geometric center) of the rectangle, assuming uniform pressure.",
+          "difficulty": "easy",
+          "time_limit_seconds": 15
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "What is the most common unit mistake in this problem?",
+          "back": "Mixing mm and m without conversion. Always convert to consistent units (e.g., N and mm) before calculation.",
+          "difficulty": "easy",
+          "time_limit_seconds": 20
+        },
+        {
+          "card_type": "application",
+          "front": "How do you determine the moment arm for bending at the base of a pole supporting a signboard?",
+          "back": "Distance from the fixed base to the line of action of the wind force (centroid of signboard). Typically, if pole length is given to the attachment point, add half the signboard height to get to the centroid.",
+          "difficulty": "hard",
+          "time_limit_seconds": 40
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Design of outdoor advertising billboards",
+          "industry_example": "A 6 m tall hollow square steel pole (250 mm outer) supports a 3m×1.5m sign in a coastal area with high winds. The inner dimension is sized to ensure the bending stress stays below yield.",
+          "why_it_matters": "Under-designed poles can collapse, causing property damage and injuries."
+        },
+        {
+          "application": "Street furniture and lighting poles",
+          "industry_example": "Municipalities specify pole dimensions based on wind load maps. Engineers use similar calculations to ensure safety factors.",
+          "why_it_matters": "Public safety and durability of infrastructure."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "This is a standard bending stress problem. If you know the formula and can manage units, it's straightforward.",
+        "guessing_heuristic": "If stuck, note that d must be less than 250 mm, likely around 230-240 mm from intuition. The answer is an integer in that range.",
+        "time_management": "Budget 3-4 minutes. If you get stuck on the fourth root, use approximation: 250^4 is large, so d will be close to 250."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "hollow square beam bending stress",
+        "wind load on signboard pole",
+        "cantilever pole design",
+        "bending moment due to wind pressure",
+        "yield strength design limit",
+        "moment of inertia hollow square",
+        "GATE structures numerical",
+        "combined stresses bending torsion neglect shear"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Using Section Modulus",
+          "description": "Define section modulus Z = I / y_max. Then σ = M / Z. For hollow square, Z = (b⁴ - d⁴)/(6b). Solve for d.",
+          "pros_cons": "More direct if familiar with section modulus, but same algebra.",
+          "when_to_use": "If you have section modulus formulas memorized."
+        },
+        {
+          "name": "Iterative Numerical Solution",
+          "description": "Guess d, compute stress, compare to allowable, adjust until convergence.",
+          "pros_cons": "Avoids solving fourth-order equation algebraically; good for computer solution. Slower by hand.",
+          "when_to_use": "When algebraic solution is complex or for verification."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Civil Engineering": "Structural design of poles and masts under wind loads is common in civil engineering.",
+        "Mechanical Engineering": "Shaft design under combined loads uses similar stress analysis principles.",
+        "Aerospace Engineering": "Lightweight design of aircraft pylons and supports uses hollow sections for strength-to-weight ratio."
+      },
+      "deeper_dive_topics": [
+        "Effect of torsion if the wind load is not symmetric (eccentricity)",
+        "Dynamic wind loads and fatigue considerations",
+        "Buckling of slender hollow columns under combined bending and compression",
+        "Use of different cross-sections (circular, I-section) for efficiency"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2021_AE_Q52",
+        "year": 2021,
+        "marks": 2.0,
+        "negative_marks": 0.0,
+        "time_expected": "3-4 minutes",
+        "success_rate_estimate": "65%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 4: Structures",
+        "gate_subsection": "Bending and Shear Stresses",
+        "weightage": "Approx 10-12% of Structures",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Well-aligned with core structures syllabus: bending stress, section properties, and design under static loads."
+      },
+      "rag_quality": {
+        "relevance_score": 0.6,
+        "chunks_used": 2,
+        "sources_distribution": {
+          "books": 1,
+          "videos": 1
+        },
+        "notes": "RAG chunks provided examples of wind load on signboard poles, but for circular tubular sections. They gave methodology for converting wind pressure to force and bending moment, and stressed the importance of correct moment arm. However, the cross-section in the question is square hollow, so formulas for moment of inertia had to be adapted from internal knowledge. RAG was partially helpful but not directly applicable for the geometric properties."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-13T10:30:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Include torsion if signboard is offset from pole centerline",
+        "Consider self-weight of pole and signboard",
+        "Add factor of safety and use ultimate strength instead of yield",
+        "Change cross-section to circular hollow and ask for thickness",
+        "Include shear stress check (not neglected) and find d accordingly"
+      ]
+    },
+    "question_id": "GATE_2021_AE_Q52",
+    "year": 2021,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "NAT",
+    "question_text": "A 3 m x 1 m signboard is supported by a vertical hollow pole that is fixed to the ground. The pole has a square cross section with outer dimension 250 mm. The yield strength of the pole material is 240 MPa. To sustain a wind pressure of 7.5 kPa, the dimension d of the pole is _________ mm (round off to nearest integer). (Neglect the effect of transverse shear and load due to wind pressure acting on the pole)"
+  },
+  "tokens_used": 21198,
+  "input_tokens": 11356,
+  "output_tokens": 9842,
+  "cost": 0.02779978,
+  "time_seconds": 352.71365761756897
+}
