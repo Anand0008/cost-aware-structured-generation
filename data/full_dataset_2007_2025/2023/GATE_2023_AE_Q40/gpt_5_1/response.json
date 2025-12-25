@@ -1,0 +1,439 @@
+{
+  "model_name": "gpt_5_1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "text_only",
+      "combined_type": "numerical_calculation_text_only",
+      "weight_strategy": "NUMERICAL_WEIGHTED",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "This is a numerical calculation problem involving level flight, drag coefficient, and thrust. It requires integrating lift and drag equations with thrust and weight, and solving for velocity. It involves multiple concepts and steps, making it a medium-hard problem.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "A",
+        "is_correct": true,
+        "confidence": 0.98,
+        "confidence_type": "single_model",
+        "reasoning": "In steady level flight, thrust equals drag and lift equals weight. We are given a drag polar \\(C_D = C_{D_0} + K C_L^2\\), aircraft weight, wing area, air density, and maximum available thrust (1 kN). For a given speed, lift coefficient is \\(C_L = \\frac{2W}{\\rho V^2 S}\\). Substituting this into the drag polar and then into the drag equation \\(D = \\tfrac{1}{2} \\rho V^2 S C_D\\) gives drag as a function of speed. Setting \\(D = T_{\\max} = 1000\\,\\text{N}\\) and solving for \\(V\\) yields the maximum cruise speed. \n\nGiven: \\(W = 10\\,\\text{kN} = 10000\\,\\text{N}\\), \\(S = 15\\,\\text{m}^2\\), \\(\\rho = 0.60\\,\\text{kg/m}^3\\), \\(C_{D_0} = 0.025\\), \\(K = 0.05\\), \\(T_{\\max} = 1000\\,\\text{N}\\).\n\n1) Express \\(C_L\\) in terms of \\(V\\):\n\\[ C_L = \\frac{2W}{\\rho V^2 S} = \\frac{2 \\times 10000}{0.6 V^2 \\times 15} = \\frac{20000}{9 V^2} = \\frac{2222.22}{V^2}. \\]\n2) Then \\(C_L^2 = \\frac{(2222.22)^2}{V^4} \\approx \\frac{4.94 \\times 10^6}{V^4}.\\)\n3) Drag coefficient:\n\\[ C_D = 0.025 + 0.05 C_L^2 = 0.025 + 0.05 \\cdot \\frac{4.94 \\times 10^6}{V^4} = 0.025 + \\frac{2.47 \\times 10^5}{V^4}. \\]\n4) Drag:\n\\[ D = \\tfrac{1}{2} \\rho V^2 S C_D = 0.5 \\cdot 0.6 \\cdot 15 \\cdot V^2 \\left(0.025 + \\frac{2.47 \\times 10^5}{V^4}\\right). \\]\nThe constant in front is \\(0.5 \\times 0.6 \\times 15 = 4.5\\), so\n\\[ D = 4.5 V^2 \\left(0.025 + \\frac{2.47 \\times 10^5}{V^4}\\right) = 4.5(0.025 V^2) + 4.5 \\cdot \\frac{2.47 \\times 10^5}{V^2}. \\]\nCompute coefficients:\n\\(4.5 \\times 0.025 = 0.1125\\), and \\(4.5 \\times 2.47 \\times 10^5 \\approx 1.1115 \\times 10^6\\). Thus\n\\[ D(V) = 0.1125 V^2 + \\frac{1.1115 \\times 10^6}{V^2}. \\]\n5) Set \\(D = 1000\\,\\text{N}\\) to find the speed where thrust just equals drag:\n\\[ 0.1125 V^2 + \\frac{1.1115 \\times 10^6}{V^2} = 1000. \\]\nLet \\(x = V^2\\). Then\n\\[ 0.1125 x + \\frac{1.1115 \\times 10^6}{x} = 1000. \\]\nMultiply by \\(x\\):\n\\[ 0.1125 x^2 - 1000 x + 1.1115 \\times 10^6 = 0. \\]\nSolve the quadratic:\n\\[ x = \\frac{1000 \\pm \\sqrt{1000^2 - 4 \\cdot 0.1125 \\cdot 1.1115 \\times 10^6}}{2 \\cdot 0.1125}. \\]\nCompute discriminant:\n\\(4ac = 4 \\cdot 0.1125 \\cdot 1.1115 \\times 10^6 \\approx 5.0 \\times 10^5\\), so\n\\(\\Delta \\approx 10^6 - 5.0 \\times 10^5 = 5.0 \\times 10^5\\). Then \\(\\sqrt{\\Delta} \\approx 707.1\\).\nThus\n\\[ x_1 = \\frac{1000 + 707.1}{0.225} \\approx \\frac{1707.1}{0.225} \\approx 7587, \\]\n\\[ x_2 = \\frac{1000 - 707.1}{0.225} \\approx \\frac{292.9}{0.225} \\approx 1302. \\]\nSo the two speeds are\n\\[ V_1 = \\sqrt{7587} \\approx 87.1\\,\\text{m/s}, \\quad V_2 = \\sqrt{1302} \\approx 36.1\\,\\text{m/s}. \\]\nThe smaller root corresponds to the low-speed solution; the larger root is the maximum cruise speed for the given thrust. Rounding \\(87.1\\,\\text{m/s}\\) to the nearest integer gives \\(87\\,\\text{m/s}\\), which matches option A."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Identify that for steady, level cruise at maximum speed with a thrust limit, we must use T = D and L = W, with the given drag polar.",
+          "Express lift coefficient as a function of speed using L = W: $C_L = \\frac{2W}{\\rho V^2 S}$.",
+          "Substitute $C_L$ into the drag polar $C_D = C_{D_0} + K C_L^2$ to obtain $C_D(V)$.",
+          "Use the drag equation $D = \\tfrac{1}{2} \\rho V^2 S C_D(V)$ to get drag as an explicit function of $V$.",
+          "Set $D(V) = T_{\\max}$ (1000 N) and simplify to a quadratic equation in $V^2$.",
+          "Solve the quadratic for $V^2$, take square roots to get the two possible speeds, and select the higher one as the maximum cruise speed.",
+          "Round the resulting maximum speed to the nearest integer and match with the options."
+        ],
+        "formulas_used": [
+          "$L = W$",
+          "$T = D$",
+          "$L = \\tfrac{1}{2} \\\\rho V^2 S C_L$",
+          "$D = \\tfrac{1}{2} \\\\rho V^2 S C_D$",
+          "$C_D = C_{D_0} + K C_L^2$",
+          "$C_L = \\frac{2W}{\\\\rho V^2 S}$"
+        ],
+        "estimated_time_minutes": 3
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Flight Mechanics",
+          "confidence": 0.96
+        },
+        "topic": {
+          "name": "Aircraft performance in steady level flight",
+          "syllabus_ref": "Flight Mechanics -> Performance of airplanes"
+        },
+        "concepts": [
+          {
+            "name": "Level unaccelerated flight (L = W, T = D)",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Drag polar and induced drag",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Thrust required versus velocity",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Maximum cruise speed with thrust limit",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Quadratic solution in $V^2$ for performance",
+            "importance": "tertiary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Understanding of steady, level flight conditions: lift equals weight, thrust equals drag",
+          "Basic aerodynamic force coefficients: lift coefficient and drag coefficient",
+          "Drag polar concept: decomposition into zero-lift and induced drag",
+          "Algebraic manipulation and solving quadratic equations",
+          "Use of SI units and unit consistency in aerodynamic formulas"
+        ],
+        "helpful": [
+          "Qualitative shape of thrust-required versus velocity curve",
+          "Physical meaning of induced drag and its variation with speed"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Understanding of lift and drag equations in terms of coefficients",
+            "requires: Knowledge of level flight equilibrium (L = W, T = D)",
+            "enables: Ability to compute thrust required and maximum speed for given thrust",
+            "enables: Advanced performance analysis such as range, endurance, and climb performance"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Easy",
+        "score": 3,
+        "complexity_breakdown": {
+          "conceptual": 3,
+          "mathematical": 4,
+          "problem_solving": 3
+        },
+        "estimated_solve_time_seconds": 150,
+        "expected_accuracy_percent": 80,
+        "difficulty_factors": [
+          "Requires correctly substituting $C_L$ into the drag polar and then into the drag equation",
+          "Involves solving a quadratic in $V^2$ and identifying the physically relevant (higher) speed",
+          "Careful arithmetic is needed to avoid numerical slips"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Introduction to Flight",
+          "author": "John D. Anderson Jr.",
+          "chapter_number": "6",
+          "chapter_title": "Elements of Airplane Performance",
+          "section": "6.3 Level, unaccelerated flight and thrust required",
+          "page_range": "",
+          "complexity": "introductory",
+          "relevance_score": 0.96,
+          "source": "rag_retrieval",
+          "text_snippet": "For level, unaccelerated flight, T = D and L = W. The thrust required is T_R = W / (L/D). Using the drag polar C_D = C_{D,0} + C_L^2 / (\\pi e AR), we can express drag as a function of velocity."
+        },
+        {
+          "source_type": "book",
+          "book": "Aircraft Performance and Design",
+          "author": "John D. Anderson Jr.",
+          "chapter_number": "2",
+          "chapter_title": "Performance in Steady Flight",
+          "section": "",
+          "page_range": "",
+          "complexity": "introductory",
+          "relevance_score": 0.9,
+          "source": "model_consensus",
+          "text_snippet": "Derivation of thrust required versus velocity using the drag polar and the condition L = W for steady level flight."
+        },
+        {
+          "source_type": "book",
+          "book": "Introduction to Flight",
+          "author": "John D. Anderson Jr.",
+          "chapter_number": "6",
+          "chapter_title": "Elements of Airplane Performance",
+          "section": "",
+          "page_range": "",
+          "complexity": "introductory",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval",
+          "text_snippet": "C_D = C_{D,0} + C_L^2 / (\\pi e AR) and T_R = W / (L/D) are used to construct the thrust-required curve as a function of velocity."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. A.K. Ghosh",
+          "timestamp_start": "00:12:00",
+          "timestamp_end": "00:15:20",
+          "video_url": "https://www.youtube.com/watch?v=nGdl2cy9Zy4",
+          "book_reference": "Perkins & Hage, Chapter 2: Performance in Steady Flight",
+          "topic_covered": "Derivation of thrust required using drag polar and level flight conditions",
+          "relevance_score": 0.95,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. A.K. Ghosh",
+          "timestamp_start": "00:10:03",
+          "timestamp_end": "00:11:51",
+          "video_url": "https://www.youtube.com/watch?v=",
+          "book_reference": "John D. Anderson, Aircraft Performance",
+          "topic_covered": "Wing loading and thrust loading in cruise flight",
+          "relevance_score": 0.75,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Direct Formula Application",
+        "total_steps": 7,
+        "solution_path": "Use level flight conditions to relate CL to V, substitute into drag polar, get D(V), equate to thrust, solve quadratic in V^2, choose higher root as maximum speed.",
+        "key_insights": [
+          "Recognize that maximum cruise speed at a given altitude and thrust occurs where thrust available equals drag required.",
+          "Substituting $C_L$ from $L = W$ into the drag polar converts the problem into a single-variable equation in speed.",
+          "The quadratic in $V^2$ yields two speeds; the higher one is the maximum speed, the lower one is the minimum speed for that thrust."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$L = \\tfrac{1}{2} \\\\rho V^2 S C_L$",
+          "name": "Lift equation in coefficient form",
+          "conditions": "Applies to steady, incompressible or subsonic compressible flow using lift coefficient definition",
+          "type": "equation",
+          "relevance": "Used with L = W to express lift coefficient as a function of speed."
+        },
+        {
+          "formula": "$D = \\tfrac{1}{2} \\\\rho V^2 S C_D$",
+          "name": "Drag equation in coefficient form",
+          "conditions": "Applies to steady flight using drag coefficient definition",
+          "type": "equation",
+          "relevance": "Relates drag force to drag coefficient and speed; used to compute drag required."
+        },
+        {
+          "formula": "$C_D = C_{D_0} + K C_L^2$",
+          "name": "Parabolic drag polar",
+          "conditions": "Typical for subsonic aircraft where drag is decomposed into zero-lift and induced drag",
+          "type": "equation",
+          "relevance": "Core relation to express drag coefficient as a function of lift coefficient."
+        },
+        {
+          "formula": "$C_L = \\frac{2W}{\\\\rho V^2 S}$",
+          "name": "Lift coefficient from weight balance",
+          "conditions": "Steady, level flight with L = W",
+          "type": "equation",
+          "relevance": "Allows substitution of CL into the drag polar to obtain drag as a function of speed."
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Preliminary sizing of general aviation aircraft, where designers must ensure that available engine thrust allows a desired cruise speed at a given altitude.",
+          "Performance charts in pilot operating handbooks, which show maximum level-flight speed versus altitude based on thrust available and drag characteristics."
+        ],
+        "specific_systems": [
+          "Cessna 172 and similar light aircraft, where engine power and drag polar determine maximum cruise speed at various altitudes.",
+          "Small unmanned aerial vehicles (UAVs), where propeller thrust and aerodynamic drag set the achievable top speed."
+        ],
+        "practical_relevance": "Accurate estimation of maximum cruise speed is critical for mission planning, fuel estimation, and safety margins; underestimating drag or overestimating thrust can lead to optimistic performance claims and operational issues."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Using $C_D = C_{D_0} + K C_L$ instead of $C_L^2$ in the drag polar.",
+          "why_students_make_it": "They may misremember the parabolic form and forget that induced drag scales with $C_L^2$.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Remember that induced drag is proportional to lift squared; always check that the drag polar has $C_L^2$ for induced drag term.",
+          "consequence": "Leads to an incorrect drag function and wrong speeds, often far from the correct options."
+        },
+        {
+          "mistake": "Forgetting to convert weight from kN to N when substituting into formulas.",
+          "why_students_make_it": "They rush and directly plug 10 instead of 10000, mixing kN with N.",
+          "type": "Units",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Always write units explicitly and convert kN to N by multiplying by 1000 before calculations.",
+          "consequence": "Drag and CL become off by orders of magnitude, giving unrealistic speeds."
+        },
+        {
+          "mistake": "Solving the quadratic but taking only one root or automatically picking the smaller speed as the answer.",
+          "why_students_make_it": "They may not realize that two level-flight speeds exist for the same thrust (low-speed and high-speed branches).",
+          "type": "Calculation",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "After solving, compute both speeds and interpret physically: the higher speed is the maximum cruise speed.",
+          "consequence": "Selecting the lower root gives the minimum speed for that thrust, not the maximum cruise speed."
+        },
+        {
+          "mistake": "Dropping the induced drag term at high speeds without checking its magnitude.",
+          "why_students_make_it": "They assume induced drag is always negligible at cruise without verifying.",
+          "type": "Approximation",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Keep both terms in the expression for drag unless the problem explicitly allows an approximation; compare magnitudes if you want to simplify.",
+          "consequence": "Underestimates drag and overestimates maximum cruise speed."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "\"Level flight: Lift = Weight, Thrust = Drag\"",
+          "concept": "Equilibrium conditions in steady level flight",
+          "effectiveness": "high",
+          "context": "Use whenever you see 'level, unaccelerated' or 'cruise' in performance problems."
+        },
+        {
+          "mnemonic": "\"Induced is squared\"",
+          "concept": "Induced drag term is proportional to $C_L^2$ in the drag polar",
+          "effectiveness": "medium",
+          "context": "Recall the correct form of the drag polar when writing $C_D$."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "Write the drag polar used for subsonic aircraft including induced drag.",
+          "back": "$C_D = C_{D_0} + K C_L^2$, where $C_{D_0}$ is zero-lift drag and $K$ is the induced drag factor.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "In steady, level flight, what are the force balance equations along vertical and horizontal directions?",
+          "back": "Vertical: $L = W$. Horizontal: $T = D$.",
+          "difficulty": "easy",
+          "time_limit_seconds": 20
+        },
+        {
+          "card_type": "application",
+          "front": "Given $W, S, \\\\rho, V$, how do you compute the required lift coefficient in level flight?",
+          "back": "Use $C_L = \\dfrac{2W}{\\\\rho V^2 S}$ from $L = W$ and the lift equation.",
+          "difficulty": "medium",
+          "time_limit_seconds": 40
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "Why does solving for maximum cruise speed with a drag polar often give two speeds, and which one is the maximum?",
+          "back": "Because the thrust-required curve is U-shaped, equating it to constant thrust yields two intersections: a low-speed and a high-speed solution. The higher speed is the maximum cruise speed.",
+          "difficulty": "medium",
+          "time_limit_seconds": 60
+        },
+        {
+          "card_type": "application",
+          "front": "How do you express drag as a function of speed using $C_D = C_{D_0} + K C_L^2$ and $L = W$?",
+          "back": "First find $C_L(V) = 2W/(\\\\rho V^2 S)$, then $C_D(V) = C_{D_0} + K C_L(V)^2$, then $D(V) = 0.5 \\\\rho V^2 S C_D(V)$.",
+          "difficulty": "hard",
+          "time_limit_seconds": 70
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Determining maximum level-flight speed for a light aircraft at a given altitude",
+          "industry_example": "For a 4-seat general aviation airplane, performance charts show that at 8000 ft, maximum level speed might be around 120–130 kt depending on engine power and drag polar.",
+          "why_it_matters": "Pilots rely on these speeds for flight planning; overestimating maximum speed can lead to unrealistic schedules and fuel planning errors."
+        },
+        {
+          "application": "Sizing engines for UAVs and small aircraft",
+          "industry_example": "A designer choosing between a 1 kW and 1.5 kW electric motor must ensure the chosen motor provides enough thrust to reach the desired cruise speed with the given airframe drag.",
+          "why_it_matters": "Underpowered designs may never reach the intended cruise speed, reducing mission effectiveness or even preventing safe flight."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "Scan for key words like 'level flight', 'thrust', 'drag polar'. Recognize it as a standard thrust-required vs velocity calculation; set up equations quickly and solve the quadratic.",
+        "guessing_heuristic": "If stuck, note that realistic GA cruise speeds at moderate density are tens of m/s; eliminate very low or very high options and favor the higher of two plausible roots as maximum speed.",
+        "time_management": "Aim to finish algebra and get to the quadratic within 1–1.5 minutes, leaving another minute for careful arithmetic and checking both roots."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "thrust required curve level flight",
+        "drag polar CD = CD0 + K CL^2",
+        "maximum level flight speed given thrust",
+        "Anderson Introduction to Flight thrust required",
+        "general aviation aircraft performance calculation",
+        "induced drag and lift coefficient squared",
+        "GATE AE aircraft performance level flight problem"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Use $T_R = W / (L/D)$ with $L/D$ expressed in terms of $C_L$",
+          "description": "Instead of directly substituting into the drag equation, express $L/D = C_L / C_D$. Use $C_D = C_{D_0} + K C_L^2$ and $C_L = 2W/(\\\\rho V^2 S)$ to get $L/D(V)$, then $T_R(V) = W / (L/D(V))$. Set $T_R(V) = T_{max}$ and solve for $V$.",
+          "pros_cons": "Pros: Emphasizes the role of aerodynamic efficiency via $L/D$. Cons: Algebra is similar in complexity and still leads to a nonlinear equation in $V$.",
+          "when_to_use": "Useful when you are already comfortable thinking in terms of $L/D$ and want to connect with range/endurance concepts."
+        },
+        {
+          "name": "Graphical/qualitative method using thrust-required curve",
+          "description": "Sketch the thrust-required curve using its U-shape based on zero-lift and induced drag components, then conceptually place a horizontal line for thrust available. The intersections indicate possible speeds; identify the higher one as maximum cruise speed.",
+          "pros_cons": "Pros: Builds strong physical intuition about multiple solutions and speed limits. Cons: Not precise enough for numerical exam answers without actual calculation.",
+          "when_to_use": "Best for conceptual understanding and checking if your computed speeds are reasonable."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Aerodynamics": "Uses the drag polar, which comes from 3D wing aerodynamics and induced drag theory.",
+        "Propulsion": "Maximum thrust available depends on engine characteristics; in propulsion you learn how thrust varies with speed and altitude.",
+        "Control Systems": "Operating near maximum speed affects stability margins and control effectiveness, which are studied in flight dynamics and control.",
+        "Space Dynamics": "The idea of balancing thrust and drag for steady motion has analogies in orbital drag compensation for low Earth orbit satellites using electric propulsion."
+      },
+      "deeper_dive_topics": [
+        "Derivation of induced drag from lifting-line theory and its relation to $K$ in the drag polar",
+        "Variation of thrust available with speed for propeller versus jet aircraft and its impact on maximum speed",
+        "Optimization of $C_{D_0}$ and aspect ratio to improve cruise performance",
+        "Performance envelopes: plotting and interpreting V–n and thrust–velocity diagrams"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2023_AE_Q40",
+        "year": 2023,
+        "marks": 2.0,
+        "negative_marks": 0.66,
+        "time_expected": "2-3 minutes",
+        "success_rate_estimate": "75-85%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Flight Mechanics: Airplane performance",
+        "gate_subsection": "Level flight, range and endurance, climb and glide performance",
+        "weightage": "10-15%",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Excellent alignment with core performance outcomes; integrates drag polar, level flight equilibrium, and thrust limits in a compact numerical problem."
+      },
+      "rag_quality": {
+        "relevance_score": 0.8,
+        "chunks_used": 4,
+        "sources_distribution": {
+          "books": 2,
+          "videos": 2
+        },
+        "notes": "RAG provided directly relevant material on level, unaccelerated flight (L = W, T = D), drag polar, and thrust-required derivations (chunks 2, 4, 5). Chunk 1 on wing loading and chunk 3 on drag polar example also supported understanding. Chunk 6 was more general but consistent. Overall, RAG was helpful and aligned with the required solution method."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-25T00:00:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Ask for the speed corresponding to minimum thrust required using the same drag polar and parameters.",
+        "Modify the problem to include a thrust-available curve that decreases with speed and ask for both minimum and maximum level-flight speeds.",
+        "Ask for the lift-to-drag ratio at the computed maximum cruise speed and compare it with the value at minimum thrust required.",
+        "Extend the question to compute rate of climb at a given speed using excess thrust derived from the same drag polar."
+      ]
+    },
+    "question_id": "GATE_2023_AE_Q40",
+    "year": 2023,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "MCQ",
+    "question_text": "Consider a general aviation airplane with weight 10 kN and a wing planform area of 15 m². The drag coefficient of the airplane is given as C_D = C_{D_0} + K C_L^2 with C_{D_0} = 0.025 and K = 0.05. For level flight at an altitude where the density is 0.60 kg/m³ and thrust 1 kN, the maximum cruise speed is (rounded off to the nearest integer)"
+  },
+  "tokens_used": 15997,
+  "input_tokens": 9452,
+  "output_tokens": 6545,
+  "cost": 0.077265,
+  "time_seconds": 57.95489239692688
+}
