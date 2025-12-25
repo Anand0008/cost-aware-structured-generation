@@ -1,0 +1,393 @@
+{
+  "model_name": "deepseek_r1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "conceptual_theory",
+      "media_type": "text_only",
+      "combined_type": "conceptual_theory_text_only",
+      "weight_strategy": "CONCEPTUAL_WEIGHTED",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "The question tests understanding of forced vibration concepts, damping conditions, and their impact on system response. It requires integrating knowledge of transient and steady-state behavior, making it a medium-difficulty conceptual question.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": false,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "A, B, D",
+        "is_correct": true,
+        "confidence": 0.99,
+        "confidence_type": "single_model",
+        "reasoning": "Option A is true: For a linear system, the total response is the superposition of the complementary (transient) and particular (steady-state) solutions. This is a fundamental principle of linear differential equations, confirmed by RAG chunks 2, 3, 4, and 5. Option B is true: In all damped systems (under-, critically, and over-damped), the transient free vibration response decays exponentially to zero. Damping ensures decay; the distinction is the rate and nature of decay (oscillatory or non-oscillatory). Option C is false: The steady-state response is solely determined by the forcing function and system parameters (m, c, k). It is independent of initial conditions, as stated in RAG chunk 4. Option D is true: The decay rate of the transient response is governed by the damping ratio \\(\\zeta = \\frac{c}{2\\sqrt{m k}}\\), which depends on m, c, and k. The exponential decay term is \\(e^{-\\zeta \\omega_n t}\\), where \\(\\omega_n = \\sqrt{k/m}\\)."
+      },
+      "explanation": {
+        "question_nature": "Conceptual",
+        "step_by_step": [
+          "Step 1: Understand the system. A harmonically excited SDOF linear spring-mass-damper system has an equation of motion: \\(m\\ddot{x} + c\\dot{x} + kx = F_0 \\sin(\\omega t)\\).",
+          "Step 2: Recall the structure of the total solution. The total response \\(x(t)\\) is the sum of the complementary/homogeneous solution \\(x_c(t)\\) (transient, free vibration) and the particular solution \\(x_p(t)\\) (steady-state, forced vibration). This confirms statement A.",
+          "Step 3: Analyze the transient response. The complementary solution is of the form \\(x_c(t) = e^{-\\zeta \\omega_n t}[A \\cos(\\omega_d t) + B \\sin(\\omega_d t)]\\) for under-damped systems, with analogous forms for critically and over-damped. The term \\(e^{-\\zeta \\omega_n t}\\) ensures exponential decay for \\(\\zeta > 0\\) in all three damping cases. Thus, statement B is true.",
+          "Step 4: Analyze the steady-state response. The particular solution is of the form \\(x_p(t) = X \\sin(\\omega t - \\phi)\\), where amplitude X and phase \\(\\phi\\) are determined solely by \\(F_0, \\omega, m, c, k\\) (via frequency response function). They are not functions of initial displacement or velocity. Therefore, statement C is false.",
+          "Step 5: Analyze the decay rate. The rate of decay is dictated by the exponent \\(\\zeta \\omega_n = \\frac{c}{2m}\\). This depends explicitly on mass (m) and damping constant (c). Also, \\(\\omega_n = \\sqrt{k/m}\\), so the damping ratio \\(\\zeta = \\frac{c}{2\\sqrt{m k}}\\) depends on m, c, and k. Hence, statement D is true."
+        ],
+        "formulas_used": [
+          "$m\\ddot{x} + c\\dot{x} + kx = F_0 \\sin(\\omega t)$",
+          "$x(t) = x_c(t) + x_p(t)$",
+          "$x_c(t) = e^{-\\zeta \\omega_n t}[A \\cos(\\omega_d t) + B \\sin(\\omega_d t)]$ where $\\omega_d = \\omega_n \\sqrt{1-\\zeta^2}$",
+          "$x_p(t) = X \\sin(\\omega t - \\phi)$",
+          "$\\zeta = \\frac{c}{2\\sqrt{m k}}$, $\\omega_n = \\sqrt{\\frac{k}{m}}$",
+          "$\\text{Decay rate factor} = \\zeta \\omega_n = \\frac{c}{2m}$"
+        ],
+        "estimated_time_minutes": 2
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Structures",
+          "confidence": 0.95
+        },
+        "topic": {
+          "name": "Mechanical Vibrations",
+          "syllabus_ref": "Section 4: Structures -> Vibrations"
+        },
+        "concepts": [
+          {
+            "name": "Forced Vibration Response",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Transient vs Steady-State Response",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Damping and Decay",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Initial Conditions",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Linear Superposition",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Linear Ordinary Differential Equations (complementary and particular solutions)",
+          "Free Vibration of SDOF systems (natural frequency, damping ratio)",
+          "Newton's Second Law for dynamic systems"
+        ],
+        "helpful": [
+          "Complex exponential method for solving ODEs",
+          "Frequency response function"
+        ],
+        "dependency_tree": {
+          "Main Concept: Forced Vibration Response": [
+            "requires: Free Vibration Analysis (to get complementary solution)",
+            "requires: Method of Undetermined Coefficients or Complex Exponential (to get particular solution)",
+            "requires: Understanding of Damping Types (under, critical, over)",
+            "enables: Vibration Isolation and Transmissibility Analysis",
+            "enables: Rotor Dynamics (Unbalance Response)"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Easy",
+        "score": 3,
+        "complexity_breakdown": {
+          "conceptual": 5,
+          "mathematical": 2
+        },
+        "estimated_solve_time_seconds": 90,
+        "expected_accuracy_percent": 75,
+        "difficulty_factors": [
+          "Conceptual clarity on superposition of transient and steady-state",
+          "Understanding that damping always causes transient decay (if present)",
+          "Common misconception that steady-state depends on initial conditions"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Mechanical Vibrations",
+          "author": "S.S. Rao",
+          "chapter_number": "3",
+          "chapter_title": "Harmonically Excited Vibration",
+          "section": "3.3-3.5",
+          "complexity": "intermediate",
+          "relevance_score": 0.95,
+          "source": "rag_retrieval",
+          "text_snippet": "The total response of a damped system under forced vibration is the sum of its complementary function (transient response) and its particular integral (steady-state response)."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. S.K. Dwivedy and Prof. Rajiv Tiwari",
+          "timestamp_start": "00:31:17",
+          "timestamp_end": "00:32:57",
+          "video_url": "https://www.youtube.com/watch?v=76OBC0BGRzY",
+          "book_reference": "S.S. Rao",
+          "topic_covered": "Total Response of a Damped SDOF System (Transient and Steady-State)",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. Srinivasan Chandrasekaran",
+          "timestamp_start": "00:41:12",
+          "timestamp_end": "00:43:08",
+          "video_url": "https://www.youtube.com/watch?v=YxiDLacINHg",
+          "book_reference": "S.S. Rao",
+          "topic_covered": "Complete Solution for Damped Forced Vibration",
+          "relevance_score": 0.85,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Conceptual Analysis based on Linear ODE Theory",
+        "total_steps": 5,
+        "solution_path": "Identify governing equation → Break solution into complementary and particular parts → Analyze each statement against properties of these parts",
+        "key_insights": [
+          "Superposition principle holds for linear systems: total response = transient + steady-state.",
+          "Damping (any positive amount) causes exponential decay of the transient, regardless of damping type.",
+          "Steady-state amplitude and phase are functions of forcing and system parameters only, not initial conditions.",
+          "Decay rate constant = ζω_n = c/(2m), depends on m, c, and k (via ω_n)."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$m\\ddot{x} + c\\dot{x} + kx = F_0 \\sin(\\omega t)$",
+          "name": "Equation of Motion for Forced Damped SDOF",
+          "conditions": "Linear system, harmonic excitation",
+          "type": "equation",
+          "relevance": "Governing differential equation for the system"
+        },
+        {
+          "formula": "$x(t) = x_c(t) + x_p(t)$",
+          "name": "Superposition of Solutions",
+          "conditions": "Linear ordinary differential equation",
+          "type": "principle",
+          "relevance": "Core principle confirming statement A"
+        },
+        {
+          "formula": "$x_c(t) = e^{-\\zeta \\omega_n t} [A \\cos(\\omega_d t) + B \\sin(\\omega_d t)]$",
+          "name": "Transient Response (Under-damped)",
+          "conditions": "0 < ζ < 1; A, B from initial conditions",
+          "type": "equation",
+          "relevance": "Shows exponential decay and dependence on initial conditions"
+        },
+        {
+          "formula": "$\\zeta = \\frac{c}{2\\sqrt{m k}}$",
+          "name": "Damping Ratio",
+          "conditions": "Viscous damping",
+          "type": "equation",
+          "relevance": "Shows dependency of decay characteristics on m, c, k (statement D)"
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Aircraft engine vibration analysis during start-up (transient) and steady operation.",
+          "Helicopter rotor blade response to periodic aerodynamic forces.",
+          "Satellite solar panel deployment dynamics and steady vibration under attitude control inputs."
+        ],
+        "specific_systems": [
+          "Turbofan engine rotor unbalance response",
+          "Aircraft landing gear shimmy analysis"
+        ],
+        "practical_relevance": "Understanding transient vs steady-state response is critical for designing structures to avoid resonant fatigue, ensuring passenger comfort, and predicting start-up/shut-down loads."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Believing that the steady-state response depends on initial conditions (e.g., how the system was started).",
+          "why_students_make_it": "Confusion with the transient response which does depend on initial conditions. Students may think the entire motion is influenced by how the force is applied initially.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Remember: Steady-state is the particular solution, which is determined solely by the forcing function. The constants in the particular solution are found by plugging into the ODE, not from initial conditions.",
+          "consequence": "Would incorrectly select option C as true."
+        },
+        {
+          "mistake": "Thinking that over-damped or critically damped systems do not have a decaying transient because they don't oscillate.",
+          "why_students_make_it": "Associating 'decay' only with oscillatory under-damped decay. Over-damped response is a sum of decaying exponentials without oscillation, but still decays.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Recall that for any positive damping, the homogeneous solution terms have negative real exponents → they go to zero as t→∞. The form differs but the decay property holds.",
+          "consequence": "Would incorrectly reject option B."
+        },
+        {
+          "mistake": "Assuming the decay rate depends only on the damping constant c, ignoring mass and stiffness.",
+          "why_students_make_it": "Intuitive sense that damping alone controls decay. Forgetting that the damping ratio ζ and natural frequency ω_n combine to set the decay rate.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "common",
+          "how_to_avoid": "Remember the decay exponent is ζω_n = c/(2m). Write the formula and see it involves c and m. Also, ζ itself depends on m, c, and k.",
+          "consequence": "Would incorrectly reject option D."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "Transient = Temporary, Steady-State = Stay (persistent)",
+          "concept": "Distinguishing between transient (dies out) and steady-state (remains)",
+          "effectiveness": "medium",
+          "context": "When reading the total response formula"
+        },
+        {
+          "mnemonic": "SIP: Steady-State Independent of initial conditions, Particular solution.",
+          "concept": "Steady-state response is independent of initial conditions",
+          "effectiveness": "high",
+          "context": "To remember that option C is false"
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "concept_recall",
+          "front": "What are the two components of the total response of a linear SDOF system under harmonic forcing?",
+          "back": "Transient (free vibration) response and steady-state (forced vibration) response.",
+          "difficulty": "easy",
+          "time_limit_seconds": 20
+        },
+        {
+          "card_type": "definition",
+          "front": "Does the steady-state response amplitude depend on initial displacement?",
+          "back": "No. The steady-state amplitude and phase are determined solely by the forcing function (amplitude, frequency) and system parameters (m, c, k).",
+          "difficulty": "medium",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "True or False: The transient response decays to zero only for under-damped systems.",
+          "back": "False. The transient decays for all three damping conditions (under-, critically, and over-damped) as long as damping is positive (c > 0).",
+          "difficulty": "medium",
+          "time_limit_seconds": 25
+        },
+        {
+          "card_type": "formula_recall",
+          "front": "Write the exponential decay factor for the transient response of an under-damped SDOF system.",
+          "back": "$e^{-\\zeta \\omega_n t}$, where $\\zeta = c/(2\\sqrt{m k})$ and $\\omega_n = \\sqrt{k/m}$.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "application",
+          "front": "How does increasing mass affect the decay rate of transient vibration, assuming constant c and k?",
+          "back": "Decay rate factor is $\\zeta \\omega_n = c/(2m)$. Increasing mass decreases the decay rate (slower decay).",
+          "difficulty": "hard",
+          "time_limit_seconds": 35
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Aircraft engine vibration monitoring",
+          "industry_example": "During start-up of a jet engine, the rotor passes through critical speeds causing transient vibration peaks. After reaching operational RPM, the vibration settles to a steady-state level determined by residual unbalance.",
+          "why_it_matters": "Designers must ensure transient vibrations during start-up do not cause immediate failure, and steady-state vibrations are within limits to prevent fatigue."
+        },
+        {
+          "application": "Satellite attitude control",
+          "industry_example": "When a reaction wheel starts or changes speed, it induces transient torsional vibrations in the satellite structure. The steady-state vibration corresponds to the constant wheel speed.",
+          "why_it_matters": "Transients can disturb sensitive instruments; steady-state vibrations must be low to maintain pointing accuracy."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "This is a quick conceptual check. Read each statement carefully; use elimination. Statement C is a classic trap, so be cautious.",
+        "guessing_heuristic": "If unsure, remember: Steady-state never depends on initial conditions in linear systems. Transient always decays if damped. So A, B, D are highly likely.",
+        "time_management": "Spend no more than 1.5 minutes; if stuck, mark based on the heuristic and move on."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "SDOF forced vibration transient steady-state",
+        "damped harmonic oscillator total response",
+        "initial conditions effect on steady-state vibration",
+        "decay rate of transient vibration damping ratio",
+        "linear superposition vibration solution",
+        "GATE aerospace vibrations forced response"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Laplace Transform Method",
+          "description": "Solve the ODE $m\\ddot{x}+c\\dot{x}+kx=F_0\\sin(\\omega t)$ using Laplace transforms, incorporating initial conditions directly. The solution in s-domain gives both transient and steady-state parts after inverse transform.",
+          "pros_cons": "Pros: Systematic, handles initial conditions naturally. Cons: More algebraic steps, requires knowledge of Laplace transforms.",
+          "when_to_use": "When initial conditions are nonzero and you need the exact time-domain expression including transient."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Control Systems": "Forced vibration response is analogous to the step response of a second-order system: transient (natural response) and steady-state (forced response). Concepts of damping ratio and natural frequency are identical.",
+        "Dynamics": "The equation of motion is derived from Newton's second law or Lagrange's equations. Understanding forced vibration is key for analyzing dynamic systems like vehicle suspension.",
+        "Aeroelasticity": "Flutter and divergence analyses often involve forced vibration concepts, where aerodynamic forces act as excitation."
+      },
+      "deeper_dive_topics": [
+        "Rotating Unbalance as a Forcing Mechanism (common in aerospace engines)",
+        "Frequency Response Function and Bode Plots for SDOF systems",
+        "Transmissibility and Vibration Isolation (design to reduce force transmitted to foundation)",
+        "Numerical Methods for solving forced vibration (e.g., Newmark's method for transient integration)"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2023_AE_Q25",
+        "year": 2023,
+        "marks": 1.0,
+        "negative_marks": 0.0,
+        "time_expected": "1-2 minutes",
+        "success_rate_estimate": "70%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 4: Structures",
+        "gate_subsection": "Vibrations",
+        "weightage": "Approx 5-8% of the Structures section",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Well-aligned with core vibrations syllabus. Tests fundamental understanding essential for advanced topics like aeroelasticity and rotor dynamics."
+      },
+      "rag_quality": {
+        "relevance_score": 0.9,
+        "chunks_used": 6,
+        "sources_distribution": {
+          "books": 0,
+          "videos": 6
+        },
+        "notes": "RAG chunks (all from video lecture notes) provided excellent coverage of the core concepts: total response as sum of transient and steady-state, decay due to damping, independence of steady-state from initial conditions. The context directly supports analysis of all statements. No missing key info."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-13T10:30:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Numerical calculation of steady-state amplitude given m, c, k, F0, ω.",
+        "Sketching transient and steady-state response on the same graph.",
+        "Effect of damping ratio on the decay rate and settling time.",
+        "Comparing the transient decay for under-damped vs over-damped systems."
+      ]
+    },
+    "question_id": "GATE_2023_AE_Q25",
+    "year": 2023,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "MCQ",
+    "question_text": "Which of the following statement(s) is/are true about harmonically excited forced vibration of a single degree-of-freedom linear spring-mass-damper system?"
+  },
+  "tokens_used": 14630,
+  "input_tokens": 9181,
+  "output_tokens": 5449,
+  "cost": 0.01698286,
+  "time_seconds": 153.5630660057068
+}
