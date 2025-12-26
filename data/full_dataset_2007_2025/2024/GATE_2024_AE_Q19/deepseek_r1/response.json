@@ -1,0 +1,404 @@
+{
+  "model_name": "deepseek_r1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "text_only",
+      "combined_type": "numerical_calculation_text_only",
+      "weight_strategy": "NUMERICAL_WEIGHTED",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "This is a numerical calculation problem involving the energy balance in a combustor. It requires applying the energy equation and solving for the fuel-air ratio. The problem involves multiple steps but the concepts are relatively straightforward.",
+      "difficulty_score": 5,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": false,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": true
+      },
+      "use_gpt51": false
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "A",
+        "is_correct": true,
+        "confidence": 1.0,
+        "confidence_type": "single_model",
+        "reasoning": "Applying the simplified combustor energy balance for f << 1 (justified by the given assumption), $f = \\frac{C_p (T_{t4} - T_{t3})}{Q_R \\eta_b}$. With given values $C_p = 1100\\, \\text{J/kg K}$, $T_{t4}=1300\\,\\text{K}$, $T_{t3}=600\\,\\text{K}$, $Q_R=43.4 \\times 10^6\\, \\text{J/kg}$, $\\eta_b=1$, the calculation yields $f \\approx 0.01774$, matching option A."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Step 1: Identify the governing principle. For a combustor with negligible kinetic energy changes and 100% burner efficiency, the steady-flow energy balance (First Law of Thermodynamics) applies.",
+          "Step 2: Recall the simplified fuel-air ratio formula for f << 1. Since fuel mass flow is much less than air mass flow, the energy balance simplifies to: $f = \\frac{C_p (T_{t4} - T_{t3})}{Q_R \\eta_b}$. (Derivation: $\\dot{m}_a C_p T_{t3} + \\dot{m}_f Q_R \\eta_b = \\dot{m}_a C_p T_{t4}$, ignoring $\\dot{m}_f$ addition on RHS due to f<<1).",
+          "Step 3: Extract given data from the problem statement. $T_{t3}=600\\,\\text{K}$, $T_{t4}=1300\\,\\text{K}$, $Q_R=43.4\\times10^6\\,\\text{J/kg}$, $C_p=1100\\,\\text{J/kg K}$, $\\eta_b=1$, and $f << 1$.",
+          "Step 4: Perform the calculation. Compute temperature rise: $\\Delta T = T_{t4} - T_{t3} = 1300 - 600 = 700\\,\\text{K}$. Compute numerator: $C_p \\Delta T = 1100 \\times 700 = 770,000\\,\\text{J/kg}$. Denominator: $Q_R \\eta_b = 43.4 \\times 10^6 \\,\\text{J/kg}$. Thus, $f = \\frac{770,000}{43,400,000} = 0.017741...$",
+          "Step 5: Compare with options. $f \\approx 0.0177$ corresponds to option A."
+        ],
+        "formulas_used": [
+          "$f = \\frac{C_p (T_{t4} - T_{t3})}{Q_R \\eta_b}$ (simplified for $f \\ll 1$)",
+          "Full energy balance: $\\dot{m}_a C_p T_{t3} + \\dot{m}_f Q_R \\eta_b = (\\dot{m}_a + \\dot{m}_f) C_p T_{t4}$"
+        ],
+        "estimated_time_minutes": 2
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Propulsion",
+          "confidence": 1.0
+        },
+        "topic": {
+          "name": "Combustion and thermochemistry",
+          "syllabus_ref": "Section 6 Propulsion -> Combustion"
+        },
+        "concepts": [
+          {
+            "name": "Fuel-air ratio",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Combustor energy balance",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Burner efficiency",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Approximation for small f",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "First Law of Thermodynamics for open systems (steady-flow energy equation)",
+          "Concept of heating value (calorific value) of fuel",
+          "Specific heat at constant pressure"
+        ],
+        "helpful": [
+          "Mass and energy conservation in reacting flows",
+          "Brayton cycle analysis"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: First Law of Thermodynamics for control volume",
+            "requires: Definition of fuel-air ratio",
+            "enables: Calculation of specific fuel consumption (SFC)",
+            "enables: Analysis of overall engine performance"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Easy",
+        "score": 3,
+        "complexity_breakdown": {
+          "conceptual": 2,
+          "mathematical": 2,
+          "problem_solving": 4
+        },
+        "estimated_solve_time_seconds": 120,
+        "expected_accuracy_percent": 80,
+        "difficulty_factors": [
+          "Requires recognizing the f << 1 approximation to use simplified formula",
+          "Straightforward arithmetic but must handle large numbers correctly"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Hill & Peterson",
+          "author": "Hill, P., & Peterson, C.",
+          "chapter_number": "4",
+          "chapter_title": "Airbreathing Propulsion Cycle Analysis",
+          "section": "Combustor Energy Balance",
+          "page_range": null,
+          "complexity": "intermediate",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval",
+          "text_snippet": "Energy balance across combustor: m_dot_a * cp_a * T_t3 + m_dot_f * Q_R * eta_b = (m_dot_a + m_dot_f) * cp_g * T_t4."
+        },
+        {
+          "source_type": "book",
+          "book": "V. Ganesan",
+          "author": "V. Ganesan",
+          "chapter_number": "4",
+          "chapter_title": "Combustion Systems",
+          "section": null,
+          "page_range": null,
+          "complexity": "intermediate",
+          "relevance_score": 0.8,
+          "source": "rag_retrieval",
+          "text_snippet": "Fuel consumption in combustor determined by energy required to raise stagnation temperature, considering calorific value and efficiency."
+        },
+        {
+          "source_type": "book",
+          "book": "P.K. Nag",
+          "author": "P.K. Nag",
+          "chapter_number": "13",
+          "chapter_title": "Gas Turbines",
+          "section": null,
+          "page_range": null,
+          "complexity": "introductory",
+          "relevance_score": 0.7,
+          "source": "rag_retrieval",
+          "text_snippet": "Energy equation for control volume, heat of combustion."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Dr. D.P. Mishra",
+          "timestamp_start": "00:11:31",
+          "timestamp_end": "00:12:41",
+          "video_url": "https://www.youtube.com/watch?v=HhZ_xV-eT5o",
+          "book_reference": "Hill & Peterson",
+          "topic_covered": "Combustor energy balance and fuel-air ratio calculation",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Dr. P.A. Ramakrishna",
+          "timestamp_start": "00:22:35",
+          "timestamp_end": "00:25:21",
+          "video_url": "https://www.youtube.com/watch?v=8dym9hA1I-A",
+          "book_reference": "Hill & Peterson",
+          "topic_covered": "Fuel-air ratio determination via energy balance",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Direct Formula Application",
+        "total_steps": 5,
+        "solution_path": "Energy Balance → Simplification using f << 1 → Plug numbers → Compute f → Match option",
+        "key_insights": [
+          "The assumption f << 1 allows neglecting the fuel mass addition in the exhaust mass flow, simplifying the energy balance.",
+          "With 100% burner efficiency, all fuel energy is used to heat the gases."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$f = \\frac{C_p (T_{t4} - T_{t3})}{Q_R \\eta_b}$",
+          "name": "Simplified combustor fuel-air ratio",
+          "conditions": "When fuel-air ratio f << 1, constant Cp, negligible kinetic energy, 100% burner efficiency.",
+          "type": "equation",
+          "relevance": "Core formula for solving this problem directly."
+        },
+        {
+          "formula": "$\\dot{m}_a C_p T_{t3} + \\dot{m}_f Q_R \\eta_b = (\\dot{m}_a + \\dot{m}_f) C_p T_{t4}$",
+          "name": "Exact combustor energy balance",
+          "conditions": "General steady flow, constant Cp for air and burned gases.",
+          "type": "equation",
+          "relevance": "Underlying principle; simplification leads to the above formula."
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "CFM56 turbofan engine combustor design",
+          "General Electric GE90 combustor fuel-air ratio calculation"
+        ],
+        "specific_systems": [
+          "Boeing 737 MAX (CFM LEAP engines)",
+          "Airbus A320neo (PW1100G engines)"
+        ],
+        "practical_relevance": "Fuel-air ratio directly impacts engine efficiency, emissions, and operating temperature limits. Accurate calculation is crucial for combustor design and engine performance optimization."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Using the exact energy balance formula without simplifying for f << 1, leading to a more complex calculation and potential arithmetic error.",
+          "why_students_make_it": "Overlooking the given assumption f << 1, or not knowing the simplification is allowed.",
+          "type": "Approximation",
+          "severity": "Medium",
+          "frequency": "common",
+          "how_to_avoid": "Always check for given assumptions. When f << 1 is stated, use the simplified formula $f = \\frac{C_p \\Delta T}{Q_R \\eta_b}$ to save time and reduce complexity.",
+          "consequence": "May get answer ~0.0183, which is not among options, causing confusion."
+        },
+        {
+          "mistake": "Incorrect unit handling: not converting all quantities to consistent units (e.g., mixing kJ and J).",
+          "why_students_make_it": "Heating value is given in 10^6 J/kg, Cp in J/kg K; students might forget to keep all in same unit system.",
+          "type": "Units",
+          "severity": "High",
+          "frequency": "occasional",
+          "how_to_avoid": "Explicitly write units for each term. Ensure all are in SI base units (J, kg, K).",
+          "consequence": "Answer off by orders of magnitude (e.g., 0.177 or 0.00177)."
+        },
+        {
+          "mistake": "Forgetting to account for burner efficiency, even though it's 100% here. In other problems, overlooking η_b < 1 leads to underestimating f.",
+          "why_students_make_it": "Skipping reading 'assume 100% burner efficiency' or misplacing η_b in formula.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "common",
+          "how_to_avoid": "Always note efficiency value. If η_b=1, it simplifies, but keep the habit of including it in the formula template.",
+          "consequence": "If η_b were less than 1, would compute lower f than required."
+        },
+        {
+          "mistake": "Using different Cp values for air and burned gases despite problem stating 'assume Cp to be 1100 J/kg K for air and burned gases'.",
+          "why_students_make_it": "Relying on memorized typical values (e.g., 1005 for air, 1148 for gases) instead of given data.",
+          "type": "Data Misapplication",
+          "severity": "High",
+          "frequency": "occasional",
+          "how_to_avoid": "Always use the values provided in the problem statement, not recalled values.",
+          "consequence": "Using Cp_air=1005, Cp_gas=1148 yields f ~0.0171, close but not exact, possibly leading to wrong option selection."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "CHEF: Combustor Heat Equals Fuel energy. (Heat added = fuel energy * efficiency)",
+          "concept": "Energy balance core idea",
+          "effectiveness": "medium",
+          "context": "Remembering the structure of combustor energy equation."
+        },
+        {
+          "mnemonic": "FART: Fuel-Air Ratio = (Cp ΔT) / (QR eta).",
+          "concept": "Simplified fuel-air ratio formula (f << 1)",
+          "effectiveness": "high",
+          "context": "Quick recall for calculations under small f assumption."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "What is the simplified fuel-air ratio formula for a combustor when f << 1, constant Cp, and 100% burner efficiency?",
+          "back": "$f = \\frac{C_p (T_{t4} - T_{t3})}{Q_R}$ where $T_{t4}$ is combustor exit temp, $T_{t3}$ inlet temp, $Q_R$ heating value.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "definition",
+          "front": "Define fuel-air ratio (f) in the context of gas turbine combustors.",
+          "back": "Fuel-air ratio f = mass flow rate of fuel / mass flow rate of air entering combustor. It is a dimensionless quantity, typically ~0.01-0.03 for gas turbines.",
+          "difficulty": "easy",
+          "time_limit_seconds": 20
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "What is a common unit mistake when calculating f with Q_R=43.4e6 J/kg and Cp=1100 J/kg K?",
+          "back": "Ensure both numerator (CpΔT) and denominator (Q_R) are in same units (J/kg). CpΔT = 1100*700 = 770,000 J/kg, Q_R=43,400,000 J/kg. Dividing gives f=0.0177.",
+          "difficulty": "medium",
+          "time_limit_seconds": 40
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "What does the assumption f << 1 allow in the combustor energy balance?",
+          "back": "It allows neglecting the fuel mass addition on the RHS: (ṁ_a+ṁ_f) ≈ ṁ_a, simplifying the energy balance to ṁ_a C_p T_t3 + ṁ_f Q_R η_b = ṁ_a C_p T_t4.",
+          "difficulty": "medium",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "application",
+          "front": "Given T_t3=600 K, T_t4=1300 K, Q_R=43.4e6 J/kg, Cp=1100 J/kg K, η_b=1, compute f using simplified formula.",
+          "back": "ΔT=700 K. Numerator=1100*700=770,000 J/kg. Denominator=43.4e6 J/kg. f=770,000/43,400,000=0.01774 ≈ 0.0177.",
+          "difficulty": "easy",
+          "time_limit_seconds": 45
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Combustor design in aircraft engines",
+          "industry_example": "In the LEAP engine (CFM International), the fuel-air ratio in the combustor is carefully controlled to maintain low emissions (NOx) and high efficiency, typically around 0.02.",
+          "why_it_matters": "If f is too high, temperature exceeds turbine material limits; if too low, combustion instability or incomplete combustion occurs."
+        },
+        {
+          "application": "Performance calculation for existing engines",
+          "industry_example": "Engine health monitoring uses measured fuel flow and air flow to compute actual f and compare with design values to detect issues like compressor degradation.",
+          "why_it_matters": "Deviations from design f indicate performance loss or potential failures."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "Quick 2-minute formula plug-in. Recognize it as a standard combustor f calculation with simple numbers.",
+        "guessing_heuristic": "If stuck, compute approximate: Cp~1 kJ/kg K, ΔT=700 K, so numerator ~700 kJ/kg. QR~43,000 kJ/kg. Ratio ~700/43000 ≈ 0.0163, closest to 0.0177 (A).",
+        "time_management": "Allocate max 3 minutes; it's a 1-mark question with negative marking, but straightforward."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "fuel-air ratio combustor calculation",
+        "combustor energy balance gas turbine",
+        "how to calculate fuel mass flow rate in turbojet",
+        "burner efficiency effect on fuel-air ratio",
+        "Cp air burned gases constant",
+        "GATE propulsion numericals combustor",
+        "first law thermodynamics combustor steady flow",
+        "heating value calorific value fuel"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Exact energy balance without f << 1 approximation",
+          "description": "Solve the full equation: $f = \\frac{C_p (T_{t4} - T_{t3})}{Q_R \\eta_b - C_p T_{t4}}$. This accounts for the fuel mass addition in the exhaust.",
+          "pros_cons": "Pros: More accurate for larger f. Cons: Slightly more complex algebra and arithmetic.",
+          "when_to_use": "When f is not very small (e.g., >0.05) or when problem does not state f << 1."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Thermodynamics": "First Law for open systems (control volume) is the foundation. Concepts of enthalpy, specific heat, and heat of reaction.",
+        "Chemical Engineering": "Combustion stoichiometry and energy release per kg fuel.",
+        "Fluid Mechanics": "Mass flow rate conservation and stagnation properties."
+      },
+      "deeper_dive_topics": [
+        "Stoichiometric vs lean/rich combustion and their impact on flame temperature and emissions.",
+        "Effect of altitude (inlet pressure and temperature) on required fuel-air ratio for same TIT.",
+        "Combustor efficiency factors: incomplete combustion, heat loss, pressure loss.",
+        "Variation of Cp with temperature and composition (need for polynomial fits)."
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2024_AE_Q19",
+        "year": 2024,
+        "marks": 1.0,
+        "negative_marks": 0.33,
+        "time_expected": "2-3 minutes",
+        "success_rate_estimate": "80%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 6: Propulsion",
+        "gate_subsection": "Combustion and thermochemistry",
+        "weightage": "Approx 5-8% of Propulsion section",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Well-aligned with core propulsion syllabus; tests fundamental application of energy balance."
+      },
+      "rag_quality": {
+        "relevance_score": 0.9,
+        "chunks_used": 6,
+        "sources_distribution": {
+          "books": 3,
+          "videos": 3
+        },
+        "notes": "RAG provided excellent and directly relevant content: multiple video chunks (1,2,4,5,6) and textbook references detailing the combustor energy balance and fuel-air ratio formula. The derivation and example calculations in chunks 1 and 2 match the problem structure. The context was sufficient to solve the problem and provide comprehensive explanation."
+      },
+      "model_meta": {
+        "timestamp": "2025-04-10T15:30:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Effect of burner efficiency less than 100% on f (e.g., η_b=0.98).",
+        "Given f and temperatures, find required heating value of fuel.",
+        "Include pressure drop in combustor (given pressure recovery factor) and ask for stagnation pressure at exit.",
+        "Combined with compressor/turbine work balance to find net thrust or specific fuel consumption."
+      ]
+    },
+    "question_id": "GATE_2024_AE_Q19",
+    "year": 2024,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "MCQ",
+    "question_text": "In an airbreathing gas turbine engine, the combustor inlet temperature is 600 K. The heating value of the fuel is 43.4 × 10^6 J/kg. Assume Cp to be 1100 J/kg K for air and burned gases, and fuel-air ratio f << 1.0. Neglect kinetic energy at the inlet and exit of the combustor and assume 100% burner efficiency. What is the fuel-air ratio required to achieve 1300 K temperature at the combustor exit?"
+  },
+  "tokens_used": 17964,
+  "input_tokens": 10975,
+  "output_tokens": 6989,
+  "cost": 0.021342160000000002,
+  "time_seconds": 218.8835051059723
+}
