@@ -1,0 +1,364 @@
+{
+  "model_name": "deepseek_r1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "text_only",
+      "combined_type": "numerical_calculation_text_only",
+      "weight_strategy": "NUMERICAL_WEIGHTED",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "This question involves a numerical calculation based on the given relationship between power coefficient, flow coefficient, and rotation rate. It requires understanding the relationship and applying it to find the new power value when the rotation rate changes, keeping the flow rate constant. It involves multiple steps but doesn't require deep conceptual understanding or derivation.",
+      "difficulty_score": 5,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": false,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": false
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "1.25",
+        "is_correct": true,
+        "confidence": 0.95,
+        "confidence_type": "single_model",
+        "reasoning": "The power coefficient is given by $C_p = P / (\\rho \\omega^3 D^5) = a \\Phi^2$. The flow coefficient $\\Phi$ is a dimensionless flow rate scaled with $\\omega$ and $D$. The standard definition is $\\Phi = Q / (\\omega D^3)$, where $Q$ is the volume flow rate. The condition states the flow rate $Q$ remains constant. Using the affinity law for power with respect to speed (from RAG chunks 1 & 4), $P \\propto \\omega^3$ only if $\\Phi$ (i.e., dynamic similarity) is maintained. However, here $Q$ is constant, so $\\Phi \\propto 1/\\omega$. Substituting into the given relation $C_p = a \\Phi^2$, we find $P \\propto \\omega$. Therefore, increasing $\\omega$ by a factor of 1.25 increases $P$ by the same factor: $\\alpha = 1.25$."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Step 1: Define the dimensionless coefficients. Power coefficient: $C_p = \\frac{P}{\\rho \\omega^3 D^5}$. Flow coefficient: $\\Phi = \\frac{Q}{\\omega D^3}$, where $Q$ is the volume flow rate. The given pump characteristic is $C_p = a \\Phi^2$, where $a$ is constant.",
+          "Step 2: Express power $P$ in terms of $Q$, $\\omega$, and constants. Substitute $\\Phi$ into the characteristic: $\\frac{P}{\\rho \\omega^3 D^5} = a \\left(\\frac{Q}{\\omega D^3}\\right)^2 = a \\frac{Q^2}{\\omega^2 D^6}$. Solve for $P$: $P = a \\rho \\omega^3 D^5 \\cdot \\frac{Q^2}{\\omega^2 D^6} = \\frac{a \\rho Q^2}{D} \\omega$.",
+          "Step 3: Analyze the scenario. Flow rate $Q$ is constant. Length scale $D$, density $\\rho$, and constant $a$ are also constant. Therefore, from the derived relation, $P \\propto \\omega$.",
+          "Step 4: Apply the speed change. Initial rotation rate is $\\omega$, power is $P$. New rotation rate is $\\omega' = 1.25\\omega$. New power $P' = \\frac{a \\rho Q^2}{D} \\omega' = \\frac{a \\rho Q^2}{D} (1.25\\omega) = 1.25 \\left(\\frac{a \\rho Q^2}{D} \\omega\\right) = 1.25 P$.",
+          "Step 5: Conclude $\\alpha = P'/P = 1.25$. Round to two decimal places: 1.25."
+        ],
+        "formulas_used": [
+          "$C_p = \\frac{P}{\\rho \\omega^3 D^5}$",
+          "$\\Phi = \\frac{Q}{\\omega D^3}$",
+          "$C_p = a \\Phi^2$",
+          "$P = \\frac{a \\rho Q^2}{D} \\omega$"
+        ],
+        "estimated_time_minutes": 3
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Propulsion",
+          "confidence": 0.9
+        },
+        "topic": {
+          "name": "Turbomachinery (Pumps)",
+          "syllabus_ref": "Section 6: Propulsion -> Turbopumps and Feed Systems"
+        },
+        "concepts": [
+          {
+            "name": "Pump Affinity Laws / Similarity Laws",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Dimensionless Performance Coefficients (Power Coefficient, Flow Coefficient)",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Scaling with Rotational Speed",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Dimensional Analysis and Buckingham Pi Theorem",
+          "Definition of pump performance parameters (Head, Power, Flow Rate)",
+          "Basic algebra and proportionality reasoning"
+        ],
+        "helpful": [
+          "Understanding of pump characteristic curves",
+          "Fluid mechanics of turbomachinery"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Dimensional Analysis to define $C_p$ and $\\Phi$",
+            "requires: Knowledge of pump power and flow rate relationships",
+            "enables: Predicting pump performance under changed operating conditions",
+            "enables: Design of pump systems using similarity principles"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Medium",
+        "score": 5,
+        "complexity_breakdown": {
+          "conceptual": 6,
+          "mathematical": 4
+        },
+        "estimated_solve_time_seconds": 120,
+        "expected_accuracy_percent": 65,
+        "difficulty_factors": [
+          "Requires careful interpretation of 'flow rate remains the same' vs. constant flow coefficient.",
+          "Must correctly derive the proportionality $P \\propto \\omega$ from the given characteristic, not blindly apply $P \\propto \\omega^3$."
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Rocket Propulsion Elements",
+          "author": "Sutton and Biblarz",
+          "chapter_title": "Pump Performance and Scaling",
+          "section": "Pump Power and Head Formulas",
+          "relevance_score": 0.7,
+          "source": "rag_retrieval",
+          "text_snippet": "Pump Power: $P_p = \\frac{{\\dot{m}} g_0 H}{{\\eta_p}} = \\frac{{Q \\Delta p}}{{\\eta_p}}$. Pump Head: $H = \\frac{{\\Delta p}}{{\\rho g_0}}$."
+        },
+        {
+          "source_type": "book",
+          "book": "Fluid Mechanics",
+          "author": "Frank M. White",
+          "chapter_title": "Turbomachinery",
+          "section": "Pump Similarity Laws",
+          "relevance_score": 0.8,
+          "source": "model_consensus",
+          "text_snippet": "Affinity laws for a given pump (constant D): $Q_2/Q_1 = n_2/n_1$, $H_2/H_1 = (n_2/n_1)^2$, $P_2/P_1 = (n_2/n_1)^3$. These assume dynamic similarity (constant flow coefficient)."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. A. Sameen",
+          "timestamp_start": "00:19:44",
+          "timestamp_end": "00:28:19",
+          "topic_covered": "Pump Similarity Laws (Affinity Laws)",
+          "relevance_score": 0.75,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Direct Formula Application with Dimensional Analysis",
+        "total_steps": 5,
+        "solution_path": "Define Coefficients → Substitute Characteristic → Derive P(ω) Relation → Apply Speed Change → Compute α",
+        "key_insights": [
+          "The key is to realize $Q$ constant means $\\Phi$ changes with $ω$, breaking the direct $P ∝ ω^3$ affinity law.",
+          "The given $C_p = aΦ^2$ is the specific pump characteristic that must be used instead of generic affinity laws."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$C_p = \\frac{P}{\\rho \\omega^3 D^5}$",
+          "name": "Power Coefficient",
+          "conditions": "Dimensionless group for pump power",
+          "type": "equation",
+          "relevance": "Given in problem, defines relationship between power, speed, and size."
+        },
+        {
+          "formula": "$\\Phi = \\frac{Q}{\\omega D^3}$",
+          "name": "Flow Coefficient",
+          "conditions": "Standard definition for dimensionless flow rate in turbomachinery",
+          "type": "equation",
+          "relevance": "Assumed definition based on problem statement 'scaled with ω and D'. Critical for solution."
+        },
+        {
+          "formula": "$C_p = a \\Phi^2$",
+          "name": "Pump Characteristic",
+          "conditions": "Given operating characteristic, 'a' is constant.",
+          "type": "equation",
+          "relevance": "Core equation linking power and flow coefficients."
+        },
+        {
+          "formula": "$P = \\frac{a \\rho Q^2}{D} \\omega$",
+          "name": "Derived Power Relation",
+          "conditions": "For constant Q, ρ, D, a",
+          "type": "equation",
+          "relevance": "Shows direct proportionality P ∝ ω under the given constraints."
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Predicting power requirements for a rocket engine turbopump when its RPM is adjusted to maintain constant propellant flow.",
+          "Scaling pump performance in aircraft fuel systems or environmental control systems."
+        ],
+        "specific_systems": [
+          "Space Shuttle Main Engine (SSME) High-Pressure Fuel Turbopump",
+          "Auxiliary Power Unit (APU) fuel pump"
+        ],
+        "practical_relevance": "Accurate prediction of power consumption is critical for sizing turbines, motors, and power supplies in propulsion and fluid systems. Misapplication of scaling laws can lead to underpowered or overpowered designs."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Blindly applying affinity law $P_2/P_1 = (\\omega_2/\\omega_1)^3$ assuming dynamic similarity (constant $\\Phi$).",
+          "why_students_make_it": "Familiarity with the common affinity laws from formula sheets without checking if the condition of constant flow coefficient is met.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Always check the given constraints. Here, $Q$ is constant, so $\\Phi = Q/(\\omega D^3)$ changes with $\\omega$. Dynamic similarity is not maintained, so the simple cubic law does not apply.",
+          "consequence": "Would give $\\alpha = (1.25)^3 \\approx 1.95$, which is incorrect."
+        },
+        {
+          "mistake": "Incorrectly defining the flow coefficient $\\Phi$. For example, using $\\Phi = Q/(\\omega^2 D^2)$ or other combinations that are not dimensionless.",
+          "why_students_make_it": "Not recalling the standard form or misinterpreting 'scaled with ω and D'.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "occasional",
+          "how_to_avoid": "Use dimensional analysis: $Q$ has dimensions $[L^3T^{-1}]$, $\\omega$ has $[T^{-1}]$, $D$ has $[L]$. For $\\Phi$ to be dimensionless, it must be $Q/(\\omega D^3)$ or a constant multiple thereof.",
+          "consequence": "Leads to an incorrect proportionality between $P$ and $\\omega$ and a wrong answer."
+        },
+        {
+          "mistake": "Algebraic error when substituting $\\Phi$ into $C_p = a\\Phi^2$, especially with exponents.",
+          "why_students_make_it": "Rushing through the manipulation of terms with exponents $\\omega^3$, $\\omega^2$, $D^5$, $D^6$.",
+          "type": "Calculation",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Write step clearly: $C_p = a (Q/(\\omega D^3))^2 = a Q^2/(\\omega^2 D^6)$. Then multiply both sides by $\\rho \\omega^3 D^5$ to solve for $P$. Double-check exponent cancellation.",
+          "consequence": "May get $P \\propto \\omega^2$ or $P \\propto \\omega^{-1}$, etc."
+        },
+        {
+          "mistake": "Forgetting that $Q$ is constant and treating it as variable, or confusing volume flow rate $Q$ with flow coefficient $\\Phi$.",
+          "why_students_make_it": "Misreading the problem statement: 'assuming that the flow rate remains the same'.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Underline key constraints in the problem. Here, 'flow rate remains the same' means $Q$ = constant. $\\Phi$ will change because it depends on $\\omega$.",
+          "consequence": "May incorrectly keep $\\Phi$ constant, leading to the wrong affinity law application."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "PQ Omega (P-Q-ω): For this problem, from the derived relation, remember: Power is directly Proportional to Omega when Q is constant.",
+          "concept": "Proportionality $P \\propto \\omega$ under constant flow rate for the given characteristic.",
+          "effectiveness": "medium",
+          "context": "For quick recall in similar GATE problems where a pump characteristic is given and Q is fixed."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "Write the standard definitions for Power Coefficient ($C_p$) and Flow Coefficient ($\\Phi$) for a pump in terms of $P$, $\\rho$, $\\omega$, $D$, $Q$.",
+          "back": "$C_p = \\frac{P}{\\rho \\omega^3 D^5}$; $\\Phi = \\frac{Q}{\\omega D^3}$. $\\Phi$ is dimensionless.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "Under what condition do the simple pump affinity laws $P \\propto \\omega^3$, $Q \\propto \\omega$, $H \\propto \\omega^2$ hold exactly?",
+          "back": "When dynamic similarity is maintained, i.e., the flow coefficient $\\Phi$ is constant (geometrically similar pumps at homologous points).",
+          "difficulty": "medium",
+          "time_limit_seconds": 25
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "If a pump problem states 'flow rate Q remains constant', can you directly use $P \\propto \\omega^3$? Why or why not?",
+          "back": "No. Constant Q means $\\Phi = Q/(\\omega D^3)$ changes with $\\omega$. The condition for $P \\propto \\omega^3$ is constant $\\Phi$. You must use the given pump characteristic equation instead.",
+          "difficulty": "hard",
+          "time_limit_seconds": 40
+        },
+        {
+          "card_type": "application",
+          "front": "Given $C_p = a\\Phi^2$, $Q$ constant, $\\omega$ increases by 20%. By what factor does power $P$ change?",
+          "back": "From $P = (a\\rho Q^2/D) \\omega$, $P \\propto \\omega$. So $P$ increases by 20%, factor = 1.20.",
+          "difficulty": "medium",
+          "time_limit_seconds": 30
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Rocket Engine Thrust Control",
+          "industry_example": "In a liquid rocket engine, the thrust is often controlled by varying the turbopump speed to change propellant flow rate. However, during certain steady-state phases (e.g., maximum thrust), the flow rate might be held constant. If the pump speed needs a slight increase to overcome increased system losses while maintaining flow, this calculation predicts the new pump power requirement.",
+          "why_it_matters": "Oversizing or undersizing the turbine that drives the pump leads to inefficient operation or failure to meet thrust requirements."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "This is a 2-mark numerical answer type (NAT) question. It's relatively quick if you correctly identify the proportionality. Should take 2-3 minutes. Read carefully: 'flow rate remains the same' is the critical clue.",
+        "guessing_heuristic": "If confused, note that $C_p$ contains $\\omega^3$ in denominator and $\\Phi^2$ contains $\\omega^{-2}$, so combining gives $P$ likely proportional to $\\omega^{3-2} = \\omega^1$. So guess around 1.25.",
+        "time_management": "Allocate no more than 3 minutes. If stuck, note the derived relation $P \\propto \\omega$ and move on."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "pump affinity laws GATE AE",
+        "power coefficient flow coefficient derivation",
+        "turbopump scaling laws",
+        "dimensional analysis pump performance",
+        "effect of rotational speed on pump power",
+        "constant flow rate pump speed change",
+        "pump similarity laws problem",
+        "GATE aerospace propulsion turbomachinery"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Dimensional Analysis from Scratch",
+          "description": "Assume $P = f(\\rho, \\omega, D, Q, a)$. Using Buckingham Pi theorem, form dimensionless groups $C_p$ and $\\Phi$. The given $C_p = a\\Phi^2$ is the specific functional form. Then proceed as in the solution.",
+          "pros_cons": "More fundamental but longer. Reinforces understanding of dimensional analysis.",
+          "when_to_use": "If you want to verify the definitions of $C_p$ and $\\Phi$ or if the problem did not provide them."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Fluid Mechanics": "Direct application of turbomachinery principles, dimensionless numbers, and similarity.",
+        "Thermodynamics": "Power is related to the energy transfer between the pump and fluid; efficiency concepts connect to the first law.",
+        "Propulsion": "Core application in rocket turbopumps and aircraft fuel systems."
+      },
+      "deeper_dive_topics": [
+        "Pump Specific Speed ($N_s$) and its use in pump selection and classification (see RAG chunk 2).",
+        "Impact of pump efficiency ($\\eta_p$) on power calculations; how $\\eta_p$ varies with $\\omega$ and $Q$.",
+        "Cavitation in pumps when speed changes and its effect on performance and scaling law accuracy.",
+        "Full pump characteristic curves (head vs flow, efficiency vs flow) and how they shift with speed."
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2023_AE_Q55",
+        "year": 2023,
+        "marks": 2.0,
+        "negative_marks": 0.0,
+        "time_expected": "2-3 minutes",
+        "success_rate_estimate": "65%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 6: Propulsion",
+        "gate_subsection": "6.3 Rocket Propulsion: Turbopumps and Feed Systems",
+        "weightage": "~5-8% of Propulsion section",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Well-aligned with turbomachinery fundamentals within propulsion context. Tests understanding of scaling laws beyond rote memory."
+      },
+      "rag_quality": {
+        "relevance_score": 0.6,
+        "chunks_used": 3,
+        "sources_distribution": {
+          "books": 1,
+          "videos": 2
+        },
+        "notes": "RAG provided relevant background on pump affinity laws (Chunks 1, 4, 6) and pump power formulas (Chunk 2), which are essential context. However, the specific given characteristic $C_p = a\\Phi^2$ and the condition of constant flow rate were not covered. The solution required combining RAG knowledge (definitions, standard laws) with internal reasoning about dimensionless groups and proportionality. RAG was helpful but not sufficient alone."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-13T10:30:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Same setup but with impeller diameter $D$ changing instead of $\\omega$.",
+        "Given $C_p = a\\Phi + b\\Phi^2$, find new power for a change in speed while keeping efficiency constant.",
+        "Combine with system curve (H vs Q) to find the operating point after speed change.",
+        "Include pump efficiency $\\eta_p$ and ask for the required turbine power or motor size."
+      ]
+    },
+    "question_id": "GATE_2023_AE_Q55",
+    "year": 2023,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "NAT",
+    "question_text": "The operating characteristics of a pump were measured to be C_p = a Φ², where power coefficient C_p = P / (ρ ω³ D⁵), Φ is the flow coefficient, a is a constant, D is a length scale, ω is the rotation rate, ρ is fluid density, and P is the power required. The flow coefficient is a dimensionless volume flow rate scaled with ω and D. Assuming that the flow rate remains the same, if the rotation rate is increased to 1.25ω, the power changes to αP. The value of α is ________ . (round off to two decimal places)"
+  },
+  "tokens_used": 18245,
+  "input_tokens": 9512,
+  "output_tokens": 8733,
+  "cost": 0.02435687,
+  "time_seconds": 304.28523302078247
+}
