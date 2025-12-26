@@ -1,0 +1,375 @@
+{
+  "model_name": "gemini_2.5_pro",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "image_based",
+      "combined_type": "numerical_calculation_image_based",
+      "weight_strategy": "MATH_IMAGE_HYBRID",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "The question requires calculating principal stresses based on two uniaxial stress states, which involves Mohr's circle or stress transformation equations. It requires understanding of stress transformation and principal stress concepts, making it a multi-concept integration problem with a medium difficulty.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "0.0 N/mm2",
+        "is_correct": true,
+        "confidence": 1.0,
+        "confidence_type": "single_model",
+        "reasoning": "The problem involves two separate loading cases that are superimposed to find the resultant stress state. The goal is to find the sum of the maximum and minimum principal stresses for this resultant state.\n\n1.  **Analyze Case I: Uniaxial tension along x' (10 N/mm²)**\n    The stress state in the x'y' coordinate system is: $\\sigma_{x'} = 10 \\text{ N/mm}^2$, $\\sigma_{y'} = 0$, $\\tau_{x'y'} = 0$.\n    The x' axis is oriented at $\\theta = 45^\\circ$ with respect to the x-axis.\n    Using plane stress transformation equations to find stresses in the xy system:\n    $\\sigma_x^{(I)} = \\sigma_{x'} \\cos^2\\theta + \\sigma_{y'} \\sin^2\\theta + 2\\tau_{x'y'} \\sin\\theta \\cos\\theta = 10 \\cos^2(45^\\circ) + 0 + 0 = 10 (1/\\sqrt{2})^2 = 5 \\text{ N/mm}^2$\n    $\\sigma_y^{(I)} = \\sigma_{x'} \\sin^2\\theta + \\sigma_{y'} \\cos^2\\theta - 2\\tau_{x'y'} \\sin\\theta \\cos\\theta = 10 \\sin^2(45^\\circ) + 0 + 0 = 10 (1/\\sqrt{2})^2 = 5 \\text{ N/mm}^2$\n    $\\tau_{xy}^{(I)} = -(\\sigma_{x'} - \\sigma_{y'}) \\sin\\theta \\cos\\theta + \\tau_{x'y'} (\\cos^2\\theta - \\sin^2\\theta) = -(10 - 0) \\sin(45^\\circ) \\cos(45^\\circ) = -10 (1/\\sqrt{2})(1/\\sqrt{2}) = -5 \\text{ N/mm}^2$\n\n2.  **Analyze Case II: Uniaxial compression along y' (10 N/mm²)**\n    The stress state in the x'y' coordinate system is: $\\sigma_{x'} = 0$, $\\sigma_{y'} = -10 \\text{ N/mm}^2$, $\\tau_{x'y'} = 0$.\n    The y' axis is oriented at $45^\\circ$ from the y-axis, which means the x' axis is still at $\\theta = 45^\\circ$ from the x-axis.\n    Using plane stress transformation equations:\n    $\\sigma_x^{(II)} = \\sigma_{x'} \\cos^2\\theta + \\sigma_{y'} \\sin^2\\theta + 2\\tau_{x'y'} \\sin\\theta \\cos\\theta = 0 + (-10) \\sin^2(45^\\circ) + 0 = -10 (1/\\sqrt{2})^2 = -5 \\text{ N/mm}^2$\n    $\\sigma_y^{(II)} = \\sigma_{x'} \\sin^2\\theta + \\sigma_{y'} \\cos^2\\theta - 2\\tau_{x'y'} \\sin\\theta \\cos\\theta = 0 + (-10) \\cos^2(45^\\circ) + 0 = -10 (1/\\sqrt{2})^2 = -5 \\text{ N/mm}^2$\n    $\\tau_{xy}^{(II)} = -(\\sigma_{x'} - \\sigma_{y'}) \\sin\\theta \\cos\\theta + \\tau_{x'y'} (\\cos^2\\theta - \\sin^2\\theta) = -(0 - (-10)) \\sin(45^\\circ) \\cos(45^\\circ) = -10 (1/\\sqrt{2})(1/\\sqrt{2}) = -5 \\text{ N/mm}^2$\n\n3.  **Apply Superposition for Resultant Stress State:**\n    Add the corresponding stress components from Case I and Case II:\n    $\\sigma_{x,res} = \\sigma_x^{(I)} + \\sigma_x^{(II)} = 5 + (-5) = 0 \\text{ N/mm}^2$\n    $\\sigma_{y,res} = \\sigma_y^{(I)} + \\sigma_y^{(II)} = 5 + (-5) = 0 \\text{ N/mm}^2$\n    $\\tau_{xy,res} = \\tau_{xy}^{(I)} + \\tau_{xy}^{(II)} = -5 + (-5) = -10 \\text{ N/mm}^2$\n    The resultant stress state in the xy system is $\\sigma_x = 0$, $\\sigma_y = 0$, $\\tau_{xy} = -10 \\text{ N/mm}^2$. This is a state of pure shear.\n\n4.  **Calculate the Sum of Maximum and Minimum Principal Stresses:**\n    A key property of plane stress is that the sum of the normal stresses is an invariant, meaning it remains constant regardless of the coordinate system's orientation. This implies that the sum of the principal stresses ($\\sigma_1 + \\sigma_2$) is equal to the sum of the normal stresses in any orthogonal coordinate system (e.g., $\\sigma_x + \\sigma_y$).\n    Therefore, for the resultant stress state:\n    $\\sigma_1 + \\sigma_2 = \\sigma_{x,res} + \\sigma_{y,res} = 0 + 0 = 0 \\text{ N/mm}^2$.\n\n    Alternatively, we can calculate the principal stresses explicitly for the resultant state:\n    $\\sigma_{1,2} = \\frac{\\sigma_x + \\sigma_y}{2} \\pm \\sqrt{\\left(\\frac{\\sigma_x - \\sigma_y}{2}\\right)^2 + \\tau_{xy}^2}$\n    $\\sigma_{1,2} = \\frac{0 + 0}{2} \\pm \\sqrt{\\left(\\frac{0 - 0}{2}\\right)^2 + (-10)^2}$\n    $\\sigma_{1,2} = 0 \\pm \\sqrt{0 + 100} = \\pm 10 \\text{ N/mm}^2$\n    So, the maximum principal stress is $\\sigma_1 = 10 \\text{ N/mm}^2$ and the minimum principal stress is $\\sigma_2 = -10 \\text{ N/mm}^2$.\n    The sum is $\\sigma_1 + \\sigma_2 = 10 + (-10) = 0 \\text{ N/mm}^2$.\n\nThe final answer is 0.0 N/mm²."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Step 1: Identify the given stress states for Case I (uniaxial tension along x') and Case II (uniaxial compression along y') and the orientation of the x'y' coordinate system relative to the xy system ($\\theta = 45^\\circ$).",
+          "Step 2: Transform the stress components from the x'y' system to the xy system for Case I using the plane stress transformation equations.",
+          "Step 3: Transform the stress components from the x'y' system to the xy system for Case II.",
+          "Step 4: Apply the principle of superposition to find the resultant stress components ($\\sigma_x, \\sigma_y, \\tau_{xy}$) in the xy system by summing the corresponding components from Case I and Case II.",
+          "Step 5: Recognize that the sum of maximum and minimum principal stresses ($\\sigma_1 + \\sigma_2$) is a stress invariant, equal to the sum of normal stresses in any orthogonal coordinate system ($\\sigma_x + \\sigma_y$).",
+          "Step 6: Calculate the sum $\\sigma_x + \\sigma_y$ for the resultant stress state to find the required answer. Alternatively, calculate $\\sigma_1$ and $\\sigma_2$ explicitly and then sum them."
+        ],
+        "formulas_used": [
+          "$\\sigma_x = \\sigma_{x'} \\cos^2\\theta + \\sigma_{y'} \\sin^2\\theta + 2\\tau_{x'y'} \\sin\\theta \\cos\\theta$",
+          "$\\sigma_y = \\sigma_{x'} \\sin^2\\theta + \\sigma_{y'} \\cos^2\\theta - 2\\tau_{x'y'} \\sin\\theta \\cos\\theta$",
+          "$\\tau_{xy} = -(\\sigma_{x'} - \\sigma_{y'}) \\sin\\theta \\cos\\theta + \\tau_{x'y'} (\\cos^2\\theta - \\sin^2\\theta)$",
+          "$\\sigma_1 + \\sigma_2 = \\sigma_x + \\sigma_y$",
+          "$\\sigma_{1,2} = \\frac{\\sigma_x + \\sigma_y}{2} \\pm \\sqrt{\\left(\\frac{\\sigma_x - \\sigma_y}{2}\\right)^2 + \\tau_{xy}^2}$"
+        ],
+        "estimated_time_minutes": 3
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Structures",
+          "confidence": 0.98
+        },
+        "topic": {
+          "name": "Stress Analysis and Transformation",
+          "syllabus_ref": "Section 1: Engineering Mechanics -> Stress and Strain -> Plane Stress, Principal Stresses"
+        },
+        "concepts": [
+          {
+            "name": "Stress Transformation",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Principle of Superposition",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Principal Stresses",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Stress Invariants",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Pure Shear",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Understanding of 2D stress state representation",
+          "Stress transformation equations for plane stress",
+          "Principle of superposition in mechanics of materials",
+          "Calculation of principal stresses"
+        ],
+        "helpful": [
+          "Mohr's Circle for plane stress",
+          "Concept of stress invariants"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Understanding of stress components ($\\sigma_x, \\sigma_y, \\tau_{xy}$)",
+            "requires: Knowledge of coordinate system rotation",
+            "enables: Analysis of complex loading scenarios",
+            "enables: Design against failure under combined stresses"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Easy",
+        "score": 3,
+        "complexity_breakdown": {
+          "conceptual": 4,
+          "mathematical": 3,
+          "problem_solving": 3
+        },
+        "estimated_solve_time_seconds": 180,
+        "expected_accuracy_percent": 80,
+        "difficulty_factors": [
+          "Requires knowledge of stress invariants for efficient solution",
+          "Careful application of stress transformation equations and sign conventions"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Aircraft Structures for Engineering Students",
+          "author": "T.H.G. Megson",
+          "chapter_title": "Basic elasticity",
+          "section": "1.7",
+          "complexity": "intermediate",
+          "relevance_score": 0.8,
+          "source": "rag_retrieval",
+          "text_snippet": "This section introduces the fundamental concept of principal stresses, which are the maximum and minimum normal (direct) stresses experienced by a material at a specific point."
+        },
+        {
+          "source_type": "book",
+          "book": "Mechanics of Materials",
+          "author": "Beer & Johnston",
+          "chapter_title": "Stress Transformation and Principal Stresses",
+          "complexity": "introductory",
+          "relevance_score": 0.9,
+          "source": "model_consensus"
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. S.K. Bhattacharyya",
+          "timestamp_start": "00:54:41",
+          "topic_covered": "Stress Invariants, Pure Shear, Axial Loading",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Superposition and Stress Invariant Application",
+        "total_steps": 6,
+        "solution_path": "Stress Transformation -> Superposition -> Stress Invariant Application",
+        "key_insights": [
+          "The sum of principal stresses is an invariant and equals the sum of normal stresses in any orthogonal coordinate system.",
+          "Superposition allows combining stress states from different loads."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$\\sigma_x = \\sigma_{x'} \\cos^2\\theta + \\sigma_{y'} \\sin^2\\theta + 2\\tau_{x'y'} \\sin\\theta \\cos\\theta$",
+          "name": "Normal Stress Transformation (x-direction)",
+          "conditions": "For plane stress, rotation by angle $\\theta$",
+          "type": "equation",
+          "relevance": "Core formula for solving"
+        },
+        {
+          "formula": "$\\sigma_y = \\sigma_{x'} \\sin^2\\theta + \\sigma_{y'} \\cos^2\\theta - 2\\tau_{x'y'} \\sin\\theta \\cos\\theta$",
+          "name": "Normal Stress Transformation (y-direction)",
+          "conditions": "For plane stress, rotation by angle $\\theta$",
+          "type": "equation",
+          "relevance": "Core formula for solving"
+        },
+        {
+          "formula": "$\\sigma_1 + \\sigma_2 = \\sigma_x + \\sigma_y$",
+          "name": "Stress Invariant (Sum of Normal Stresses)",
+          "conditions": "Applies to any 2D plane stress state, regardless of coordinate system orientation",
+          "type": "principle",
+          "relevance": "Key principle for efficient solution"
+        },
+        {
+          "formula": "$\\sigma_{1,2} = \\frac{\\sigma_x + \\sigma_y}{2} \\pm \\sqrt{\\left(\\frac{\\sigma_x - \\sigma_y}{2}\\right)^2 + \\tau_{xy}^2}$",
+          "name": "Principal Stresses Formula",
+          "conditions": "For 2D plane stress state",
+          "type": "equation",
+          "relevance": "Alternative method for verification"
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Aircraft fuselage design where skin panels experience combined tension, compression, and shear from pressurization and aerodynamic loads.",
+          "Design of bolted joints and riveted connections where stress concentrations and combined stresses are critical."
+        ],
+        "specific_systems": [
+          "Wing spars and ribs under combined bending and torsion.",
+          "Landing gear components experiencing complex multi-axial loading."
+        ],
+        "practical_relevance": "Understanding how stresses transform and superimpose is crucial for predicting material failure and ensuring structural integrity in aerospace components, especially where loads are not aligned with material axes or multiple loads act simultaneously."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Incorrect sign convention for shear stress or compressive stress.",
+          "why_students_make_it": "Confusion between positive/negative shear stress definitions or forgetting to use negative for compression.",
+          "type": "Sign Error",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Consistently use a standard sign convention (e.g., positive shear stress causes counter-clockwise rotation of the element, compression is negative). Draw free-body diagrams clearly.",
+          "consequence": "Incorrect resultant stress state, leading to wrong principal stresses."
+        },
+        {
+          "mistake": "Errors in trigonometric functions (e.g., $\\cos^2\\theta$ vs $\\sin^2\\theta$) or angle for transformation.",
+          "why_students_make_it": "Misremembering the transformation formulas or using the wrong angle (e.g., $2\\theta$ instead of $\\theta$ for some terms, or using angle to y' instead of x').",
+          "type": "Calculation",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Memorize or have a reliable reference for stress transformation formulas. Practice with Mohr's Circle to visualize the transformation.",
+          "consequence": "Completely incorrect transformed stresses."
+        },
+        {
+          "mistake": "Forgetting or misapplying the principle of superposition.",
+          "why_students_make_it": "Assuming stresses interact in a non-linear way or simply adding magnitudes without considering directions/components.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Remember that superposition is valid for linear elastic materials and small deformations. Always add corresponding stress components ($\\sigma_x$ with $\\sigma_x$, etc.).",
+          "consequence": "Incorrect resultant stress state."
+        },
+        {
+          "mistake": "Not recognizing the stress invariant property and performing full principal stress calculation unnecessarily.",
+          "why_students_make_it": "Lack of familiarity with stress invariants, leading to longer, more error-prone calculations.",
+          "type": "Problem Solving",
+          "severity": "Low",
+          "frequency": "occasional",
+          "how_to_avoid": "Understand and utilize stress invariants to simplify calculations where applicable. This saves time and reduces error potential.",
+          "consequence": "Wasted time in exam, higher chance of calculation error."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "Sum of Normal Stresses is Constant (S.N.S.C.)",
+          "concept": "Stress Invariant: $\\sigma_x + \\sigma_y = \\sigma_{x'} + \\sigma_{y'} = \\sigma_1 + \\sigma_2$",
+          "effectiveness": "high",
+          "context": "When asked for sum of principal stresses or to verify stress transformation."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "What are the plane stress transformation equations for $\\sigma_x, \\sigma_y, \\tau_{xy}$ from $\\sigma_{x'}, \\sigma_{y'}, \\tau_{x'y'}$ at angle $\\theta$?",
+          "back": "$\\sigma_x = \\sigma_{x'} \\cos^2\\theta + \\sigma_{y'} \\sin^2\\theta + 2\\tau_{x'y'} \\sin\\theta \\cos\\theta$ \\n $\\sigma_y = \\sigma_{x'} \\sin^2\\theta + \\sigma_{y'} \\cos^2\\theta - 2\\tau_{x'y'} \\sin\\theta \\cos\\theta$ \\n $\\tau_{xy} = -(\\sigma_{x'} - \\sigma_{y'}) \\sin\\theta \\cos\\theta + \\tau_{x'y'} (\\cos^2\\theta - \\sin^2\\theta)$",
+          "difficulty": "medium"
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "What is the principle of superposition in stress analysis?",
+          "back": "For linear elastic materials, the total stress (or strain) at a point due to multiple loads is the algebraic sum of the stresses (or strains) caused by each load acting independently.",
+          "difficulty": "easy"
+        },
+        {
+          "card_type": "definition",
+          "front": "What is a stress invariant? Give an example for 2D plane stress.",
+          "back": "A stress invariant is a quantity that remains constant regardless of the orientation of the coordinate system. For 2D plane stress, $\\sigma_x + \\sigma_y$ is an invariant, and it equals $\\sigma_1 + \\sigma_2$.",
+          "difficulty": "medium"
+        },
+        {
+          "card_type": "application",
+          "front": "If a stress state is pure shear ($\\sigma_x = 0, \\sigma_y = 0, \\tau_{xy} = \\tau$), what are the principal stresses?",
+          "back": "The principal stresses are $\\sigma_1 = \\tau$ and $\\sigma_2 = -\\tau$. They occur at $\\pm 45^\\circ$ to the shear planes.",
+          "difficulty": "easy"
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "How to avoid sign errors in stress transformation?",
+          "back": "Always draw a consistent stress element and use a standard sign convention (e.g., tension positive, compression negative, shear positive if it causes counter-clockwise rotation on the positive x-face). Double-check the angle $\\theta$ and its direction.",
+          "difficulty": "easy"
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Designing aircraft structures to withstand complex aerodynamic and internal pressure loads.",
+          "industry_example": "Analyzing stress distribution in a wing box where bending, torsion, and shear forces combine, requiring engineers to superimpose stress states from different load cases (e.g., lift, drag, engine thrust) and transform them to critical orientations.",
+          "why_it_matters": "Failure to accurately predict combined stress states can lead to premature fatigue, yielding, or fracture of structural components, compromising flight safety and increasing maintenance costs."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "If the question asks for the sum of principal stresses, immediately check if the stress invariant property ($\\sigma_1 + \\sigma_2 = \\sigma_x + \\sigma_y$) can be used to simplify calculations after superposition.",
+        "time_management": "This question can be solved quickly using the invariant property. Aim for 1-2 minutes if the invariant is recognized, 3-4 minutes if full transformation and principal stress calculation is performed."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "plane stress transformation equations",
+        "principle of superposition mechanics of materials",
+        "principal stresses 2D",
+        "stress invariants plane stress",
+        "Mohr's Circle for plane stress",
+        "pure shear stress state"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Mohr's Circle",
+          "description": "A graphical method to determine normal and shear stresses on any inclined plane, as well as principal stresses and maximum shear stress. It involves plotting the stress state on a $\\sigma - \\tau$ diagram and drawing a circle.",
+          "pros_cons": "Pros: Visual, intuitive, good for checking results. Cons: Can be less precise than analytical methods, requires careful drawing.",
+          "when_to_use": "For conceptual understanding, quick checks, or when the problem explicitly asks for graphical solution. Can be used to find resultant stress state and then principal stresses."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Mathematics": "Linear algebra (eigenvalues and eigenvectors for principal stresses), trigonometry for transformations.",
+        "Solid Mechanics": "Foundation for understanding material behavior under load, failure theories (e.g., Rankine's theory, which uses principal stresses).",
+        "Finite Element Analysis (FEA)": "Stress transformation and principal stress calculations are fundamental outputs of FEA software."
+      },
+      "deeper_dive_topics": [
+        "3D Stress Transformation and Principal Stresses (Mohr's Circle for 3D)",
+        "Failure Theories (Maximum Principal Stress Theory, Maximum Shear Stress Theory, Von Mises Yield Criterion)",
+        "Stress Concentration Factors for various geometries under combined loading"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2024_AE_Q52",
+        "year": 2024,
+        "marks": 2.0,
+        "negative_marks": 0.0,
+        "time_expected": "2-3 minutes",
+        "success_rate_estimate": "75%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 1: Engineering Mechanics",
+        "gate_subsection": "Stress and Strain",
+        "weightage": "Typically 5-10% of Structures section",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Well-aligned with core concepts of plane stress analysis, superposition, and principal stresses, which are fundamental for aerospace structures."
+      },
+      "rag_quality": {
+        "relevance_score": 0.85,
+        "chunks_used": 2,
+        "sources_distribution": {
+          "books": 1,
+          "videos": 1
+        },
+        "notes": "RAG chunk 5 provided direct confirmation of the stress invariant property ($\\sigma_x + \\sigma_y = \\sigma_1 + \\sigma_2$) and definition of pure shear, which was crucial for the most efficient solution. Chunk 6 provided general context on principal stresses. Other chunks were less directly applicable but related to stress analysis."
+      },
+      "model_meta": {
+        "timestamp": "2024-07-30T12:00:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Calculate the maximum shear stress for the resultant state of stress.",
+        "Determine the orientation of the principal planes for the resultant state of stress.",
+        "If the material has a yield strength, determine if it will fail according to Rankine's theory.",
+        "Repeat the problem with different angles or magnitudes of applied stresses."
+      ]
+    },
+    "question_id": "GATE_2024_AE_Q52",
+    "year": 2024,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "NAT",
+    "question_text": "The state of stress at a point is caused by two separate loading cases. One of them produces a pure uniaxial tension along the x' direction, and other one produces a pure uniaxial compression along the y' direction, as shown in the figure. The sum of maximum and minimum principal stresses for the resultant state of stress caused by both loads acting simultaneously is ___________ N/mm2 (rounded off to 1 decimal place)."
+  },
+  "tokens_used": 15843,
+  "input_tokens": 9366,
+  "output_tokens": 6477,
+  "cost": 0.0052911,
+  "time_seconds": 67.10286068916321
+}
