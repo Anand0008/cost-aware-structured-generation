@@ -1,0 +1,402 @@
+{
+  "model_name": "deepseek_r1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "text_only",
+      "combined_type": "numerical_calculation_text_only",
+      "weight_strategy": "NUMERICAL_WEIGHTED",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "This is a numerical calculation problem involving shear stress in a shaft. It requires understanding of both the exact shear stress formula and the thin-walled approximation, and then calculating their ratio. The problem involves multiple steps and requires recognizing when to apply the thin-wall approximation, making it a medium-hard problem.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": true
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "1.2",
+        "is_correct": true,
+        "confidence": 0.98,
+        "confidence_type": "single_model",
+        "reasoning": "Using exact torsion formula for hollow shaft and thin-wall approximation formula, with inner/outer diameter ratio k = 0.5, the ratio τ_max_exact / τ_max_thin-wall computes to 1.2 exactly. This matches the answer key range 1.1 to 1.3. The derivation is straightforward: τ_max_exact = (16T)/(πD_o^3(1-k^4)), τ_max_thin-wall = T/(2 A_m t), with A_m = π r_m^2, t = r_o - r_i, r_m = (r_o+r_i)/2. Substituting k=0.5 gives 1.2."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Step 1: Define variables and given ratio. Let outer diameter D_o, inner diameter D_i. Given D_i/D_o = 0.5 = k. Outer radius r_o = D_o/2, inner radius r_i = D_i/2 = k r_o. Wall thickness t = r_o - r_i = r_o(1-k).",
+          "Step 2: Exact maximum shear stress for hollow circular shaft. Use torsion formula: τ_max_exact = (T r_o)/J, where J = (π/32)(D_o^4 - D_i^4) = (π/32) D_o^4 (1-k^4). Hence τ_max_exact = (16 T D_o) / (π (D_o^4 - D_i^4)) = (16 T) / (π D_o^3 (1-k^4)).",
+          "Step 3: Thin-wall approximation shear stress. For thin-walled closed tube, τ_thin-wall = T / (2 A_m t), where A_m is area enclosed by median line. For circular tube, median radius r_m = (r_o + r_i)/2 = r_o (1+k)/2. Thus A_m = π r_m^2 = π r_o^2 (1+k)^2 / 4. Thickness t = r_o - r_i = r_o (1-k). So τ_thin-wall = T / (2 * [π r_o^2 (1+k)^2/4] * [r_o (1-k)]) = (2 T) / (π r_o^3 (1+k)^2 (1-k)). Since r_o = D_o/2, τ_thin-wall = (16 T) / (π D_o^3 (1+k)^2 (1-k)).",
+          "Step 4: Compute ratio. R = τ_max_exact / τ_thin-wall = [ (16 T)/(π D_o^3 (1-k^4)) ] / [ (16 T)/(π D_o^3 (1+k)^2 (1-k)) ] = (1+k)^2 (1-k) / (1-k^4). Note 1-k^4 = (1-k)(1+k)(1+k^2). Cancel (1-k)(1+k): R = (1+k) / (1+k^2).",
+          "Step 5: Substitute k = 0.5. R = (1+0.5) / (1+0.25) = 1.5 / 1.25 = 1.2. Round to one decimal place = 1.2."
+        ],
+        "formulas_used": [
+          "$\\tau_{max,exact} = \\frac{16 T}{\\pi D_o^3 (1 - k^4)}$",
+          "$J = \\frac{\\pi}{32} (D_o^4 - D_i^4)$",
+          "$\\tau_{thin} = \\frac{T}{2 A_m t}$",
+          "$A_m = \\pi r_m^2$",
+          "$r_m = \\frac{r_o + r_i}{2}$",
+          "$t = r_o - r_i$",
+          "$k = \\frac{D_i}{D_o}$",
+          "$R = \\frac{\\tau_{max,exact}}{\\tau_{thin}} = \\frac{(1+k)}{(1+k^2)}$"
+        ],
+        "estimated_time_minutes": 5
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Structures",
+          "confidence": 1.0
+        },
+        "topic": {
+          "name": "Torsion of Shafts",
+          "syllabus_ref": "Section 4: Solid Mechanics -> Torsion of circular shafts, thin-walled tubes"
+        },
+        "concepts": [
+          {
+            "name": "Maximum shear stress in hollow circular shaft",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Thin-wall approximation for torsion",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Diameter ratio effect",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Polar moment of inertia for annular section",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Torsion formula for circular shafts: τ = T r / J",
+          "Polar moment of inertia for hollow circle: J = (π/32)(D_o^4 - D_i^4)",
+          "Thin-wall approximation formula: τ = T/(2 A_m t)"
+        ],
+        "helpful": [
+          "Algebraic manipulation with ratios",
+          "Understanding of shear stress distribution in circular shafts"
+        ],
+        "dependency_tree": {
+          "Main Concept: Ratio of exact to approximate shear stress in hollow shaft": [
+            "requires: Torsion formula and J for hollow shaft",
+            "requires: Thin-wall approximation formula for closed tubes",
+            "requires: Given diameter ratio k=0.5",
+            "enables: Efficiency assessment of thin-wall approximation for given geometry"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Medium",
+        "score": 6,
+        "complexity_breakdown": {
+          "conceptual": 7,
+          "mathematical": 5,
+          "problem_solving": 6
+        },
+        "estimated_solve_time_seconds": 180,
+        "expected_accuracy_percent": 65,
+        "difficulty_factors": [
+          "Requires recalling both exact and thin-wall torsion formulas",
+          "Requires careful algebraic simplification to get ratio in terms of k",
+          "Must correctly interpret thin-wall parameters (A_m, t) for circular tube"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Mechanics of Materials",
+          "author": "Beer & Johnston",
+          "chapter_title": "Torsion",
+          "section": "Torsion of Hollow Circular Shafts",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval",
+          "text_snippet": "The polar moment of inertia for a hollow circular shaft with outer diameter D_o and inner diameter D_i is J = (π/32) (D_o^4 - D_i^4). Maximum shear stress τ_max = (16 T D_o) / (π (D_o^4 - D_i^4))."
+        },
+        {
+          "source_type": "book",
+          "book": "Advanced Mechanics of Materials",
+          "author": "Timoshenko",
+          "chapter_title": "Torsion",
+          "section": "Thin-Walled Tubes",
+          "relevance_score": 0.8,
+          "source": "model_consensus",
+          "text_snippet": "For thin-walled closed sections, shear stress due to torsion is approximately uniform across thickness and given by τ = T/(2 A_m t), where A_m is area enclosed by median line."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. S.P. Harsha",
+          "timestamp_start": "00:28:42",
+          "timestamp_end": "00:33:35",
+          "topic_covered": "Maximum shear stress in hollow circular shafts, formula derivation",
+          "relevance_score": 0.85,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. S.K. Bhattacharyya",
+          "timestamp_start": "00:11:51",
+          "timestamp_end": "00:15:15",
+          "topic_covered": "Shear stress distribution in hollow shafts",
+          "relevance_score": 0.7,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Formula Substitution and Algebraic Simplification",
+        "total_steps": 5,
+        "solution_path": "Exact formula → Thin-wall formula → Express in terms of k → Compute ratio with k=0.5 → Round",
+        "key_insights": [
+          "The ratio simplifies to (1+k)/(1+k^2), independent of torque and outer diameter.",
+          "Thin-wall approximation underestimates stress for k=0.5 (ratio >1)."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$\\tau_{max} = \\frac{T r_o}{J}$",
+          "name": "Torsion formula",
+          "conditions": "Linear elastic, circular cross-section",
+          "type": "equation",
+          "relevance": "Core for exact shear stress"
+        },
+        {
+          "formula": "$J = \\frac{\\pi}{32} (D_o^4 - D_i^4)$",
+          "name": "Polar moment of inertia for hollow circle",
+          "conditions": "Annular cross-section, uniform thickness",
+          "type": "equation",
+          "relevance": "Needed for exact stress calculation"
+        },
+        {
+          "formula": "$\\tau_{thin} = \\frac{T}{2 A_m t}$",
+          "name": "Thin-wall approximation for closed tubes",
+          "conditions": "Thin wall (t << radius), constant thickness",
+          "type": "equation",
+          "relevance": "Approximate shear stress"
+        },
+        {
+          "formula": "$R = \\frac{(1+k)}{(1+k^2)}$",
+          "name": "Ratio of exact to thin-wall shear stress for circular tube",
+          "conditions": "k = D_i/D_o, circular cross-section",
+          "type": "equation",
+          "relevance": "Simplified result for this problem"
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Design of lightweight drive shafts in aerospace (helicopter rotor shafts, engine transmission shafts)",
+          "Torsion members in automotive suspension systems"
+        ],
+        "specific_systems": [
+          "Helicopter tail rotor drive shafts (hollow for weight saving)",
+          "Turboprop engine power transmission shafts"
+        ],
+        "practical_relevance": "Understanding when thin-wall approximation is valid (error within acceptable limits) is crucial for quick design calculations vs detailed analysis. For k=0.5, error is 20% (ratio 1.2), so thin-wall may not be accurate enough for critical components."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Using thin-wall formula with outer area instead of median area: τ = T/(2 π r_o^2 t)",
+          "why_students_make_it": "Confusing outer radius with median radius, especially when wall is not very thin.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Always remember A_m is area enclosed by the median line (middle of wall). For circular tube, r_m = (r_o + r_i)/2.",
+          "consequence": "Underestimates τ_thin, leading to ratio > actual (e.g., would get ~1.6 instead of 1.2 for k=0.5)."
+        },
+        {
+          "mistake": "Forgetting that thickness t = r_o - r_i, not wall thickness in diameter terms.",
+          "why_students_make_it": "Mixing radius and diameter measures.",
+          "type": "Calculation",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Consistently use either all radii or all diameters. Define t clearly as radial thickness.",
+          "consequence": "Incorrect t leads to wrong τ_thin."
+        },
+        {
+          "mistake": "Using solid shaft formula J = π D^4/32 for hollow shaft.",
+          "why_students_make_it": "Overlooking hollow nature, especially if k is given but not used.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Always check if shaft is hollow; J must subtract inner part.",
+          "consequence": "Overestimates J, underestimates τ_max_exact, ratio becomes too low."
+        },
+        {
+          "mistake": "Algebraic error in simplifying ratio: not cancelling terms properly.",
+          "why_students_make_it": "Rushing through algebra with k^4, (1-k^4) factorization.",
+          "type": "Calculation",
+          "severity": "Medium",
+          "frequency": "common",
+          "how_to_avoid": "Factor 1-k^4 = (1-k)(1+k)(1+k^2). Cancel common factors step by step.",
+          "consequence": "Incorrect ratio, possibly outside answer range."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "THIN: Torsion, Half, Area, thickness: τ = T/(2 A_m t) for thin-walled tubes.",
+          "concept": "Thin-wall approximation formula",
+          "effectiveness": "medium",
+          "context": "Recall the formula quickly during exam."
+        },
+        {
+          "mnemonic": "Hollow J: Big O minus I: J = (π/32)(D_o^4 - D_i^4)",
+          "concept": "Polar moment for hollow shaft",
+          "effectiveness": "high",
+          "context": "Remember to subtract inner from outer."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "What is the exact max shear stress formula for hollow circular shaft (k=D_i/D_o)?",
+          "back": "$\\tau_{max} = \\frac{16 T}{\\pi D_o^3 (1-k^4)}$",
+          "difficulty": "medium",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "formula_recall",
+          "front": "Thin-wall approximation for shear stress in closed circular tube?",
+          "back": "$\\tau = \\frac{T}{2 A_m t}$, with $A_m = \\pi r_m^2$, $r_m = (r_o+r_i)/2$, $t = r_o - r_i$.",
+          "difficulty": "medium",
+          "time_limit_seconds": 45
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "For a hollow shaft with k=0.5, does thin-wall approximation overestimate or underestimate max shear stress?",
+          "back": "Underestimates. Ratio exact/thin = 1.2 > 1, so exact stress is higher.",
+          "difficulty": "easy",
+          "time_limit_seconds": 20
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "Common mistake in thin-wall A_m for circular tube?",
+          "back": "Using outer radius instead of mean radius. Correct: r_m = (r_o+r_i)/2.",
+          "difficulty": "easy",
+          "time_limit_seconds": 25
+        },
+        {
+          "card_type": "application",
+          "front": "Compute ratio R = τ_exact/τ_thin for k=0.2.",
+          "back": "R = (1+k)/(1+k^2) = 1.2/1.04 ≈ 1.154. So thin-wall error ~15%.",
+          "difficulty": "hard",
+          "time_limit_seconds": 40
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Design of aircraft landing gear torsion links",
+          "industry_example": "Hollow steel tubes in landing gear struts experience torsion during landing; thin-wall approximation used for initial sizing, but exact stress checked for fatigue.",
+          "why_it_matters": "Underestimating stress could lead to premature failure."
+        },
+        {
+          "application": "Rotor shafts in helicopters",
+          "industry_example": "Hollow titanium shafts transmit torque from engine to rotor; weight critical, so hollow sections used. k typically 0.5-0.7.",
+          "why_it_matters": "Accurate stress calculation ensures safe life under dynamic loads."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "Straightforward plug-and-chug if formulas are known. Time: 3-4 mins.",
+        "guessing_heuristic": "If stuck, note that thin-wall approximation usually underestimates stress for moderate thickness, so ratio >1. For k=0.5, guess around 1.2.",
+        "time_management": "Spend 2 mins recalling formulas, 2 mins algebra, 1 min verification."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "hollow circular shaft torsion maximum shear stress",
+        "thin-wall approximation torsion closed tube",
+        "polar moment of inertia hollow cylinder",
+        "ratio exact vs approximate shear stress",
+        "torsion of thin-walled tubes formula",
+        "diameter ratio effect on shear stress",
+        "GATE aerospace structures torsion",
+        "shear stress in hollow shaft k=0.5"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Direct derivation from first principles",
+          "description": "Start from differential equation for torsion: d/dr (r^3 dφ/dr)=0, integrate with boundary conditions to get stress distribution, then compute exact τ_max. For thin-wall, use shear flow q = T/(2A_m) and τ = q/t.",
+          "pros_cons": "More fundamental but time-consuming. Good for understanding.",
+          "when_to_use": "When you need to derive formulas from scratch."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Mechanics of Materials": "Torsion is a fundamental loading mode; connects to bending, combined stresses.",
+        "Aircraft Structures": "Thin-wall approximation widely used for aircraft fuselage and wing torsion boxes.",
+        "Design of Machine Elements": "Shaft design under torsion uses these formulas for sizing."
+      },
+      "deeper_dive_topics": [
+        "Shear stress distribution in non-circular thin-walled sections (Bredt's formula)",
+        "Effect of large thickness on thin-wall approximation error (finite element validation)",
+        "Torsional buckling of thin-walled tubes",
+        "Energy methods for torsion (St. Venant's principle)"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2023_AE_Q48",
+        "year": 2023,
+        "marks": 2.0,
+        "negative_marks": 0.0,
+        "time_expected": "3-4 minutes",
+        "success_rate_estimate": "65%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 4: Solid Mechanics",
+        "gate_subsection": "Torsion of circular shafts, thin-walled tubes",
+        "weightage": "Approx 8-10% of Structures section",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Well-aligned with core topics; tests both exact and approximate methods."
+      },
+      "rag_quality": {
+        "relevance_score": 0.7,
+        "chunks_used": 4,
+        "sources_distribution": {
+          "books": 1,
+          "videos": 3
+        },
+        "notes": "RAG chunks (1,2,4,6) provided excellent formulas and explanations for exact maximum shear stress in hollow shafts, polar moment of inertia, and stress distribution. However, RAG did not contain any information about thin-wall approximation formula (τ = T/(2 A_m t)), which is critical for this problem. Therefore, internal knowledge was used for thin-wall part. Overall, RAG was helpful for exact stress but incomplete for the full problem."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-13T10:30:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Same ratio calculation for different k values (e.g., k=0.8 for very thin wall)",
+        "Find thickness for which thin-wall error is less than 5%",
+        "Combine with bending stress for combined loading",
+        "Weight savings comparison between hollow and solid shafts for same τ_max"
+      ]
+    },
+    "question_id": "GATE_2023_AE_Q48",
+    "year": 2023,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "NAT",
+    "question_text": "The thickness of a uniform hollow circular shaft is equal to the difference between the outer radius and the inner radius. The ratio of the inner diameter to outer diameter of the shaft is 0.5. For the shaft reacting to an applied torque, the ratio of the maximum shear stress τ to the maximum shear stress τ_thin-wall obtained using the thin-wall approximation is _______. (round off to one decimal place)"
+  },
+  "tokens_used": 16604,
+  "input_tokens": 10016,
+  "output_tokens": 6588,
+  "cost": 0.01993652,
+  "time_seconds": 234.06444811820984
+}
