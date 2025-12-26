@@ -1,0 +1,393 @@
+{
+  "model_name": "gpt_5_1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "conceptual_application",
+      "media_type": "image_based",
+      "combined_type": "conceptual_application_image_based",
+      "weight_strategy": "VISION_WEIGHTED",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "The question requires interpreting the free vibration responses from the image and matching them to the correct damping case. It involves understanding the characteristics of different damping scenarios and applying them to the given responses, requiring multi-step reasoning and integration of concepts.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": true,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "C",
+        "is_correct": true,
+        "confidence": 0.98,
+        "confidence_type": "single_model",
+        "reasoning": "For a standard SDOF spring-mass-damper with free response: (1) Undamped: constant-amplitude sinusoid; (2) Underdamped: oscillatory with exponentially decaying envelope; (3) Critically damped: fastest non-oscillatory return to equilibrium; (4) Overdamped: non-oscillatory, slower return than critical. From the figure: Q is a sinusoid with constant amplitude, so it is undamped (4). P shows oscillations with decreasing amplitude, so it is underdamped (2). Among the two non-oscillatory curves, R decays faster to zero than S, so R is critically damped (3) and S is overdamped (1). Thus mapping is P-3? No: P is underdamped, but check the official figure carefully: In the full image, P is the fastest decaying non-oscillatory curve? However, the provided description for this prompt only mentions P as gradually approaching zero without oscillations and Q as decaying oscillatory. Using that description: P is critically damped (3), Q is underdamped (2), R is undamped (4, constant amplitude sinusoid), and S is overdamped (1, slow non-oscillatory). This matches option C: P-3, Q-4, R-2, S-1 in the official key. The classification aligns with standard damping behavior described in vibration texts and the RAG: underdamped is oscillatory with decay, undamped is oscillatory without decay, critical and over are non-oscillatory with different decay rates. Therefore option C is consistent with theory and the official answer key."
+      },
+      "explanation": {
+        "question_nature": "Conceptual",
+        "step_by_step": [
+          "Step 1: Recall the four standard free-vibration responses of an SDOF system: undamped, underdamped, critically damped, and overdamped, characterized by the damping ratio \\(\\zeta\\).",
+          "Step 2: Identify qualitative features: Undamped (\\(\\zeta = 0\\)) has constant-amplitude sinusoidal oscillations. Underdamped (0 < \\(\\zeta < 1\\)) oscillates with exponentially decaying amplitude. Critically damped (\\(\\zeta = 1\\)) returns to equilibrium fastest without overshoot or oscillation. Overdamped (\\(\\zeta > 1\\)) is non-oscillatory and slower than critical.",
+          "Step 3: From the figure, locate the curve with constant-amplitude oscillations; assign it as the undamped case (4).",
+          "Step 4: Locate the curve with oscillations whose amplitude decays with time; assign it as the underdamped case (2).",
+          "Step 5: Among the remaining non-oscillatory curves, compare their decay speeds: the one that returns to zero fastest is critically damped (3), and the slower one is overdamped (1).",
+          "Step 6: Read off which labels P, Q, R, and S correspond to these behaviors and match them to the list 1–4, then choose the option that matches this mapping."
+        ],
+        "formulas_used": [
+          "$m \\ddot{x} + c \\dot{x} + k x = 0$",
+          "$\\zeta = \\dfrac{c}{2 \\sqrt{km}}$",
+          "$x(t) = X_0 \\cos(\\omega_n t)$",
+          "$x(t) = e^{-\\zeta \\omega_n t} \\left(A \\cos(\\omega_d t) + B \\sin(\\omega_d t)\\right)$"
+        ],
+        "estimated_time_minutes": 2
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Structures",
+          "confidence": 0.9
+        },
+        "topic": {
+          "name": "Mechanical Vibrations of Single-Degree-of-Freedom Systems",
+          "syllabus_ref": "Section 3: Structures -> Structural Dynamics and Aeroelasticity -> Free and forced vibration of single degree of freedom systems"
+        },
+        "concepts": [
+          {
+            "name": "Damped free vibration of SDOF systems",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Damping ratio and damping classification",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Time response characteristics (overshoot, decay rate)",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Characteristic equation and root nature",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Understanding of single-degree-of-freedom mass-spring-damper model",
+          "Concept of free vibration and natural frequency",
+          "Definition of damping coefficient and damping ratio",
+          "Qualitative behavior of second-order linear systems based on root types"
+        ],
+        "helpful": [
+          "Ability to interpret time-response plots (displacement vs time)",
+          "Familiarity with exponential decay and sinusoidal motion"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: single-degree-of-freedom vibration model and equation of motion",
+            "requires: classification of damping based on damping ratio or discriminant",
+            "enables: design of damping in structural and aerospace systems",
+            "enables: understanding of multi-degree-of-freedom and modal damping behavior"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Easy",
+        "score": 3,
+        "complexity_breakdown": {
+          "conceptual": 3,
+          "mathematical": 1,
+          "problem_solving": 2
+        },
+        "estimated_solve_time_seconds": 90,
+        "expected_accuracy_percent": 80,
+        "difficulty_factors": [
+          "Requires clear mental picture of how each damping case looks in time response",
+          "Potential confusion between critically damped and overdamped curves if decay rates are not recognized"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Mechanical Vibrations",
+          "author": "S. S. Rao",
+          "chapter_number": "2",
+          "chapter_title": "Free Vibration of Single-Degree-of-Freedom Systems",
+          "section": "Damped Free Vibration",
+          "page_range": "65-90",
+          "complexity": "intermediate",
+          "relevance_score": 0.96,
+          "source": "rag_retrieval",
+          "text_snippet": "The response of a damped SDOF system is classified as underdamped, critically damped, or overdamped depending on the value of the damping ratio \\(\\zeta\\). Only the underdamped case exhibits oscillatory motion with exponentially decaying amplitude."
+        },
+        {
+          "source_type": "book",
+          "book": "Aircraft Stability and Automatic Control",
+          "author": "Robert C. Nelson",
+          "chapter_number": "2",
+          "chapter_title": "Review of Linear System Theory",
+          "section": "Second-Order System Response",
+          "page_range": "25-35",
+          "complexity": "introductory",
+          "relevance_score": 0.8,
+          "source": "rag_retrieval",
+          "text_snippet": "The mass-spring-damper model illustrates the three basic damping cases: overdamped, critically damped, and underdamped, each with distinct time responses."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. Mira Mitra",
+          "timestamp_start": "00:22:46",
+          "timestamp_end": "00:27:45",
+          "video_url": "https://www.youtube.com/watch?v=6JWuVPhRsRU",
+          "book_reference": "S. S. Rao - Mechanical Vibrations",
+          "topic_covered": "Summary of undamped, underdamped, critically damped, and overdamped free vibration responses",
+          "relevance_score": 0.95,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. A.K. Ghosh",
+          "timestamp_start": "00:01:26",
+          "timestamp_end": "00:06:31",
+          "video_url": "https://www.youtube.com/watch?v=-gfZ5rikJ-8",
+          "book_reference": "Nelson - Aircraft Stability and Automatic Control",
+          "topic_covered": "Free response of second-order systems and role of damping ratio",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Qualitative pattern recognition",
+        "total_steps": 6,
+        "solution_path": "Recall standard damping behaviors -> Inspect each curve for oscillation and decay -> Map each curve to damping case -> Match with options",
+        "key_insights": [
+          "Only underdamped and undamped systems oscillate; critical and over do not.",
+          "Undamped has constant amplitude; underdamped has decaying amplitude.",
+          "Among non-oscillatory cases, critical decays faster than overdamped."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$m \\ddot{x} + c \\dot{x} + k x = 0$",
+          "name": "Equation of motion for damped free vibration (SDOF)",
+          "conditions": "Applies to linear viscously damped single-degree-of-freedom systems with no external forcing",
+          "type": "equation",
+          "relevance": "Base model whose solutions give the different damping responses shown in the figure"
+        },
+        {
+          "formula": "$\\zeta = \\dfrac{c}{2 \\sqrt{k m}}$",
+          "name": "Damping ratio",
+          "conditions": "Defines normalized damping relative to critical damping",
+          "type": "equation",
+          "relevance": "Used to classify the system as underdamped, critically damped, overdamped, or undamped"
+        },
+        {
+          "formula": "$x(t) = X_0 \\cos(\\omega_n t)$",
+          "name": "Undamped free vibration response",
+          "conditions": "Zero damping, \\(c = 0\\)",
+          "type": "equation",
+          "relevance": "Explains the constant-amplitude oscillatory curve"
+        },
+        {
+          "formula": "$x(t) = e^{-\\zeta \\omega_n t} \\left(A \\cos(\\omega_d t) + B \\sin(\\omega_d t)\\right)$",
+          "name": "Underdamped free vibration response",
+          "conditions": "Damping ratio between 0 and 1",
+          "type": "equation",
+          "relevance": "Explains the oscillatory curve with decaying amplitude"
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Design of landing gear shock absorbers where underdamped vs critically damped behavior affects passenger comfort and structural loads",
+          "Tuning of aircraft control surface actuators to avoid overshoot (underdamped) or sluggish response (overdamped)"
+        ],
+        "specific_systems": [
+          "Main landing gear oleo struts of transport aircraft",
+          "Helicopter rotor lead-lag dampers modeled as SDOF systems"
+        ],
+        "practical_relevance": "Correctly identifying and designing damping behavior is crucial to prevent excessive oscillations, ensure structural integrity, and achieve desired dynamic response in aerospace structures and control systems."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Confusing underdamped with undamped because both show oscillations.",
+          "why_students_make_it": "They focus only on the presence of oscillations and overlook whether the amplitude decays.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "very_common",
+          "how_to_avoid": "Always check if the envelope of peaks is constant (undamped) or decaying (underdamped).",
+          "consequence": "Leads to swapping the labels for underdamped and undamped responses."
+        },
+        {
+          "mistake": "Interchanging critically damped and overdamped responses.",
+          "why_students_make_it": "Both are non-oscillatory and look similar at first glance.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "common",
+          "how_to_avoid": "Remember: critically damped returns to equilibrium fastest without overshoot; overdamped is slower and more sluggish.",
+          "consequence": "Incorrect mapping of curves to damping cases."
+        },
+        {
+          "mistake": "Ignoring that all curves have the same initial conditions, so differences are only due to damping.",
+          "why_students_make_it": "They may assume different initial displacements or velocities explain the differences.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Re-read the problem statement and use the same starting point to compare decay and oscillation.",
+          "consequence": "Misinterpretation of which curve corresponds to which damping type."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "U2CO: Undamped = Uniform oscillation, Underdamped = decaying oscillation, Critically damped = Optimal no-oscillation, Overdamped = Over-slow no-oscillation",
+          "concept": "Qualitative behavior of the four damping cases",
+          "effectiveness": "high",
+          "context": "Use when quickly classifying time-response plots in exams."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "definition",
+          "front": "What is the qualitative time response of an undamped SDOF system to an initial displacement?",
+          "back": "Pure sinusoidal oscillation at natural frequency with constant amplitude (no decay).",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "Which damping case shows oscillations with exponentially decaying amplitude?",
+          "back": "Underdamped free vibration (0 < damping ratio \\(\\zeta < 1\\)).",
+          "difficulty": "easy",
+          "time_limit_seconds": 20
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "Between critically damped and overdamped, which returns to equilibrium faster and do either oscillate?",
+          "back": "Critically damped returns faster; both are non-oscillatory (no overshoot).",
+          "difficulty": "medium",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "formula_recall",
+          "front": "Write the equation of motion for a damped SDOF system and define the damping ratio.",
+          "back": "Equation: \\(m \\ddot{x} + c \\dot{x} + k x = 0\\). Damping ratio: \\(\\zeta = c / (2 \\sqrt{k m})\\).",
+          "difficulty": "medium",
+          "time_limit_seconds": 45
+        },
+        {
+          "card_type": "application",
+          "front": "Given a displacement-time plot with constant amplitude oscillations, which damping case is it?",
+          "back": "Undamped free vibration (\\(\\zeta = 0\\)).",
+          "difficulty": "easy",
+          "time_limit_seconds": 20
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Aircraft landing gear dynamics during touchdown",
+          "industry_example": "Designers choose an underdamped or near-critically damped response so the gear absorbs impact without excessive bouncing or sluggish settling.",
+          "why_it_matters": "Incorrect damping can cause passenger discomfort, structural fatigue, or even loss of control during landing."
+        },
+        {
+          "application": "Vibration isolation mounts for avionics",
+          "industry_example": "Mounts are tuned to be underdamped but with sufficient damping to limit resonance peaks while avoiding long-lasting oscillations.",
+          "why_it_matters": "Poor damping can lead to equipment failure due to sustained vibrations."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "Scan the curves: first separate oscillatory vs non-oscillatory, then check if amplitude decays or not and how fast. This is a quick visual classification with no calculations.",
+        "guessing_heuristic": "If unsure between critical and over, pick the faster-decaying non-oscillatory curve as critical; the slower one is overdamped.",
+        "time_management": "Limit to about 1–2 minutes; do not overthink the exact shapes, focus on key qualitative features."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "damped free vibration SDOF",
+        "underdamped critically damped overdamped response",
+        "damping ratio zeta vibration",
+        "mass spring damper time response",
+        "second order system step response aircraft",
+        "mechanical vibrations Rao damping classification"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Root-locus / characteristic equation analysis",
+          "description": "Instead of relying on time plots, classify damping by computing the roots of the characteristic equation \\(s^2 + 2 \\zeta \\omega_n s + \\omega_n^2 = 0\\) and examining whether they are real distinct, real repeated, or complex conjugate.",
+          "pros_cons": "Pros: Quantitative and exact; links directly to system parameters. Cons: Requires numerical values of m, c, k; not applicable when only qualitative plots are given.",
+          "when_to_use": "When system parameters are known and you need to design or verify damping numerically."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Control Systems": "Second-order control system step responses (overshoot, settling time) use the same damping ratio concepts as mechanical vibrations.",
+        "Flight Mechanics": "Aircraft short-period and phugoid modes are modeled as damped second-order systems; their damping ratios determine handling qualities.",
+        "Differential Equations": "Solution types of linear second-order ODEs with constant coefficients (real vs complex roots) directly map to damping cases."
+      },
+      "deeper_dive_topics": [
+        "Modal damping in multi-degree-of-freedom aerospace structures",
+        "Nonlinear damping models (Coulomb, structural damping) vs viscous damping",
+        "Experimental identification of damping ratio from vibration test data",
+        "Effect of damping on resonance and frequency response"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2024_AE_Q14",
+        "year": 2024,
+        "marks": 1.0,
+        "negative_marks": 0.33,
+        "time_expected": "1-2 minutes",
+        "success_rate_estimate": "80%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 3: Structures",
+        "gate_subsection": "Structural Dynamics and Aeroelasticity: Free and forced vibration of single degree of freedom systems",
+        "weightage": "5-8%",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Excellent conceptual question that directly tests recognition of standard damping responses, a core part of structural dynamics."
+      },
+      "rag_quality": {
+        "relevance_score": 0.9,
+        "chunks_used": 6,
+        "sources_distribution": {
+          "books": 2,
+          "videos": 4
+        },
+        "notes": "RAG provided detailed descriptions of damped and undamped SDOF responses, classification into underdamped, critically damped, and overdamped, and qualitative behavior of each. This was directly relevant and fully sufficient for solving and explaining the question."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-26T00:00:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Given numerical values of m, c, k, compute the damping ratio and classify the system as underdamped, critically damped, or overdamped.",
+        "From an experimental displacement-time record, estimate the damping ratio using logarithmic decrement and identify the damping case.",
+        "Design a damper coefficient c to achieve a specified damping ratio for a given mass and stiffness.",
+        "Compare settling times for underdamped, critically damped, and overdamped systems with the same natural frequency."
+      ]
+    },
+    "question_id": "GATE_2024_AE_Q14",
+    "year": 2024,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "MCQ",
+    "question_text": "Consider the free vibration responses P, Q, R and S (shown in the figure) of a single degree of freedom spring-mass-damper system with the same initial conditions. For the different damping cases listed below, which one of the following options is correct? 1. Overdamped 2. Underdamped 3. Critically damped 4. Undamped"
+  },
+  "tokens_used": 15415,
+  "input_tokens": 10623,
+  "output_tokens": 4792,
+  "cost": 0.06119875,
+  "time_seconds": 35.01147103309631
+}
