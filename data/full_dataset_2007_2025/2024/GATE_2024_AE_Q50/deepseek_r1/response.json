@@ -1,0 +1,391 @@
+{
+  "model_name": "deepseek_r1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "conceptual_application",
+      "media_type": "text_only",
+      "combined_type": "conceptual_application_text_only",
+      "weight_strategy": "APPLICATION_WEIGHTED",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "This question requires applying concepts of axial compressor operation, including incidence angle, surge, and the relationship between RPM, mass flow rate, and blade angles. It involves multiple concepts and requires understanding the behavior of the compressor under different operating conditions.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "A;C",
+        "is_correct": true,
+        "confidence": 0.9,
+        "confidence_type": "single_model",
+        "reasoning": "Statement A is TRUE: Keeping mass flow constant and increasing RPM increases blade speed $U$. From continuity ($\\dot{m} = \\rho A V_x$), if $\\dot{m}$ is constant and $\\rho$ tends to increase due to higher compression, $V_x$ decreases relative to design ($V_x < V_{x,design}$). From velocity triangle analysis (RAG Chunks 2 & 3), lower $V_x$ causes the relative velocity vector $C_2$ at rotor inlet to swing towards the pressure surface, creating a positive incidence angle ($\\beta_{actual} > \\beta_{blade}$), leading to potential flow separation on the pressure side. Statement C is TRUE: The same condition (increased RPM at constant $\\dot{m}$) causes positive incidence and stalling in front stages. If severe, this can lead to compressor surge, a system-wide instability. Statement B is FALSE: Increasing mass flow at constant RPM increases $V_x$ ($V_x > V_{x,design}$), causing $C_2$ to swing towards the suction surface (negative incidence), not positive. Statement D is FALSE: Increasing mass flow at constant RPM moves the operating point away from the surge line on the compressor map, reducing surge risk."
+      },
+      "explanation": {
+        "question_nature": "Application",
+        "step_by_step": [
+          "Step 1: Understand the design condition: At design, velocity triangles are matched to blade angles for smooth flow (zero incidence). The axial velocity $V_x$ is a key parameter.",
+          "Step 2: Recall the continuity equation: $\\dot{m} = \\rho A V_x$, where $\\dot{m}$ is mass flow, $\\rho$ is density, $A$ is flow area (related to blade height), and $V_x$ is axial velocity.",
+          "Step 3: For Statement A: Constant $\\dot{m}$, increased RPM ($U$ increases). Higher $U$ tends to increase pressure ratio, thus $\\rho$ increases downstream. To keep $\\dot{m}$ constant, $V_x$ must decrease. Lower $V_x$ than design causes the relative flow angle at rotor inlet ($\\beta_2$) to increase relative to blade angle (positive incidence). This can cause flow separation on the pressure side (stall). So A is TRUE.",
+          "Step 4: For Statement B: Constant RPM ($U$ fixed), increased $\\dot{m}$. Assuming area $A$ fixed, $V_x$ increases. Higher $V_x$ than design causes $\\beta_2$ to decrease (negative incidence), leading to suction side separation. This is not positive incidence. So B is FALSE.",
+          "Step 5: For Statement C: Same condition as A (constant $\\dot{m}$, increased RPM). Positive incidence and stalling in early stages can lead to a breakdown of pressure rise, potentially triggering surge (a global instability where flow reverses). So C is TRUE.",
+          "Step 6: For Statement D: Constant RPM, increased $\\dot{m}$. This moves the operating point to a higher flow rate on the compressor characteristic, typically away from the surge line (which is at low flow). Surge risk decreases. So D is FALSE."
+        ],
+        "formulas_used": [
+          "$\\dot{m} = \\rho A V_x$ (Continuity equation)",
+          "$C = V - U$ (Relative velocity from absolute $V$ and blade speed $U$)",
+          "$i = \\beta_{actual} - \\beta_{blade}$ (Incidence angle definition)"
+        ],
+        "estimated_time_minutes": 4
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Propulsion",
+          "confidence": 0.95
+        },
+        "topic": {
+          "name": "Axial Compressors",
+          "syllabus_ref": "Section 6 Propulsion -> Compressors"
+        },
+        "concepts": [
+          {
+            "name": "Velocity Triangles and Incidence",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Compressor Stall and Surge",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Off-Design Performance",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Constant Axial Velocity Design",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Velocity triangles for axial compressors (relationship between absolute, relative, and blade velocities)",
+          "Continuity equation and mass flow conservation",
+          "Basic understanding of flow separation and stall due to incidence angle",
+          "Definition of surge in compressors"
+        ],
+        "helpful": [
+          "Compressor performance maps (surge line)",
+          "Effect of density change in compressors"
+        ],
+        "dependency_tree": {
+          "Main Concept: Off-Design Compressor Behavior": [
+            "requires: Velocity Triangles and Incidence",
+            "requires: Mass Conservation",
+            "enables: Prediction of Stall/Surge Conditions",
+            "enables: Compressor Control System Design"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Medium",
+        "score": 6,
+        "complexity_breakdown": {
+          "conceptual": 7,
+          "mathematical": 4,
+          "problem_solving": 7
+        },
+        "estimated_solve_time_seconds": 180,
+        "expected_accuracy_percent": 60,
+        "difficulty_factors": [
+          "Requires mental manipulation of velocity triangles under changing conditions",
+          "Understanding the link between individual blade stall and system-level surge",
+          "Multiple statements to evaluate increase cognitive load"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Gas Turbines",
+          "author": "V. Ganesan",
+          "chapter_number": "4",
+          "chapter_title": "Axial Flow Compressors",
+          "section": "Constant Axial Velocity Design, Blade Height Variation",
+          "page_range": null,
+          "complexity": "intermediate",
+          "relevance_score": 0.7,
+          "source": "rag_retrieval",
+          "text_snippet": "The constant axial velocity design principle is a widely adopted industry practice... as air density increases, the flow cross-sectional area must decrease, achieved by decreasing blade height."
+        },
+        {
+          "source_type": "book",
+          "book": "Mechanics and Thermodynamics of Propulsion",
+          "author": "Hill & Peterson",
+          "chapter_number": "8",
+          "chapter_title": "Axial-Flow Compressors",
+          "section": "Velocity Triangles, Incidence Angle, Flow Separation",
+          "page_range": null,
+          "complexity": "advanced",
+          "relevance_score": 0.8,
+          "source": "rag_retrieval",
+          "text_snippet": "Under off-design conditions, deviations in axial velocity disrupt flow angles, leading to incorrect incidence, causing flow separation (stalling) or choking."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. V. Babu",
+          "timestamp_start": "00:07:54",
+          "timestamp_end": "00:13:35",
+          "video_url": "https://www.youtube.com/watch?v=iKLRgAgfjKE",
+          "book_reference": "Hill & Peterson",
+          "topic_covered": "Flow separation, stalling, and choking in compressors under off-design conditions",
+          "relevance_score": 0.85,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Velocity Triangle Analysis and Continuity Reasoning",
+        "total_steps": 6,
+        "solution_path": "For each statement: 1) Determine how the change (RPM or mass flow) affects axial velocity Vx using continuity and physical reasoning. 2) Infer the change in relative flow angle (incidence) using velocity triangle logic. 3) Relate incidence to stall type (positive/negative) and surge potential.",
+        "key_insights": [
+          "Constant mass flow and increased RPM leads to decreased Vx, causing positive incidence and potential surge.",
+          "Increased mass flow at constant RPM leads to increased Vx, causing negative incidence and reduced surge risk."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$\\dot{m} = \\rho A V_x$",
+          "name": "Mass Flow Continuity",
+          "conditions": "Steady, one-dimensional flow",
+          "type": "equation",
+          "relevance": "Core to relating mass flow, axial velocity, and density changes"
+        },
+        {
+          "formula": "$\\vec{C} = \\vec{V} - \\vec{U}$",
+          "name": "Relative Velocity Definition",
+          "conditions": "Inertial vs. rotating frame",
+          "type": "equation",
+          "relevance": "Foundation for velocity triangles and incidence analysis"
+        },
+        {
+          "formula": "$i = \\beta_{actual} - \\beta_{blade}$",
+          "name": "Incidence Angle",
+          "conditions": "At blade leading edge",
+          "type": "equation",
+          "relevance": "Directly links flow angle mismatch to stall risk"
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Compressor surge avoidance in aircraft engines during rapid throttle-up (requires careful control of fuel flow to prevent RPM increase at low mass flow)",
+          "Compressor stall detection and recovery systems in industrial gas turbines"
+        ],
+        "specific_systems": [
+          "GE CF6 turbofan compressor",
+          "Pratt & Whitney PW1000G geared turbofan compressor"
+        ],
+        "practical_relevance": "Understanding these off-design behaviors is critical for designing stable compressors and engine control systems that prevent catastrophic surge events."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Confusing the effect of increased mass flow on incidence: thinking it causes positive incidence (Statement B).",
+          "why_students_make_it": "Intuitive but incorrect assumption that 'more flow' pushes the flow more onto the blade (positive incidence), without considering velocity triangle geometry.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Always draw velocity triangles: For fixed U, increasing Vx lengthens the axial side, making the relative vector C swing downward (smaller β, negative incidence).",
+          "consequence": "Would incorrectly select B as true."
+        },
+        {
+          "mistake": "Assuming surge is caused by high mass flow rates (Statement D).",
+          "why_students_make_it": "Surge is associated with 'too much pressure', which might be misattributed to high flow.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Memorize: Surge occurs at low mass flow rates (left side of compressor map). High flow leads to choking, not surge.",
+          "consequence": "Would incorrectly select D as true."
+        },
+        {
+          "mistake": "Forgetting that constant mass flow does NOT imply constant axial velocity when RPM (and thus density) changes.",
+          "why_students_make_it": "Over-simplifying continuity, treating ρ and A as constant.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Explicitly write continuity: $\\dot{m}$ constant, but if RPM increases, pressure rise increases, so ρ increases downstream. Therefore, Vx must decrease if area A is fixed.",
+          "consequence": "Unable to correctly analyze Statement A and C."
+        },
+        {
+          "mistake": "Mixing up 'positive incidence' definition: thinking it's when flow angle is less than blade angle.",
+          "why_students_make_it": "Lack of consistent sign convention.",
+          "type": "Definition",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Stick to one definition: Positive incidence = actual relative flow angle > blade angle (flow hits pressure side). Negative incidence = actual angle < blade angle (flow hits suction side).",
+          "consequence": "Incorrectly classify stall type."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "LOW flow (Vx low), HIGH angle (β high) -> POSITIVE incidence -> Pressure side stall.",
+          "concept": "Effect of low axial velocity on incidence",
+          "effectiveness": "high",
+          "context": "Remembering Statement A scenario"
+        },
+        {
+          "mnemonic": "SURGE is on the LEFT (of compressor map).",
+          "concept": "Surge occurs at low mass flow rates",
+          "effectiveness": "high",
+          "context": "Rejecting Statement D"
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "concept_recall",
+          "front": "In an axial compressor, if axial velocity Vx is lower than design (with fixed blade speed U), what happens to the relative flow angle β and incidence?",
+          "back": "Relative flow angle β increases (flow comes from more tangential direction). Incidence becomes positive (β_actual > β_blade), risking pressure side stall.",
+          "difficulty": "medium",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "True or False: Increasing mass flow rate at constant RPM always moves the compressor operating point away from the surge line.",
+          "back": "True. Surge line is on the low-flow side of the compressor map. Increasing flow moves right, away from surge.",
+          "difficulty": "easy",
+          "time_limit_seconds": 20
+        },
+        {
+          "card_type": "application",
+          "front": "Scenario: Constant mass flow, RPM increased. Using continuity, explain why Vx decreases.",
+          "back": "$\\dot{m} = ρ A V_x$ constant. Increased RPM raises pressure ratio, so density ρ increases downstream. Area A is fixed for a given stage. Therefore, Vx must decrease.",
+          "difficulty": "hard",
+          "time_limit_seconds": 45
+        },
+        {
+          "card_type": "definition",
+          "front": "What is positive incidence in a compressor rotor?",
+          "back": "When the actual relative flow angle at the rotor inlet is greater than the blade inlet angle. The flow hits the pressure surface of the blade.",
+          "difficulty": "easy",
+          "time_limit_seconds": 20
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "What is the primary system-level instability caused by severe stalling in a compressor?",
+          "back": "Surge - a violent oscillation or reversal of flow through the compressor.",
+          "difficulty": "medium",
+          "time_limit_seconds": 20
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Engine Acceleration Control",
+          "industry_example": "During take-off, pilots advance throttles rapidly. Engine control systems must carefully meter fuel to increase RPM while ensuring sufficient air mass flow to avoid entering surge conditions (as described in Statement A & C).",
+          "why_it_matters": "Uncontrolled surge can cause flameout, severe vibration, and engine damage."
+        },
+        {
+          "application": "Compressor Blade Design and Testing",
+          "industry_example": "Compressor rig tests map out stall and surge boundaries across various RPM lines. Engineers use this data to define safe operating envelopes for the engine.",
+          "why_it_matters": "Ensures engine operates reliably under all flight conditions without instability."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "This is a classic GATE AE concept question. If you know velocity triangles and surge/stall basics, you can reason through it in 2-3 minutes. For MSQs, evaluate each statement independently.",
+        "guessing_heuristic": "If unsure, remember: Low flow conditions (constant m_dot, high RPM OR low m_dot at constant RPM) are surge/stall prone. High flow moves away from surge.",
+        "time_management": "Spend max 4 minutes. If stuck, flag and return."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "axial compressor off design performance",
+        "velocity triangle compressor RPM change",
+        "compressor surge vs stall",
+        "positive incidence flow separation",
+        "constant mass flow compressor RPM increase",
+        "axial compressor characteristic map surge line",
+        "effect of axial velocity on incidence angle",
+        "GATE AE axial compressor questions"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Compressor Map Analysis",
+          "description": "Plot constant RPM lines (speed lines) on a pressure ratio vs. mass flow rate map. The surge line is the boundary of stable operation. Analyze statements by visualizing movement of operating points on this map.",
+          "pros_cons": "Pros: Provides system-level view, clearly shows surge region. Cons: Requires understanding of compressor maps, less detailed on blade-level phenomena.",
+          "when_to_use": "For quick assessment of surge risk (Statements C & D)."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Fluid Mechanics": "Continuity equation, flow separation, and boundary layer theory explain why flow separates at high incidence.",
+        "Dynamics": "Relative velocity and vector addition are core to velocity triangles.",
+        "Control Systems": "Compressor surge avoidance requires feedback control of fuel flow and variable geometry (like stator vanes)."
+      },
+      "deeper_dive_topics": [
+        "Multi-stage compressor matching and stage stacking",
+        "Active surge control techniques (bleed valves, fast-acting valves)",
+        "Computational Fluid Dynamics (CFD) for predicting stall inception",
+        "Rotating stall vs surge"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2024_AE_Q50",
+        "year": 2024,
+        "marks": 2.0,
+        "negative_marks": 0.0,
+        "time_expected": "3-4 minutes",
+        "success_rate_estimate": "60%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 6: Propulsion",
+        "gate_subsection": "Air Breathing Engines: Axial compressors - stage velocity triangles, performance, stall and surge.",
+        "weightage": "~8-10%",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Perfectly aligned with core syllabus. Tests application of fundamental concepts to off-design scenarios."
+      },
+      "rag_quality": {
+        "relevance_score": 0.8,
+        "chunks_used": 3,
+        "sources_distribution": {
+          "books": 2,
+          "videos": 1
+        },
+        "notes": "RAG context (Chunks 1-3, 6) provided excellent foundational material on constant axial velocity design, velocity triangles, and the effects of axial velocity deviation on stall and choking. This directly supported the analysis of Statements A and B. Chunks 4 and 5 were about turbines, less relevant. The context lacked explicit discussion of surge, but the link from stall to surge is standard knowledge. Overall, RAG was highly relevant and sufficient for core reasoning."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-13T10:30:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "How would decreasing mass flow at constant RPM affect incidence and surge risk? (Opposite of Statement B/D)",
+        "For a multi-stage compressor, which stage is most likely to stall first under the condition of constant m_dot and increased RPM?",
+        "Explain the role of variable stator vanes in preventing the positive incidence described in Statement A.",
+        "Given a compressor map, identify the operating point corresponding to the condition in Statement C."
+      ]
+    },
+    "question_id": "GATE_2024_AE_Q50",
+    "year": 2024,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "MSQ",
+    "question_text": "Which of the following statements is/are TRUE for a single stage axial compressor?"
+  },
+  "tokens_used": 15545,
+  "input_tokens": 9502,
+  "output_tokens": 6043,
+  "cost": 0.01846027,
+  "time_seconds": 190.7532036304474
+}
