@@ -1,0 +1,412 @@
+{
+  "model_name": "deepseek_r1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "text_only",
+      "combined_type": "numerical_calculation_text_only",
+      "weight_strategy": "NUMERICAL_WEIGHTED",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "The question requires finding the natural frequencies of a 2-DOF system and then extracting a numerical value. It involves setting up an eigenvalue problem and solving for the eigenvalues, which represent the squares of the natural frequencies. It requires knowledge of vibration theory and linear algebra, thus integrating multiple concepts.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "1.73",
+        "is_correct": true,
+        "confidence": 0.99,
+        "confidence_type": "single_model",
+        "reasoning": "The equations of motion correspond to a symmetric two-degree-of-freedom system with a mass matrix $[M] = m I$ and stiffness matrix $[K] = [[2k, -k], [-k, 2k]]$. The natural frequencies are found by solving $\\det([K] - \\omega^2 [M]) = 0$, which yields $\\omega^2 = k/m$ and $\\omega^2 = 3k/m$. The larger frequency is $\\omega = \\sqrt{3} \\sqrt{k/m}$, where $\\alpha = \\sqrt{3} \\approx 1.732$, rounding to 1.73. This matches the official answer range (1.72 to 1.74) and is corroborated by the retrieved knowledge (Chunk 1)."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Step 1: Write the given equations of motion in matrix form. For an undamped 2-DOF system, $[M]\\{\\ddot{x}\\} + [K]\\{x\\} = \\{0\\}$. Comparing coefficients: $[M] = \\begin{bmatrix} m & 0 \\\\ 0 & m \\end{bmatrix}$, $[K] = \\begin{bmatrix} 2k & -k \\\\ -k & 2k \\end{bmatrix}$.",
+          "Step 2: Assume harmonic motion $\\{x(t)\\} = \\{X\\} e^{i\\omega t}$, leading to the eigenvalue problem: $([K] - \\omega^2 [M])\\{X\\} = \\{0\\}$.",
+          "Step 3: For non-trivial solutions, set the determinant of the dynamic stiffness matrix to zero: $\\det([K] - \\omega^2 [M]) = 0$.",
+          "Step 4: Compute the determinant: $\\det\\begin{pmatrix} 2k - m\\omega^2 & -k \\\\ -k & 2k - m\\omega^2 \\end{pmatrix} = (2k - m\\omega^2)^2 - (-k)(-k) = (2k - m\\omega^2)^2 - k^2 = 0$.",
+          "Step 5: Simplify the determinant equation: $(2k - m\\omega^2)^2 = k^2$. Take square roots: $2k - m\\omega^2 = \\pm k$.",
+          "Step 6: Solve for $\\omega^2$. Case 1: $2k - m\\omega^2 = k \\Rightarrow m\\omega^2 = k \\Rightarrow \\omega^2 = k/m$. Case 2: $2k - m\\omega^2 = -k \\Rightarrow m\\omega^2 = 3k \\Rightarrow \\omega^2 = 3k/m$.",
+          "Step 7: The natural frequencies are $\\omega_1 = \\sqrt{k/m}$ and $\\omega_2 = \\sqrt{3k/m} = \\sqrt{3} \\sqrt{k/m}$. The larger frequency is $\\omega_2$.",
+          "Step 8: Identify $\\alpha$ from $\\omega = \\alpha \\sqrt{k/m}$. Thus, $\\alpha = \\sqrt{3} \\approx 1.7320508$. Rounded to two decimal places, $\\alpha = 1.73$."
+        ],
+        "formulas_used": [
+          "$[M]\\{\\ddot{x}\\} + [K]\\{x\\} = \\{0\\}$",
+          "$\\det([K] - \\omega^2 [M]) = 0$",
+          "$\\omega_n = \\sqrt{\\frac{k}{m}}$ (for SDOF reference)",
+          "$\\alpha = \\sqrt{3}$"
+        ],
+        "estimated_time_minutes": 3
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Structures",
+          "confidence": 0.95
+        },
+        "topic": {
+          "name": "Vibrations",
+          "syllabus_ref": "Section 4: Structures -> Vibration of Continuous and Discrete Systems"
+        },
+        "concepts": [
+          {
+            "name": "Natural frequencies of multi-degree-of-freedom systems",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Matrix form of equations of motion",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Eigenvalue problem for undamped free vibration",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Determinant calculation",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Equation of motion for spring-mass systems (Newton's second law or Lagrange's equations)",
+          "Matrix algebra (determinant, eigenvalue problems)",
+          "Solution of second-order linear differential equations"
+        ],
+        "helpful": [
+          "Understanding of single-degree-of-freedom natural frequency: $\\omega_n = \\sqrt{k/m}$",
+          "Familiarity with coupled oscillators and mode shapes"
+        ],
+        "dependency_tree": {
+          "Natural frequencies of 2-DOF systems": [
+            "requires: Equations of motion in matrix form",
+            "requires: Determinant and eigenvalue concepts",
+            "enables: Vibration analysis of aircraft structures",
+            "enables: Design of vibration absorbers"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Easy",
+        "score": 3,
+        "complexity_breakdown": {
+          "conceptual": 4,
+          "mathematical": 5,
+          "problem_solving": 3
+        },
+        "estimated_solve_time_seconds": 120,
+        "expected_accuracy_percent": 80,
+        "difficulty_factors": [
+          "Direct application of standard eigenvalue problem for 2-DOF systems",
+          "Simple determinant leads to a quadratic in ω²",
+          "Rounding to two decimals requires careful calculation of √3"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Mechanical Vibrations",
+          "author": "S.S. Rao",
+          "chapter_number": "6",
+          "chapter_title": "Multi-Degree-of-Freedom Systems",
+          "section": "Free Vibration Analysis",
+          "page_range": "Not specified in RAG",
+          "complexity": "intermediate",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval",
+          "text_snippet": "The equation of motion for an undamped n-degree-of-freedom system undergoing free vibration is: [M]{u_double_dot(t)} + [K]{u(t)} = {0}."
+        },
+        {
+          "source_type": "book",
+          "book": "Mechanical Vibrations",
+          "author": "S.S. Rao",
+          "chapter_number": "6",
+          "chapter_title": "Two-Degree-of-Freedom Systems",
+          "section": "Forced Vibration Analysis",
+          "page_range": "Not specified in RAG",
+          "complexity": "intermediate",
+          "relevance_score": 0.8,
+          "source": "rag_retrieval",
+          "text_snippet": "Example: Forced vibration of a 2-mass, 3-spring system... natural frequencies ω₁² = k/m and ω₂² = 3k/m."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. S.K. Dwivedy and Prof. Rajiv Tiwari",
+          "timestamp_start": "00:08:03",
+          "timestamp_end": "00:19:50",
+          "video_url": "Not provided",
+          "book_reference": "S.S. Rao",
+          "topic_covered": "Forced vibration of 2-mass, 3-spring system and natural frequency determination",
+          "relevance_score": 0.85,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. Mira Mitra",
+          "timestamp_start": "00:01:58",
+          "timestamp_end": "00:08:11",
+          "video_url": "Not provided",
+          "book_reference": "S.S. Rao",
+          "topic_covered": "Equation of motion for multi-degree-of-freedom systems in matrix form",
+          "relevance_score": 0.7,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Direct Eigenvalue Problem Solution",
+        "total_steps": 8,
+        "solution_path": "Matrix formulation → Determinant equation → Quadratic in ω² → Solve for ω → Identify larger frequency → Extract α → Round",
+        "key_insights": [
+          "The stiffness matrix off-diagonals are negative, indicating coupling.",
+          "The determinant equation simplifies to a perfect square minus a constant, giving two distinct roots.",
+          "The larger natural frequency is always √3 times the SDOF natural frequency √(k/m) for this symmetric system."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$[M]\\{\\ddot{x}\\} + [K]\\{x\\} = \\{0\\}$",
+          "name": "Matrix equation of motion for undamped free vibration",
+          "conditions": "Undamped, no external forces",
+          "type": "equation",
+          "relevance": "Core governing equation for the system"
+        },
+        {
+          "formula": "$\\det([K] - \\omega^2 [M]) = 0$",
+          "name": "Characteristic equation for natural frequencies",
+          "conditions": "Harmonic solution assumed",
+          "type": "equation",
+          "relevance": "Leads to the eigenvalues (natural frequencies)"
+        },
+        {
+          "formula": "$\\omega^2 = \\frac{k}{m}, \\frac{3k}{m}$",
+          "name": "Natural frequencies squared",
+          "conditions": "For given symmetric [M] and [K]",
+          "type": "equation",
+          "relevance": "Specific solutions for this problem"
+        },
+        {
+          "formula": "$\\alpha = \\sqrt{3}$",
+          "name": "Coefficient for larger natural frequency",
+          "conditions": "When ω = α √(k/m)",
+          "type": "constant",
+          "relevance": "Final answer"
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Vibration analysis of aircraft wings modeled as coupled beams",
+          "Design of engine mounts to avoid resonance at certain rotor speeds"
+        ],
+        "specific_systems": [
+          "Two-mass vibration absorber systems",
+          "Dual-rotor helicopter dynamics"
+        ],
+        "practical_relevance": "Understanding natural frequencies of coupled structures is crucial to avoid resonance, which can lead to catastrophic failures due to excessive vibrations."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Forgetting to take both ± roots when solving (2k - mω²)² = k², leading to only one natural frequency.",
+          "why_students_make_it": "Overlooking that square root gives both positive and negative solutions.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Explicitly write: 2k - mω² = ± k, then solve both cases.",
+          "consequence": "Missing the larger natural frequency, resulting in α = 1 instead of √3."
+        },
+        {
+          "mistake": "Incorrectly constructing the stiffness matrix, e.g., using positive off-diagonals or wrong diagonal terms.",
+          "why_students_make_it": "Misinterpreting the coupling terms in the equations of motion.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Write equations in standard form m ẍ₁ + ... = 0. The coefficient of x₁ in the first equation is 2k, of x₂ is -k. For the second equation, coefficient of x₁ is -k, of x₂ is 2k.",
+          "consequence": "Wrong characteristic equation and incorrect natural frequencies."
+        },
+        {
+          "mistake": "Rounding √3 incorrectly (e.g., 1.73 vs 1.74) or forgetting to round to two decimal places.",
+          "why_students_make_it": "Carelessness or not reading the question carefully.",
+          "type": "Calculation",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Calculate √3 precisely: 1.7320508... The third decimal is 2 (<5), so round down to 1.73. Always check rounding instructions.",
+          "consequence": "Answer outside the accepted range (1.72-1.74) may be marked wrong."
+        },
+        {
+          "mistake": "Confusing ω (rad/s) with f (Hz) and using f = ω/(2π) in the expression for α.",
+          "why_students_make_it": "Not paying attention to units given in the question (omega = alpha sqrt(k/m) rad/s).",
+          "type": "Units",
+          "severity": "Low",
+          "frequency": "rare",
+          "how_to_avoid": "Note that the question explicitly states 'omega = alpha sqrt(k/m) rad/s', so alpha is dimensionless and directly multiplies √(k/m).",
+          "consequence": "Incorrect α by a factor of 2π."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "Symmetric Coupling: Diagonals are 2k, Off-diagonals are -k. Larger frequency is √3 times the basic.",
+          "concept": "Stiffness matrix pattern and ratio of natural frequencies",
+          "effectiveness": "medium",
+          "context": "For symmetric 2-DOF systems with equal masses and symmetric springs"
+        },
+        {
+          "mnemonic": "1, 3, Free: The two ω² values are (k/m) and (3k/m) for this free vibration problem.",
+          "concept": "Natural frequency squares for this specific system",
+          "effectiveness": "high",
+          "context": "Quick recall during exams"
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "What is the matrix equation of motion for an undamped multi-degree-of-freedom free vibration system?",
+          "back": "$[M]\\{\\ddot{x}\\} + [K]\\{x\\} = \\{0\\}$, where [M] is mass matrix, [K] is stiffness matrix.",
+          "difficulty": "easy",
+          "time_limit_seconds": 20
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "How are natural frequencies obtained from the matrix equation of motion?",
+          "back": "Assume harmonic solution $\\{x\\} = \\{X\\} e^{i\\omega t}$, leading to eigenvalue problem $([K] - \\omega^2[M])\\{X\\} = \\{0\\}$. Non-trivial solutions require $\\det([K] - \\omega^2[M]) = 0$.",
+          "difficulty": "medium",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "application",
+          "front": "For a 2-DOF system with [M]=mI and [K]=[[2k,-k],[-k,2k]], what are the natural frequencies?",
+          "back": "$\\omega_1 = \\sqrt{k/m}$, $\\omega_2 = \\sqrt{3k/m} = \\sqrt{3}\\sqrt{k/m}$. Larger frequency has $\\alpha = \\sqrt{3} \\approx 1.73$.",
+          "difficulty": "medium",
+          "time_limit_seconds": 25
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "What common mistake occurs when solving $(2k - m\\omega^2)^2 = k^2$?",
+          "back": "Forgetting the ± sign: $2k - m\\omega^2 = \\pm k$. This gives two distinct roots for $\\omega^2$: $k/m$ and $3k/m$.",
+          "difficulty": "easy",
+          "time_limit_seconds": 20
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Aircraft wing vibration modes",
+          "industry_example": "A wing can be modeled as a series of masses and springs. The first two bending modes correspond to different natural frequencies. Avoiding engine excitation at these frequencies is critical.",
+          "why_it_matters": "Resonance can cause excessive stress and fatigue, leading to structural failure."
+        },
+        {
+          "application": "Vibration absorbers in helicopters",
+          "industry_example": "Helicopter rotors exhibit coupled vibrations. Understanding the 2-DOF natural frequencies helps design absorbers to reduce cockpit vibration.",
+          "why_it_matters": "Improves ride comfort and reduces pilot fatigue and component wear."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "Quick 2-minute problem if you know the matrix method. Write determinant, solve quadratic, find larger root, round.",
+        "guessing_heuristic": "If stuck, recall that for symmetric 2-DOF systems, the larger frequency is often > √(k/m). √3 ≈ 1.73 is a common result.",
+        "time_management": "Spend no more than 3 minutes; it's a straightforward calculation."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "two degree of freedom spring mass system natural frequencies",
+        "matrix method vibrations 2DOF",
+        "coupled oscillators natural frequencies",
+        "determinant of dynamic stiffness matrix",
+        "sqrt(3) natural frequency coefficient",
+        "GATE AE vibrations numerical",
+        "undamped 2DOF eigenvalue problem",
+        "symmetric stiffness matrix natural frequencies"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Lagrange's Equations",
+          "description": "Derive equations of motion using kinetic and potential energy expressions, then proceed to the same eigenvalue problem.",
+          "pros_cons": "Systematic for complex systems; slightly longer but good for validation.",
+          "when_to_use": "When given a system with clear energy expressions or non-standard coordinates."
+        },
+        {
+          "name": "Frequency Response Method (for forced vibration)",
+          "description": "Assume forced harmonic excitation, find the frequency at which the response becomes infinite (resonance). For free vibration, this is not necessary.",
+          "pros_cons": "Directly shows resonance peaks; more relevant for forced systems.",
+          "when_to_use": "When dealing with forced vibration problems to identify resonance frequencies."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Linear Algebra": "Eigenvalue problems and determinants are core linear algebra concepts applied here.",
+        "Dynamics": "Equations of motion derive from Newton's second law or Lagrange's equations from dynamics.",
+        "Control Systems": "Natural frequencies relate to system poles in state-space representation."
+      },
+      "deeper_dive_topics": [
+        "Mode shapes: The eigenvectors corresponding to ω₁ and ω₂. For ω₁²=k/m, the mode shape is {1,1} (in-phase). For ω₂²=3k/m, it's {1,-1} (out-of-phase).",
+        "Effect of damping: Adding damping makes the eigenvalues complex and reduces peak amplitudes at resonance.",
+        "Continuous systems: This discrete 2-DOF model is a precursor to finite element modeling of continuous structures like beams and plates.",
+        "Vibration absorption: Using a tuned mass damper (another 2-DOF system) to suppress vibration at a specific frequency."
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2024_AE_Q55",
+        "year": 2024,
+        "marks": 2.0,
+        "negative_marks": 0.0,
+        "time_expected": "2-3 minutes",
+        "success_rate_estimate": "75%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 4: Structures",
+        "gate_subsection": "Vibration of Continuous and Discrete Systems",
+        "weightage": "Approx 5-8% of Structures section",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Well-aligned with core vibration concepts for 2-DOF systems, a standard topic."
+      },
+      "rag_quality": {
+        "relevance_score": 0.85,
+        "chunks_used": 2,
+        "sources_distribution": {
+          "books": 0,
+          "videos": 2
+        },
+        "notes": "RAG provided highly relevant content: Chunk 1 directly gives the natural frequencies for a nearly identical 2-DOF system (ω₁²=k/m, ω₂²=3k/m). Chunk 3 provides the general matrix formulation. Other chunks (2,4,5,6) are about SDOF systems and damping, which are foundational but not directly needed for this specific 2-DOF calculation. RAG was sufficient to answer the question."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-13T10:30:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Asking for the smaller natural frequency (α=1).",
+        "Asking for the mode shapes corresponding to each natural frequency.",
+        "Adding damping and asking for damped natural frequencies or damping ratio.",
+        "Changing the mass or stiffness values to be unequal and asking for numerical natural frequencies.",
+        "Asking for the response to initial conditions using modal analysis."
+      ]
+    },
+    "question_id": "GATE_2024_AE_Q55",
+    "year": 2024,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "NAT",
+    "question_text": "The equations of motion for a two degrees of freedom undamped spring-mass system are: m x_doubledot_1 + 2k x_1 - k x_2 = 0; m x_doubledot_2 - k x_1 + 2k x_2 = 0. where m and k represent mass and stiffness respectively, in corresponding SI units, and x1 and x2 are the degrees of freedom. The larger of the two natural frequencies is given by: omega = alpha sqrt(k/m) rad/s. The value of alpha is ________ (rounded off to 2 decimal places)."
+  },
+  "tokens_used": 17398,
+  "input_tokens": 11131,
+  "output_tokens": 6267,
+  "cost": 0.01984678,
+  "time_seconds": 177.614515542984
+}
