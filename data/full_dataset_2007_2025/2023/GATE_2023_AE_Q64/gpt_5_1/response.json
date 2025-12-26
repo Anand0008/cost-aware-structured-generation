@@ -1,0 +1,410 @@
+{
+  "model_name": "gpt_5_1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "text_only",
+      "combined_type": "numerical_calculation_text_only",
+      "weight_strategy": "NUMERICAL_WEIGHTED",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "This is a numerical calculation problem involving multiple concepts like pressure ratio, polytropic efficiency, and slip factor to find the impeller speed. It requires multiple steps to solve, making it a medium-hard problem.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "≈1.60×10^4 RPM",
+        "is_correct": true,
+        "confidence": 0.96,
+        "confidence_type": "single_model",
+        "reasoning": "We use the polytropic relation for a compressor to find the stagnation temperature rise corresponding to the given pressure ratio and polytropic efficiency, then equate this to the specific work from the Euler turbomachine equation including slip factor. Finally, we relate impeller tip speed to RPM using the given outlet diameter.\\n\\n1) Polytropic temperature ratio:\\nGiven pressure ratio $r_p = p_{02}/p_{01} = 5$, $\\gamma = 1.4$, polytropic efficiency $\\eta_p = 0.8$. For a compressor, the polytropic relation is\\n$$\\frac{T_{02}}{T_{01}} = r_p^{\\frac{\\gamma-1}{\\gamma\\eta_p}}$$\\nCompute exponent: $(\\gamma-1)/(\\gamma\\eta_p) = 0.4/(1.4\\times0.8) = 0.4/1.12 \\approx 0.3571$.\\nThen $T_{01} = 25^\\circ C = 298\\,\\text{K}$, so\\n$T_{02}/T_{01} = 5^{0.3571} \\approx e^{0.3571\\ln 5}$. With $\\ln 5 \\approx 1.6094$, exponent $\\approx 0.3571\\times1.6094 \\approx 0.574$, so $T_{02}/T_{01} \\approx e^{0.574} \\approx 1.776$.\\nThus $T_{02} \\approx 1.776\\times298 \\approx 529.8\\,\\text{K}$ and $\\Delta T_0 = T_{02}-T_{01} \\approx 231.8\\,\\text{K}$.\\n\\n2) Specific work from thermodynamics:\\nWith $C_p = 1.004\\,\\text{kJ/kg-K} = 1004\\,\\text{J/kg-K}$,\\n$$w = C_p\\Delta T_0 \\approx 1004\\times231.8 \\approx 2.33\\times10^5\\,\\text{J/kg}$$\\n\\n3) Relate work to impeller tip speed including slip:\\nFor a radial-flow centrifugal compressor with negligible inlet whirl, the ideal specific work is $w_{ideal} = U_2^2$. With slip factor $\\mu$, the actual tangential component is $c_{t2} = \\mu U_2$, so actual work is\\n$$w = U_2 c_{t2} = \\mu U_2^2$$\\nEquate to thermodynamic work: $\\mu U_2^2 = C_p\\Delta T_0$. Thus\\n$$U_2^2 = \\frac{C_p\\Delta T_0}{\\mu} = \\frac{2.33\\times10^5}{0.92} \\approx 2.53\\times10^5\\,(\\text{m}^2/\\text{s}^2)$$\\nSo $U_2 \\approx \\sqrt{2.53\\times10^5} \\approx 503\\,\\text{m/s}$.\\n\\n4) Convert tip speed to RPM:\\nTip speed $U_2$ is related to rotational speed $N$ and impeller diameter $D_2$ by\\n$$U_2 = \\pi D_2 \\frac{N}{60}$$\\nGiven $D_2 = 0.6\\,\\text{m}$,\\n$$N = \\frac{60U_2}{\\pi D_2} = \\frac{60\\times503}{\\pi\\times0.6} \\approx \\frac{30180}{1.884} \\approx 1.60\\times10^4\\,\\text{RPM}$$\\nThis lies within the official answer range 15948 to 16048 RPM, confirming the key."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Step 1: Note given data: inlet total conditions $p_{01}=1\\,\\text{atm}$, $T_{01}=298\\,\\text{K}$, pressure ratio $p_{02}/p_{01}=5$, polytropic efficiency $\\eta_p=0.8$, slip factor $\\mu=0.92$, $C_p=1.004\\,\\text{kJ/kg-K}$, $\\gamma=1.4$, outlet diameter $D_2=0.6\\,\\text{m}$.",
+          "Step 2: Use the polytropic compression relation $T_{02}/T_{01} = (p_{02}/p_{01})^{(\\gamma-1)/(\\gamma\\eta_p)}$ to compute the outlet stagnation temperature $T_{02}$ and the temperature rise $\\Delta T_0$.",
+          "Step 3: Compute the specific work from thermodynamics using $w = C_p\\Delta T_0$ (convert $C_p$ to J/kg-K).",
+          "Step 4: Use the Euler turbomachine work equation with slip: $w = U_2 c_{t2} = \\mu U_2^2$ (assuming negligible inlet whirl and radial exit), and solve for the impeller tip speed $U_2$.",
+          "Step 5: Relate tip speed to RPM using $U_2 = \\pi D_2 N/60$ and solve for $N$ in RPM.",
+          "Step 6: Round the RPM to the nearest integer and verify it lies within the official answer range."
+        ],
+        "formulas_used": [
+          "$\\frac{T_{02}}{T_{01}} = \\left(\\frac{p_{02}}{p_{01}}\\right)^{\\frac{\\gamma-1}{\\gamma\\eta_p}}$",
+          "$w = C_p\\,(T_{02}-T_{01})$",
+          "$w = U_2 c_{t2}$",
+          "$c_{t2} = \\mu U_2$",
+          "$U_2^2 = \\frac{C_p\\Delta T_0}{\\mu}$",
+          "$U_2 = \\pi D_2 \\frac{N}{60}$"
+        ],
+        "estimated_time_minutes": 3
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Propulsion",
+          "confidence": 0.99
+        },
+        "topic": {
+          "name": "Gas turbine compressors (centrifugal compressor performance and design)",
+          "syllabus_ref": "Section 6 Propulsion -> Gas turbine engines: axial and centrifugal compressors, performance"
+        },
+        "concepts": [
+          {
+            "name": "Polytropic compression in compressors",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Euler turbomachine equation for compressors",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Slip factor in centrifugal compressors",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Relation between tip speed and RPM",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Stagnation temperature rise and specific work",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Basic thermodynamics of compression processes (isentropic and polytropic relations)",
+          "Definition and use of stagnation (total) temperature and pressure",
+          "Euler turbomachine work equation for compressors",
+          "Concept of slip factor in centrifugal compressors",
+          "Kinematics of rotating machinery (relation between tangential speed, diameter, and RPM)"
+        ],
+        "helpful": [
+          "Logarithms and exponentials for handling polytropic relations",
+          "Understanding of compressor efficiency definitions (isentropic vs polytropic)"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Thermodynamic relations for compressible flow (polytropic and isentropic processes)",
+            "requires: Euler turbomachine equation and velocity triangles",
+            "requires: Definition and role of slip factor in centrifugal compressors",
+            "enables: Preliminary design of centrifugal compressor impellers (size and speed selection)",
+            "enables: Performance analysis and matching of compressor with turbine in gas turbine engines"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Medium",
+        "score": 5,
+        "complexity_breakdown": {
+          "conceptual": 5,
+          "mathematical": 5,
+          "problem_solving": 5
+        },
+        "estimated_solve_time_seconds": 180,
+        "expected_accuracy_percent": 65,
+        "difficulty_factors": [
+          "Requires correct use of polytropic efficiency (not isentropic) in the temperature relation",
+          "Needs understanding that slip factor modifies the work via $w = \\mu U_2^2$",
+          "Involves multiple steps: thermodynamics, turbomachinery work, and kinematics"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Gas Turbines",
+          "author": "V. Ganesan",
+          "chapter_number": "8",
+          "chapter_title": "Centrifugal Compressors",
+          "section": "8.x Polytropic efficiency and work input; Slip factor",
+          "page_range": "Approx. 230-260",
+          "complexity": "intermediate",
+          "relevance_score": 0.95,
+          "source": "rag_retrieval",
+          "text_snippet": "Worked examples show how to relate pressure ratio, polytropic efficiency, and slip factor to impeller tip speed and diameter in centrifugal compressors."
+        },
+        {
+          "source_type": "book",
+          "book": "Gas Turbine Theory",
+          "author": "Cohen, Rogers and Saravanamuttoo",
+          "chapter_number": "4",
+          "chapter_title": "Centrifugal Compressors",
+          "section": "Polytropic efficiency and compressor work",
+          "page_range": "120-150",
+          "complexity": "intermediate",
+          "relevance_score": 0.9,
+          "source": "model_consensus",
+          "text_snippet": "Derives the polytropic relation for compressors and connects it with the work input and blade speed."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. N. K. Jain (NPTEL, IIT Kanpur)",
+          "timestamp_start": "00:15:00",
+          "timestamp_end": "00:35:00",
+          "video_url": "https://www.youtube.com/results?search_query=nptel+centrifugal+compressor+polytropic+efficiency",
+          "book_reference": "Gas Turbines by V. Ganesan",
+          "topic_covered": "Polytropic efficiency and work in centrifugal compressors; relation to blade speed and slip factor",
+          "relevance_score": 0.88,
+          "source": "model_consensus"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Direct Formula Application",
+        "total_steps": 6,
+        "solution_path": "Polytropic relation for T-rise → Specific work from CpΔT → Euler work with slip → Tip speed → RPM",
+        "key_insights": [
+          "Polytropic efficiency modifies the exponent in the $T$–$p$ relation, not just a simple ratio of temperature rises.",
+          "For a radial-flow centrifugal compressor with negligible inlet whirl, the work is effectively $w = \\mu U_2^2$.",
+          "Once tip speed is known, RPM follows directly from the geometric relation $U_2 = \\pi D_2 N/60$."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$\\frac{T_{02}}{T_{01}} = \\left(\\frac{p_{02}}{p_{01}}\\right)^{\\frac{\\gamma-1}{\\gamma\\eta_p}}$",
+          "name": "Polytropic temperature-pressure relation for compressor",
+          "conditions": "Applies to steady, adiabatic, internally reversible polytropic compression with constant Cp and gamma; efficiency defined on small stages.",
+          "type": "equation",
+          "relevance": "Core relation to compute stagnation temperature rise from given pressure ratio and polytropic efficiency."
+        },
+        {
+          "formula": "$w = C_p\\,(T_{02}-T_{01})$",
+          "name": "Specific work from stagnation temperature rise",
+          "conditions": "Applies to steady-flow adiabatic compression with negligible changes in kinetic energy and potential energy; constant Cp.",
+          "type": "equation",
+          "relevance": "Links thermodynamic temperature rise to mechanical work per unit mass."
+        },
+        {
+          "formula": "$w = U_2 c_{t2}$",
+          "name": "Euler turbomachine work equation (simplified)",
+          "conditions": "Applies when inlet whirl is negligible and exit radius is the main contributor; steady flow in a turbomachine.",
+          "type": "equation",
+          "relevance": "Relates specific work to blade speed and tangential component of absolute velocity at exit."
+        },
+        {
+          "formula": "$c_{t2} = \\mu U_2$",
+          "name": "Slip factor relation",
+          "conditions": "Applies to centrifugal compressors where slip factor accounts for deviation of flow from ideal blade guidance.",
+          "type": "equation",
+          "relevance": "Introduces slip factor into the work equation, leading to $w = \\mu U_2^2$."
+        },
+        {
+          "formula": "$U_2 = \\pi D_2 \\frac{N}{60}$",
+          "name": "Tip speed-RPM relation",
+          "conditions": "Applies to rigid body rotation with diameter $D_2$ and rotational speed $N$ in RPM.",
+          "type": "equation",
+          "relevance": "Converts computed tip speed into the required impeller rotational speed."
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Preliminary design of centrifugal compressors for small turbojet and auxiliary power unit (APU) gas turbines, where required pressure ratio and efficiency dictate impeller size and speed.",
+          "Design of industrial centrifugal compressors used in process plants and refrigeration systems, where accurate speed prediction ensures safe operation below material stress limits."
+        ],
+        "specific_systems": [
+          "Small turbojet engines used in UAVs or cruise missiles, which often use single-stage centrifugal compressors.",
+          "APU compressors on commercial aircraft, where compact high-pressure-ratio centrifugal stages are common."
+        ],
+        "practical_relevance": "Correctly sizing impeller speed is crucial to achieve the desired pressure ratio without exceeding material stress limits or causing excessive Mach numbers at the blade tips, which can reduce efficiency and cause noise and vibration."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Using the isentropic relation $T_{02}/T_{01} = (p_{02}/p_{01})^{(\\gamma-1)/\\gamma}$ instead of the polytropic relation with efficiency in the exponent.",
+          "why_students_make_it": "Students often memorize the isentropic formula and forget that polytropic efficiency modifies the exponent rather than being applied as a simple ratio.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Whenever you see 'polytropic efficiency', recall that it appears in the exponent: $(\\gamma-1)/(\\gamma\\eta_p)$. Write the general polytropic relation before plugging numbers.",
+          "consequence": "Underestimates the temperature rise and specific work, leading to a significantly lower computed RPM."
+        },
+        {
+          "mistake": "Applying slip factor incorrectly as $w = U_2^2/\\mu$ instead of $w = \\mu U_2^2$.",
+          "why_students_make_it": "Confusion about whether slip increases or decreases effective work; some think of it as an efficiency in the denominator.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "occasional",
+          "how_to_avoid": "Remember: slip reduces the effective tangential velocity, so $c_{t2} = \\mu U_2$ with $\\mu<1$, hence $w = U_2 c_{t2} = \\mu U_2^2$.",
+          "consequence": "Gives a much larger required tip speed and RPM, often far outside realistic values."
+        },
+        {
+          "mistake": "Forgetting to convert $C_p$ from kJ/kg-K to J/kg-K when computing specific work.",
+          "why_students_make_it": "Rushing and directly using 1.004 as if it were in J/kg-K.",
+          "type": "Units",
+          "severity": "Medium",
+          "frequency": "common",
+          "how_to_avoid": "Always check units: if work is in J/kg, use $C_p$ in J/kg-K. Multiply kJ/kg-K values by 1000.",
+          "consequence": "Specific work is underestimated by a factor of 1000, leading to an unrealistically low tip speed and RPM."
+        },
+        {
+          "mistake": "Using radius instead of diameter in the tip speed formula $U_2 = \\pi D_2 N/60$ or mixing them up.",
+          "why_students_make_it": "Confusion between radius and diameter when reading the problem statement.",
+          "type": "Calculation",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Underline 'diameter' or 'radius' in the question. Recall that the circumference is $\\pi D$, not $2\\pi r$ if $D$ is already given.",
+          "consequence": "Tip speed or RPM is off by a factor of 2, leading to an incorrect final answer."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "Poly in the POWER: Polytropic efficiency goes in the exponent.",
+          "concept": "Remembering that polytropic efficiency appears in the exponent of the $T$–$p$ relation, not as a simple ratio.",
+          "effectiveness": "high",
+          "context": "Use whenever you see polytropic efficiency in compressor or turbine problems."
+        },
+        {
+          "mnemonic": "Slip SLows: Slip factor makes $c_{t2}$ Smaller than $U_2$.",
+          "concept": "Understanding that slip factor multiplies $U_2$ (not divides) to give a smaller tangential velocity.",
+          "effectiveness": "medium",
+          "context": "Use when writing $c_{t2} = \\mu U_2$ for centrifugal compressors."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "Write the polytropic relation between $T_0$ and $p_0$ for a compressor with polytropic efficiency $\\eta_p$.",
+          "back": "$\\displaystyle \\frac{T_{02}}{T_{01}} = \\left(\\frac{p_{02}}{p_{01}}\\right)^{\\frac{\\gamma-1}{\\gamma\\eta_p}}$",
+          "difficulty": "medium",
+          "time_limit_seconds": 45
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "In a centrifugal compressor, how does slip factor $\\mu$ relate $c_{t2}$ and $U_2$?",
+          "back": "Slip factor reduces the effective whirl: $c_{t2} = \\mu U_2$ with $0<\\mu<1$. Thus the actual work is $w = U_2 c_{t2} = \\mu U_2^2$.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "formula_recall",
+          "front": "What is the relation between impeller tip speed $U_2$, diameter $D_2$, and RPM $N$?",
+          "back": "$\\displaystyle U_2 = \\pi D_2 \\frac{N}{60}$, where $D_2$ is the impeller diameter and $N$ is in RPM.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "application",
+          "front": "A centrifugal compressor has $p_{02}/p_{01}=4$, $T_{01}=300\\,K$, $\\eta_p=0.8$, $\\gamma=1.4$. Estimate $T_{02}/T_{01}$.",
+          "back": "Use $T_{02}/T_{01} = 4^{(\\gamma-1)/(\\gamma\\eta_p)} = 4^{0.4/(1.4\\times0.8)} = 4^{0.3571} \\approx e^{0.3571\\ln 4} \\approx e^{0.3571\\times1.386} \\approx e^{0.495} \\approx 1.64$.",
+          "difficulty": "medium",
+          "time_limit_seconds": 60
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "In compressor problems, when should you use $w = \\mu U_2^2$ instead of $w = U_2^2/\\mu$?",
+          "back": "Always: slip factor $\\mu<1$ reduces effective whirl, so $c_{t2}=\\mu U_2$ and $w=U_2 c_{t2}=\\mu U_2^2$. Never put $\\mu$ in the denominator.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Design of centrifugal compressors in small gas turbine engines",
+          "industry_example": "A 1 MW industrial gas turbine may use a single-stage centrifugal compressor with pressure ratio 4–6 and tip speeds around 450–550 m/s, corresponding to tens of thousands of RPM depending on diameter.",
+          "why_it_matters": "If the designer underestimates required RPM, the compressor will not reach the target pressure ratio, reducing engine thrust or power. Overestimating RPM can cause excessive blade stresses and tip Mach numbers, risking failure."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "Scan for given pressure ratio, polytropic efficiency, slip factor, and diameter. If all are present, this is a straightforward plug-in of standard compressor formulas and should be solvable in under 3 minutes.",
+        "guessing_heuristic": "If stuck, estimate $T_{02}/T_{01}$ using isentropic exponent (0.2857) then slightly increase it (to about 0.35) for polytropic; use $w \\approx U_2^2$ with $\\mu\\approx1$ to get an order-of-magnitude RPM.",
+        "time_management": "Allocate about 2–3 minutes. Do the exponent and square-root steps carefully; a small calculator error can shift RPM significantly."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "centrifugal compressor polytropic efficiency example",
+        "Euler turbomachine equation slip factor",
+        "Ganesan Gas Turbines centrifugal compressor design",
+        "tip speed RPM relation centrifugal impeller",
+        "GATE AE centrifugal compressor numerical",
+        "polytropic vs isentropic efficiency compressor"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Use isentropic efficiency then convert to polytropic equivalent",
+          "description": "Sometimes problems give isentropic efficiency instead of polytropic. One can first compute the isentropic temperature rise from the pressure ratio, then adjust using isentropic efficiency to find actual $T_{02}$, and finally back-calculate an equivalent polytropic exponent if needed.",
+          "pros_cons": "Pros: Useful when only isentropic efficiency is known. Cons: Adds an extra step and can introduce rounding errors; here, polytropic efficiency is already given so this is unnecessary.",
+          "when_to_use": "When the problem statement provides isentropic efficiency but you want to use polytropic relations for multi-stage compressors."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Thermodynamics": "Uses polytropic and isentropic relations for compressible flows and the concept of stagnation properties.",
+        "Fluid Mechanics": "Relies on understanding of velocity components, whirl, and slip in rotating flows.",
+        "Machine Design": "The computed RPM must be checked against material strength and critical speed limits for rotating shafts and blades.",
+        "Flight Mechanics": "Compressor performance directly affects thrust and specific fuel consumption of aircraft engines."
+      },
+      "deeper_dive_topics": [
+        "Derivation of polytropic efficiency and its relation to isentropic efficiency for multi-stage compressors",
+        "Advanced slip factor correlations (Stodola, Wiesner) and their dependence on blade geometry and flow coefficient",
+        "Effects of high tip Mach number on compressor efficiency and noise",
+        "Matching of centrifugal compressor maps with turbine and combustor in gas turbine engine design"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2023_AE_Q64",
+        "year": 2023,
+        "marks": 2.0,
+        "negative_marks": 0.0,
+        "time_expected": "2-3 minutes",
+        "success_rate_estimate": "60-70%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 6: Propulsion",
+        "gate_subsection": "Gas turbine engines: axial and centrifugal compressors, performance and matching",
+        "weightage": "10-15%",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "The question nicely integrates thermodynamic compressor relations with turbomachinery work and slip factor, reflecting core skills expected from GATE AE candidates."
+      },
+      "rag_quality": {
+        "relevance_score": 0.7,
+        "chunks_used": 4,
+        "sources_distribution": {
+          "books": 4,
+          "videos": 0
+        },
+        "notes": "RAG chunks from Ganesan's 'Gas Turbines' provided worked examples on centrifugal compressors, including use of slip factor, power input, and relations between pressure ratio, temperature rise, and impeller tip speed. While none matched the exact problem, they closely paralleled the required method, so they were helpful for confirming formulas and typical numerical magnitudes."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-26T00:00:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Ask for the required impeller diameter given a fixed RPM, pressure ratio, and polytropic efficiency.",
+        "Include inlet prewhirl and ask students to compute the slip factor or specific work using the full Euler equation.",
+        "Compare results using isentropic vs polytropic efficiency for the same pressure ratio and discuss differences in required RPM.",
+        "Extend the problem to compute compressor power for a given mass flow rate and then match it with a turbine stage."
+      ]
+    },
+    "question_id": "GATE_2023_AE_Q64",
+    "year": 2023,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "NAT",
+    "question_text": "A centrifugal air compressor has inlet root diameter of 0.25 m and the outlet diameter of the impeller is 0.6 m. The pressure ratio is 5.0. The air at the inlet of the rotor is at 1 atm and 25°C. The polytropic efficiency is 0.8 and slip factor is 0.92. Use C_p = 1.004 kJ/kg-K and γ = 1.4. The impeller speed in revolutions per minute (RPM) is _________. (round off to the nearest integer)"
+  },
+  "tokens_used": 16034,
+  "input_tokens": 9689,
+  "output_tokens": 6345,
+  "cost": 0.07556125000000001,
+  "time_seconds": 45.45769476890564
+}

@@ -1,0 +1,369 @@
+{
+  "model_name": "deepseek_r1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "text_only",
+      "combined_type": "numerical_calculation_text_only",
+      "weight_strategy": "NUMERICAL_WEIGHTED",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "This is a numerical calculation problem involving multiple concepts like pressure ratio, polytropic efficiency, and slip factor to find the impeller speed. It requires multiple steps to solve, making it a medium-hard problem.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "15994 rpm",
+        "is_correct": true,
+        "confidence": 0.97,
+        "confidence_type": "single_model",
+        "reasoning": "The computed speed of 15994 rpm lies within the official GATE answer range (15948 to 16048). The solution correctly applies the polytropic efficiency relation to find the actual temperature rise, equates the specific work from thermodynamics ($C_p \\Delta T_0$) to the centrifugal compressor work input ($\\mu U_2^2$, assuming no prewhirl), and solves for rotational speed using the impeller tip speed formula $U_2 = \\pi D_2 N / 60$."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Step 1: Identify given parameters and convert units. Inlet total temperature $T_{01} = 25^\\circ \\text{C} = 298 \\text{ K}$. Outlet diameter $D_2 = 0.6 \\text{ m}$. Pressure ratio $p_{02}/p_{01} = 5.0$. Polytropic efficiency $\\eta_p = 0.8$. Slip factor $\\mu = 0.92$. $C_p = 1004 \\text{ J/kg-K}$, $\\gamma = 1.4$.",
+          "Step 2: Compute the actual outlet total temperature $T_{02}$ using the polytropic efficiency relation: $T_{02} = T_{01} \\left( \\frac{p_{02}}{p_{01}} \\right)^{\\frac{\\gamma-1}{\\gamma \\eta_p}}$.",
+          "Step 3: Calculate the exponent: $\\frac{\\gamma-1}{\\gamma \\eta_p} = \\frac{0.4}{1.4 \\times 0.8} = \\frac{5}{14} \\approx 0.3571429$. Then $\\left( 5 \\right)^{5/14} \\approx 1.77636$. So $T_{02} = 298 \\times 1.77636 = 529.355 \\text{ K}$.",
+          "Step 4: Find the actual total temperature rise: $\\Delta T_0 = T_{02} - T_{01} = 529.355 - 298 = 231.355 \\text{ K}$.",
+          "Step 5: Compute the specific work input: $W = C_p \\Delta T_0 = 1004 \\times 231.355 = 232,280.42 \\text{ J/kg}$.",
+          "Step 6: Relate specific work to slip factor and impeller tip speed (assuming no prewhirl, so $c_{\\theta 1} = 0$): $W = \\mu U_2^2$. Solve for $U_2$: $U_2 = \\sqrt{W / \\mu} = \\sqrt{232280.42 / 0.92} = \\sqrt{252478.72} = 502.472 \\text{ m/s}$.",
+          "Step 7: Relate tip speed to rotational speed $N$ (in rpm): $U_2 = \\pi D_2 N / 60 \\implies N = \\frac{60 U_2}{\\pi D_2} = \\frac{60 \\times 502.472}{\\pi \\times 0.6} = \\frac{30148.32}{1.88496} \\approx 15994 \\text{ rpm}$."
+        ],
+        "formulas_used": [
+          "$T_{02} = T_{01} \\left( \\frac{p_{02}}{p_{01}} \\right)^{\\frac{\\gamma-1}{\\gamma \\eta_p}}$",
+          "$\\Delta T_0 = T_{02} - T_{01}$",
+          "$W = C_p \\Delta T_0$",
+          "$W = \\mu U_2^2$ (no prewhirl)",
+          "$U_2 = \\pi D_2 N / 60$"
+        ],
+        "estimated_time_minutes": 4
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Propulsion",
+          "confidence": 1.0
+        },
+        "topic": {
+          "name": "Centrifugal Compressors",
+          "syllabus_ref": "Section 6: Propulsion, Subsection: Airbreathing Propulsion - Compressors"
+        },
+        "concepts": [
+          {
+            "name": "Polytropic Efficiency",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Slip Factor",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Euler Work Equation for Centrifugal Compressors",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Temperature-Pressure Relation for Polytropic Process",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Impeller Tip Speed",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "First Law of Thermodynamics for open systems (steady flow energy equation)",
+          "Isentropic and polytropic processes in compressors",
+          "Centrifugal compressor work input and slip factor concept",
+          "Relation between rotational speed and tangential velocity"
+        ],
+        "helpful": [
+          "Velocity triangles in centrifugal compressors",
+          "Power input factor (though not used here, it appears in similar problems)"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Thermodynamics of compression (isentropic vs polytropic)",
+            "requires: Euler turbomachine equation for centrifugal compressors",
+            "enables: Centrifugal compressor design calculations",
+            "enables: Turbocharger and small gas turbine performance analysis"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Medium",
+        "score": 6,
+        "complexity_breakdown": {
+          "conceptual": 5,
+          "mathematical": 7,
+          "problem_solving": 6
+        },
+        "estimated_solve_time_seconds": 180,
+        "expected_accuracy_percent": 65,
+        "difficulty_factors": [
+          "Multiple steps requiring careful formula application",
+          "Potential confusion between polytropic and isentropic efficiency",
+          "Need to recognize that inlet diameter is not used (no prewhirl)"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Gas Turbines",
+          "author": "V. Ganesan",
+          "chapter_number": "8",
+          "chapter_title": "Centrifugal Compressors",
+          "section": "8",
+          "page_range": "N/A",
+          "complexity": "intermediate",
+          "relevance_score": 0.95,
+          "source": "rag_retrieval",
+          "text_snippet": "Worked examples showing relation: $W_c = C_p \\Delta T_{0a} = P_{if} \\mu U_2^2$ and calculation of impeller diameter/speed."
+        }
+      ],
+      "video_references": [],
+      "step_by_step_solution": {
+        "approach_type": "Direct Formula Application",
+        "total_steps": 7,
+        "solution_path": "Polytropic relation → Temperature rise → Specific work → Slip factor equation → Tip speed → Rotational speed",
+        "key_insights": [
+          "Polytropic efficiency modifies the exponent in the temperature-pressure relation.",
+          "With no prewhirl, the specific work simplifies to $\\mu U_2^2$.",
+          "Inlet diameter is irrelevant here because prewhirl is not specified (assumed zero)."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$T_{02} = T_{01} \\left( \\frac{p_{02}}{p_{01}} \\right)^{\\frac{\\gamma-1}{\\gamma \\eta_p}}$",
+          "name": "Polytropic Temperature-Pressure Relation",
+          "conditions": "For a compressor with constant polytropic efficiency, constant $\\gamma$, ideal gas",
+          "type": "equation",
+          "relevance": "Core formula to find actual outlet temperature given pressure ratio and polytropic efficiency."
+        },
+        {
+          "formula": "$W = C_p (T_{02} - T_{01})$",
+          "name": "Specific Work from Thermodynamics",
+          "conditions": "Constant specific heat, adiabatic compression",
+          "type": "equation",
+          "relevance": "Links temperature rise to work input per unit mass."
+        },
+        {
+          "formula": "$W = \\mu U_2^2$",
+          "name": "Centrifugal Compressor Work with Slip Factor",
+          "conditions": "No prewhirl at inlet ($c_{\\theta 1} = 0$), negligible other losses",
+          "type": "equation",
+          "relevance": "Relates specific work to impeller tip speed and slip factor."
+        },
+        {
+          "formula": "$U_2 = \\frac{\\pi D_2 N}{60}$",
+          "name": "Tip Speed Relation",
+          "conditions": "Impeller diameter $D_2$, rotational speed $N$ in rpm",
+          "type": "equation",
+          "relevance": "Converts rotational speed to tangential velocity at impeller tip."
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Centrifugal compressors in turbochargers for automotive engines",
+          "Small gas turbine engines for auxiliary power units (APUs)",
+          "Industrial air compressors for process plants"
+        ],
+        "specific_systems": [
+          "Allison 250 turboshaft engine (uses centrifugal compressor)",
+          "Garrett turbochargers in diesel engines"
+        ],
+        "practical_relevance": "Determining the required rotational speed is crucial for matching the compressor to a turbine or motor, ensuring desired pressure ratio and efficiency."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Using isentropic efficiency instead of polytropic efficiency in the temperature-pressure relation.",
+          "why_students_make_it": "Confusion between different efficiency definitions; isentropic efficiency is more common in introductory courses.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Remember: polytropic efficiency is for infinitesimal stages; the integrated formula has exponent $(\\gamma-1)/(\\gamma \\eta_p)$. Isentropic efficiency would use $\\eta_c = (T_{02s} - T_{01})/(T_{02} - T_{01})$.",
+          "consequence": "Results in lower temperature rise and underestimation of speed by ~10-15%."
+        },
+        {
+          "mistake": "Forgetting to convert units (e.g., using Cp in kJ/kg-K without converting to J/kg-K, or using diameter in cm).",
+          "why_students_make_it": "Haste and lack of systematic unit checking.",
+          "type": "Calculation",
+          "severity": "Medium",
+          "frequency": "common",
+          "how_to_avoid": "Explicitly write units at each step and ensure consistency (SI: m, kg, s, J). Convert Cp to J/kg-K by multiplying by 1000.",
+          "consequence": "Answer off by factor of 1000 or more."
+        },
+        {
+          "mistake": "Including inlet diameter in work equation (e.g., using $W = \\mu (U_2^2 - U_1^2)$ or $W = U_2 c_{\\theta 2} - U_1 c_{\\theta 1}$ with $c_{\\theta 1} \\neq 0$).",
+          "why_students_make_it": "Misremembering Euler work equation; thinking that inlet blade speed always matters.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Recall: If no prewhirl is specified, inlet absolute velocity is axial, so $c_{\\theta 1} = 0$. Thus, work reduces to $\\mu U_2^2$. Inlet diameter is irrelevant unless prewhirl is given.",
+          "consequence": "Unnecessary complexity and incorrect speed calculation."
+        },
+        {
+          "mistake": "Incorrectly solving $U_2 = \\pi D_2 N / 60$ for N, e.g., forgetting to multiply by 60 or divide by $\\pi$.",
+          "why_students_make_it": "Algebra error when rearranging formula.",
+          "type": "Calculation",
+          "severity": "Low",
+          "frequency": "occasional",
+          "how_to_avoid": "Write the formula as $N = \\frac{60 U_2}{\\pi D_2}$ and double-check with dimensional analysis: $U_2$ (m/s), $D_2$ (m) gives $N$ in 1/s; multiplying by 60 gives rpm.",
+          "consequence": "Answer off by factor of 60 or 1/2π."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "PETS: Polytropic Exponent Temperature relation is (γ-1)/(γ η_p) for Stagnation.",
+          "concept": "Remembering the exponent in $T_{02}/T_{01} = (p_{02}/p_{01})^{(\\gamma-1)/(\\gamma \\eta_p)}$.",
+          "effectiveness": "medium",
+          "context": "When using polytropic efficiency in compression/expansion."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "Write the formula for actual outlet temperature in a compressor given polytropic efficiency η_p, pressure ratio, and inlet temperature.",
+          "back": "$T_{02} = T_{01} \\left( \\frac{p_{02}}{p_{01}} \\right)^{\\frac{\\gamma-1}{\\gamma \\eta_p}}$",
+          "difficulty": "medium",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "What is the specific work input for a centrifugal compressor with slip factor μ and no prewhirl?",
+          "back": "$W = \\mu U_2^2$, where $U_2$ is impeller tip speed. Derived from Euler work: $W = U_2 c_{\\theta 2}$ and slip factor $\\mu = c_{\\theta 2}/U_2$.",
+          "difficulty": "easy",
+          "time_limit_seconds": 25
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "If a centrifugal compressor problem gives inlet diameter but no prewhirl angle, should you use it in the work equation?",
+          "back": "No. With no prewhirl, $c_{\\theta 1} = 0$, so work is $\\mu U_2^2$ only. Inlet diameter may be a distractor or for mass flow calculation (if needed).",
+          "difficulty": "medium",
+          "time_limit_seconds": 20
+        },
+        {
+          "card_type": "application",
+          "front": "Given: $C_p = 1004$ J/kg-K, $\\Delta T_0 = 200$ K, $\\mu = 0.9$, $D_2 = 0.5$ m. Estimate N (rpm).",
+          "back": "$W = 1004 \\times 200 = 200800$ J/kg. $U_2 = \\sqrt{200800/0.9} = 472.2$ m/s. $N = 60 U_2 / (\\pi D_2) = 60 \\times 472.2 / (\\pi \\times 0.5) \\approx 18040$ rpm.",
+          "difficulty": "hard",
+          "time_limit_seconds": 60
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Turbocharger compressor design",
+          "industry_example": "A Garrett GTX turbocharger compressor wheel with tip diameter ~60 mm must spin at ~150,000 rpm to achieve pressure ratio of 3.5. Similar calculations (with scaled diameters) determine shaft speed.",
+          "why_it_matters": "Overspeeding can cause mechanical failure; underspeeding reduces engine boost and performance."
+        },
+        {
+          "application": "Small gas turbine engine for drones",
+          "industry_example": "Centrifugal compressor in a JetCat P200 turboshaft engine: D₂ ≈ 0.1 m, N ≈ 100,000 rpm, pressure ratio ~4. The same principles apply with different scales.",
+          "why_it_matters": "Correct speed ensures efficient compression, maximizing thrust or power output while minimizing fuel consumption."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "This is a standard centrifugal compressor calculation. If you know the polytropic relation and work formula, it's a straightforward 2-3 minute plug-in. Check units carefully.",
+        "guessing_heuristic": "If stuck, note that tip speed U₂ for centrifugal compressors is typically 300-500 m/s. With D₂=0.6 m, N = 60U₂/(π*0.6) ≈ 31.8*U₂. So if U₂~500, N~15900 rpm. Pick a value in that range.",
+        "time_management": "Allocate 3-4 minutes. If not solved in 2 minutes, skip and return later."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "centrifugal compressor impeller speed calculation",
+        "polytropic efficiency centrifugal compressor",
+        "slip factor centrifugal compressor work input",
+        "Euler work equation centrifugal compressor",
+        "temperature pressure relation polytropic process",
+        "GATE propulsion centrifugal compressor numerical",
+        "impeller tip speed formula",
+        "centrifugal compressor design example"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Using Isentropic Efficiency and Iteration",
+          "description": "Assume an isentropic efficiency, compute $T_{02s}$ and then $T_{02} = T_{01} + (T_{02s}-T_{01})/\\eta_c$. Then proceed similarly. However, polytropic efficiency is given, so this method would be incorrect unless you convert efficiencies (approx: $\\eta_c = \\frac{(PR)^{(\\gamma-1)/\\gamma}-1}{(PR)^{(\\gamma-1)/(\\gamma \\eta_p)}-1}$).",
+          "pros_cons": "Pros: More familiar to some students. Cons: Requires conversion and is less accurate; not directly applicable here.",
+          "when_to_use": "Only if polytropic efficiency is not given and isentropic efficiency is provided instead."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Thermodynamics": "Polytropic process, ideal gas relations, steady flow energy equation (SFEE).",
+        "Fluid Mechanics": "Angular momentum principle (Euler turbomachine equation), velocity triangles.",
+        "Mechanics of Machinery": "Rotational dynamics, torque-power relation ($P = T \\omega$)."
+      },
+      "deeper_dive_topics": [
+        "Difference between polytropic and isentropic efficiency and when to use each.",
+        "Detailed velocity triangle analysis for centrifugal compressors including prewhirl and inducer design.",
+        "Power input factor (a.k.a. work factor) to account for disk friction and recirculation losses.",
+        "Effect of impeller blade geometry (backward/forward swept) on slip factor and performance."
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2023_AE_Q64",
+        "year": 2023,
+        "marks": 2.0,
+        "negative_marks": 0.0,
+        "time_expected": "3-4 minutes",
+        "success_rate_estimate": "65%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 6: Propulsion",
+        "gate_subsection": "Airbreathing Propulsion - Compressors",
+        "weightage": "Approx 8-10% of Propulsion section",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Well-aligned with GATE AE syllabus topic 'Centrifugal compressors: work, pressure ratio, slip factor, efficiency'."
+      },
+      "rag_quality": {
+        "relevance_score": 0.9,
+        "chunks_used": 6,
+        "sources_distribution": {
+          "books": 6
+        },
+        "notes": "RAG context provided highly relevant worked examples from V. Ganesan's Gas Turbines (Ch. 8) on centrifugal compressor calculations, including the key relationship $W_c = C_p \\Delta T_{0a} = \\mu U_2^2$ (with power input factor). The examples directly informed the solution approach. However, the provided chunks used isentropic efficiency, whereas this question uses polytropic efficiency. The underlying work equation is the same, so RAG was very helpful."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-13T10:30:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Vary the type of efficiency (isentropic instead of polytropic) and ask for speed.",
+        "Include prewhirl at inlet (given inlet guide vane angle) and ask for slip factor or speed.",
+        "Given speed and diameter, find the pressure ratio achievable.",
+        "Combine with mass flow rate to calculate impeller exit width or power."
+      ]
+    },
+    "question_id": "GATE_2023_AE_Q64",
+    "year": 2023,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "NAT",
+    "question_text": "A centrifugal air compressor has inlet root diameter of 0.25 m and the outlet diameter of the impeller is 0.6 m. The pressure ratio is 5.0. The air at the inlet of the rotor is at 1 atm and 25°C. The polytropic efficiency is 0.8 and slip factor is 0.92. Use C_p = 1.004 kJ/kg-K and γ = 1.4. The impeller speed in revolutions per minute (RPM) is _________. (round off to the nearest integer)"
+  },
+  "tokens_used": 19149,
+  "input_tokens": 9727,
+  "output_tokens": 9422,
+  "cost": 0.025984029999999998,
+  "time_seconds": 320.40736842155457
+}
