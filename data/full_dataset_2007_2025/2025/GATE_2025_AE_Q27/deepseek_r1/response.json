@@ -1,0 +1,409 @@
+{
+  "model_name": "deepseek_r1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "conceptual_application",
+      "media_type": "image_based",
+      "combined_type": "conceptual_application_image_based",
+      "weight_strategy": "VISION_WEIGHTED",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "This question requires understanding of static equilibrium and beam loading. It involves calculating reactions based on a distributed load, which requires multiple steps and integration of concepts. The image is essential for understanding the load distribution.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "A",
+        "is_correct": true,
+        "confidence": 0.98,
+        "confidence_type": "single_model",
+        "reasoning": "For a simply supported beam with a linearly varying distributed load (triangular load) from intensity $q_0$ at end A to 0 at end B, the total load is $\\frac{q_0 L}{2}$. Its centroid is located $\\frac{L}{3}$ from A (the high-intensity end). Taking moments about B: $R_A \\cdot L = \\text{Total Load} \\cdot (L - \\frac{L}{3}) = \\frac{q_0 L}{2} \\cdot \\frac{2L}{3} = \\frac{q_0 L^2}{3}$. Thus, $R_A = \\frac{q_0 L}{3}$. From vertical equilibrium, $R_A + R_B = \\frac{q_0 L}{2}$, giving $R_B = \\frac{q_0 L}{6}$. Therefore, $R_A > R_B$."
+      },
+      "explanation": {
+        "question_nature": "Application",
+        "step_by_step": [
+          "Step 1: Identify the loading type. The distributed load varies linearly from $q_0$ at A to zero at B. This is a triangular distributed load.",
+          "Step 2: Calculate the resultant force (total load). For a triangular load of base length $L$ and peak intensity $q_0$, the resultant $W = \\frac{1}{2} \\times q_0 \\times L = \\frac{q_0 L}{2}$.",
+          "Step 3: Locate the centroid (point of application) of the resultant force. For a right triangle with the right angle at the peak, the centroid is at a distance of $\\frac{L}{3}$ from the peak (A) and $\\frac{2L}{3}$ from the zero end (B).",
+          "Step 4: Apply static equilibrium equations. Let $R_A$ and $R_B$ be the vertical reactions at A and B (upwards positive).",
+          "Step 5: Sum of moments about point B equals zero: $\\sum M_B = 0: R_A \\cdot L - W \\cdot (\\frac{2L}{3}) = 0$. Substitute $W = \\frac{q_0 L}{2}$ to solve for $R_A$: $R_A L = \\frac{q_0 L}{2} \\cdot \\frac{2L}{3} \\implies R_A = \\frac{q_0 L}{3}$.",
+          "Step 6: Sum of vertical forces equals zero: $\\sum F_y = 0: R_A + R_B - W = 0 \\implies R_B = W - R_A = \\frac{q_0 L}{2} - \\frac{q_0 L}{3} = \\frac{q_0 L}{6}$.",
+          "Step 7: Compare magnitudes: $R_A = \\frac{q_0 L}{3}$, $R_B = \\frac{q_0 L}{6}$. Clearly, $|R_A| > |R_B|$. Hence, the vertical reaction at A is larger."
+        ],
+        "formulas_used": [
+          "$W = \\frac{1}{2} q_0 L$",
+          "$\\bar{x} = \\frac{L}{3}$ (from A) for centroid of triangular load",
+          "$\\sum F_y = 0: R_A + R_B = W$",
+          "$\\sum M_B = 0: R_A \\cdot L - W \\cdot \\frac{2L}{3} = 0$"
+        ],
+        "estimated_time_minutes": 3
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Structures",
+          "confidence": 1.0
+        },
+        "topic": {
+          "name": "Beam Analysis: Support Reactions",
+          "syllabus_ref": "Section 4: Structures - Beams: Shear Force and Bending Moment Diagrams"
+        },
+        "concepts": [
+          {
+            "name": "Static Equilibrium of Beams",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Distributed Loads (Triangular Load)",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Resultant Force and Centroid",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Support Reactions",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Static Equilibrium Equations (Sum of Forces = 0, Sum of Moments = 0)",
+          "Concept of Distributed Loads and Resultant Force",
+          "Centroid Location for Basic Shapes (Triangle)"
+        ],
+        "helpful": [
+          "Shear Force and Bending Moment Diagram Basics",
+          "Integration for Non-uniform Loads"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Static Equilibrium of Rigid Bodies",
+            "requires: Concept of Distributed Load Resultant",
+            "enables: Drawing SFD and BMD for Linearly Varying Loads",
+            "enables: Analysis of Beams with Complex Loading"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Medium",
+        "score": 6,
+        "complexity_breakdown": {
+          "conceptual": 7,
+          "mathematical": 5,
+          "problem_solving": 6
+        },
+        "estimated_solve_time_seconds": 120,
+        "expected_accuracy_percent": 65,
+        "difficulty_factors": [
+          "Requires recognizing the load as triangular and recalling its centroid",
+          "Requires correct application of moment equilibrium about a strategically chosen point"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Engineering Mechanics: Statics",
+          "author": "Hibbeler, R.C.",
+          "chapter_number": "9",
+          "chapter_title": "Center of Gravity and Centroid",
+          "section": "Distributed Loads on Beams",
+          "page_range": "475-485",
+          "complexity": "introductory",
+          "relevance_score": 0.9,
+          "source": "model_consensus",
+          "text_snippet": "The resultant of a distributed load is equal to the area under the loading curve, and it acts through the centroid of that area."
+        },
+        {
+          "source_type": "book",
+          "book": "Mechanics of Materials",
+          "author": "Beer & Johnston",
+          "chapter_number": "5",
+          "chapter_title": "Analysis and Design of Beams for Bending",
+          "section": "5.3 Relations Among Load, Shear, and Bending Moment",
+          "page_range": "320-330",
+          "complexity": "intermediate",
+          "relevance_score": 0.7,
+          "source": "model_consensus",
+          "text_snippet": "For a simply supported beam with any distributed load, support reactions can be found by replacing the distributed load with its resultant and solving equilibrium equations."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. Mahesh Panchagnula",
+          "timestamp_start": "00:23:20",
+          "timestamp_end": "00:36:29",
+          "video_url": "https://www.youtube.com/watch?v=nNcfzNjIifU",
+          "book_reference": "Megson, T.H.G., 'Aircraft Structures for Engineering Students'",
+          "topic_covered": "SFD and BMD for Uniformly Distributed Load",
+          "relevance_score": 0.4,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. K. Ramesh",
+          "timestamp_start": "00:48:12",
+          "timestamp_end": "00:50:06",
+          "video_url": "https://www.youtube.com/watch?v=74pm8A0RJ-0",
+          "book_reference": "Beer & Johnston, 'Mechanics of Materials'",
+          "topic_covered": "Beam with Uniformly Distributed Load",
+          "relevance_score": 0.4,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Resultant Force and Equilibrium",
+        "total_steps": 7,
+        "solution_path": "Identify Loading → Compute Resultant Force and Centroid → Apply Moment Equilibrium → Apply Force Equilibrium → Compare Reactions",
+        "key_insights": [
+          "For a triangular distributed load, the resultant is half the area of the rectangle (base * peak/2).",
+          "The centroid of a right triangle is at one-third the base length from the right-angled vertex (high load end).",
+          "Taking moments about the support with the smaller expected reaction (B) simplifies the algebra."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$W = \\frac{1}{2} q_0 L$",
+          "name": "Resultant of Triangular Distributed Load",
+          "conditions": "Linear variation from $q_0$ at one end to zero at the other over length $L$",
+          "type": "equation",
+          "relevance": "Total downward load on the beam"
+        },
+        {
+          "formula": "$\\bar{x} = \\frac{L}{3}$",
+          "name": "Centroid of Right Triangle",
+          "conditions": "Measured from the vertex with the right angle (peak load $q_0$)",
+          "type": "equation",
+          "relevance": "Point of application of the resultant force W"
+        },
+        {
+          "formula": "$\\sum M_B = 0: R_A L = W \\cdot (L - \\bar{x})$",
+          "name": "Moment Equilibrium about B",
+          "conditions": "Beam in static equilibrium, supports at A and B",
+          "type": "principle",
+          "relevance": "Used to solve for reaction at A"
+        },
+        {
+          "formula": "$\\sum F_y = 0: R_A + R_B = W$",
+          "name": "Vertical Force Equilibrium",
+          "conditions": "Beam in static equilibrium",
+          "type": "principle",
+          "relevance": "Used to solve for reaction at B"
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Aircraft wing spar under linearly varying aerodynamic lift distribution",
+          "Cantilever balcony slab with load tapering towards the free edge"
+        ],
+        "specific_systems": [
+          "Bridge deck supported at ends with non-uniform traffic load",
+          "Launch vehicle adapter supporting a payload with non-uniform mass distribution"
+        ],
+        "practical_relevance": "Accurate reaction force calculation is critical for designing support structures, ensuring safety, and optimizing material usage."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Treating the linearly varying load as uniform and using $R_A = R_B = q_0 L/4$",
+          "why_students_make_it": "Confusing triangular load with uniform load due to superficial similarity in wording or haste",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Draw the load diagram carefully. Note that intensity changes; a uniform load has constant $w$, while here it's $w(x)=q_0(1-x/L)$.",
+          "consequence": "Leads to incorrect equal reactions, choosing option C."
+        },
+        {
+          "mistake": "Incorrect centroid location: using $L/2$ (center) instead of $L/3$ for the triangular load",
+          "why_students_make_it": "Forgetting the centroid formula for a triangle or misremembering it as the geometric center",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Memorize: Centroid of a right triangle is at one-third the base from the right angle. Visualize: The load is heavier on one side, so resultant acts closer to that side.",
+          "consequence": "Wrong moment arm, leading to incorrect $R_A$ and $R_B$ values."
+        },
+        {
+          "mistake": "Taking moments about the wrong point, leading to more complex algebra",
+          "why_students_make_it": "Not strategizing to eliminate an unknown reaction by choosing the moment point at a support",
+          "type": "Problem Solving",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Always take moments about a point where an unknown force acts (e.g., take moments about B to find $R_A$ directly).",
+          "consequence": "Solves two equations simultaneously, increasing time and chance of arithmetic error."
+        },
+        {
+          "mistake": "Sign error in moment equation: not accounting correctly for the direction of the moment due to the resultant load",
+          "why_students_make_it": "Lack of consistent sign convention (clockwise vs counterclockwise positive)",
+          "type": "Sign Error",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Adopt a consistent sign convention (e.g., counterclockwise positive) and carefully determine the direction each force tends to rotate the beam about the pivot.",
+          "consequence": "Reaction sign becomes wrong, magnitude may be off."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "Tri-Load, One-Third Road: For a triangular load, the centroid is one-third of the way from the heavy end.",
+          "concept": "Centroid location for triangular distributed load",
+          "effectiveness": "medium",
+          "context": "When analyzing beams with linearly varying loads"
+        },
+        {
+          "mnemonic": "A for Area, A for Action: The resultant (Area) acts at the centroid (Action point).",
+          "concept": "Resultant of distributed load acts through centroid",
+          "effectiveness": "high",
+          "context": "For any distributed load, first find the area (total force) and centroid (point of application)."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "concept_recall",
+          "front": "For a simply supported beam with a triangular load (peak $q_0$ at left, zero at right), where is the centroid of the load measured from the left?",
+          "back": "At a distance $L/3$ from the left end (the heavy end). The resultant force $W = q_0 L / 2$ acts at this point.",
+          "difficulty": "medium",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "formula_recall",
+          "front": "Write the formula for the total resultant force $W$ for a linearly varying load from $q_0$ to 0 over length $L$.",
+          "back": "$W = \\frac{1}{2} \\times q_0 \\times L = \\frac{q_0 L}{2}$ (area of a triangle).",
+          "difficulty": "easy",
+          "time_limit_seconds": 20
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "What is a common mistake when comparing reactions for triangular vs uniform loads on a simply supported beam?",
+          "back": "Assuming reactions are equal due to symmetry. Triangular loads are NOT symmetric unless the peak is at the center. For peak at one end, the nearer support carries more load.",
+          "difficulty": "medium",
+          "time_limit_seconds": 40
+        },
+        {
+          "card_type": "application",
+          "front": "A beam of length 6 m has a triangular load from 10 kN/m at left to 0 at right. Find $R_A$.",
+          "back": "$W = 0.5*10*6 = 30$ kN. Centroid at $6/3=2$ m from left. Take moments about B: $R_A*6 = 30*(6-2)=120$ → $R_A=20$ kN.",
+          "difficulty": "hard",
+          "time_limit_seconds": 60
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Aircraft Wing Loading",
+          "industry_example": "The lift distribution over a wing span often resembles a triangular or elliptical shape. The wing root (attached to fuselage) experiences higher reaction forces than the tip.",
+          "why_it_matters": "Accurate reaction force calculation ensures the wing spar and fuselage attachments are designed to withstand the higher loads near the root."
+        },
+        {
+          "application": "Dam or Retaining Wall",
+          "industry_example": "Hydrostatic pressure on a dam increases linearly with depth (triangular load). The foundation must provide a larger reaction at the base to resist the overturning moment.",
+          "why_it_matters": "Ensuring stability against tipping and sliding; incorrect reactions can lead to catastrophic failure."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "Quickly sketch the load diagram, note it's triangular. The reaction at the high-load end is always larger. If short on time, guess A.",
+        "guessing_heuristic": "For linearly varying load, the support closer to the higher intensity carries more load. Here, A is at the high intensity, so $R_A > R_B$.",
+        "time_management": "Spend no more than 2-3 minutes. Use moment equilibrium about one support for direct solution."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "simply supported beam triangular load reactions",
+        "centroid of triangular distributed load",
+        "linear varying load beam equilibrium",
+        "GATE aerospace structures beam problems",
+        "how to find support reactions for non-uniform distributed load",
+        "triangular load resultant force location",
+        "beam with linearly varying load example",
+        "static equilibrium beams engineering mechanics"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Integration of Load Function",
+          "description": "Directly integrate the load function $w(x)=q_0(1-x/L)$ to obtain shear force $V(x)$. Then use $V(0)=R_A$ and $V(L)=-R_B$ to find reactions.",
+          "pros_cons": "More fundamental, does not require centroid calculation. Slightly more algebraic steps.",
+          "when_to_use": "When load function is given explicitly, or to verify the resultant method."
+        },
+        {
+          "name": "Graphical Method (Area under SFD)",
+          "description": "Plot the load diagram. The shear force diagram is the integral of the load. The reactions are the shear forces at the supports, which can be found from the areas of the load diagram.",
+          "pros_cons": "Visual, helps understand SFD shape. Requires understanding of integration relationships.",
+          "when_to_use": "When also asked to draw SFD/BMD."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Engineering Mechanics (Statics)": "Direct application of equilibrium of rigid bodies and centroid calculations.",
+        "Structural Analysis": "Foundation for analyzing indeterminate beams using flexibility or stiffness methods.",
+        "Aircraft Structures": "Loading on wing spars, fuselage frames often non-uniform; similar analysis is used."
+      },
+      "deeper_dive_topics": [
+        "Shear Force and Bending Moment Diagrams for Linearly Varying Loads",
+        "Beam Deflection under Non-uniform Loads using Integration or Superposition",
+        "Indeterminate Beams with Distributed Loads (using compatibility conditions)",
+        "Influence Lines for Moving Distributed Loads on Beams"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2025_AE_Q27",
+        "year": 2025,
+        "marks": 1.0,
+        "negative_marks": 0.33,
+        "time_expected": "2-3 minutes",
+        "success_rate_estimate": "65%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 4: Structures",
+        "gate_subsection": "Beams: Bending moment and shear force diagrams, stresses in beams",
+        "weightage": "10-15%",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "The question perfectly aligns with the syllabus objective of analyzing beams under various loading conditions."
+      },
+      "rag_quality": {
+        "relevance_score": 0.4,
+        "chunks_used": 0,
+        "sources_distribution": {
+          "books": 0,
+          "videos": 0
+        },
+        "notes": "RAG chunks provided detailed analysis of uniformly distributed loads (UDL) on simply supported beams, but the question is about a linearly varying (triangular) distributed load. The principles of static equilibrium and resultant force are common, but the specific formulas and centroid location differ. Therefore, the RAG context is of low relevance, and the solution relies on internal knowledge of mechanics."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-13T10:30:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Find the maximum bending moment for the same beam and loading.",
+        "If the load varies from zero at A to $q_0$ at B (reverse triangle), compare reactions.",
+        "For a simply supported beam with a trapezoidal distributed load, find reactions.",
+        "Combine point load and triangular load on a beam and draw SFD/BMD."
+      ]
+    },
+    "question_id": "GATE_2025_AE_Q27",
+    "year": 2025,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE AE",
+    "question_type": "MCQ",
+    "question_text": "A simply supported horizontal beam is subjected to a distributed transverse load varying linearly from $q_0$ at A to zero at B, as shown in the figure. Which one of the following options is correct?"
+  },
+  "tokens_used": 18891,
+  "input_tokens": 12331,
+  "output_tokens": 6560,
+  "cost": 0.02114845,
+  "time_seconds": 190.77878785133362
+}
