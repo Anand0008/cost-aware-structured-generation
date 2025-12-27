@@ -1,0 +1,384 @@
+{
+  "model_name": "deepseek_r1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "image_based",
+      "combined_type": "numerical_calculation_image_based",
+      "weight_strategy": "MATH_IMAGE_HYBRID",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "The question requires calculating strain energy using a standard formula for a cantilever beam. The image provides necessary geometric information. It's a multi-step calculation but not overly complex.",
+      "difficulty_score": 5,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": false,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": false,
+        "approximation_needed": false
+      },
+      "use_gpt51": false
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "A",
+        "is_correct": true,
+        "confidence": 1.0,
+        "confidence_type": "single_model",
+        "reasoning": "The strain energy for a prismatic cantilever beam subjected to a transverse point load at its free end, considering only bending and ignoring shear, is given by the formula $U = \\frac{P^2 L^3}{6EI}$. This is a standard result derived from the general strain energy expression for bending: $U = \\int_0^L \\frac{M(x)^2}{2EI} dx$, where $M(x) = Px$ (with x measured from the free end). The integration yields option A. The provided RAG context (Chunk 1) explicitly confirms this derivation and result. Options B and C are incorrect because they lack the $P^2$ term or have incorrect denominators. Option D has an incorrect denominator (3 instead of 6)."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Step 1: Identify the type of loading and structure. A cantilever beam of length L, uniform symmetric cross-section, with a transverse force P at the free end. Ignore shear contributions.",
+          "Step 2: Recall the formula for strain energy due to bending in a beam: $U = \\int_{0}^{L} \\frac{[M(x)]^2}{2EI} dx$, where M(x) is the bending moment as a function of the distance along the beam, E is Young's modulus, I is the moment of inertia.",
+          "Step 3: Determine the bending moment equation M(x). For a cantilever with a point load P at the free end, the bending moment at a distance x from the free end (or from the fixed end with appropriate sign) is $M(x) = -Px$ (if x measured from free end) or $M(x) = P(L-x)$ (if x from fixed end). The sign is not critical for energy as it is squared. Let's use x measured from the free end: M(x) = Px (taking magnitude, assuming positive convention for bending moment causing tension on bottom).",
+          "Step 4: Substitute M(x) into the strain energy formula: $U = \\int_{0}^{L} \\frac{(Px)^2}{2EI} dx = \\frac{P^2}{2EI} \\int_{0}^{L} x^2 dx$.",
+          "Step 5: Perform the integration: $\\int_{0}^{L} x^2 dx = \\left[ \\frac{x^3}{3} \\right]_0^L = \\frac{L^3}{3}$.",
+          "Step 6: Combine results: $U = \\frac{P^2}{2EI} \\cdot \\frac{L^3}{3} = \\frac{P^2 L^3}{6EI}$.",
+          "Step 7: Match with given options. Option A is exactly $\\frac{P^2 L^3}{6EI}$."
+        ],
+        "formulas_used": [
+          "$U = \\int_{0}^{L} \\frac{[M(x)]^2}{2EI} dx$",
+          "$M(x) = Px$ (for cantilever with tip load, x from free end)",
+          "$\\int x^2 dx = \\frac{x^3}{3}$"
+        ],
+        "estimated_time_minutes": 2
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Structures",
+          "confidence": 1.0
+        },
+        "topic": {
+          "name": "Energy Methods",
+          "syllabus_ref": "Section 3: Structures - Energy Methods"
+        },
+        "concepts": [
+          {
+            "name": "Strain Energy in Bending",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Cantilever Beam Bending Moment",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Integration of Energy Expression",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Concept of strain energy and its expression for bending",
+          "Bending moment equation for a cantilever beam under point load",
+          "Basic integral calculus"
+        ],
+        "helpful": [
+          "Understanding of shear strain energy and when it can be neglected",
+          "Familiarity with Castigliano's theorem for deflections"
+        ],
+        "dependency_tree": {
+          "Strain Energy for Cantilever Beam": [
+            "requires: Bending moment diagram for cantilever",
+            "requires: Formula for bending strain energy",
+            "enables: Deflection calculation via Castigliano's theorem",
+            "enables: Analysis of more complex loading using superposition"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Easy",
+        "score": 3,
+        "complexity_breakdown": {
+          "conceptual": 3,
+          "mathematical": 3,
+          "problem_solving": 2
+        },
+        "estimated_solve_time_seconds": 90,
+        "expected_accuracy_percent": 85,
+        "difficulty_factors": [
+          "Direct application of a standard formula",
+          "Requires careful integration and algebraic simplification"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Aircraft Structures for Engineering Students",
+          "author": "T.H.G. Megson",
+          "chapter_title": "Energy Methods",
+          "section": "Strain Energy for Cantilever Beams",
+          "relevance_score": 0.95,
+          "source": "rag_retrieval",
+          "text_snippet": "Strain energy (U) formula: U = integral (from 0 to L) (M^2 / (2 * E * I)) dx. For a cantilever with end load P: M(x) = -P * x, leading to U = (P^2 * L^3) / (6 * E * I)."
+        },
+        {
+          "source_type": "book",
+          "book": "Mechanics of Materials",
+          "author": "Beer & Johnston",
+          "chapter_title": "Deflection of Beams by Energy Methods",
+          "relevance_score": 0.8,
+          "source": "model_consensus"
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. S.P. Harsha",
+          "timestamp_start": "00:11:45",
+          "timestamp_end": "00:14:23",
+          "topic_covered": "Strength of Materials - Strain Energy for Cantilever Beam",
+          "relevance_score": 0.95,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. Anup Ghosh",
+          "timestamp_start": "00:13:15",
+          "timestamp_end": "00:15:42",
+          "topic_covered": "Castigliano's Theorems - Cantilever Beam Deflection",
+          "relevance_score": 0.85,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Direct Formula Application",
+        "total_steps": 7,
+        "solution_path": "Strain Energy Formula -> Bending Moment Expression -> Integration -> Simplification",
+        "key_insights": [
+          "Strain energy is quadratic in load (P^2), not linear.",
+          "The integration limits must match the bending moment expression (0 to L from free end)."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$U = \\int_{0}^{L} \\frac{[M(x)]^2}{2EI} dx$",
+          "name": "Strain Energy due to Bending",
+          "conditions": "Prismatic beam, linear elastic material, small deformations",
+          "type": "equation",
+          "relevance": "Core formula for solving the problem"
+        },
+        {
+          "formula": "$M(x) = Px$",
+          "name": "Bending Moment for Cantilever with Tip Load",
+          "conditions": "x measured from free end, P perpendicular to beam axis",
+          "type": "equation",
+          "relevance": "Describes the internal moment distribution for integration"
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Calculating energy absorption in aircraft wing spars during ground maneuvers",
+          "Design of cantilevered support structures in launch vehicle gantries"
+        ],
+        "specific_systems": [
+          "Wing root attachment analysis",
+          "Tailplane actuator mounting brackets"
+        ],
+        "practical_relevance": "Understanding strain energy is crucial for predicting deflection, fatigue life, and impact resistance in aerospace structures."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Using linear P instead of P^2 in the final answer, e.g., choosing option B or C.",
+          "why_students_make_it": "Forgetting that strain energy is proportional to the square of the load (or stress).",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Remember the general form: Strain energy = (1/2)*(stress)*(strain)*volume, or from work-energy: Work done by load is (1/2)*P*δ, and δ is proportional to P, so U ∝ P^2.",
+          "consequence": "Selecting wrong option, typically off by a factor of P."
+        },
+        {
+          "mistake": "Incorrect integration limits or moment expression, e.g., using x from fixed end without adjusting M(x).",
+          "why_students_make_it": "Confusion about sign convention and coordinate origin.",
+          "type": "Calculation",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Sketch the beam, define x clearly (either from free end or fixed end) and write M(x) accordingly. For x from free end: M = Px. For x from fixed end: M = P(L-x). Both yield the same U after integration.",
+          "consequence": "May get a coefficient like 1/3 instead of 1/6."
+        },
+        {
+          "mistake": "Forgetting to divide by 2 in the strain energy formula, leading to U = P^2 L^3/(3EI) (option D).",
+          "why_students_make_it": "Recalling only the integral of M^2/(EI) without the 1/2 factor.",
+          "type": "Formula Recall",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Remember the physical origin: Strain energy is the area under the load-deflection curve, which is (1/2)*load*deflection for linear elasticity. The 1/2 factor is crucial.",
+          "consequence": "Selecting option D, off by a factor of 2."
+        },
+        {
+          "mistake": "Including shear strain energy despite the problem stating 'ignoring transverse shear'.",
+          "why_students_make_it": "Overlooking the instruction or being used to including both bending and shear.",
+          "type": "Instructional",
+          "severity": "Medium",
+          "frequency": "rare",
+          "how_to_avoid": "Always read the problem statement carefully. Underline key phrases like 'ignoring contributions due to transverse shear'.",
+          "consequence": "Would add an extra term V^2L/(2GA_s) and not match any option."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "Cantilever Energy: Power 2 over 6EI",
+          "concept": "Strain energy for cantilever with tip load: P^2 L^3 / (6EI)",
+          "effectiveness": "medium",
+          "context": "Recall the formula quickly; note the numbers: 6 in denominator, cube for length, square for load."
+        },
+        {
+          "mnemonic": "BEND: Bending Energy = Integral of (Moment^2) / (2EI) over length",
+          "concept": "General strain energy due to bending formula",
+          "effectiveness": "high",
+          "context": "Remember the formula structure: Bending Energy Needs Denominator 2EI."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "What is the strain energy due to bending for a general beam?",
+          "back": "$U = \\int_{0}^{L} \\frac{[M(x)]^2}{2EI} dx$",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "formula_recall",
+          "front": "For a cantilever beam with a transverse point load P at the free end (ignoring shear), the strain energy is ____.",
+          "back": "$U = \\frac{P^2 L^3}{6EI}$",
+          "difficulty": "medium",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "Why is strain energy proportional to the square of the load?",
+          "back": "Because both stress and strain are linear in load (Hooke's law), and energy is (1/2)*stress*strain*volume, giving a quadratic dependence.",
+          "difficulty": "medium",
+          "time_limit_seconds": 45
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "What is a common mistake when calculating cantilever strain energy?",
+          "back": "Forgetting the 1/2 factor, leading to $\\frac{P^2 L^3}{3EI}$ instead of $\\frac{P^2 L^3}{6EI}$.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "application",
+          "front": "If a cantilever beam's length is doubled, how does the strain energy change (for same P, E, I)?",
+          "back": "Energy increases by a factor of 8 (since U ∝ L^3).",
+          "difficulty": "medium",
+          "time_limit_seconds": 30
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Aircraft wing design",
+          "industry_example": "During a hard landing, the wing acts as a cantilever beam absorbing energy. Calculating strain energy helps assess potential damage.",
+          "why_it_matters": "Overestimation of energy absorption capacity could lead to structural failure."
+        },
+        {
+          "application": "Satellite solar panel deployment",
+          "industry_example": "Solar panels are often cantilevered from the satellite body. Strain energy analysis ensures they can withstand launch vibrations without excessive deflection.",
+          "why_it_matters": "Excessive deflection could cause panel interference or failure to lock in position."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "Quick formula recall: if you remember $U = \\frac{P^2 L^3}{6EI}$, directly select option A. If not, derive quickly: M = Px, integrate x^2 from 0 to L gives L^3/3, then combine with P^2/(2EI) -> P^2 L^3/(6EI).",
+        "guessing_heuristic": "Options with linear P (B, C) are likely wrong because energy is quadratic. Between A and D, remember the 1/2 factor in energy formula, so denominator should have 6 not 3.",
+        "time_management": "Spend no more than 2 minutes. This is a straightforward 1-mark question."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "cantilever beam strain energy",
+        "strain energy due to bending formula",
+        "GATE aerospace structures energy methods",
+        "bending moment cantilever point load",
+        "Castigliano's theorem cantilever deflection",
+        "ignoring shear strain energy",
+        "prismatic beam strain energy calculation",
+        "aircraft structures energy absorption"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Castigliano's Theorem (First Theorem)",
+          "description": "To find deflection, one can compute strain energy U in terms of load P, then deflection δ = ∂U/∂P. Conversely, if the deflection formula is known, one could integrate to find U, but that's more work.",
+          "pros_cons": "Pros: Directly gives deflection. Cons: For this problem, it's simpler to compute U directly.",
+          "when_to_use": "When asked for deflection rather than strain energy."
+        },
+        {
+          "name": "Work-Energy Principle",
+          "description": "The work done by the gradually applied load P equals the strain energy stored: U = (1/2) P * δ, where δ is the tip deflection. For a cantilever, δ = PL^3/(3EI), so U = (1/2) P * (PL^3/(3EI)) = P^2 L^3/(6EI).",
+          "pros_cons": "Pros: Relates energy directly to deflection. Cons: Requires knowing the deflection formula beforehand.",
+          "when_to_use": "When the deflection formula is known or easier to recall."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Mechanics of Materials": "Bending stress, deflection of beams, stress-strain relationships.",
+        "Structural Dynamics": "Strain energy is used in calculating natural frequencies via Rayleigh's method.",
+        "Finite Element Analysis": "Strain energy is a key component in the principle of virtual work and formulation of stiffness matrices."
+      },
+      "deeper_dive_topics": [
+        "Effect of shear strain energy: when is it significant? (short, deep beams, composite sandwiches)",
+        "Strain energy for non-prismatic beams (varying cross-section)",
+        "Strain energy under combined loading (bending, torsion, axial)",
+        "Energy methods for indeterminate structures (Castigliano's theorem, unit load method)"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2025_AE_Q29",
+        "year": 2025,
+        "marks": 1.0,
+        "negative_marks": 0.33,
+        "time_expected": "1-2 minutes",
+        "success_rate_estimate": "85%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 3: Structures",
+        "gate_subsection": "Energy Methods",
+        "weightage": "Approx 5-10% in Structures",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Well-aligned with core topic of strain energy calculation for basic beam configurations."
+      },
+      "rag_quality": {
+        "relevance_score": 0.9,
+        "chunks_used": 2,
+        "sources_distribution": {
+          "books": 1,
+          "videos": 1
+        },
+        "notes": "RAG context (Chunk 1) was highly relevant, providing the exact derivation and formula for the cantilever beam strain energy. Another chunk (Chunk 5) also discussed Castigliano's theorem application to cantilever beams, which reinforces the concept. Other chunks about shear and torsion strain energy were less relevant since the question explicitly ignores shear. Overall, RAG provided excellent support for this question."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-13T10:30:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Include shear strain energy contribution for the same beam (with shear correction factor K).",
+        "Calculate tip deflection using Castigliano's theorem given the strain energy expression.",
+        "Strain energy for a cantilever with uniformly distributed load.",
+        "Strain energy for a simply supported beam with central point load.",
+        "Effect of material nonlinearity on strain energy (if stress-strain relation is not linear)."
+      ]
+    },
+    "question_id": "GATE_2025_AE_Q29",
+    "year": 2025,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE AE",
+    "question_type": "MCQ",
+    "question_text": "A uniform symmetric cross-section cantilever beam of length $L$ is subjected to a transverse force $P$ at the free end, as shown in the figure. The Young’s modulus of the material is E and the moment of inertia is I. Ignoring the contributions due to transverse shear, the strain energy stored in the beam is _____."
+  },
+  "tokens_used": 15004,
+  "input_tokens": 9950,
+  "output_tokens": 5054,
+  "cost": 0.01654076,
+  "time_seconds": 143.9114625453949
+}
