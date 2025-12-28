@@ -1,0 +1,425 @@
+{
+  "model_name": "deepseek_r1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "text_only",
+      "combined_type": "numerical_calculation_text_only",
+      "weight_strategy": "NUMERICAL_WEIGHTED",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "This is a numerical calculation problem requiring multiple steps to find the thrust. It involves calculating the mass flow rate through the injectors and then using the specific impulse to find the thrust. It integrates concepts of fluid mechanics and rocket propulsion.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "438.4 kN (approximate, within the range 430.0 to 442.0 kN)",
+        "is_correct": true,
+        "confidence": 0.99,
+        "confidence_type": "single_model",
+        "reasoning": "The calculation follows the standard injector flow formula from propulsion textbooks (Sutton, Hill & Peterson) and Newton's second law for rocket thrust. Using given parameters: N=800, d=4e-3 m, Cd=0.65, rho=1000 kg/m³, ΔP=10e5 Pa, I_sp=1500 m/s (which is the effective exhaust velocity c). The computed total mass flow rate is about 292.24 kg/s, leading to thrust F = m_dot * c ≈ 438360 N = 438.36 kN, which rounds to 438.4 kN. This falls within the official answer key range (430.0 to 442.0 kN). Slight variations may arise from rounding π or sqrt(2e9)."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Step 1: Understand given data and required output. We have monopropellant rocket engine with 800 injectors, each diameter 4 mm (so radius r=2 mm=0.002 m). Discharge coefficient Cd=0.65, propellant density ρ=1000 kg/m³, pressure difference ΔP=10 bar = 10×10^5 Pa = 1,000,000 Pa. Specific impulse I_sp=1500 m/s (this is effective exhaust velocity c). Need thrust F in kN.",
+          "Step 2: Recall the mass flow rate formula for liquid flow through an orifice/injector (incompressible flow): m_dot_single = Cd * A * sqrt(2 * ρ * ΔP), where A is the cross-sectional area of one injector orifice.",
+          "Step 3: Calculate area A of one injector: A = π*(d/2)^2 = π*(0.002)^2 = π*4e-6 ≈ 1.256637e-5 m².",
+          "Step 4: Calculate the term sqrt(2 * ρ * ΔP) = sqrt(2 * 1000 * 1e6) = sqrt(2e9) = sqrt(2)*sqrt(1e9)=1.41421356 * 31622.7766 ≈ 44721.36 m/s.",
+          "Step 5: Compute mass flow rate per injector: m_dot_single = 0.65 * 1.256637e-5 * 44721.36 ≈ 0.3653 kg/s. (Detailed: 0.65*1.256637e-5=8.168e-6; 8.168e-6*44721.36=0.3653).",
+          "Step 6: Total mass flow rate m_dot_total = N * m_dot_single = 800 * 0.3653 ≈ 292.24 kg/s.",
+          "Step 7: Rocket thrust F = m_dot_total * c, where c = I_sp = 1500 m/s. Thus F = 292.24 * 1500 = 438360 N.",
+          "Step 8: Convert to kN: F = 438360 / 1000 = 438.36 kN ≈ 438.4 kN (rounded to one decimal place)."
+        ],
+        "formulas_used": [
+          "$A = \\pi \\left(\\frac{d}{2}\\right)^2$",
+          "$\\dot{m}_{\\text{single}} = C_d \\cdot A \\cdot \\sqrt{2 \\rho \\Delta P}$",
+          "$\\dot{m}_{\\text{total}} = N \\cdot \\dot{m}_{\\text{single}}$",
+          "$F = \\dot{m}_{\\text{total}} \\cdot c$, where $c = I_{sp}$ (in m/s)"
+        ],
+        "estimated_time_minutes": 3
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Propulsion",
+          "confidence": 0.99
+        },
+        "topic": {
+          "name": "Liquid Rocket Engines",
+          "syllabus_ref": "Section 6 Propulsion -> Liquid Propulsion -> Injectors and feed systems"
+        },
+        "concepts": [
+          {
+            "name": "Injector mass flow rate",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Discharge coefficient",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Rocket thrust equation",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Pressure drop across injector",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Specific impulse (as effective exhaust velocity)",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Fluid mechanics: Bernoulli's equation for incompressible flow",
+          "Orifice flow and discharge coefficient",
+          "Rocket thrust equation (F = m_dot * Ve)",
+          "Unit conversions (bar to Pa, mm to m, N to kN)"
+        ],
+        "helpful": [
+          "Knowledge of liquid rocket engine components",
+          "Understanding of monopropellant vs. bipropellant systems"
+        ],
+        "dependency_tree": {
+          "Injector Mass Flow Rate": [
+            "requires: Bernoulli's equation and continuity",
+            "requires: Concept of discharge coefficient (Cd)",
+            "requires: Pressure differential and density",
+            "enables: Total propellant flow rate calculation"
+          ],
+          "Rocket Thrust": [
+            "requires: Total mass flow rate",
+            "requires: Effective exhaust velocity (specific impulse in m/s)",
+            "enables: Thrust determination for performance analysis"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Easy",
+        "score": 3,
+        "complexity_breakdown": {
+          "conceptual": 2,
+          "mathematical": 4,
+          "problem_solving": 3
+        },
+        "estimated_solve_time_seconds": 120,
+        "expected_accuracy_percent": 80,
+        "difficulty_factors": [
+          "Requires careful unit conversions (bar to Pa, mm to m)",
+          "Multiple-step calculation with square root and multiplication",
+          "Must remember the injector flow formula"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Rocket Propulsion Elements",
+          "author": "Sutton, O., & Biblarz",
+          "chapter_number": "5",
+          "chapter_title": "Liquid Propellant Injectors",
+          "section": "5.3 Injector Flow Equations",
+          "page_range": "Not specified",
+          "complexity": "intermediate",
+          "relevance_score": 0.95,
+          "source": "rag_retrieval",
+          "text_snippet": "The mass flow rate through a rocket engine injector is governed by the pressure difference across the injector, the injector's geometry (area), and the fluid properties. For incompressible liquids... m_dot_total = N * CD * A_injector * sqrt(2 * rho * Delta P_injector)."
+        },
+        {
+          "source_type": "book",
+          "book": "Mechanics and Thermodynamics of Propulsion",
+          "author": "Hill & Peterson",
+          "chapter_number": "3",
+          "chapter_title": "Fluid Flow in Propulsion Systems",
+          "section": "Orifice Flow, Discharge Coefficient",
+          "page_range": "Not specified",
+          "complexity": "intermediate",
+          "relevance_score": 0.85,
+          "source": "rag_retrieval",
+          "text_snippet": "The actual mass flow rate is determined by the pressure differential, fluid density, orifice area, and a discharge coefficient that accounts for flow losses and contraction effects."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Dr. P.A. Ramakrishna",
+          "timestamp_start": "00:09:05",
+          "timestamp_end": "00:20:46",
+          "video_url": "Not specified",
+          "book_reference": "Sutton, 'Rocket Propulsion Elements'",
+          "topic_covered": "Liquid Rocket – Pump fed system, Injector mass flow rate & pressure drop",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. K. Ramamurthi",
+          "timestamp_start": "00:01:30",
+          "timestamp_end": "00:07:37",
+          "video_url": "Not specified",
+          "book_reference": "Hill & Peterson, 'Mechanics and Thermodynamics of Propulsion'",
+          "topic_covered": "Shower head injectors and flow rate calculation",
+          "relevance_score": 0.8,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Direct Formula Application",
+        "total_steps": 8,
+        "solution_path": "Injector Flow → Total Mass Flow → Thrust Calculation",
+        "key_insights": [
+          "The specific impulse given in m/s is directly the effective exhaust velocity c, no need to multiply by g0.",
+          "Pressure drop ΔP must be in Pascals for SI consistency.",
+          "Discharge coefficient Cd accounts for real flow effects (vena contracta, friction)."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$\\dot{m} = C_d A \\sqrt{2 \\rho \\Delta P}$",
+          "name": "Injector Mass Flow Rate",
+          "conditions": "Incompressible liquid flow, steady state, negligible inlet velocity, constant density",
+          "type": "equation",
+          "relevance": "Core formula to compute propellant mass flow rate through injectors"
+        },
+        {
+          "formula": "$F = \\dot{m} c$",
+          "name": "Rocket Thrust Equation",
+          "conditions": "Steady flow, constant exhaust velocity, negligible pressure thrust if not specified",
+          "type": "equation",
+          "relevance": "Relates mass flow rate and effective exhaust velocity to thrust"
+        },
+        {
+          "formula": "$A = \\pi r^2$",
+          "name": "Area of a Circle",
+          "conditions": "Circular orifice",
+          "type": "equation",
+          "relevance": "Calculate injector orifice area from diameter"
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Monopropellant hydrazine thrusters used for satellite attitude control",
+          "Liquid apogee engines using monopropellant or bipropellant"
+        ],
+        "specific_systems": [
+          "Spacecraft reaction control systems (RCS)",
+          "Launch vehicle upper stage engines"
+        ],
+        "practical_relevance": "Accurate injector flow calculation is critical for achieving desired thrust and mixture ratio, ensuring engine performance and stability."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Forgetting to convert pressure from bar to Pa (10 bar = 10^6 Pa, not 10 Pa or 10^5 Pa).",
+          "why_students_make_it": "Bar is a common unit, but SI unit is Pascal. Misremembering conversion factor (1 bar = 10^5 Pa, so 10 bar = 10*10^5 = 10^6 Pa).",
+          "type": "Units",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Always write units: ΔP = 10 bar = 10 × 100,000 Pa = 1,000,000 Pa. Remember: 1 bar = 10^5 Pa.",
+          "consequence": "Thrust off by factor of sqrt(10) ≈ 3.16 if using 10^5 Pa instead of 10^6 Pa."
+        },
+        {
+          "mistake": "Using diameter instead of radius in area calculation: A = πd^2 instead of π(d/2)^2.",
+          "why_students_make_it": "Confusion between radius and diameter formulas under time pressure.",
+          "type": "Calculation",
+          "severity": "High",
+          "frequency": "occasional",
+          "how_to_avoid": "Always check: area of circle is πr^2. If given diameter d, r = d/2. Write explicitly: A = π*(d/2)^2.",
+          "consequence": "Area becomes 4 times larger, mass flow rate and thrust become 4 times larger."
+        },
+        {
+          "mistake": "Confusing specific impulse in seconds with effective exhaust velocity in m/s. Multiplying I_sp (1500 m/s) by g0 (9.81) to get c, then using F = m_dot * c, effectively using I_sp twice.",
+          "why_students_make_it": "Specific impulse is often given in seconds (I_sp,s) and related to c by I_sp,s = c/g0. Here I_sp is explicitly in m/s, so it is c.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Check units: If I_sp is given in m/s, it is directly c. If in seconds, then c = I_sp * g0.",
+          "consequence": "Thrust becomes ~9.81 times larger if mistakenly multiplying by g0 again."
+        },
+        {
+          "mistake": "Neglecting the discharge coefficient Cd, assuming ideal flow (Cd=1).",
+          "why_students_make_it": "Forgetting that real flows have losses and vena contracta, making effective area less than geometric area.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Remember that Cd accounts for real effects; typical values 0.6-0.9. Always include Cd in the mass flow formula.",
+          "consequence": "Mass flow rate and thrust overestimated by factor of 1/Cd (~1.54 for Cd=0.65)."
+        },
+        {
+          "mistake": "Calculation error in sqrt(2ρΔP): using ρ=1000, ΔP=10^6, but incorrectly computing sqrt(2e9) as 4472 instead of 44721.",
+          "why_students_make_it": "Misplacing decimal places or miscomputing exponent (2e9 vs 2e8).",
+          "type": "Calculation",
+          "severity": "High",
+          "frequency": "occasional",
+          "how_to_avoid": "Compute stepwise: 2*1000=2000; 2000*1e6=2e9; sqrt(2e9)= sqrt(2)*sqrt(1e9)=1.414*31622.8≈44721. Use calculator carefully.",
+          "consequence": "Thrust off by factor of 10."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "CDA-Root-2-Rho-DP: Can Dogs Always Run 2 Rho Dogs Playing? (for m_dot = Cd * A * sqrt(2 * rho * ΔP))",
+          "concept": "Injector mass flow rate formula",
+          "effectiveness": "medium",
+          "context": "Recall the equation sequence: Cd, then Area, then square root of (2 * density * pressure drop)."
+        },
+        {
+          "mnemonic": "F = m_dot * c (F=mc) like Einstein's E=mc^2 but with one less c.",
+          "concept": "Rocket thrust equation",
+          "effectiveness": "high",
+          "context": "Thrust equals mass flow rate times exhaust velocity."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "What is the mass flow rate formula for incompressible liquid through an injector orifice?",
+          "back": "$\\dot{m} = C_d A \\sqrt{2 \\rho \\Delta P}$, where $C_d$ is discharge coefficient, $A$ is orifice area, $\\rho$ is density, $\\Delta P$ is pressure drop.",
+          "difficulty": "easy",
+          "time_limit_seconds": 20
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "What does the discharge coefficient (Cd) account for in injector flow?",
+          "back": "It accounts for real fluid effects: vena contracta (flow contraction), friction losses, and non-ideal flow patterns, making the effective flow area less than the geometric area.",
+          "difficulty": "medium",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "units_conversion",
+          "front": "Convert 10 bar to Pascals (Pa).",
+          "back": "1 bar = 100,000 Pa = 10^5 Pa. So 10 bar = 10 × 10^5 Pa = 1,000,000 Pa = 1 MPa.",
+          "difficulty": "easy",
+          "time_limit_seconds": 15
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "If specific impulse is given as 1500 m/s, how is it used in the thrust equation?",
+          "back": "It is directly the effective exhaust velocity c. So thrust F = m_dot * 1500. Do NOT multiply by g0.",
+          "difficulty": "medium",
+          "time_limit_seconds": 20
+        },
+        {
+          "card_type": "application",
+          "front": "A rocket has 500 injectors of diameter 3 mm, Cd=0.7, ρ=1200 kg/m³, ΔP=8 bar, I_sp=1600 m/s. Estimate thrust (approx).",
+          "back": "Step: A=π*(0.0015)^2≈7.07e-6 m²; sqrt(2ρΔP)=sqrt(2*1200*8e5)=sqrt(1.92e9)=43817.8 m/s; m_dot_single=0.7*7.07e-6*43817.8≈0.217 kg/s; total m_dot=500*0.217=108.5 kg/s; F=108.5*1600=173600 N = 173.6 kN.",
+          "difficulty": "hard",
+          "time_limit_seconds": 60
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Injector design for liquid rocket engines",
+          "industry_example": "SpaceX Merlin engine uses coaxial swirl injectors; the mass flow rate through each injector element is precisely calculated to ensure proper mixture ratio and combustion stability.",
+          "why_it_matters": "Inaccurate mass flow rate leads to off-mixture combustion, reduced specific impulse, combustion instability, or even engine failure."
+        },
+        {
+          "application": "Monopropellant thrusters for satellite station-keeping",
+          "industry_example": "Hydrazine thrusters on communication satellites use catalytic decomposition; injector flow rate determines thrust level for orbit adjustments.",
+          "why_it_matters": "Precise thrust control is needed for fuel-efficient station-keeping and attitude control over satellite lifetime."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "This is a straightforward numerical plug-in. If you know the injector flow formula and thrust equation, it's quick points. Check units carefully.",
+        "guessing_heuristic": "If stuck, compute order of magnitude: area ~ 10^-5 m², sqrt(2ρΔP) ~ 10^4 m/s, m_dot_single ~ 0.65*10^-5*10^4=0.065 kg/s, total m_dot ~ 800*0.065=52 kg/s (but actual is higher due to A=1.26e-5, sqrt=4.47e4, so ~0.365 kg/s). Thrust ~ 52*1500=78 kN (too low) vs 292*1500=438 kN. So guess around 400-450 kN.",
+        "time_management": "Allocate 2-3 minutes. Do not spend more than 5 minutes."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "liquid rocket injector mass flow rate calculation",
+        "discharge coefficient orifice flow",
+        "rocket thrust equation specific impulse m/s",
+        "pressure drop across injector bar to Pa",
+        "monopropellant engine thrust calculation",
+        "GATE aerospace propulsion numerical",
+        "Bernoulli equation injector flow",
+        "vena contracta discharge coefficient"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Energy balance with compressibility correction",
+          "description": "If the propellant is compressible (e.g., gas) or if there is significant phase change, use compressible flow equations with stagnation properties and critical pressure ratios.",
+          "pros_cons": "More accurate for gases, but more complex. Not needed for incompressible liquids.",
+          "when_to_use": "When dealing with gaseous propellants or when ΔP is very large causing significant density changes."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Fluid Mechanics": "Bernoulli's equation, continuity, orifice flow, discharge coefficient, vena contracta.",
+        "Thermodynamics": "Incompressible vs compressible flow, stagnation properties.",
+        "Control Systems": "Thrust control via regulating pressure drop (ΔP) or injector area."
+      },
+      "deeper_dive_topics": [
+        "Hysteresis in discharge coefficient (Cd) during throttling",
+        "Injector types: showerhead, swirl, coaxial, and their Cd values",
+        "Effect of cavitation on injector flow",
+        "Combustion instability linked to injector flow oscillations"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2025_AE_Q63",
+        "year": 2025,
+        "marks": 2.0,
+        "negative_marks": 0.0,
+        "time_expected": "2-3 minutes",
+        "success_rate_estimate": "80%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 6: Propulsion",
+        "gate_subsection": "Liquid Propulsion",
+        "weightage": "Approx 8-10% of propulsion section",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Well-aligned with core liquid rocket engine topic. Tests understanding of injector flow and basic thrust equation."
+      },
+      "rag_quality": {
+        "relevance_score": 0.85,
+        "chunks_used": 3,
+        "sources_distribution": {
+          "books": 1,
+          "videos": 2
+        },
+        "notes": "RAG provided excellent direct formulas and context for injector mass flow rate (Chunks 1, 3, 5). Chunks 2, 4, 6 were about pressurant tank sizing and solid rockets, not directly relevant. The relevant chunks gave the exact formula needed (m_dot = Cd A sqrt(2ρΔP)) and explained discharge coefficient, which is central to solving the question. Hence, RAG was highly helpful for core concept."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-13T10:30:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Vary propellant density or pressure drop and ask for required injector diameter to achieve a given thrust.",
+        "Given thrust and mass flow rate, find the discharge coefficient.",
+        "Include mixture ratio for bipropellant engine and ask for oxidizer and fuel injector areas separately.",
+        "Add nozzle efficiency and ask for chamber pressure or throat area."
+      ]
+    },
+    "question_id": "GATE_2025_AE_Q63",
+    "year": 2025,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE AE",
+    "question_type": "NAT",
+    "question_text": "A monopropellant liquid rocket engine has 800 injectors of diameter 4 mm each, and with a discharge coefficient of 0.65. The liquid propellant of density 1000 kg/m$^3$ flows through the injectors. There is a pressure difference of 10 bar across the injectors. The specific impulse of the rocket is 1500 m/s. The thrust generated by the rocket is _____ kN (rounded off to one decimal place)."
+  },
+  "tokens_used": 17660,
+  "input_tokens": 10025,
+  "output_tokens": 7635,
+  "cost": 0.0222344,
+  "time_seconds": 235.7391664981842
+}
