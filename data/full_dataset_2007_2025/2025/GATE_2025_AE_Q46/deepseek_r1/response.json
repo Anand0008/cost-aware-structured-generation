@@ -1,0 +1,378 @@
+{
+  "model_name": "deepseek_r1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "text_only",
+      "combined_type": "numerical_calculation_text_only",
+      "weight_strategy": "NUMERICAL_WEIGHTED",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "The question requires calculating stagnation pressure and then using the given formula. It involves multiple steps but the concepts are relatively straightforward. It requires calculating Mach number first.",
+      "difficulty_score": 5,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": false,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": false
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "1.12 (within range 1.08-1.14)",
+        "is_correct": true,
+        "confidence": 0.95,
+        "confidence_type": "single_model",
+        "reasoning": "The computed ratio (p0-p)/(1/2 ρ V^2) is approximately 1.12, which falls within the official answer range of 1.08 to 1.14. The calculation involves: 1) Compute speed of sound a = √(γRT) using given T, 2) Compute Mach number M = V/a, 3) Compute stagnation pressure ratio p0/p = (1 + (γ-1)/2 M^2)^(γ/(γ-1)), 4) Compute p0-p = p*(p0/p - 1), 5) Compute dynamic pressure q = 1/2 ρ V^2 using given ρ, 6) Take the ratio. Slight variations occur due to rounding and the given p, ρ, T not perfectly satisfying the ideal gas law, but the result is consistent with compressible flow theory."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Step 1: Identify given data: altitude 4500 m, p = 57 kPa, T = 259 K, ρ = 0.777 kg/m³, V = 230 m/s, γ = 1.4, R = 287 J/kg/K.",
+          "Step 2: Compute speed of sound a = √(γRT) = √(1.4 × 287 × 259) ≈ 322.56 m/s.",
+          "Step 3: Compute Mach number M = V/a = 230 / 322.56 ≈ 0.7131. Then M² ≈ 0.5085.",
+          "Step 4: Compute stagnation pressure ratio using isentropic relation: p0/p = (1 + (γ-1)/2 M²)^(γ/(γ-1)) = (1 + 0.2 × M²)^(3.5) ≈ (1.1017)^(3.5) ≈ 1.4034.",
+          "Step 5: Compute stagnation pressure rise: p0 - p = p × (p0/p - 1) = 57,000 Pa × 0.4034 ≈ 22,994 Pa.",
+          "Step 6: Compute dynamic pressure q = 1/2 ρ V² = 0.5 × 0.777 kg/m³ × (230 m/s)² ≈ 20,552 Pa.",
+          "Step 7: Compute the desired ratio: (p0 - p) / q ≈ 22,994 / 20,552 ≈ 1.119, rounded to two decimal places gives 1.12."
+        ],
+        "formulas_used": [
+          "$a = \\sqrt{\\gamma R T}$",
+          "$M = \\frac{V}{a}$",
+          "$\\frac{p_0}{p} = \\left(1 + \\frac{\\gamma - 1}{2} M^2\\right)^{\\frac{\\gamma}{\\gamma - 1}}$",
+          "$p_0 - p = p \\left(\\frac{p_0}{p} - 1\\right)$",
+          "$q = \\frac{1}{2} \\rho V^2$"
+        ],
+        "estimated_time_minutes": 3
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Aerodynamics",
+          "confidence": 1.0
+        },
+        "topic": {
+          "name": "Compressible Flow",
+          "syllabus_ref": "GATE AE Syllabus: Section 2 - Aerodynamics, Subsection: Compressible Flow"
+        },
+        "concepts": [
+          {
+            "name": "Stagnation Pressure",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Mach Number",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Dynamic Pressure",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Compressibility Correction",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Ideal gas law: p = ρRT",
+          "Definition of Mach number: M = V/a",
+          "Isentropic flow relations for stagnation properties",
+          "Dynamic pressure definition: q = 1/2 ρV²"
+        ],
+        "helpful": [
+          "Speed of sound in a perfect gas: a = √(γRT)",
+          "Bernoulli's equation for incompressible flow"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Ideal gas law to relate p, ρ, T",
+            "requires: Speed of sound to compute Mach number",
+            "enables: Correct stagnation pressure calculation",
+            "enables: Compressible vs incompressible flow analysis"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Medium",
+        "score": 5,
+        "complexity_breakdown": {
+          "conceptual": 4,
+          "mathematical": 6,
+          "problem_solving": 5
+        },
+        "estimated_solve_time_seconds": 180,
+        "expected_accuracy_percent": 70,
+        "difficulty_factors": [
+          "Requires multi-step calculation with several formulas",
+          "Given p, ρ, T are not perfectly consistent with ideal gas law, which may cause confusion if students try to enforce consistency",
+          "Need to correctly identify and apply isentropic relations"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Intro to Aerodynamics",
+          "author": "J. D. Anderson",
+          "chapter_number": "7",
+          "chapter_title": "Compressible Flow: Some Preliminary Aspects",
+          "section": "§7.5",
+          "page_range": "N/A",
+          "complexity": "introductory",
+          "relevance_score": 0.8,
+          "source": "rag_retrieval",
+          "text_snippet": "Worked example calculating total temperature and total pressure from static conditions and velocity, demonstrating direct application of total condition formulas."
+        },
+        {
+          "source_type": "book",
+          "book": "Gas Dynamics",
+          "author": "E. Rathakrishnan",
+          "chapter_number": "4",
+          "chapter_title": "Steady One-Dimensional Flow",
+          "section": "N/A",
+          "page_range": "N/A",
+          "complexity": "intermediate",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval",
+          "text_snippet": "Worked example on calculating dynamic pressure with compressibility effects, including the compressibility correction factor K = 1 + M²/4 + M⁴/40, which is closely related to the ratio (p0-p)/(1/2 ρ V²)."
+        }
+      ],
+      "video_references": [],
+      "step_by_step_solution": {
+        "approach_type": "Direct Formula Application",
+        "total_steps": 7,
+        "solution_path": "Compute Mach number → Compute stagnation pressure ratio → Compute p0-p → Compute dynamic pressure → Take ratio",
+        "key_insights": [
+          "The ratio (p0-p)/(1/2 ρ V²) is the compressibility correction factor and exceeds 1 for Mach > 0.3.",
+          "Use given static temperature to find speed of sound, not density or pressure, as T is the fundamental thermodynamic variable for a."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$a = \\sqrt{\\gamma R T}$",
+          "name": "Speed of Sound in a Perfect Gas",
+          "conditions": "Calorically perfect gas, constant γ",
+          "type": "equation",
+          "relevance": "Required to compute Mach number."
+        },
+        {
+          "formula": "$M = \\frac{V}{a}$",
+          "name": "Mach Number Definition",
+          "conditions": "None",
+          "type": "equation",
+          "relevance": "Dimensionless speed parameter needed for isentropic relations."
+        },
+        {
+          "formula": "$\\frac{p_0}{p} = \\left(1 + \\frac{\\gamma - 1}{2} M^2\\right)^{\\frac{\\gamma}{\\gamma - 1}}$",
+          "name": "Isentropic Stagnation Pressure Ratio",
+          "conditions": "Isentropic, adiabatic, calorically perfect gas",
+          "type": "equation",
+          "relevance": "Core formula for computing stagnation pressure from static pressure and Mach number."
+        },
+        {
+          "formula": "$q = \\frac{1}{2} \\rho V^2$",
+          "name": "Dynamic Pressure",
+          "conditions": "None",
+          "type": "definition",
+          "relevance": "Denominator of the requested ratio."
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Pitot-static systems on high-speed aircraft for airspeed measurement",
+          "Wind tunnel testing of compressible flows"
+        ],
+        "specific_systems": [
+          "Aircraft airspeed indicators (IAS vs CAS vs TAS corrections)",
+          "Supersonic wind tunnel pressure probes"
+        ],
+        "practical_relevance": "At high subsonic speeds (M > 0.3), compressibility effects cause the measured pressure difference (p0-p) to exceed the incompressible dynamic pressure. This correction is essential for accurate airspeed determination and aerodynamic force calculations."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Using incompressible Bernoulli equation, assuming (p0-p) = 1/2 ρ V², leading to an answer of 1.00.",
+          "why_students_make_it": "Over-reliance on incompressible flow intuition, especially at moderate Mach numbers where compressibility is often overlooked.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Always check Mach number first; if M > 0.3, compressibility effects are significant and isentropic relations must be used.",
+          "consequence": "Answer off by ~10-20%, outside the acceptable range."
+        },
+        {
+          "mistake": "Incorrectly computing speed of sound using p and ρ instead of T (e.g., a = √(γp/ρ)), which may give a different value if p, ρ, T are inconsistent.",
+          "why_students_make_it": "Misremembering the formula for speed of sound or attempting to use all given data without checking consistency.",
+          "type": "Formula",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Memorize that a = √(γRT) for a perfect gas; use the given T directly.",
+          "consequence": "Incorrect Mach number, leading to erroneous stagnation pressure and ratio."
+        },
+        {
+          "mistake": "Using ρ computed from p and T via ideal gas law instead of the given ρ, despite the problem providing ρ explicitly.",
+          "why_students_make_it": "Desire for consistency, not trusting given data that may not satisfy ideal gas law exactly.",
+          "type": "Calculation",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "In GATE numerical problems, use the given numbers as is, even if they appear inconsistent. The problem setter often provides rounded values.",
+          "consequence": "Different dynamic pressure value, affecting final ratio."
+        },
+        {
+          "mistake": "Mishandling units: not converting kPa to Pa, or using °C instead of K for temperature.",
+          "why_students_make_it": "Lack of attention to unit consistency in SI units.",
+          "type": "Units",
+          "severity": "Medium",
+          "frequency": "common",
+          "how_to_avoid": "Always convert all pressures to Pascals (1 kPa = 1000 Pa) and ensure temperature is in Kelvin.",
+          "consequence": "Orders-of-magnitude errors in pressure calculations."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "GAMMA for Stagnation: Gamma over (Gamma minus One) is the exponent; Gamma minus One over Two times M squared is the increment.",
+          "concept": "Isentropic pressure ratio formula: p0/p = (1 + ((γ-1)/2) M²)^(γ/(γ-1))",
+          "effectiveness": "medium",
+          "context": "Recall the exact form of the isentropic relation for stagnation pressure."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "Write the formula for speed of sound in a calorically perfect gas.",
+          "back": "$a = \\sqrt{\\gamma R T}$, where γ is ratio of specific heats, R is specific gas constant, T is static temperature.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "What is the approximate Mach number threshold above which compressibility effects become significant?",
+          "back": "M > 0.3. Below this, incompressible Bernoulli equation is accurate within ~2%.",
+          "difficulty": "easy",
+          "time_limit_seconds": 20
+        },
+        {
+          "card_type": "formula_recall",
+          "front": "Write the isentropic stagnation pressure ratio formula for a perfect gas.",
+          "back": "$\\frac{p_0}{p} = \\left(1 + \\frac{\\gamma - 1}{2} M^2\\right)^{\\frac{\\gamma}{\\gamma - 1}}$",
+          "difficulty": "medium",
+          "time_limit_seconds": 45
+        },
+        {
+          "card_type": "application",
+          "front": "Given p, T, V, γ, R, how do you compute (p0-p)/(1/2 ρ V²) step-by-step?",
+          "back": "1) Compute a = √(γRT), M = V/a. 2) Compute p0/p using isentropic formula. 3) p0-p = p*(p0/p -1). 4) Compute q = 1/2 ρ V² using given ρ. 5) Take ratio.",
+          "difficulty": "medium",
+          "time_limit_seconds": 60
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "Why should you use the given ρ directly, even if it doesn't satisfy p = ρRT exactly?",
+          "back": "GATE numerical problems often provide rounded values. Using the given numbers as is ensures you match the problem setter's intended calculation.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Airspeed measurement in aviation using Pitot-static tubes.",
+          "industry_example": "On a commercial jet like the Boeing 737, the indicated airspeed (IAS) is derived from (p0-p). At high subsonic speeds (M ~ 0.8), compressibility correction is applied to obtain calibrated airspeed (CAS) and true airspeed (TAS).",
+          "why_it_matters": "Without compressibility correction, airspeed readings would be inaccurate, potentially leading to unsafe operations near the speed of sound."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "This is a straightforward numerical calculation if you know the formulas. Check Mach number first: if M > 0.3, proceed with compressible formulas. Allocate 2-3 minutes.",
+        "guessing_heuristic": "For M around 0.7, the ratio is typically between 1.1 and 1.2. If you compute M correctly, you can approximate the ratio using the formula (2/(γ M²)) * ((1+0.2 M²)^3.5 - 1).",
+        "time_management": "Spend no more than 3 minutes. If stuck, compute M and guess based on range."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "compressibility correction factor dynamic pressure",
+        "stagnation pressure minus static pressure over dynamic pressure",
+        "Mach number calculation aerodynamics",
+        "isentropic flow relations stagnation properties",
+        "Pitot tube compressible flow correction",
+        "GATE Aerospace compressible flow numerical",
+        "subsonic compressibility effects",
+        "dynamic pressure in compressible flow"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Series Expansion for Small Mach Number",
+          "description": "Use the approximation (p0-p)/(1/2 ρ V²) ≈ 1 + M²/4 + M⁴/40 + ... for M < 1. This avoids computing the exact exponentiation.",
+          "pros_cons": "Faster for low M, but less accurate as M approaches 1. For M=0.713, the series gives ~1.124 vs exact ~1.12, which is acceptable.",
+          "when_to_use": "When quick estimation is needed or for multiple-choice questions with approximate answers."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Thermodynamics": "Isentropic process relations derive from the First Law and ideal gas law; stagnation temperature and pressure are thermodynamic properties.",
+        "Fluid Mechanics": "Bernoulli's equation is the incompressible limit of the energy equation; compressible flow extends this to high speeds.",
+        "Instrumentation": "Pitot-static systems measure pressure differences to determine airspeed, requiring corrections for compressibility and altitude."
+      },
+      "deeper_dive_topics": [
+        "Critical pressure ratio and choked flow in nozzles",
+        "Rayleigh Pitot formula for supersonic flow (normal shock ahead of Pitot tube)",
+        "Impact pressure definition in compressible flow and its relation to stagnation pressure",
+        "Standard atmosphere and altitude effects on static pressure and temperature"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2025_AE_Q46",
+        "year": 2025,
+        "marks": 2.0,
+        "negative_marks": 0.0,
+        "time_expected": "2-3 minutes",
+        "success_rate_estimate": "70%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 2: Aerodynamics",
+        "gate_subsection": "Compressible Flow",
+        "weightage": "~10-15% of Aerodynamics section",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Excellent alignment with core compressible flow concepts tested in GATE AE. The question tests both understanding of isentropic relations and numerical computation skills."
+      },
+      "rag_quality": {
+        "relevance_score": 0.7,
+        "chunks_used": 2,
+        "sources_distribution": {
+          "books": 2,
+          "videos": 0
+        },
+        "notes": "RAG chunks provided relevant worked examples on stagnation pressure and dynamic pressure calculations (Chunks 1 and 5). Chunk 5 explicitly discusses the compressibility correction for dynamic pressure, which is closely related to the ratio (p0-p)/(1/2 ρ V²). However, none of the chunks gave the exact formula for this specific ratio. The retrieval had moderate relevance; internal knowledge was used for the detailed derivation and calculation."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-13T10:30:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Variation: Given the ratio (p0-p)/(1/2 ρ V²) = 1.12, find the Mach number.",
+        "Variation: At a higher altitude with lower temperature, how does the ratio change for the same true airspeed?",
+        "Application: If the aircraft uses a Pitot tube, what is the calibrated airspeed?",
+        "Extension: Include a normal shock in front of the Pitot tube (supersonic flight) and ask for the ratio."
+      ]
+    },
+    "question_id": "GATE_2025_AE_Q46",
+    "year": 2025,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE AE",
+    "question_type": "NAT",
+    "question_text": "An aircraft is flying at an altitude of 4500 m above sea level, where the ambient pressure, temperature and density are 57 kPa, 259 K and 0.777 kg/m$^3$, respectively. The speed of the aircraft ($V$) is 230 m/s. Gas constant R= 287 J/kg/K, and specific heat ratio $\\gamma = 1.4$. If the stagnation pressure is $p_o$, and static pressure is $p$, the value of $\\left[ \\frac{p_o - p}{\\frac{1}{2} \\rho V^2} \\right]$ is ________ (rounded off to two decimal places)."
+  },
+  "tokens_used": 24944,
+  "input_tokens": 9805,
+  "output_tokens": 15139,
+  "cost": 0.03854716,
+  "time_seconds": 466.63651871681213
+}
