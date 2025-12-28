@@ -1,0 +1,407 @@
+{
+  "model_name": "deepseek_r1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "image_based",
+      "combined_type": "numerical_calculation_image_based",
+      "weight_strategy": "MATH_IMAGE_HYBRID",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "The question requires calculating a numerical value, but involves understanding both yielding and buckling, and equating them. It requires multiple steps to calculate the critical load for each case and then solve for the ratio l/a.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "5.0 to 5.1",
+        "is_correct": true,
+        "confidence": 0.95,
+        "confidence_type": "single_model",
+        "reasoning": "The critical buckling load for a fixed-free (cantilever) column is $P_{cr}^{buckling} = \\frac{\\pi^2 E I_{min}}{4 L^2}$. The yielding load is $P_{cr}^{yielding} = \\sigma_y A$. For a rectangular cross-section $a \\times 0.5a$, area $A = 0.5a^2$ and minimum moment of inertia $I_{min} = \\frac{a(0.5a)^3}{12} = \\frac{a^4}{96}$. Equating both loads and solving yields $\\frac{l}{a} = \\pi \\sqrt{\\frac{E}{192 \\sigma_y}}$. Substituting $E = 200 \\times 10^9$ Pa and $\\sigma_y = 400 \\times 10^6$ Pa gives $\\frac{l}{a} \\approx 5.07$, which rounds to 5.1 (or 5.0 to 5.1 range as per answer key)."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Step 1: Identify critical loads. For yielding: $P_y = \\sigma_y A$. For buckling (fixed-free): $P_{cr} = \\frac{\\pi^2 E I_{min}}{(K L)^2}$ with effective length factor $K=2$, so $P_{cr} = \\frac{\\pi^2 E I_{min}}{4 l^2}$.",
+          "Step 2: Compute cross-sectional properties. Area $A = a \\times 0.5a = 0.5a^2$. Moment of inertia about weak axis: $I_{min} = \\frac{a (0.5a)^3}{12} = \\frac{a^4}{96}$.",
+          "Step 3: Write equations. $P_y = \\sigma_y \\times 0.5a^2$. $P_{cr} = \\frac{\\pi^2 E a^4}{96 \\times 4 l^2} = \\frac{\\pi^2 E a^4}{384 l^2}$.",
+          "Step 4: Set $P_y = P_{cr}$: $\\sigma_y \\times 0.5a^2 = \\frac{\\pi^2 E a^4}{384 l^2}$. Cancel $a^2$ (assuming $a \\neq 0$): $0.5 \\sigma_y = \\frac{\\pi^2 E a^2}{384 l^2}$.",
+          "Step 5: Solve for $l/a$: $\\frac{l^2}{a^2} = \\frac{\\pi^2 E}{384 \\times 0.5 \\sigma_y} = \\frac{\\pi^2 E}{192 \\sigma_y}$. Thus $\\frac{l}{a} = \\pi \\sqrt{\\frac{E}{192 \\sigma_y}}$.",
+          "Step 6: Substitute values: $E = 200$ GPa = $2 \\times 10^{11}$ Pa, $\\sigma_y = 400$ MPa = $4 \\times 10^8$ Pa. $\\frac{E}{\\sigma_y} = 500$. Compute $\\sqrt{\\frac{500}{192}} = \\sqrt{2.60417} \\approx 1.614$. Multiply by $\\pi \\approx 3.1416$: $\\frac{l}{a} \\approx 5.07$. Rounded to one decimal place: 5.1."
+        ],
+        "formulas_used": [
+          "$P_{cr}^{buckling} = \\frac{\\pi^2 E I_{min}}{4 L^2}$",
+          "$P_{cr}^{yielding} = \\sigma_y A$",
+          "$I_{min} = \\frac{a (0.5a)^3}{12} = \\frac{a^4}{96}$",
+          "$A = a \\times 0.5a = 0.5 a^2$",
+          "$\\frac{l}{a} = \\pi \\sqrt{\\frac{E}{192 \\sigma_y}}$"
+        ],
+        "estimated_time_minutes": 4
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Structures",
+          "confidence": 1.0
+        },
+        "topic": {
+          "name": "Column Buckling",
+          "syllabus_ref": "Section 4: Solid Mechanics and Structures -> Buckling of Columns"
+        },
+        "concepts": [
+          {
+            "name": "Euler buckling load",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Yield strength",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Effective length factor",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Moment of inertia",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Euler buckling formula for different end conditions",
+          "Concept of yielding under axial compression",
+          "Calculation of moment of inertia for rectangular cross-section"
+        ],
+        "helpful": [
+          "Radius of gyration",
+          "Slenderness ratio"
+        ],
+        "dependency_tree": {
+          "Equating yielding and buckling loads": [
+            "requires: Euler buckling load for fixed-free column",
+            "requires: Yielding load = σ_y * A",
+            "requires: Minimum moment of inertia calculation",
+            "enables: Determination of critical slenderness ratio"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Medium",
+        "score": 5,
+        "complexity_breakdown": {
+          "conceptual": 4,
+          "mathematical": 6,
+          "problem_solving": 5
+        },
+        "estimated_solve_time_seconds": 180,
+        "expected_accuracy_percent": 70,
+        "difficulty_factors": [
+          "Requires identification of correct buckling formula for fixed-free end condition",
+          "Need to compute minimum moment of inertia correctly",
+          "Algebraic manipulation to solve for l/a",
+          "Numerical calculation with large numbers and square roots"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Strength of Materials",
+          "author": "Timoshenko",
+          "chapter_title": "Buckling of Columns",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval",
+          "text_snippet": "The Euler Critical Buckling Load (P_cr) is the maximum axial compressive force a slender column can withstand before it suddenly buckles. For a cantilever column (fixed at one end, free at the other), P_cr = π² EI / (4 L²)."
+        },
+        {
+          "source_type": "book",
+          "book": "Mechanics of Materials",
+          "author": "Beer & Johnston",
+          "chapter_title": "Columns",
+          "relevance_score": 0.8,
+          "source": "model_consensus"
+        },
+        {
+          "source_type": "book",
+          "book": "Aircraft Structures for Engineering Students",
+          "author": "T.H.G. Megson",
+          "chapter_title": "Thin plates",
+          "relevance_score": 0.5,
+          "source": "rag_retrieval"
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. Ajeet Kumar",
+          "timestamp_start": "00:39:00",
+          "timestamp_end": "00:53:30",
+          "video_url": "https://www.youtube.com/watch?v=9sHV02tZnEo",
+          "topic_covered": "Derivation of Euler critical load for cantilever column",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. Nachiketa Tiwari",
+          "timestamp_start": "00:01:45",
+          "timestamp_end": "00:07:06",
+          "video_url": "https://www.youtube.com/watch?v=EVJAKbdgLLU",
+          "topic_covered": "Critical load for cantilevered column",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Direct Formula Application and Equating",
+        "total_steps": 6,
+        "solution_path": "Identify critical loads for yielding and buckling → Compute area and minimum moment of inertia → Write equations → Set equal → Solve for l/a → Numerical calculation",
+        "key_insights": [
+          "For a fixed-free column, effective length factor K=2, so buckling load has denominator 4L^2",
+          "Buckling occurs about the axis with smallest moment of inertia",
+          "Equating yields a condition independent of a, giving l/a ratio"
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$P_{cr}^{buckling} = \\frac{\\pi^2 E I_{min}}{(K L)^2}$",
+          "name": "Euler buckling load",
+          "conditions": "K=2 for fixed-free column, elastic buckling",
+          "type": "equation",
+          "relevance": "Core formula for buckling load"
+        },
+        {
+          "formula": "$P_{cr}^{yielding} = \\sigma_y A$",
+          "name": "Yielding load",
+          "conditions": "Axial compression, material yields when stress reaches σ_y",
+          "type": "equation",
+          "relevance": "Critical load based on material strength"
+        },
+        {
+          "formula": "$I_{min} = \\frac{a (0.5a)^3}{12}$",
+          "name": "Moment of inertia of rectangle about centroidal axis",
+          "conditions": "For axis parallel to side of length a, depth 0.5a",
+          "type": "equation",
+          "relevance": "Needed to compute buckling load"
+        },
+        {
+          "formula": "$\\frac{l}{a} = \\pi \\sqrt{\\frac{E}{192 \\sigma_y}}$",
+          "name": "Derived condition for equal critical loads",
+          "conditions": "From equating buckling and yielding loads",
+          "type": "equation",
+          "relevance": "Final expression to compute"
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Design of vertical support masts",
+          "Aircraft wing struts",
+          "Flagpoles"
+        ],
+        "specific_systems": [
+          "Launch vehicle interstage columns",
+          "Aircraft landing gear struts"
+        ],
+        "practical_relevance": "Determining when a slender column will fail by buckling versus yielding is crucial for lightweight design in aerospace structures."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Using incorrect effective length factor for fixed-free column (e.g., using K=1 instead of K=2)",
+          "why_students_make_it": "Confusion with end conditions: fixed-free is less common than pinned-pinned",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Remember: Fixed-free has effective length L_e = 2L, so K=2. Use mnemonic: 'Fixed-Free is like a flagpole, twice as long for buckling.'",
+          "consequence": "P_cr off by factor of 4, leading to incorrect l/a"
+        },
+        {
+          "mistake": "Calculating moment of inertia about the wrong axis (not the minimum I)",
+          "why_students_make_it": "Not recognizing that buckling occurs about the axis with smallest flexural rigidity",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Always compute I for both principal axes and use the smaller one. For rectangle, I_min = (width * depth^3)/12, where depth is the dimension perpendicular to the axis. Here, for axis parallel to side a, depth=0.5a.",
+          "consequence": "I_min wrong by factor, leading to incorrect l/a"
+        },
+        {
+          "mistake": "Algebraic error in equating and solving for l/a",
+          "why_students_make_it": "Mishandling powers of a and l when equating",
+          "type": "Calculation",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Write equations clearly: P_y = σ_y * 0.5 a^2; P_b = π² E (a^4/96) / (4 l^2) = π² E a^4/(384 l^2). Set equal and cancel a^2 from both sides.",
+          "consequence": "Incorrect ratio"
+        },
+        {
+          "mistake": "Unit inconsistency: Not converting GPa and MPa to same units (Pa)",
+          "why_students_make_it": "Overlooking prefix differences",
+          "type": "Units",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Convert all to base SI: E = 200e9 Pa, σ_y = 400e6 Pa.",
+          "consequence": "Numerical answer off by orders of magnitude"
+        },
+        {
+          "mistake": "Rounding too early in numerical calculation",
+          "why_students_make_it": "Impatience",
+          "type": "Calculation",
+          "severity": "Low",
+          "frequency": "common",
+          "how_to_avoid": "Keep full precision until final step, then round as required.",
+          "consequence": "Slight error in final answer"
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "Free-Fixed, Buckling Mix: For Fixed-Free, K=2, Remember 'Flagpole Fixed at bottom Free at top, Length appears Twice as long for buckling'",
+          "concept": "Effective length factor for fixed-free column",
+          "effectiveness": "medium",
+          "context": "When recalling Euler buckling formula for different end conditions"
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "What is Euler buckling load for a fixed-free column of length L, flexural rigidity EI?",
+          "back": "$P_{cr} = \\frac{\\pi^2 E I}{4 L^2}$ or $P_{cr} = \\frac{\\pi^2 E I}{(2L)^2}$; effective length factor K=2.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "Which moment of inertia (I) should be used in Euler buckling formula for a rectangular cross-section?",
+          "back": "The minimum moment of inertia about the centroidal axes, because buckling occurs about the axis with least bending stiffness.",
+          "difficulty": "medium",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "application",
+          "front": "Given a column with cross-section a × 0.5a, what is its area and minimum I?",
+          "back": "Area A = 0.5 a^2; I_min = a*(0.5a)^3/12 = a^4/96 (assuming axis parallel to side a).",
+          "difficulty": "medium",
+          "time_limit_seconds": 45
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "What common mistake do students make when equating yielding and buckling loads?",
+          "back": "Forgetting to use the correct effective length factor (K=2 for fixed-free) or using wrong I_min.",
+          "difficulty": "hard",
+          "time_limit_seconds": 45
+        },
+        {
+          "card_type": "numerical_calculation",
+          "front": "For E=200 GPa, σ_y=400 MPa, what is π√(E/(192σ_y))?",
+          "back": "Approximately 5.07, so l/a ≈ 5.1 to one decimal.",
+          "difficulty": "medium",
+          "time_limit_seconds": 60
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Design of slender structural components in aerospace",
+          "industry_example": "Rocket interstage skirt columns: must be lightweight but resist buckling under launch loads.",
+          "why_it_matters": "If buckling load is lower than yield load, the column will buckle suddenly, leading to catastrophic failure."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "Straightforward if you know Euler buckling for fixed-free and yielding formula. Likely 2-3 minute calculation.",
+        "guessing_heuristic": "If stuck, note that l/a is likely between 1 and 10; typical slender columns have l/a > 10, but here yield stress is high, so maybe lower. Could guess around 5.",
+        "time_management": "Spend no more than 3 minutes."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "Euler buckling fixed-free column",
+        "critical buckling load cantilever",
+        "yielding vs buckling column",
+        "slenderness ratio design",
+        "column effective length factor",
+        "moment of inertia rectangular cross-section",
+        "buckling and yielding equality",
+        "GATE aerospace structures questions"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Using slenderness ratio and critical stress",
+          "description": "Express buckling critical stress as σ_cr = π²E/(λ²) where λ = L_e/r, and yielding stress σ_y. Equate σ_y = π²E/λ² to find λ, then relate to l/a via radius of gyration r = sqrt(I_min/A).",
+          "pros_cons": "More general, connects to column classification (slender vs intermediate).",
+          "when_to_use": "When asked for slenderness ratio directly."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Mechanics of Materials": "Direct application of column buckling and axial deformation.",
+        "Aircraft Structures": "Design of stiffened panels and compression members.",
+        "Engineering Design": "Trade-off between material strength and stability."
+      },
+      "deeper_dive_topics": [
+        "Inelastic buckling: Johnson's parabolic formula for intermediate columns.",
+        "Effect of imperfections on buckling load.",
+        "Finite element analysis of buckling modes."
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2025_AE_Q58",
+        "year": 2025,
+        "marks": 2.0,
+        "negative_marks": 0.0,
+        "time_expected": "3-4 minutes",
+        "success_rate_estimate": "70%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 4: Solid Mechanics and Structures",
+        "gate_subsection": "Buckling of Columns",
+        "weightage": "5-8%",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Well-aligned: tests Euler buckling, end conditions, and yielding."
+      },
+      "rag_quality": {
+        "relevance_score": 0.8,
+        "chunks_used": 2,
+        "sources_distribution": {
+          "books": 1,
+          "videos": 2
+        },
+        "notes": "RAG provided excellent derivations for Euler buckling of cantilever columns (Chunks 1 and 6), which directly support the solution. Other chunks cover related column buckling concepts but are less directly applicable."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-13T10:30:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Change end conditions (e.g., pinned-pinned) and ask for l/a",
+        "Change cross-section (e.g., circular) and ask for diameter/length ratio",
+        "Include safety factor and ask for design load",
+        "Ask for critical length given cross-section dimensions"
+      ]
+    },
+    "question_id": "GATE_2025_AE_Q58",
+    "year": 2025,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE AE",
+    "question_type": "NAT",
+    "question_text": "A prismatic vertical column of cross-section $a \\times 0.5a$ and length $l$ is rigidly fixed at the bottom and free at the top. A compressive force P is applied along the centroidal axis at the top surface. The Young’s modulus of the material is 200 GPa and the uniaxial yield stress is 400 MPa. If the critical value of P for yielding and for buckling of the column are equal, the value of $\\left(\\frac{l}{a}\\right)$ is _____(rounded off to one decimal place)."
+  },
+  "tokens_used": 22646,
+  "input_tokens": 12999,
+  "output_tokens": 9647,
+  "cost": 0.02827638,
+  "time_seconds": 301.1228184700012
+}
