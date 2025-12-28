@@ -1,0 +1,366 @@
+{
+  "model_name": "gemini_2.5_pro",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "text_only",
+      "combined_type": "numerical_calculation_text_only",
+      "weight_strategy": "NUMERICAL_WEIGHTED",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classification_reasoning": "The question requires a numerical calculation of specific thrust. It involves calculating the total thrust from core and fan exhaust and then dividing by the core mass flow rate. It involves multiple steps but the concepts are relatively straightforward.",
+      "difficulty_score": 5,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": false,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": false
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "1200 Ns/kg",
+        "is_correct": true,
+        "confidence": 1.0,
+        "confidence_type": "single_model",
+        "reasoning": "The total thrust for an unmixed turbofan with separate, optimally expanded nozzles and negligible fuel flow at static conditions is given by the sum of momentum thrusts from the core and bypass streams. The specific thrust per unit core mass flow rate is then derived from this total thrust.\n\nThe general thrust equation for an unmixed turbofan is:\n`$F = \\dot{m}_{a,c}(1+f)V_e + \\dot{m}_{a,f}V_f - (\\dot{m}_{a,c} + \\dot{m}_{a,f})U_0 + (P_e - P_a)A_e + (P_f - P_a)A_f$`\n\nGiven conditions:\n1.  Bypass ratio `$\\alpha = \\frac{\\dot{m}_{a,f}}{\\dot{m}_{a,c}} = 5 \\implies \\dot{m}_{a,f} = \\alpha \\dot{m}_{a,c}$`\n2.  Fuel mass flow rate is negligible, so `f \\approx 0`.\n3.  Optimally expanded nozzles, so `P_e = P_a` and `P_f = P_a`. This means the pressure thrust terms `$(P_e - P_a)A_e$` and `$(P_f - P_a)A_f$` are zero.\n4.  Static specific thrust, so flight velocity `U_0 = 0`.\n\nSubstituting these conditions into the thrust equation:\n`$F = \\dot{m}_{a,c}(1+0)V_e + (\\alpha \\dot{m}_{a,c})V_f - (\\dot{m}_{a,c} + \\alpha \\dot{m}_{a,c}) \\times 0 + 0 + 0$`\n`$F = \\dot{m}_{a,c}V_e + \\alpha \\dot{m}_{a,c}V_f$`\n`$F = \\dot{m}_{a,c}(V_e + \\alpha V_f)$`\n\nThe question asks for the static specific thrust (`$T/\\dot{m}_{a,c}$`):\n`$T/\\dot{m}_{a,c} = \\frac{\\dot{m}_{a,c}(V_e + \\alpha V_f)}{\\dot{m}_{a,c}}$`\n`$T/\\dot{m}_{a,c} = V_e + \\alpha V_f$`\n\nNow, substitute the given numerical values:\n`$V_e = 600 \\text{ m/s}$`\n`$V_f = 120 \\text{ m/s}$`\n`$\\alpha = 5$`\n\n`$T/\\dot{m}_{a,c} = 600 \\text{ m/s} + 5 \\times 120 \\text{ m/s}$`\n`$T/\\dot{m}_{a,c} = 600 \\text{ m/s} + 600 \\text{ m/s}$`\n`$T/\\dot{m}_{a,c} = 1200 \\text{ Ns/kg}$`\n\nThe unit Ns/kg is equivalent to m/s, which is consistent with specific thrust (momentum per unit mass flow rate)."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Step 1: Identify the engine type (ideal turbofan with separate, optimally expanded exhausts) and operating conditions (static, negligible fuel flow).",
+          "Step 2: Recall or derive the general thrust equation for an unmixed turbofan engine.",
+          "Step 3: Apply the given conditions to simplify the general thrust equation: set flight velocity (`$U_0$`) to zero for static conditions, set fuel-air ratio (`$f$`) to zero for negligible fuel flow, and eliminate pressure thrust terms for optimally expanded nozzles (`$P_e = P_a$` and `P_f = P_a`).",
+          "Step 4: Express the bypass mass flow rate (`$\\dot{m}_{a,f}$`) in terms of core mass flow rate (`$\\dot{m}_{a,c}$`) and bypass ratio (`$\\alpha$`) using the definition `$\\alpha = \\dot{m}_{a,f} / \\dot{m}_{a,c}$`.",
+          "Step 5: Substitute these simplifications into the thrust equation to get the total thrust `F` in terms of `$\\dot{m}_{a,c}$`, `V_e`, `V_f`, and `$\\alpha$`.",
+          "Step 6: Divide the total thrust `F` by the core mass flow rate `$\\dot{m}_{a,c}$` to find the specific thrust (`$T/\\dot{m}_{a,c}$`) as requested.",
+          "Step 7: Substitute the numerical values for core exhaust speed (`$V_e$`), fan exhaust speed (`$V_f$`), and bypass ratio (`$\\alpha$`) to calculate the final answer."
+        ],
+        "formulas_used": [
+          "$\\alpha = \\frac{\\dot{m}_{a,f}}{\\dot{m}_{a,c}}$",
+          "$F = \\dot{m}_{a,c}(1+f)V_e + \\dot{m}_{a,f}V_f - (\\dot{m}_{a,c} + \\dot{m}_{a,f})U_0 + (P_e - P_a)A_e + (P_f - P_a)A_f$",
+          "$T/\\dot{m}_{a,c} = V_e + \\alpha V_f$"
+        ],
+        "estimated_time_minutes": 2
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Propulsion",
+          "confidence": 1.0
+        },
+        "topic": {
+          "name": "Turbofan Engines, Engine Performance Parameters",
+          "syllabus_ref": "Section 6: Propulsion -> Turbofan engines, thrust and specific fuel consumption"
+        },
+        "concepts": [
+          {
+            "name": "Turbofan Thrust Equation",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Bypass Ratio",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Specific Thrust",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Static Conditions",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Optimally Expanded Nozzle",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Negligible Fuel Mass Flow",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Understanding of momentum principle and control volume analysis.",
+          "Basic definitions of turbofan engine components and operation.",
+          "Knowledge of bypass ratio and its significance.",
+          "Ability to simplify equations based on given assumptions (static, ideal, negligible fuel)."
+        ],
+        "helpful": [
+          "Familiarity with units and dimensional analysis."
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Momentum Equation for Control Volume",
+            "requires: Definition of Bypass Ratio",
+            "requires: Ideal Nozzle Assumptions",
+            "enables: Turbofan Cycle Analysis",
+            "enables: Engine Performance Optimization"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Easy",
+        "score": 3,
+        "complexity_breakdown": {
+          "conceptual": 3,
+          "mathematical": 2,
+          "problem_solving": 3
+        },
+        "estimated_solve_time_seconds": 120,
+        "expected_accuracy_percent": 85,
+        "difficulty_factors": [
+          "Correctly applying all simplifying assumptions (static, negligible fuel, optimally expanded).",
+          "Understanding that specific thrust is requested per unit core mass flow rate."
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Mechanics and Thermodynamics of Propulsion",
+          "author": "P.G. Hill & C.R. Peterson",
+          "chapter_title": "Turbofan Engines",
+          "section": "Thrust, Specific Thrust, Bypass Ratio",
+          "complexity": "intermediate",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval",
+          "text_snippet": "The total thrust for a turbofan with separate nozzles is the sum of the thrust generated by the primary (core) nozzle and the secondary (bypass) nozzle."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Dr. P.A. Ramakrishna",
+          "timestamp_start": "00:39:52",
+          "timestamp_end": "00:42:21",
+          "video_url": null,
+          "book_reference": "Hill & Peterson",
+          "topic_covered": "Turbofan Thrust Equation, Core and Bypass Contributions",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Dr. D.P. Mishra",
+          "timestamp_start": "00:25:34",
+          "timestamp_end": "00:27:35",
+          "video_url": "https://www.youtube.com/watch?v=HhZ_xV-eT5o",
+          "book_reference": "Hill & Peterson",
+          "topic_covered": "Turbofan Thrust Equation, Bypass Ratio, Specific Thrust",
+          "relevance_score": 0.95,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Direct Formula Application and Simplification",
+        "total_steps": 7,
+        "solution_path": "General Thrust Equation \\rightarrow Apply Assumptions \\rightarrow Simplify to Specific Thrust \\rightarrow Calculate",
+        "key_insights": [
+          "Static condition means zero flight velocity (`$U_0=0$`).",
+          "Optimally expanded nozzles mean zero pressure thrust.",
+          "Negligible fuel flow means fuel-air ratio (`$f$`) is zero.",
+          "Specific thrust is requested per unit core mass flow rate (`$T/\\dot{m}_{a,c}$`)."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$\\frac{F}{\\dot{m}_{a,c}} = V_e + \\alpha V_f$",
+          "name": "Static Specific Thrust for Ideal Unmixed Turbofan",
+          "conditions": "Static conditions (`$U_0=0$`), negligible fuel mass flow (`$f \\approx 0$`), optimally expanded nozzles (`$P_e=P_a$`, `$P_f=P_a$`), unmixed flow.",
+          "type": "equation",
+          "relevance": "Core formula for solving the problem."
+        },
+        {
+          "formula": "$\\alpha = \\frac{\\dot{m}_{a,f}}{\\dot{m}_{a,c}}$",
+          "name": "Bypass Ratio",
+          "conditions": "Applicable to turbofan engines.",
+          "type": "definition",
+          "relevance": "Essential for relating bypass and core mass flow rates."
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Design and performance evaluation of commercial aircraft engines (e.g., CFM LEAP, Rolls-Royce Trent).",
+          "Comparison of different turbofan engine architectures (e.g., high bypass vs. low bypass) for specific mission requirements."
+        ],
+        "specific_systems": [
+          "Boeing 737 MAX (CFM LEAP-1B engines)",
+          "Airbus A320neo (CFM LEAP-1A or Pratt & Whitney PW1100G engines)"
+        ],
+        "practical_relevance": "Understanding specific thrust is crucial for engine designers to optimize engine size, weight, and fuel efficiency for various aircraft types and flight envelopes. Higher specific thrust (for a given engine size) generally means more power, while lower specific thrust (achieved by higher bypass ratio) often leads to better fuel efficiency and reduced noise."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Forgetting to set `$U_0=0$` for static conditions, or incorrectly applying it.",
+          "why_students_make_it": "Overlooking the \"static\" keyword or confusing it with flight conditions where `$U_0 \\neq 0$`.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Always explicitly list all given conditions and assumptions (static, ideal, negligible fuel, unmixed) before writing down the formula.",
+          "consequence": "Incorrectly including a `$U_0$` term, leading to a wrong answer."
+        },
+        {
+          "mistake": "Not correctly interpreting \"optimally expanded nozzles\" as zero pressure thrust.",
+          "why_students_make_it": "Lack of understanding of nozzle performance or ideal cycle assumptions.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Memorize the implications of ideal nozzle conditions (optimally expanded means `$P_e=P_a$`, choked means `$P_e > P_a$`).",
+          "consequence": "Including unnecessary and incorrect pressure thrust terms."
+        },
+        {
+          "mistake": "Confusing specific thrust per total air mass flow rate vs. per core mass flow rate.",
+          "why_students_make_it": "The question explicitly asks for `$T/\\dot{m}_{a,c}$`, but some students might default to `$T/\\dot{m}_{a,total}$`.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Pay close attention to the exact quantity requested in the question's units and notation.",
+          "consequence": "An answer that is off by a factor of `$(1+\\alpha)$`."
+        },
+        {
+          "mistake": "Calculation error in multiplying `$\\alpha \\times V_f$`.",
+          "why_students_make_it": "Simple arithmetic mistake under exam pressure.",
+          "type": "Calculation",
+          "severity": "Low",
+          "frequency": "occasional",
+          "how_to_avoid": "Double-check calculations, especially simple multiplications and additions."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "S.O.N.G. for Thrust: **S**tatic (`$U_0=0$`), **O**ptimally expanded (`$P_e=P_a$`), **N**egligible fuel (`$f=0$`), **G**eneral formula simplified.",
+          "concept": "Conditions for simplified turbofan thrust equation.",
+          "effectiveness": "medium",
+          "context": "When simplifying thrust equations for ideal conditions."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "What is the simplified specific thrust (`$T/\\dot{m}_{a,c}$`) formula for an ideal, unmixed turbofan under static conditions with negligible fuel and optimally expanded nozzles?",
+          "back": "`$T/\\dot{m}_{a,c} = V_e + \\alpha V_f$`",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "definition",
+          "front": "What does \"optimally expanded nozzle\" imply for thrust calculation?",
+          "back": "It implies that the exhaust static pressure (`$P_e$` or `$P_f$`) is equal to the ambient static pressure (`$P_a$`), making the pressure thrust term `$(P_e - P_a)A_e$` equal to zero.",
+          "difficulty": "easy",
+          "time_limit_seconds": 20
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "How do you avoid confusing specific thrust per total air vs. per core air?",
+          "back": "Always check the notation in the question (`$T/\\dot{m}_{a,c}$` vs `$T/\\dot{m}_{a,total}$`) and the units. The bypass ratio `$\\alpha$` is defined using core mass flow, so specific thrust per core mass flow is a natural choice in turbofan analysis.",
+          "difficulty": "medium",
+          "time_limit_seconds": 45
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Engine performance specification and comparison.",
+          "industry_example": "When an aircraft manufacturer evaluates different engine options for a new aircraft, specific thrust is a key parameter. For example, a high specific thrust engine might be chosen for a fighter jet requiring high acceleration, while a lower specific thrust (higher bypass ratio) engine is preferred for a commercial airliner for better fuel economy.",
+          "why_it_matters": "Directly impacts aircraft performance metrics like take-off distance, climb rate, and cruise speed."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "This is a direct formula application question. Identify the keywords (ideal, turbofan, bypass ratio, static, specific thrust, negligible fuel, optimally expanded) and immediately write down the simplified thrust equation.",
+        "guessing_heuristic": "If stuck, consider the contributions from core and bypass streams. The specific thrust is essentially the sum of exhaust velocities weighted by bypass ratio. A reasonable guess would be in the range of exhaust velocities.",
+        "time_management": "Aim to solve within 1-2 minutes."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "Turbofan thrust equation",
+        "Specific thrust turbofan",
+        "Bypass ratio definition",
+        "Static thrust calculation turbofan",
+        "Ideal turbofan cycle analysis",
+        "Momentum thrust equation",
+        "Optimally expanded nozzle definition",
+        "Turbofan performance parameters"
+      ],
+      "alternative_methods": [
+        {
+          "name": "First Principles (Control Volume Analysis)",
+          "description": "Instead of recalling a specific formula, one can start from the integral form of the momentum equation applied to a control volume enclosing the engine. This involves summing the momentum flux at the inlet and outlets, and accounting for pressure forces on the control surface.",
+          "pros_cons": "More fundamental and robust (less prone to forgetting specific formulas), but more time-consuming for a GATE exam.",
+          "when_to_use": "For derivation questions, or when unsure about the specific simplified formula."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Thermodynamics": "Engine cycle analysis, energy balance in combustor and turbines.",
+        "Fluid Mechanics": "Control volume analysis, nozzle flow, compressible flow.",
+        "Aircraft Performance": "Thrust requirements for flight, take-off, climb, cruise."
+      },
+      "deeper_dive_topics": [
+        "Effect of non-ideal components (component efficiencies) on turbofan thrust.",
+        "Thrust specific fuel consumption (TSFC) and its relation to specific thrust.",
+        "Thrust optimization for different flight conditions (e.g., cruise vs. take-off).",
+        "Mixed vs. unmixed flow turbofans and their thrust equations."
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2025_AE_Q61",
+        "year": 2025,
+        "marks": 2.0,
+        "negative_marks": 0.0,
+        "time_expected": "1-2 minutes",
+        "success_rate_estimate": "85%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 6: Propulsion",
+        "gate_subsection": "Turbofan engines, thrust and specific fuel consumption",
+        "weightage": "10-15%",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Perfectly aligns with the core concepts of turbofan engine performance analysis."
+      },
+      "rag_quality": {
+        "relevance_score": 0.9,
+        "chunks_used": 5,
+        "sources_distribution": {
+          "books": 0,
+          "videos": 5
+        },
+        "notes": "RAG chunks provided excellent coverage of turbofan thrust equations, specific thrust, bypass ratio, and the impact of various assumptions (static, optimally expanded, negligible fuel). Specifically, Chunk 5 and 6 directly provided the necessary formulas for specific thrust calculation under ideal conditions. The numerical discrepancies noted in Chunk 1 were not relevant to the conceptual formula derivation used here."
+      },
+      "model_meta": {
+        "timestamp": "2024-07-30T12:00:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Calculate the total thrust or specific thrust for a turbofan at a given flight speed (`$U_0 \\neq 0$`).",
+        "Calculate the thrust specific fuel consumption (TSFC) for the given engine.",
+        "Compare the propulsive efficiency of this turbofan with a turbojet or another turbofan with a different bypass ratio.",
+        "Analyze the effect of non-ideal components (e.g., nozzle efficiency) on the specific thrust.",
+        "A question involving a mixed-flow turbofan, requiring a different thrust equation."
+      ]
+    },
+    "question_id": "GATE_2025_AE_Q61",
+    "year": 2025,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE AE",
+    "question_type": "NAT",
+    "question_text": "An ideal turbofan with a bypass ratio of 5 has core mass flow rate, $\\dot{m}_{a,c} = 100$ kg/s. The core and the fan exhausts are separate and optimally expanded. The core exhaust speed is 600 m/s and the fan exhaust speed is 120 m/s. If the fuel mass flow rate is negligible in comparison to $\\dot{m}_{a,c}$, the static specific thrust ($T/\\dot{m}_{a,c}$) developed by the engine is ____ Ns/kg (rounded off to the nearest integer)."
+  },
+  "tokens_used": 17356,
+  "input_tokens": 11890,
+  "output_tokens": 5466,
+  "cost": 0.0050631,
+  "time_seconds": 49.20658206939697
+}
