@@ -1,0 +1,391 @@
+{
+  "model_name": "deepseek_r1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "conceptual_application",
+      "media_type": "text_only",
+      "combined_type": "conceptual_application_text_only",
+      "weight_strategy": "APPLICATION_WEIGHTED",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "The question requires applying the concepts of lift and induced drag related to circulation distribution. It involves understanding how the given circulation and downwash distributions affect the overall lift and induced drag, requiring multiple steps to determine if they are zero or non-zero.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "B",
+        "is_correct": true,
+        "confidence": 0.95,
+        "confidence_type": "single_model",
+        "reasoning": "In Prandtl's lifting-line theory, the total lift is proportional to the first Fourier coefficient (A_1). The given circulation Γ(θ) = A sin(3θ) contains only the n=3 harmonic, implying A_1 = 0. From the formula C_L = A_1 π AR, total lift L = 0.5 ρ V_∞^2 S C_L = 0. However, induced drag depends on all Fourier coefficients via C_Di = π AR Σ n A_n^2. Since A_3 ≠ 0, induced drag is non-zero. This is consistent with direct integration of D_i = ρ V_∞ ∫ Γ w dy using the given w(θ)."
+      },
+      "explanation": {
+        "question_nature": "Conceptual Application",
+        "step_by_step": [
+          "Step 1: Recall that in Prandtl's lifting-line theory, the circulation distribution is expressed as a Fourier sine series: Γ(θ) = 2b V_∞ Σ_{n=1}^{N} A_n sin(nθ).",
+          "Step 2: Compare the given distribution Γ(θ) = A sin(3θ) with the standard form. It matches the n=3 term only, with A_3 = A/(2b V_∞) and A_n = 0 for n ≠ 3, especially A_1 = 0.",
+          "Step 3: Use the formula for total lift coefficient: C_L = A_1 π AR (from RAG Chunk 2). Since A_1 = 0, C_L = 0, therefore total lift L = 0.5 ρ V_∞^2 S C_L = 0.",
+          "Step 4: For induced drag, the coefficient is given by C_Di = π AR Σ_{n=1}^{N} n A_n^2. With only A_3 non-zero, C_Di = π AR * 3 * (A_3)^2 > 0. Hence induced drag D_i ≠ 0.",
+          "Step 5: Cross-verify with the physical definition: D_i = ρ V_∞ ∫_{-b/2}^{b/2} Γ(y) w(y) dy. Transform to θ using dy = (b/2) sin θ dθ. Substitute given Γ(θ) and w(θ), the integrand is positive and non-zero, confirming D_i ≠ 0."
+        ],
+        "formulas_used": [
+          "$\\Gamma(\\theta) = 2b V_{\\infty} \\sum_{n=1}^{N} A_n \\sin(n\\theta)$",
+          "$C_L = A_1 \\pi AR$",
+          "$C_{D,i} = \\pi AR \\sum_{n=1}^{N} n A_n^2$",
+          "$L = \\frac{1}{2} \\rho V_{\\infty}^2 S C_L$",
+          "$D_i = \\rho V_{\\infty} \\int_{-b/2}^{b/2} \\Gamma(y) w(y) dy$"
+        ],
+        "estimated_time_minutes": 3
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Aerodynamics",
+          "confidence": 1.0
+        },
+        "topic": {
+          "name": "Incompressible Flow over Finite Wings",
+          "syllabus_ref": "Section 4: Aerodynamics, Subsection: Finite Wing Theory"
+        },
+        "concepts": [
+          {
+            "name": "Prandtl's Lifting Line Theory",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Fourier Series Representation of Circulation",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Total Lift and Induced Drag from Fourier Coefficients",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Downwash and Induced Angle of Attack",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Fourier series expansion for circulation distribution",
+          "Kutta-Joukowski theorem for lift per unit span",
+          "Definition of lift and induced drag coefficients",
+          "Coordinate transformation y = -(b/2) cos θ"
+        ],
+        "helpful": [
+          "Induced drag integral derivation",
+          "Elliptic lift distribution as a special case"
+        ],
+        "dependency_tree": {
+          "Total Lift and Induced Drag from Fourier Coefficients": [
+            "requires: Fourier series for Γ(θ)",
+            "requires: Formulas for C_L and C_Di in terms of A_n",
+            "enables: Analysis of arbitrary wing planforms",
+            "enables: Understanding of induced drag minimization"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Medium",
+        "score": 5,
+        "complexity_breakdown": {
+          "conceptual": 7,
+          "mathematical": 4,
+          "problem_solving": 6
+        },
+        "estimated_solve_time_seconds": 120,
+        "expected_accuracy_percent": 60,
+        "difficulty_factors": [
+          "Requires recognizing that A_1 = 0 from the given Γ(θ)",
+          "Must recall/apply the formulas for C_L and C_Di in terms of Fourier coefficients"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Fundamentals of Aerodynamics",
+          "author": "J. D. Anderson",
+          "chapter_number": "5",
+          "chapter_title": "Incompressible Flow over Finite Wings",
+          "section": "5.3.3 The Lifting-Line Equation and its Solution",
+          "page_range": "~350-360",
+          "complexity": "intermediate",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval",
+          "text_snippet": "The general circulation distribution (Fourier Series): $\\Gamma(\\theta) = 2bV_{{\\infty}} \\sum_{{n=1}}^{{N}} A_n \\sin(n\\theta)$ ... Wing Lift Coefficient: $C_L = A_1 \\pi AR$."
+        },
+        {
+          "source_type": "book",
+          "book": "Intro to Aerodynamics",
+          "author": "J. D. Anderson",
+          "chapter_number": "5",
+          "chapter_title": "Incompressible Flow over Finite Wings",
+          "section": "Formulas and Equations",
+          "complexity": "intermediate",
+          "relevance_score": 0.85,
+          "source": "rag_retrieval",
+          "text_snippet": "Wing lift coefficient: $C_L = A_1 \\pi AR$. Induced angle of attack: $\\alpha_i(\\theta) = \\sum_{{n=1}}^{{N}} n A_n \\frac{{\\sin(n\\theta)}}{{\\sin\\theta}}$."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. Arnab Roy",
+          "timestamp_start": "00:13:17",
+          "timestamp_end": "00:14:40",
+          "video_url": "https://www.youtube.com/watch?v=J81N5r0YxYw",
+          "book_reference": "Fundamentals of Aerodynamics",
+          "topic_covered": "Total lift calculation from circulation distribution",
+          "relevance_score": 0.8,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. Arnab Roy",
+          "timestamp_start": "00:03:41",
+          "timestamp_end": "00:05:25",
+          "video_url": "https://www.youtube.com/watch?v=GJTpSf9wnb8",
+          "book_reference": "Fundamentals of Aerodynamics",
+          "topic_covered": "Fourier series for circulation distribution",
+          "relevance_score": 0.8,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Direct Formula Application",
+        "total_steps": 5,
+        "solution_path": "Identify Fourier coefficients → Apply C_L formula → Apply C_Di formula → Conclude",
+        "key_insights": [
+          "Total lift depends only on A_1; if A_1=0, total lift is zero.",
+          "Induced drag depends on all A_n; if any A_n for n≥1 is non-zero, induced drag exists."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$\\Gamma(\\theta) = 2b V_{\\infty} \\sum_{n=1}^{\\infty} A_n \\sin(n\\theta)$",
+          "name": "Fourier Series for Circulation",
+          "conditions": "Incompressible, inviscid flow; Prandtl's lifting-line theory",
+          "type": "equation",
+          "relevance": "Standard representation to compare given Γ(θ)"
+        },
+        {
+          "formula": "$C_L = A_1 \\pi AR$",
+          "name": "Total Lift Coefficient",
+          "conditions": "From lifting-line theory",
+          "type": "equation",
+          "relevance": "Core formula to determine total lift from Fourier coefficients"
+        },
+        {
+          "formula": "$C_{D,i} = \\pi AR \\sum_{n=1}^{\\infty} n A_n^2$",
+          "name": "Induced Drag Coefficient",
+          "conditions": "From lifting-line theory",
+          "type": "equation",
+          "relevance": "Core formula to determine induced drag from Fourier coefficients"
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Analysis of non-elliptic lift distributions in wing design",
+          "Predicting induced drag for wings with specific lift distributions"
+        ],
+        "specific_systems": [
+          "Aircraft wings with washout or specific planform shapes",
+          "Sailplanes with optimized lift distributions"
+        ],
+        "practical_relevance": "Understanding how lift distribution affects overall aerodynamic performance, crucial for wing design to minimize induced drag."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Assuming that since Γ(θ) is non-zero, total lift must be non-zero.",
+          "why_students_make_it": "Confusing local circulation with integrated total lift; not recalling that only A_1 contributes to total lift.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Remember the formula C_L = A_1 π AR. Always extract A_1 from the Fourier series.",
+          "consequence": "Would incorrectly choose options C or D."
+        },
+        {
+          "mistake": "Thinking that if lift is zero, induced drag must also be zero (since C_Di ∝ C_L^2 in elliptic case).",
+          "why_students_make_it": "Over-generalizing the elliptic wing result C_Di = C_L^2/(π e AR) to all cases.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Recall the general formula C_Di = π AR Σ n A_n^2. Induced drag can exist even if C_L=0 if higher harmonics are present.",
+          "consequence": "Would incorrectly choose option A."
+        },
+        {
+          "mistake": "Misinterpreting the coordinate transformation, leading to incorrect integration limits or differentials.",
+          "why_students_make_it": "Forgetting that y = -(b/2) cos θ maps θ=0 to y=-b/2 and θ=π to y=b/2, and dy = (b/2) sin θ dθ.",
+          "type": "Calculation",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Sketch the mapping or consistently use standard transformation: when integrating over span, θ goes from 0 to π.",
+          "consequence": "Incorrect sign or magnitude in integral calculations."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "Lift Is First (LIF): Total Lift depends on the First Fourier coefficient (A_1).",
+          "concept": "C_L = A_1 π AR",
+          "effectiveness": "high",
+          "context": "When analyzing circulation distributions in lifting-line theory."
+        },
+        {
+          "mnemonic": "Drag Includes All (DIA): Induced Drag Includes All Fourier coefficients (A_n for n≥1).",
+          "concept": "C_Di = π AR Σ n A_n^2",
+          "effectiveness": "high",
+          "context": "When calculating induced drag from Fourier coefficients."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "In Prandtl's lifting-line theory, what is the formula for total lift coefficient C_L in terms of Fourier coefficients and aspect ratio?",
+          "back": "$C_L = A_1 \\pi AR$, where $A_1$ is the first Fourier coefficient in the expansion $\\Gamma(\\theta) = 2b V_{\\infty} \\sum A_n \\sin(n\\theta)$.",
+          "difficulty": "easy",
+          "time_limit_seconds": 20
+        },
+        {
+          "card_type": "formula_recall",
+          "front": "What is the general formula for induced drag coefficient C_Di in terms of Fourier coefficients?",
+          "back": "$C_{D,i} = \\pi AR \\sum_{n=1}^{\\infty} n A_n^2$.",
+          "difficulty": "medium",
+          "time_limit_seconds": 25
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "If the circulation distribution is Γ(θ) = A sin(3θ) (A ≠ 0), what are the values of A_1 and A_3?",
+          "back": "A_1 = 0, A_3 = A/(2b V_∞). All other A_n = 0. This is because the standard form is Γ(θ) = 2b V_∞ Σ A_n sin(nθ).",
+          "difficulty": "medium",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "Can induced drag be non-zero when total lift is zero? Explain.",
+          "back": "Yes. Induced drag depends on all Fourier coefficients via C_Di = π AR Σ n A_n^2. If any A_n for n ≥ 1 is non-zero (e.g., A_3), then C_Di > 0 even if A_1 = 0 (which gives C_L=0).",
+          "difficulty": "hard",
+          "time_limit_seconds": 40
+        },
+        {
+          "card_type": "application",
+          "front": "Given Γ(θ) and w(θ), write the integral for induced drag D_i in the θ coordinate.",
+          "back": "With y = -(b/2) cos θ, dy = (b/2) sin θ dθ. Then $D_i = \\rho V_{\\infty} \\int_{0}^{\\pi} \\Gamma(\\theta) w(\\theta) \\frac{b}{2} \\sin\\theta d\\theta$.",
+          "difficulty": "medium",
+          "time_limit_seconds": 30
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Wing design for minimum induced drag",
+          "industry_example": "Aircraft like the P-51 Mustang used an approximately elliptical wing planform to achieve near-elliptic lift distribution, minimizing induced drag. Deviations from elliptic distribution increase induced drag.",
+          "why_it_matters": "Understanding non-elliptic distributions helps designers assess trade-offs between structural constraints and aerodynamic efficiency."
+        },
+        {
+          "application": "Analysis of wings with aerodynamic twist",
+          "industry_example": "Modern airliners often use washout (twist) to prevent tip stall. This modifies the lift distribution, affecting A_n coefficients and thus induced drag.",
+          "why_it_matters": "Predicting induced drag for non-ideal distributions is crucial for performance and fuel efficiency calculations."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Attempt If Time",
+        "triage_tip": "If you recall the formulas C_L = A_1 π AR and C_Di = π AR Σ n A_n^2, this is a quick 1-minute question. If not, skip.",
+        "guessing_heuristic": "If you know lift depends on A_1, and the given Γ has only sin(3θ), then A_1=0 → L=0. Eliminate C and D. Between A and B, remember induced drag can exist even with zero lift if higher harmonics are present → choose B.",
+        "time_management": "Budget 2-3 minutes max."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "Prandtl lifting line theory Fourier coefficients",
+        "total lift coefficient A1 pi AR",
+        "induced drag coefficient finite wing",
+        "elliptic vs non-elliptic lift distribution",
+        "circulation distribution Fourier series",
+        "downwash induced angle of attack",
+        "finite wing aerodynamics GATE",
+        "Anderson Fundamentals of Aerodynamics Chapter 5"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Direct Integration Method",
+          "description": "Compute total lift L = ρ V_∞ ∫_{-b/2}^{b/2} Γ(y) dy and induced drag D_i = ρ V_∞ ∫_{-b/2}^{b/2} Γ(y) w(y) dy directly using the given functions and coordinate transformation.",
+          "pros_cons": "Pros: Conceptually straightforward, uses fundamental definitions. Cons: Requires careful integration and manipulation of trigonometric functions.",
+          "when_to_use": "When formulas in terms of Fourier coefficients are not remembered, or when given explicit Γ and w."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Mathematics": "Fourier series analysis is used to represent arbitrary circulation distributions, connecting to orthogonal function expansions.",
+        "Fluid Mechanics": "Prandtl's lifting-line theory is an application of potential flow and vortex theory.",
+        "Aircraft Performance": "Induced drag directly impacts aircraft performance parameters like lift-to-drag ratio and range."
+      },
+      "deeper_dive_topics": [
+        "Oswald efficiency factor e and its relation to Fourier coefficients: e = 1/(1+δ) where δ = Σ_{n=2} n (A_n/A_1)^2.",
+        "Numerical solution of Prandtl's lifting-line equation for arbitrary wing planforms.",
+        "Extension to compressible flow using Prandtl-Glauert correction."
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2025_AE_Q36",
+        "year": 2025,
+        "marks": 2.0,
+        "negative_marks": 0.66,
+        "time_expected": "2-3 minutes",
+        "success_rate_estimate": "60%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 4: Aerodynamics",
+        "gate_subsection": "4.3 Incompressible Flow over Finite Wings",
+        "weightage": "~8-10%",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Perfectly aligned with GATE AE syllabus; tests core concepts of finite wing theory."
+      },
+      "rag_quality": {
+        "relevance_score": 0.85,
+        "chunks_used": 6,
+        "sources_distribution": {
+          "books": 3,
+          "videos": 3
+        },
+        "notes": "RAG provided excellent coverage of Prandtl's lifting-line theory, Fourier series representation, formulas for C_L and C_Di, and elliptic distribution. All chunks were relevant. The question was directly answerable using the provided RAG knowledge."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-13T10:30:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Given Γ(θ) = A sin(2θ), find L and D_i.",
+        "If downwash is constant, what can you infer about the circulation distribution?",
+        "Compare induced drag for elliptic vs. rectangular wings with same AR and C_L.",
+        "Numerical problem: Compute A_n coefficients for a tapered wing with given chord distribution."
+      ]
+    },
+    "question_id": "GATE_2025_AE_Q36",
+    "year": 2025,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE AE",
+    "question_type": "MCQ",
+    "question_text": "A lifting surface has a spanwise circulation distribution of $\\Gamma(\\theta) = A \\sin 3\\theta$ (where $A \\ne 0$) over its span $-\\frac{b}{2} \\le y \\le \\frac{b}{2}$, and $y = -\\frac{b}{2} \\cos \\theta$ is the spanwise coordinate. Furthermore, the downwash varies along the span as $w(\\theta) = V_\\infty \\left(\\frac{3A \\sin 3\\theta}{\\sin \\theta}\\right)$, where $V_\\infty$ is the freestream velocity. Which one of the following options represents the total lift ($L$) and induced drag ($D_i$)?"
+  },
+  "tokens_used": 16476,
+  "input_tokens": 9856,
+  "output_tokens": 6620,
+  "cost": 0.0199186,
+  "time_seconds": 190.29936528205872
+}
