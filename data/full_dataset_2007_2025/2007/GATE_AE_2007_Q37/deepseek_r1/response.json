@@ -1,0 +1,385 @@
+{
+  "model_name": "deepseek_r1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "conceptual_application",
+      "media_type": "text_only",
+      "combined_type": "conceptual_application_text_only",
+      "weight_strategy": "APPLICATION_WEIGHTED",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "The question requires understanding the relationship between center of gravity, trim, and lift coefficient. It involves multiple concepts (stability, control, aerodynamics) and requires multi-step reasoning to determine the effect of CG location on C_Lmax for trim.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "A",
+        "is_correct": true,
+        "confidence": 0.98,
+        "confidence_type": "single_model",
+        "reasoning": "The correct answer is A (decrease). Moving the center of gravity (CG) forward increases the static margin, making the aircraft more longitudinally stable. This results in a more negative slope of the pitching moment coefficient versus lift coefficient curve ($\\frac{dC_m}{dC_L}$). To trim ($C_m = 0$) at a given lift coefficient, a specific elevator deflection is required. The required nose-up elevator deflection (typically trailing edge down) increases with lift coefficient and with a more forward CG. Since elevator deflection has a physical limit ($\\delta_{e_{max}}$), the maximum lift coefficient at which trim can be achieved (i.e., before the required elevator deflection exceeds the available limit) decreases as the CG moves forward. This is a standard concept in aircraft stability and control, directly supported by the RAG context."
+      },
+      "explanation": {
+        "question_nature": "Application",
+        "step_by_step": [
+          "Step 1: Understand the trim condition. For steady flight, the total pitching moment about the CG must be zero: $C_m = 0$.",
+          "Step 2: Recall the pitching moment equation. A simplified form is $C_m = C_{m_0} + \\left(\\frac{dC_m}{dC_L}\\right) C_L + C_{m_{\\delta_e}} \\delta_e$, where $\\frac{dC_m}{dC_L}$ is the static stability derivative, $C_{m_{\\delta_e}}$ is the elevator effectiveness, and $\\delta_e$ is the elevator deflection.",
+          "Step 3: Recognize the effect of moving CG forward. Moving CG forward increases the static margin ($h_n - h$), making $\\frac{dC_m}{dC_L}$ more negative (more stable).",
+          "Step 4: Solve for trim elevator deflection. Setting $C_m = 0$ gives $\\delta_{e_{trim}} = -\\frac{C_{m_0} + \\left(\\frac{dC_m}{dC_L}\\right) C_{L_{trim}}}{C_{m_{\\delta_e}}}$.",
+          "Step 5: Analyze the relationship. For a given $C_{L_{trim}}$, a more negative $\\frac{dC_m}{dC_L}$ (due to forward CG) increases the magnitude of $\\delta_{e_{trim}}$ required (assuming $C_{m_{\\delta_e}}$ is negative).",
+          "Step 6: Consider the limiting factor. The elevator has a maximum deflection limit $\\delta_{e_{max}}$. The maximum trim-able lift coefficient $C_{L_{max,trim}}$ occurs when $|\\delta_{e_{trim}}| = \\delta_{e_{max}}$.",
+          "Step 7: Deduce the effect. As CG moves forward, the required $\\delta_{e_{trim}}$ for any given $C_L$ increases. Therefore, the $C_L$ at which $\\delta_{e_{trim}}$ reaches $\\delta_{e_{max}}$ becomes lower. Hence, $C_{L_{max,trim}}$ decreases."
+        ],
+        "formulas_used": [
+          "$C_m = 0$ (trim condition)",
+          "$C_m = C_{m_0} + \\left(\\frac{dC_m}{dC_L}\\right) C_L + C_{m_{\\delta_e}} \\delta_e$",
+          "$\\delta_{e_{trim}} = -\\frac{C_{m_0} + \\left(\\frac{dC_m}{dC_L}\\right) C_{L_{trim}}}{C_{m_{\\delta_e}}}$",
+          "$\\frac{dC_m}{dC_L} = -\\frac{(x_{np} - x_{cg})}{\\bar{c}} = -\\text{Static Margin}$"
+        ],
+        "estimated_time_minutes": 3
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Flight Mechanics",
+          "confidence": 0.99
+        },
+        "topic": {
+          "name": "Longitudinal Static Stability and Control",
+          "syllabus_ref": "Section 4: Flight Mechanics -> Stability and Control"
+        },
+        "concepts": [
+          {
+            "name": "CG position and static margin",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Longitudinal trim condition",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Elevator authority and control limits",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Forward CG limit",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Definition of pitching moment coefficient and trim",
+          "Concept of static longitudinal stability and static margin",
+          "Role of elevator in longitudinal control"
+        ],
+        "helpful": [
+          "Pitching moment equation for a complete aircraft",
+          "Understanding of elevator effectiveness derivative"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Definition of CG and its effect on aircraft balance",
+            "requires: Concept of aerodynamic center and neutral point",
+            "enables: Determination of CG limits for safe operation",
+            "enables: Design of control surfaces for adequate authority"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Medium",
+        "score": 5,
+        "complexity_breakdown": {
+          "conceptual": 6,
+          "mathematical": 3,
+          "problem_solving": 5
+        },
+        "estimated_solve_time_seconds": 120,
+        "expected_accuracy_percent": 65,
+        "difficulty_factors": [
+          "Requires integrating multiple concepts: stability, trim, and control limits",
+          "Understanding that maximum trim CL is limited by elevator authority, not aerodynamics"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Introduction to Flight",
+          "author": "John D. Anderson Jr.",
+          "chapter_number": "7",
+          "chapter_title": "Principles of Stability and Control",
+          "section": "Static longitudinal control",
+          "page_range": "Not specified",
+          "complexity": "introductory",
+          "relevance_score": 0.7,
+          "source": "rag_retrieval",
+          "text_snippet": "Static longitudinal control concerns how an aircraft maintains a desired flight condition (equilibrium) and how a pilot can change this condition using control surfaces, particularly the elevator."
+        },
+        {
+          "source_type": "book",
+          "book": "Perkins & Hage",
+          "author": "Perkins and Hage",
+          "chapter_number": "3",
+          "chapter_title": "Static Longitudinal Stability and Control",
+          "section": "CG Range, Forward Limit, Elevator Authority",
+          "page_range": "Not specified",
+          "complexity": "intermediate",
+          "relevance_score": 0.8,
+          "source": "rag_retrieval",
+          "text_snippet": "The most forward CG limit is determined by control authority, specifically the available elevator deflection, not by static stability."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. A.K. Ghosh",
+          "timestamp_start": "00:06:19",
+          "timestamp_end": "00:13:50",
+          "video_url": "https://www.youtube.com/watch?v=uXxxi2Uwhg8",
+          "book_reference": "Nelson, R.C.",
+          "topic_covered": "Forward CG Limit and Trimmability",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. A.K. Ghosh",
+          "timestamp_start": "00:20:25",
+          "timestamp_end": "None",
+          "video_url": "https://www.youtube.com/watch?v=eo1TABawT1Q",
+          "book_reference": "Perkins & Hage",
+          "topic_covered": "Contribution of Engine towards Stability, Forward CG limit determination",
+          "relevance_score": 0.8,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Conceptual Application via Trim Equation",
+        "total_steps": 7,
+        "solution_path": "Trim condition → Effect of forward CG on stability derivative → Required elevator deflection → Limit due to max elevator deflection → Consequence on maximum trim-able CL.",
+        "key_insights": [
+          "Forward CG increases static stability (more negative dCm/dCL).",
+          "Increased stability requires larger elevator deflection to trim at a given CL.",
+          "Since elevator deflection is limited, the CL at which max deflection is reached is lower for a forward CG."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$C_m = C_{m_0} + \\left(\\frac{dC_m}{dC_L}\\right) C_L + C_{m_{\\delta_e}} \\delta_e$",
+          "name": "Pitching Moment Equation for Trim",
+          "conditions": "Linear aerodynamic assumptions, small angles",
+          "type": "equation",
+          "relevance": "Core equation for analyzing trim condition"
+        },
+        {
+          "formula": "$\\frac{dC_m}{dC_L} = -\\frac{(x_{np} - x_{cg})}{\\bar{c}}$",
+          "name": "Static Margin Relation",
+          "conditions": "Neutral point (x_np) constant, CG position x_cg measured from reference",
+          "type": "equation",
+          "relevance": "Shows that moving CG forward (decreasing x_cg) makes dCm/dCL more negative."
+        },
+        {
+          "formula": "$\\delta_{e_{trim}} = -\\frac{C_{m_0} + \\left(\\frac{dC_m}{dC_L}\\right) C_{L_{trim}}}{C_{m_{\\delta_e}}}$",
+          "name": "Trim Elevator Deflection",
+          "conditions": "Trim condition C_m=0, C_m_{\\delta_e} ≠ 0",
+          "type": "equation",
+          "relevance": "Directly shows required elevator deflection as a function of CG position and CL."
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Aircraft loading and balance calculations ensure CG remains within allowed limits for safe trim throughout flight envelope.",
+          "Design of elevator size and travel to provide sufficient control authority for takeoff rotation and landing flare at forward CG limits."
+        ],
+        "specific_systems": [
+          "Commercial aircraft like Airbus A320 or Boeing 737 have forward and aft CG limits published in their flight manuals."
+        ],
+        "practical_relevance": "Exceeding the forward CG limit can make it impossible to rotate the aircraft for takeoff or flare for landing, leading to runway overrun or hard landing accidents."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Thinking that moving CG forward increases maximum trim-able CL because it increases stability.",
+          "why_students_make_it": "Students confuse stability with controllability. More stability is good, but they forget the need for control authority to achieve trim.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Remember: Stability determines the tendency to return, but control limits determine the range of achievable trim conditions. Always consider elevator deflection limit.",
+          "consequence": "Would incorrectly choose option B (increase)."
+        },
+        {
+          "mistake": "Assuming that maximum lift coefficient (CL_max) is solely an aerodynamic property of the wing and unaffected by CG position.",
+          "why_students_make_it": "CL_max is often taught in aerodynamics as a wing characteristic (stall). However, the question asks for maximum CL for which trim is possible, which is a flight mechanics constraint.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "common",
+          "how_to_avoid": "Read the question carefully: \"C_{{Lmax}} value for which the airplane can be trimmed\". It is the trim-able CL, not the aerodynamic stall CL. Connect trim to elevator authority.",
+          "consequence": "Might choose option C (remain same)."
+        },
+        {
+          "mistake": "Bringing rudder deflection into consideration for a longitudinal trim question.",
+          "why_students_make_it": "Mixing lateral/directional control with longitudinal control, possibly due to the option D mentioning rudder.",
+          "type": "Conceptual",
+          "severity": "Low",
+          "frequency": "occasional",
+          "how_to_avoid": "Recall that rudder is for yaw control, not pitch. Longitudinal trim is achieved by elevator (and possibly stabilizer). Ignore option D as irrelevant.",
+          "consequence": "Might be distracted by option D."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "Forward CG, Less CL (for trim)",
+          "concept": "Effect of forward CG on maximum trim-able lift coefficient",
+          "effectiveness": "medium",
+          "context": "Remembering the answer directly for exam purposes."
+        },
+        {
+          "mnemonic": "Stability Up, Trim Down",
+          "concept": "Increasing static stability (by moving CG forward) reduces the range of trim-able conditions (due to elevator limits).",
+          "effectiveness": "medium",
+          "context": "Connecting stability and trim limits."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "concept_recall",
+          "front": "What is the primary constraint that determines the forward CG limit of an aircraft?",
+          "back": "The maximum available elevator deflection ($\\delta_{e_{max}}$). When the required nose-up elevator deflection to trim exceeds this limit, the aircraft cannot be trimmed, especially at high lift coefficients like during landing.",
+          "difficulty": "medium",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "application",
+          "front": "If the CG is moved forward, how does the required elevator deflection for trim at a given CL change?",
+          "back": "It increases in magnitude (more nose-up elevator, i.e., more trailing edge down deflection is needed). This is because the static margin increases, making $\\frac{dC_m}{dC_L}$ more negative, which increases the nose-down pitching moment that must be countered by the elevator.",
+          "difficulty": "medium",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "Does moving CG forward increase or decrease the maximum lift coefficient at which the aircraft can be trimmed? Why?",
+          "back": "It decreases. While forward CG increases static stability, it also increases the required elevator deflection for trim. Since elevator deflection is limited, the lift coefficient at which the required deflection equals the maximum available is lower.",
+          "difficulty": "hard",
+          "time_limit_seconds": 45
+        },
+        {
+          "card_type": "formula_recall",
+          "front": "Write the equation for trim elevator deflection ($\\delta_{e_{trim}}$) in terms of $C_{m_0}$, $\\frac{dC_m}{dC_L}$, $C_{L_{trim}}$, and $C_{m_{\\delta_e}}$.",
+          "back": "$\\delta_{e_{trim}} = -\\frac{C_{m_0} + \\left(\\frac{dC_m}{dC_L}\\right) C_{L_{trim}}}{C_{m_{\\delta_e}}}$",
+          "difficulty": "easy",
+          "time_limit_seconds": 20
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Aircraft loading and balance",
+          "industry_example": "Before every flight, pilots and load masters calculate the aircraft's CG. If the CG is too far forward, the aircraft may not be able to rotate to the required angle of attack for takeoff, risking runway overrun.",
+          "why_it_matters": "Safety: Ensuring the aircraft can be controlled throughout all phases of flight, especially critical high-lift conditions like takeoff and landing."
+        },
+        {
+          "application": "Aircraft design",
+          "industry_example": "Designers size the horizontal tail and elevator to provide sufficient control power to trim at the forward CG limit with maximum flap deflection (high CL) during landing approach.",
+          "why_it_matters": "Certification: Aircraft must demonstrate adequate control authority for all approved CG ranges and configurations."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "This is a standard concept in stability and control. If you recall the relationship between forward CG, elevator deflection, and trim CL, it's a quick answer.",
+        "guessing_heuristic": "If unsure, remember: forward CG increases stability but reduces controllability (trim range). So maximum trim CL likely decreases. Eliminate option D (rudder is for yaw) and option C (no change is unlikely). Between A and B, choose A (decrease).",
+        "time_management": "Spend no more than 2-3 minutes. It's a 2-mark question with negative marking, so be confident."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "forward CG limit aircraft",
+        "elevator authority trim",
+        "maximum trim lift coefficient",
+        "longitudinal static stability control",
+        "CG position effect on trim",
+        "aircraft center of gravity limits",
+        "pitching moment equation trim",
+        "static margin elevator deflection"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Graphical Method using C_m vs C_L curves",
+          "description": "Plot C_m vs C_L for different elevator deflections. The trim condition is where each curve crosses C_m=0. For a given max elevator deflection curve, the intersection point gives the trim CL. Moving CG forward shifts all curves downward (more negative slope). The intersection of the max elevator deflection curve with C_m=0 occurs at a lower CL.",
+          "pros_cons": "Pros: Visual, intuitive. Cons: Requires sketching.",
+          "when_to_use": "For conceptual understanding and qualitative analysis."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "subject_name_1": "Aerodynamics",
+        "subject_name_2": "Control Systems",
+        "subject_name_3": "Aircraft Design"
+      },
+      "deeper_dive_topics": [
+        "Effect of power (thrust) on neutral point and trim (e.g., propeller vs jet)",
+        "Use of trim tabs to reduce hinge moments and extend effective elevator authority",
+        "Relaxed static stability and fly-by-wire systems that allow aft CG for performance benefits"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_AE_2007_Q37",
+        "year": 2007,
+        "marks": 2.0,
+        "negative_marks": 0.66,
+        "time_expected": "2-3 minutes",
+        "success_rate_estimate": "65%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 4: Flight Mechanics",
+        "gate_subsection": "Stability and Control",
+        "weightage": "Approx 10-15% of Flight Mechanics",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Well-aligned with core stability and control concepts. Tests application of trim and control limits."
+      },
+      "rag_quality": {
+        "relevance_score": 0.85,
+        "chunks_used": 4,
+        "sources_distribution": {
+          "books": 1,
+          "videos": 3
+        },
+        "notes": "RAG provided excellent relevant content on forward CG limit, elevator authority, and trim. Chunks 2, 3, 4, and 5 directly discuss the relationship between forward CG, required elevator deflection, and the limitation on trim at high lift coefficients. This perfectly supports the answer. Chunk 1 provides background on neutral point and static margin, which is also relevant."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-13T10:30:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "How does increasing elevator size affect the forward CG limit?",
+        "If the aerodynamic center moves aft due to high-lift devices, how does that affect the maximum trim CL for a given CG?",
+        "Numerical calculation: Given aircraft parameters, calculate the forward CG limit for a specified landing CL.",
+        "How does the aft CG limit differ in its determining factor from the forward CG limit?"
+      ]
+    },
+    "question_id": "GATE_AE_2007_Q37",
+    "year": 2007,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "MCQ",
+    "question_text": "If the center of gravity of an airplane is moved forward towards the nose of the airplane, the C_{Lmax} (maximum value of the lift coefficient) value for which the airplane can be trimmed (C_m = 0) will"
+  },
+  "tokens_used": 15121,
+  "input_tokens": 9853,
+  "output_tokens": 5268,
+  "cost": 0.01695607,
+  "time_seconds": 156.3806710243225
+}
