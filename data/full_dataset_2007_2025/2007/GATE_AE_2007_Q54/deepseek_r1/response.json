@@ -1,0 +1,407 @@
+{
+  "model_name": "deepseek_r1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "conceptual_application",
+      "media_type": "image_based",
+      "combined_type": "conceptual_application_image_based",
+      "weight_strategy": "VISION_WEIGHTED",
+      "classification_confidence": 0.9,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "The question requires applying the shear stress formula for a beam, understanding the relationship between shear force and bending moment, and interpreting the geometry from the image. It integrates concepts from solid mechanics and beam theory.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": false,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "B",
+        "is_correct": true,
+        "confidence": 0.98,
+        "confidence_type": "single_model",
+        "reasoning": "For an Euler-Bernoulli beam with a rectangular cross-section (width b, height h), the shear stress \\tau_{xz} due to a transverse shear force V_z is given by the formula \\tau_{xz} = \\frac{V_z Q}{I_y b}, where Q is the first moment of area. For a rectangle, Q = \\frac{b}{2}\\left(\\frac{h^2}{4} - z^2\\right), and I_y = \\frac{b h^3}{12}. Substituting yields \\tau_{xz} = \\frac{V_z}{2 I_y} \\left(\\frac{h^2}{4} - z^2\\right) = \\frac{V_z (h/2)^2}{2 I_y} \\left(1 - \\frac{z^2}{(h/2)^2}\\right), which is a parabolic distribution zero at the top/bottom (z = \\pm h/2) and maximum at the neutral axis (z=0). Option B matches this exact form. Options A and C are linear/quadratic but incorrect distributions, and D is constant."
+      },
+      "explanation": {
+        "question_nature": "Application",
+        "step_by_step": [
+          "Step 1: Identify the beam theory and cross-section. The problem specifies an Euler-Bernoulli beam with a rectangular cross-section (width b, height h). The shear force V_z = dM_y/dx.",
+          "Step 2: Recall the general formula for shear stress in beams: \\tau = \\frac{V Q}{I b}, where V is the shear force, Q is the first moment of area about the neutral axis, I is the second moment of area, and b is the width at the level where stress is calculated.",
+          "Step 3: For a rectangular section, the neutral axis is at mid-height. The second moment of area about the y-axis (bending axis) is I_y = \\frac{b h^3}{12}.",
+          "Step 4: Compute Q(z) for a section at a distance z from the neutral axis. Consider the area above z: A' = b \\left(\\frac{h}{2} - z\\right). The centroid of this area from the neutral axis is \\bar{z}' = \\frac{1}{2}\\left(\\frac{h}{2} + z\\right). Thus, Q(z) = A' \\bar{z}' = \\frac{b}{2}\\left(\\frac{h^2}{4} - z^2\\right).",
+          "Step 5: Substitute Q and I_y into the shear formula: \\tau_{xz}(z) = \\frac{V_z}{I_y b} \\cdot \\frac{b}{2}\\left(\\frac{h^2}{4} - z^2\\right) = \\frac{V_z}{2 I_y} \\left(\\frac{h^2}{4} - z^2\\right).",
+          "Step 6: Rewrite in the form given in options: \\tau_{xz}(z) = \\frac{V_z (h/2)^2}{2 I_y} \\left(1 - \\frac{z^2}{(h/2)^2}\\right). This matches option B.",
+          "Step 7: Verify boundary conditions: at z = \\pm h/2, \\tau_{xz}=0; at z=0, \\tau_{xz} = \\frac{V_z h^2}{8 I_y} = \\frac{3V_z}{2bh} (since I_y = b h^3/12), which is the known maximum shear stress (1.5 times average)."
+        ],
+        "formulas_used": [
+          "$V_z = \\frac{dM_y}{dx}$",
+          "$\\tau_{xz} = \\frac{V_z Q}{I_y b}$",
+          "$Q(z) = \\frac{b}{2}\\left(\\frac{h^2}{4} - z^2\\right)$",
+          "$I_y = \\frac{b h^3}{12}$",
+          "$\\tau_{max} = \\frac{3V_z}{2bh} = 1.5 \\tau_{avg}$"
+        ],
+        "estimated_time_minutes": 3
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Structures",
+          "confidence": 0.99
+        },
+        "topic": {
+          "name": "Shear Stress in Beams",
+          "syllabus_ref": "Section 4: Structures - Bending and Shear of Beams"
+        },
+        "concepts": [
+          {
+            "name": "Shear stress distribution in rectangular beams",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "First moment of area (Q)",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Euler-Bernoulli beam theory",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Shear force and bending moment relationship",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Shear force and bending moment diagrams",
+          "Calculation of second moment of area for simple shapes",
+          "Concept of shear stress and its distribution in beams",
+          "First moment of area (Q) and its calculation"
+        ],
+        "helpful": [
+          "Understanding of normal stress distribution due to bending",
+          "Coordinate systems for beam analysis (x along length, y and z across cross-section)"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Statics - equilibrium of beams",
+            "requires: Mechanics of materials - stress and strain",
+            "enables: Shear flow in thin-walled beams",
+            "enables: Deflection calculations including shear effects"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Easy",
+        "score": 3,
+        "complexity_breakdown": {
+          "conceptual": 4,
+          "mathematical": 3,
+          "problem_solving": 2
+        },
+        "estimated_solve_time_seconds": 120,
+        "expected_accuracy_percent": 75,
+        "difficulty_factors": [
+          "Direct application of standard formula",
+          "Requires memory of shear stress distribution shape for rectangle",
+          "Simple algebraic manipulation to match option form"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Mechanics of Materials",
+          "author": "Beer & Johnston",
+          "chapter_number": "6",
+          "chapter_title": "Shear Stress in Beams",
+          "section": "6.2-6.4",
+          "page_range": "380-400",
+          "complexity": "introductory",
+          "relevance_score": 0.9,
+          "source": "model_consensus",
+          "text_snippet": "Shear stress in a rectangular beam varies parabolically, zero at extreme fibers and maximum at neutral axis: $\\tau = \\frac{VQ}{Ib}$."
+        },
+        {
+          "source_type": "book",
+          "book": "Aircraft Structures for Engineering Students",
+          "author": "T.H.G. Megson",
+          "chapter_number": "7",
+          "chapter_title": "Shear of Beams",
+          "section": "7.1-7.3",
+          "page_range": "200-220",
+          "complexity": "intermediate",
+          "relevance_score": 0.85,
+          "source": "rag_retrieval",
+          "text_snippet": "For a rectangular cross-section, shear stress distribution is parabolic: $\\tau_{xy}(y) = \\frac{6V}{b h^3}\\left(\\frac{h^2}{4} - y^2\\right)$."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. S.K. Bhattacharyya",
+          "timestamp_start": "00:24:09",
+          "timestamp_end": "00:27:19",
+          "video_url": "https://www.youtube.com/watch?v=7Lda4Bi5g_M",
+          "book_reference": "Beer & Johnston",
+          "topic_covered": "Shear stress distribution in rectangular beams",
+          "relevance_score": 0.95,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. Ajeet Kumar",
+          "timestamp_start": "00:41:59",
+          "timestamp_end": "00:52:27",
+          "video_url": "https://www.youtube.com/watch?v=gQEBb59pqrA",
+          "book_reference": "Megson",
+          "topic_covered": "Shear stress distribution in rectangular cross-section",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Direct Formula Application",
+        "total_steps": 7,
+        "solution_path": "Recall shear stress formula → Compute Q and I for rectangle → Substitute → Simplify to match options → Verify boundary conditions.",
+        "key_insights": [
+          "Shear stress distribution is parabolic for rectangular sections.",
+          "The expression must vanish at the top and bottom (z = ±h/2).",
+          "Option B is the only one with the correct parabolic form and zeros at the extremes."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$\\tau_{xz} = \\frac{V_z Q}{I_y b}$",
+          "name": "Shear stress formula for beams",
+          "conditions": "Euler-Bernoulli beam, homogeneous material, small deformations",
+          "type": "equation",
+          "relevance": "Core formula for calculating shear stress"
+        },
+        {
+          "formula": "$Q(z) = \\frac{b}{2}\\left(\\frac{h^2}{4} - z^2\\right)$",
+          "name": "First moment of area for rectangle",
+          "conditions": "Rectangular cross-section, width b, height h, neutral axis at mid-height",
+          "type": "equation",
+          "relevance": "Required to compute shear stress distribution"
+        },
+        {
+          "formula": "$I_y = \\frac{b h^3}{12}$",
+          "name": "Second moment of area of rectangle about y-axis",
+          "conditions": "Neutral axis through centroid, bending about y-axis",
+          "type": "equation",
+          "relevance": "Moment of inertia needed in shear formula"
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Design of aircraft wing spars and ribs under shear loads",
+          "Analysis of shear stresses in helicopter rotor blades"
+        ],
+        "specific_systems": [
+          "Aluminum alloy beams in aircraft fuselage frames",
+          "Composite rectangular beams in UAV structures"
+        ],
+        "practical_relevance": "Accurate shear stress distribution is critical for predicting shear failure, especially in short, deep beams or where materials have low shear strength (e.g., composites)."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Assuming shear stress is uniformly distributed (choosing option D)",
+          "why_students_make_it": "Confusing average shear stress (V/A) with actual distribution",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Remember: shear stress is parabolic for solid rectangular sections; it is zero at free surfaces.",
+          "consequence": "Incorrect maximum stress, leading to unsafe designs."
+        },
+        {
+          "mistake": "Confusing the coordinate variable (using y instead of z or vice versa)",
+          "why_students_make_it": "Unclear coordinate system in problem statement; different textbooks use different notations (y or z for vertical).",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Check the given stress subscript (τ_xz) and moment of inertia (I_y) to deduce that z is the vertical coordinate, and bending is about y-axis.",
+          "consequence": "May misplace the neutral axis or use wrong moment of inertia formula."
+        },
+        {
+          "mistake": "Forgetting that Q is a function of z and plugging in a constant value",
+          "why_students_make_it": "Not recognizing that shear stress varies across the depth.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Always write Q as a function of the distance from the neutral axis before substituting into the formula.",
+          "consequence": "Incorrect stress distribution (constant or linear instead of parabolic)."
+        },
+        {
+          "mistake": "Mixing up bending stress and shear stress distributions",
+          "why_students_make_it": "Both are taught together; students may recall bending stress is linear and incorrectly apply it to shear.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Mnemonic: Bending stress is linear (like a line), shear stress is parabolic (like a parabola). Bending max at extremes, shear max at center.",
+          "consequence": "Choosing option A (linear) instead of B (parabolic)."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "PZS: Parabolic Zero at Surfaces (for rectangular beam shear stress)",
+          "concept": "Shear stress distribution shape and boundary conditions",
+          "effectiveness": "high",
+          "context": "Recall during exam when seeing rectangular cross-section shear problems."
+        },
+        {
+          "mnemonic": "Q = b/2 * (h^2/4 - z^2) for rectangle: think 'area times centroid distance'",
+          "concept": "First moment of area formula for rectangle",
+          "effectiveness": "medium",
+          "context": "When deriving shear stress from scratch."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "What is the general formula for shear stress τ in a beam?",
+          "back": "$\\tau = \\frac{V Q}{I b}$, where V = shear force, Q = first moment of area, I = second moment of area, b = width at the level.",
+          "difficulty": "easy",
+          "time_limit_seconds": 20
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "Where is shear stress zero and maximum in a rectangular beam?",
+          "back": "Zero at the top and bottom surfaces (z = ±h/2). Maximum at the neutral axis (z=0).",
+          "difficulty": "easy",
+          "time_limit_seconds": 15
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "What is the ratio of maximum shear stress to average shear stress in a rectangular section?",
+          "back": "$\\tau_{max} = \\frac{3}{2} \\tau_{avg}$. So maximum is 1.5 times average.",
+          "difficulty": "medium",
+          "time_limit_seconds": 20
+        },
+        {
+          "card_type": "application",
+          "front": "Given a rectangular beam with b=0.1m, h=0.2m, V=10kN, compute τ_max.",
+          "back": "$I = \\frac{b h^3}{12} = 6.667\\times10^{-5} m^4$, $\\tau_{max} = \\frac{3V}{2bh} = \\frac{3\\times10000}{2\\times0.1\\times0.2} = 0.75 MPa$.",
+          "difficulty": "medium",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "definition",
+          "front": "What is the shear correction factor K used for in strain energy due to shear?",
+          "back": "It accounts for non-uniform shear stress distribution across the cross-section when calculating shear strain energy. For rectangles, K ≈ 1.2.",
+          "difficulty": "hard",
+          "time_limit_seconds": 25
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Aircraft wing design",
+          "industry_example": "In a wing spar, shear forces from aerodynamic loads cause shear stresses. The rectangular spar cap (or web) must be checked for shear failure, especially near the root where shear is highest.",
+          "why_it_matters": "Underestimating shear stress can lead to catastrophic failure via shear buckling or yielding."
+        },
+        {
+          "application": "Bridge girders",
+          "industry_example": "Concrete or steel rectangular girders in bridges experience significant shear from traffic loads. The parabolic distribution influences where shear reinforcement (stirrups) is placed.",
+          "why_it_matters": "Proper shear design prevents sudden brittle failures."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "Quickly recognize rectangular cross-section → recall parabolic shear distribution → eliminate linear/constant options → verify zeros at top/bottom.",
+        "guessing_heuristic": "If unsure, remember: shear stress is zero at free surfaces, so options that are non-zero at z=±h/2 are wrong. Only B satisfies this.",
+        "time_management": "Spend no more than 2-3 minutes; it's a direct formula application."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "shear stress distribution rectangular beam",
+        "Euler Bernoulli beam shear stress",
+        "first moment of area Q rectangle",
+        "transverse shear stress formula",
+        "shear stress parabolic distribution",
+        "maximum shear stress neutral axis",
+        "beam shear stress VQ/Ib derivation",
+        "aircraft structures shear flow"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Shear flow integration (from elasticity)",
+          "description": "Start from equilibrium of a differential beam element and integrate the normal stress gradient to obtain shear stress distribution. More fundamental but lengthier.",
+          "pros_cons": "Pros: Derives from first principles, valid for any cross-section. Cons: More time-consuming, requires calculus.",
+          "when_to_use": "When deriving the shear formula for non-standard shapes or when the standard formula is not remembered."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "subject_name_1": "Mechanics of Materials",
+        "subject_name_2": "Structural Analysis",
+        "subject_name_3": "Aircraft Structures",
+        "subject_name_4": "Finite Element Analysis"
+      },
+      "deeper_dive_topics": [
+        "Shear center concept for thin-walled open sections",
+        "Shear lag effect in wide beams",
+        "Shear deformation in Timoshenko beam theory",
+        "Shear stress distribution in composite beams"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_AE_2007_Q54",
+        "year": 2007,
+        "marks": 2.0,
+        "negative_marks": 0.66,
+        "time_expected": "2-3 minutes",
+        "success_rate_estimate": "75%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 4: Structures",
+        "gate_subsection": "Bending and Shear of Beams",
+        "weightage": "~8-10%",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Well-aligned with core syllabus topic; tests fundamental understanding of shear stress distribution."
+      },
+      "rag_quality": {
+        "relevance_score": 0.8,
+        "chunks_used": 5,
+        "sources_distribution": {
+          "books": 1,
+          "videos": 4
+        },
+        "notes": "RAG chunks (1-4 and 6) provided excellent coverage of shear stress distribution in rectangular beams, including formulas, derivations, and physical intuition. Chunk 5 was about structural idealization and not directly relevant. The retrieved knowledge directly supported the solution."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-13T10:30:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Change cross-section to circular or I-section and ask for shear distribution",
+        "Ask for the shear stress at a specific point (e.g., at z = h/4)",
+        "Combine with bending stress to find principal stresses at a point",
+        "Given shear stress distribution, find the shear force or dimensions"
+      ]
+    },
+    "question_id": "GATE_AE_2007_Q54",
+    "year": 2007,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "MCQ",
+    "question_text": "An Euler-Bernoulli beam having a rectangular cross-section, as shown in the figure, is subjected to a non-uniform bending moment along its length. V_z = dM_y/dx. The shear stress distribution τ_{xz} across its cross-section is given by"
+  },
+  "tokens_used": 17095,
+  "input_tokens": 10947,
+  "output_tokens": 6148,
+  "cost": 0.01948497,
+  "time_seconds": 191.45770478248596
+}
