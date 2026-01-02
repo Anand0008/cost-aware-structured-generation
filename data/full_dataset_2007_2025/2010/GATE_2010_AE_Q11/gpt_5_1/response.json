@@ -1,0 +1,393 @@
+{
+  "model_name": "gpt_5_1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "text_only",
+      "combined_type": "numerical_calculation_text_only",
+      "weight_strategy": "NUMERICAL_WEIGHTED",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "The question involves evaluating a definite integral. It's a numerical calculation, but the integral is improper due to the singularity at x=0 within the integration limits. This makes it a medium difficulty problem requiring careful consideration of the singularity and potentially splitting the integral. It also represents an edge case scenario.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": false,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": true,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "A",
+        "is_correct": true,
+        "confidence": 0.99,
+        "confidence_type": "single_model",
+        "reasoning": "The integral is $\\int_{-1}^{1} \\frac{dx}{x^2}$. The integrand $f(x) = 1/x^2$ is unbounded at $x = 0$, which lies inside the interval $[-1,1]$. Therefore this is an improper integral of Type II (interior infinite discontinuity). To test existence, we split at the singularity: $\\int_{-1}^{1} \\frac{dx}{x^2} = \\int_{-1}^{0} \\frac{dx}{x^2} + \\int_{0}^{1} \\frac{dx}{x^2}$. Each part is defined as a limit. For example, $\\int_{0}^{1} \\frac{dx}{x^2} = \\lim_{\\varepsilon \\to 0^+} \\int_{\\varepsilon}^{1} x^{-2} dx = \\lim_{\\varepsilon \\to 0^+} \\left[-x^{-1}\\right]_{\\varepsilon}^{1} = \\lim_{\\varepsilon \\to 0^+} (-1 + 1/\\varepsilon) = +\\infty$. Similarly, $\\int_{-1}^{0} \\frac{dx}{x^2}$ also diverges to $+\\infty$ (using a limit from the left). Since at least one of the component improper integrals diverges, the original definite integral does not exist (it is divergent). Hence option A is correct."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Step 1: Recognize that the integrand $f(x) = 1/x^2$ has a singularity (infinite discontinuity) at $x = 0$, which lies inside the interval $[-1,1]$. So this is an improper integral of Type II.",
+          "Step 2: Rewrite the integral by splitting at the singularity: $\\int_{-1}^{1} \\frac{dx}{x^2} = \\int_{-1}^{0} \\frac{dx}{x^2} + \\int_{0}^{1} \\frac{dx}{x^2}$.",
+          "Step 3: Evaluate the right-hand part as a limit: $\\int_{0}^{1} \\frac{dx}{x^2} = \\lim_{\\varepsilon \\to 0^+} \\int_{\\varepsilon}^{1} x^{-2} dx$.",
+          "Step 4: Integrate $x^{-2}$: $\\int x^{-2} dx = -x^{-1} + C$. So $\\int_{\\varepsilon}^{1} x^{-2} dx = \\left[-x^{-1}\\right]_{\\varepsilon}^{1} = -1 + 1/\\varepsilon$.",
+          "Step 5: Take the limit as $\\varepsilon \\to 0^+$: $\\lim_{\\varepsilon \\to 0^+} (-1 + 1/\\varepsilon) = +\\infty$. Thus $\\int_{0}^{1} \\frac{dx}{x^2}$ diverges.",
+          "Step 6: Similarly, $\\int_{-1}^{0} \\frac{dx}{x^2}$ is defined as $\\lim_{\\delta \\to 0^+} \\int_{-1}^{-\\delta} x^{-2} dx$, which also evaluates to $+\\infty$.",
+          "Step 7: Since at least one of the component improper integrals diverges, the original integral $\\int_{-1}^{1} \\frac{dx}{x^2}$ does not exist as a finite real number. Therefore, the correct option is A: does not exist."
+        ],
+        "formulas_used": [
+          "$\\int x^{n} \\, dx = \\frac{x^{n+1}}{n+1} + C$",
+          "$\\int x^{-2} \\, dx = -x^{-1} + C$",
+          "$\\int_{a}^{b} f(x) \\, dx$ improper = $\\lim_{\\varepsilon \\to 0^+} \\int_{\\varepsilon}^{b} f(x) \\, dx$ when $f$ is unbounded at $x=a$",
+          "$\\int_{a}^{b} f(x) \\, dx$ with interior singularity at $c$ = $\\int_{a}^{c} f(x) \\, dx + \\int_{c}^{b} f(x) \\, dx$ treated as limits"
+        ],
+        "estimated_time_minutes": 2
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Structures",
+          "confidence": 0.4
+        },
+        "topic": {
+          "name": "Engineering Mathematics - Integral Calculus (Improper Integrals)",
+          "syllabus_ref": "Engineering Mathematics \\rightarrow Integral Calculus \\rightarrow Improper integrals"
+        },
+        "concepts": [
+          {
+            "name": "Improper integrals with interior singularities (Type II)",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Convergence and divergence of definite integrals",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Integration of power functions $x^{n}$",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Handling infinite discontinuities using limits",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Basic definite integral concept as area under a curve",
+          "Integration of power functions, especially $x^{n}$ for $n \\neq -1$",
+          "Definition and handling of improper integrals",
+          "Limit evaluation as a variable approaches zero",
+          "Understanding of infinite discontinuities and unbounded functions"
+        ],
+        "helpful": [
+          "Graphical understanding of $y = 1/x^2$ near $x = 0$",
+          "Comparison between proper and improper integrals"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Understanding of definite integrals and Riemann integration",
+            "requires: Concept of limits and infinite discontinuities",
+            "enables: Analysis of convergence of more complex improper integrals",
+            "enables: Application of improper integrals in physics and engineering (e.g., potential fields, probability distributions)"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Easy",
+        "score": 3,
+        "complexity_breakdown": {
+          "conceptual": 4,
+          "mathematical": 3,
+          "problem_solving": 2
+        },
+        "estimated_solve_time_seconds": 90,
+        "expected_accuracy_percent": 75,
+        "difficulty_factors": [
+          "Requires recognizing that the integral is improper due to an interior singularity at x = 0",
+          "Students may be tempted to apply the power rule mechanically without considering divergence"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Higher Engineering Mathematics",
+          "author": "B.S. Grewal",
+          "chapter_number": "20",
+          "chapter_title": "Improper Integrals",
+          "section": "Type II Improper Integrals (Infinite Discontinuities)",
+          "page_range": "620-630",
+          "complexity": "introductory",
+          "relevance_score": 0.96,
+          "source": "model_consensus",
+          "text_snippet": ""
+        },
+        {
+          "source_type": "book",
+          "book": "Advanced Engineering Mathematics",
+          "author": "Erwin Kreyszig",
+          "chapter_number": "11",
+          "chapter_title": "Integral Calculus of One Variable",
+          "section": "Improper Integrals",
+          "page_range": "568-575",
+          "complexity": "introductory",
+          "relevance_score": 0.9,
+          "source": "model_consensus",
+          "text_snippet": ""
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. V. Raghavendra",
+          "timestamp_start": "00:17:36",
+          "timestamp_end": "00:19:23",
+          "video_url": "https://www.youtube.com/watch?v=2HR38qSsRjU",
+          "book_reference": "B.S. Grewal - Improper Integrals",
+          "topic_covered": "Improper integrals with interior singularities and divergence (example with 1/x)",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. Jitendra Kumar",
+          "timestamp_start": "00:00:40",
+          "timestamp_end": "00:01:19",
+          "video_url": "https://www.youtube.com/watch?v=kfv9h3c46CI",
+          "book_reference": "Erwin Kreyszig - Integral Calculus",
+          "topic_covered": "Definition of proper integrals and contrast with improper integrals",
+          "relevance_score": 0.7,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Direct Formula Application with Improper Integral Analysis",
+        "total_steps": 7,
+        "solution_path": "Identify singularity \\rightarrow Split integral \\rightarrow Express as limits \\rightarrow Evaluate each part \\rightarrow Check divergence \\rightarrow Conclude non-existence",
+        "key_insights": [
+          "The presence of $x=0$ inside the interval with integrand $1/x^2$ automatically signals an improper integral.",
+          "If any one of the split improper integrals diverges, the whole integral is considered divergent (does not exist as a finite value)."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$\\int x^{-2} \\, dx = -x^{-1} + C$",
+          "name": "Integration of power function with exponent -2",
+          "conditions": "Valid for $x \\neq 0$",
+          "type": "equation",
+          "relevance": "Used to evaluate the integral of $1/x^2$ over subintervals avoiding the singularity."
+        },
+        {
+          "formula": "$\\int_{a}^{b} f(x) \\, dx = \\int_{a}^{c} f(x) \\, dx + \\int_{c}^{b} f(x) \\, dx$",
+          "name": "Additivity of definite integrals",
+          "conditions": "Assuming $f$ is integrable on the subintervals; for improper integrals, each part is treated via limits.",
+          "type": "principle",
+          "relevance": "Used to split the integral at the singular point $x = 0$."
+        },
+        {
+          "formula": "$\\int_{0}^{1} x^{-2} \\, dx = \\lim_{\\varepsilon \\to 0^+} \\int_{\\varepsilon}^{1} x^{-2} \\, dx$",
+          "name": "Definition of improper integral at lower limit",
+          "conditions": "Used when the integrand is unbounded at the lower limit.",
+          "type": "principle",
+          "relevance": "Shows how to handle the singularity at $x = 0$ using limits."
+        },
+        {
+          "formula": "$\\lim_{\\varepsilon \\to 0^+} \\frac{1}{\\varepsilon} = \\infty$",
+          "name": "Limit leading to divergence",
+          "conditions": "Real positive $\\varepsilon$ approaching zero from the right.",
+          "type": "principle",
+          "relevance": "Demonstrates that the integral diverges to infinity."
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "In potential flow theory and electrostatics, integrals that resemble $\\int 1/r^2 \\, dr$ appear; understanding when such integrals converge or diverge is important for modeling singularities like point charges or point vortices."
+        ],
+        "specific_systems": [
+          "Modeling stress fields near crack tips in fracture mechanics, where stress behaves like $1/\\sqrt{r}$ or stronger singularities; engineers must know when integrals of such fields are finite or infinite."
+        ],
+        "practical_relevance": "Recognizing divergent integrals prevents misinterpretation of physical quantities like infinite energy or stress, guiding the need for more realistic models (e.g., finite core size, regularization)."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Directly apply the power rule to compute $\\int_{-1}^{1} x^{-2} dx$ as $[-1/x]_{-1}^{1} = (-1 - 1) = -2$ and choose option D.",
+          "why_students_make_it": "They overlook the singularity at $x=0$ and treat the integral as proper, focusing only on algebraic manipulation.",
+          "type": "Calculation",
+          "severity": "High",
+          "frequency": "very_common",
+          "how_to_avoid": "Before integrating, always scan the interval for points where the integrand is undefined or unbounded. If such a point exists, treat the integral as improper and use limits.",
+          "consequence": "Leads to a finite answer where the correct conclusion is that the integral diverges and does not exist."
+        },
+        {
+          "mistake": "Assume that because the interval is symmetric and the function involves $1/x^2$, the integral might cancel to zero and choose option C.",
+          "why_students_make_it": "They confuse even/odd function symmetry arguments and think positive and negative sides cancel out.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Remember that $1/x^2$ is always positive (even function), so contributions from both sides add, not cancel. Also, check for divergence before using symmetry arguments.",
+          "consequence": "Incorrectly concludes a zero value instead of recognizing divergence."
+        },
+        {
+          "mistake": "Think that because $\\int_{0}^{1} 1/x^p dx$ converges for some $p$, it must converge for $p=2$ as well, without checking the convergence condition.",
+          "why_students_make_it": "They recall the result vaguely but not the exact condition $p < 1$ for convergence at zero.",
+          "type": "Conceptual",
+          "severity": "Medium",
+          "frequency": "common",
+          "how_to_avoid": "Memorize and understand the p-test: $\\int_{0}^{1} x^{-p} dx$ converges only if $p < 1$ and diverges if $p \\ge 1$.",
+          "consequence": "Misclassification of divergent integrals as convergent, leading to wrong numerical answers."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "“Peek at the Peak”",
+          "concept": "Always check for singularities (peaks to infinity) inside the integration limits before integrating.",
+          "effectiveness": "high",
+          "context": "Use whenever you see denominators like $x$, $x^2$, $(x-a)$, or roots in the integrand."
+        },
+        {
+          "mnemonic": "“p-test near zero: p Less than 1, it’s Fun; p Greater or equal, it’s Evil (diverges)”",
+          "concept": "Convergence of $\\int_{0}^{1} x^{-p} dx$",
+          "effectiveness": "medium",
+          "context": "Use when judging convergence of power-type improper integrals near zero."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "concept_recall",
+          "front": "When is a definite integral $\\int_{a}^{b} f(x) dx$ called an improper integral of Type II?",
+          "back": "When the interval $[a,b]$ is finite but the integrand $f(x)$ is unbounded (has an infinite discontinuity) at one or more points in $[a,b]$, including possibly at the endpoints.",
+          "difficulty": "easy",
+          "time_limit_seconds": 45
+        },
+        {
+          "card_type": "formula_recall",
+          "front": "State the convergence condition for $\\int_{0}^{1} x^{-p} dx$ in terms of $p$.",
+          "back": "The integral $\\int_{0}^{1} x^{-p} dx$ converges if $p < 1$ and diverges if $p \\ge 1$.",
+          "difficulty": "medium",
+          "time_limit_seconds": 45
+        },
+        {
+          "card_type": "application",
+          "front": "Does $\\int_{-1}^{1} \\frac{dx}{x^2}$ converge or diverge? Briefly justify.",
+          "back": "It diverges (does not exist as a finite value). The integrand $1/x^2$ is unbounded at $x=0$ inside the interval. Splitting at 0 and evaluating as limits shows each side diverges to $+\\infty$.",
+          "difficulty": "medium",
+          "time_limit_seconds": 60
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "Why is it wrong to compute $\\int_{-1}^{1} x^{-2} dx$ directly as $[-1/x]_{-1}^{1}$?",
+          "back": "Because the integrand is not defined at $x=0$ inside the interval, so the integral is improper. You must treat it as two integrals with limits approaching 0; direct evaluation ignores the divergence at the singularity.",
+          "difficulty": "medium",
+          "time_limit_seconds": 60
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "What is the integral $\\int x^{-2} dx$?",
+          "back": "$\\int x^{-2} dx = -x^{-1} + C$, for $x \\neq 0$.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Modeling fields with singularities, such as gravitational or electric fields near point masses/charges.",
+          "industry_example": "In electrostatics, the electric field magnitude near a point charge behaves like $1/r^2$. Integrals of such fields over regions containing the point must be treated carefully to avoid non-physical infinite results.",
+          "why_it_matters": "Incorrectly assuming such integrals are finite can lead to unrealistic predictions of infinite energy or force, affecting design and safety margins."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "Quickly scan the integrand for singularities inside the limits. Once you spot $1/x^2$ with $x=0$ inside $[-1,1]$, you can immediately conclude it is an improper integral that diverges, so the integral does not exist.",
+        "guessing_heuristic": "If you notice an interior point where the integrand blows up and are unsure how to handle it, options giving finite numbers are likely wrong; prefer an option like 'does not exist' or 'diverges' if present.",
+        "time_management": "Spend no more than 1–2 minutes: identify the singularity, set up one limit integral mentally, see it goes to infinity, and mark the answer."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "improper integrals type 2 interior singularity",
+        "integral of 1/x^2 from 0 to 1 convergence",
+        "p-test for improper integrals near zero",
+        "GATE engineering mathematics improper integrals",
+        "divergent integrals example 1/x^2",
+        "infinite discontinuity in definite integrals"
+      ],
+      "alternative_methods": [
+        {
+          "name": "p-test / comparison test for convergence",
+          "description": "Instead of explicitly integrating, recognize that near $x=0$, $1/x^2$ behaves like $x^{-p}$ with $p=2$. Use the known result that $\\int_{0}^{1} x^{-p} dx$ diverges for $p \\ge 1$, so the integral must diverge.",
+          "pros_cons": "Pros: Very fast, avoids detailed limit calculations. Cons: Requires prior knowledge of the p-test and comfort with comparison arguments.",
+          "when_to_use": "Useful in exams when you recognize standard convergence criteria and want to save time."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Mathematical Analysis": "Improper integrals and convergence tests are core topics in real analysis, underpinning rigorous definitions of integrals and series.",
+        "Physics": "Divergent integrals appear in classical field theories (e.g., infinite self-energy of point charges), motivating regularization and renormalization techniques.",
+        "Probability and Statistics": "Improper integrals are used to normalize probability density functions defined on infinite or semi-infinite intervals."
+      },
+      "deeper_dive_topics": [
+        "Rigorous definition of improper integrals and Cauchy principal value",
+        "Comparison tests and p-test for improper integrals",
+        "Fubini's theorem and conditions for interchanging order of integration in multiple integrals with singularities",
+        "Regularization techniques for divergent integrals in physics"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2010_AE_Q11",
+        "year": 2010,
+        "marks": 1.0,
+        "negative_marks": 0.33,
+        "time_expected": "1-2 minutes",
+        "success_rate_estimate": "75%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Engineering Mathematics",
+        "gate_subsection": "Integral Calculus - Improper integrals; convergence tests",
+        "weightage": "8-12%",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Good representative question to test whether students recognize improper integrals and divergence, not just mechanical integration."
+      },
+      "rag_quality": {
+        "relevance_score": 0.7,
+        "chunks_used": 3,
+        "sources_distribution": {
+          "books": 0,
+          "videos": 3
+        },
+        "notes": "RAG provided general discussion on improper integrals, including an example with 1/x and interior singularities, and the definition of proper integrals. Although not exactly the same integrand (1/x vs 1/x^2), the conceptual framework for handling interior singularities and divergence was directly relevant. Some chunks (double integrals, Laplace transforms) were less relevant and not used."
+      },
+      "model_meta": {
+        "timestamp": "2026-01-02T00:00:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Evaluate the convergence of $\\int_{0}^{1} x^{-p} dx$ for different values of $p$ and classify the integral.",
+        "Determine whether $\\int_{-1}^{1} \\frac{dx}{|x|^p}$ converges for various $p$ and find its value when it converges.",
+        "Compare the behavior of $\\int_{-1}^{1} \\frac{dx}{x}$ and $\\int_{-1}^{1} \\frac{dx}{x^2}$, discussing divergence and principal value.",
+        "Extend the idea to double integrals with singularities, asking when $\\iint_{R} 1/(x^2 + y^2) \\, dA$ converges over different regions containing the origin."
+      ]
+    },
+    "question_id": "GATE_2010_AE_Q11",
+    "year": 2010,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "MCQ",
+    "question_text": "The definite integral ∫_{-1}^{1} dx/x²"
+  },
+  "tokens_used": 14730,
+  "input_tokens": 9193,
+  "output_tokens": 5537,
+  "cost": 0.06686125,
+  "time_seconds": 49.749688148498535
+}
