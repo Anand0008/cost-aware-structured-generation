@@ -1,0 +1,419 @@
+{
+  "model_name": "gpt_5_1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "text_only",
+      "combined_type": "numerical_calculation_text_only",
+      "weight_strategy": "NUMERICAL_WEIGHTED",
+      "classification_confidence": 0.95,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "This is a numerical calculation problem involving axial compressor stage efficiency and blade angles to find the stagnation pressure ratio. It requires multiple steps and integration of concepts from thermodynamics and fluid mechanics, making it a medium-hard problem.",
+      "difficulty_score": 6,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": true,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": true,
+        "approximation_needed": false
+      },
+      "use_gpt51": true
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "D",
+        "is_correct": true,
+        "confidence": 0.96,
+        "confidence_type": "single_model",
+        "reasoning": "1) Compute specific work from rotor velocity triangles using constant axial velocity.\nGiven: blade speed u = 200 m/s, axial velocity c_a = 160 m/s, inlet relative angle \\(\\beta_1 = 44^\\circ\\), outlet relative angle \\(\\beta_2 = 14^\\circ\\).\n\\(\\tan \\beta_1 = \\tan 44^\\circ \\approx 0.9657\\), \\(\\tan \\beta_2 = \\tan 14^\\circ \\approx 0.2493\\).\nWork per unit mass for an axial compressor stage (Euler + triangles):\n\\(w = u \\, c_a (\\tan \\beta_1 - \\tan \\beta_2)\\).\nSo \\(w = 200 \\times 160 \\times (0.9657 - 0.2493) \\approx 200 \\times 160 \\times 0.7164 \\approx 22924\\,\\text{J/kg} \\approx 2.29 \\times 10^4\\,\\text{J/kg}.\\)\n\n2) Convert work to stagnation temperature rise using \\(w = C_p \\Delta T_0\\):\n\\(\\Delta T_0 = w / C_p \\approx 22924 / 1005 \\approx 22.8\\,\\text{K}.\\)\nSo ideal (Euler) stagnation temperature rise across the stage is about 22.8 K.\n\n3) Relate actual and isentropic temperature rises using stage efficiency.\nStage efficiency for a compressor: \\(\\eta_s = \\dfrac{\\Delta T_{0,\\text{is}}}{\\Delta T_{0,\\text{actual}}}\\).\nGiven \\(\\eta_s = 0.80\\) and \\(\\Delta T_{0,\\text{actual}} = 22.8\\,\\text{K}\\),\n\\(\\Delta T_{0,\\text{is}} = \\eta_s \\Delta T_{0,\\text{actual}} = 0.8 \\times 22.8 \\approx 18.24\\,\\text{K}.\\)\nInlet stagnation temperature \\(T_{01} = 300\\,\\text{K}\\), so isentropic exit stagnation temperature:\n\\(T_{03s} = 300 + 18.24 = 318.24\\,\\text{K}.\\)\n\n4) Use isentropic relation between stagnation pressure ratio and stagnation temperature ratio for a compressor:\n\\(\\dfrac{p_{03}}{p_{01}} = \\left( \\dfrac{T_{03s}}{T_{01}} \\right)^{\\tfrac{\\gamma}{\\gamma-1}}\\), with \\(\\gamma = 1.4\\), so exponent \\(\\gamma/(\\gamma-1) = 3.5\\).\n\\(T_{03s}/T_{01} = 318.24/300 \\approx 1.0608.\\)\nThus \\(p_{03}/p_{01} = (1.0608)^{3.5}.\\)\nCompute: \\(\\ln(1.0608) \\approx 0.0590\\), \\(3.5 \\times 0.0590 \\approx 0.2065\\), \\(e^{0.2065} \\approx 1.229\\), i.e. \\(p_{03}/p_{01} \\approx 1.23.\\)\nThis matches option D (1.23). The other options are significantly different, confirming D as correct."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Identify that we must first find the stage work from the rotor velocity triangles, then convert to stagnation temperature rise, then to stagnation pressure ratio using efficiency and isentropic relations.",
+          "Use the axial compressor work expression for constant axial velocity: $w = u \\, c_a (\\tan \\beta_1 - \\tan \\beta_2)$ to compute specific work input per kg of air.",
+          "Convert this work to stagnation temperature rise using $w = C_p \\Delta T_0$ to obtain $\\Delta T_0$ across the stage.",
+          "Relate stage efficiency to isentropic temperature rise: $\\eta_s = \\Delta T_{0,\\text{is}} / \\Delta T_{0,\\text{actual}}$ to find $\\Delta T_{0,\\text{is}}$ and hence $T_{03s}$. ",
+          "Apply the isentropic compressible relation between stagnation pressure and temperature for a compressor: $p_{03}/p_{01} = (T_{03s}/T_{01})^{\\gamma/(\\gamma-1)}$ with $\\gamma = 1.4$.",
+          "Evaluate the numerical value of the exponent and the power to obtain the stagnation pressure ratio and match it to the closest option."
+        ],
+        "formulas_used": [
+          "$w = u \\, c_a (\\tan \\beta_1 - \\tan \\beta_2)$",
+          "$w = C_p \\, \\Delta T_0$",
+          "$\\eta_s = \\dfrac{\\Delta T_{0,\\text{is}}}{\\Delta T_{0,\\text{actual}}}$",
+          "$T_{03s} = T_{01} + \\Delta T_{0,\\text{is}}$",
+          "$\\dfrac{p_{03}}{p_{01}} = \\left( \\dfrac{T_{03s}}{T_{01}} \\right)^{\\tfrac{\\gamma}{\\gamma - 1}}$"
+        ],
+        "estimated_time_minutes": 3
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Propulsion",
+          "confidence": 0.99
+        },
+        "topic": {
+          "name": "Axial flow compressors and turbines",
+          "syllabus_ref": "Propulsion -> Gas turbine engines -> Axial flow compressor performance"
+        },
+        "concepts": [
+          {
+            "name": "Axial compressor stage work from velocity triangles",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Stagnation temperature rise and specific work",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Compressor stage (isentropic) efficiency",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Isentropic relation between stagnation pressure and temperature",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Gas properties (Cp, gamma) for air",
+            "importance": "tertiary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Euler turbomachinery equation and axial compressor velocity triangles",
+          "Definition of stagnation temperature and stagnation pressure",
+          "Isentropic relations for perfect gases",
+          "Compressor stage efficiency (isentropic efficiency definition)",
+          "Basic trigonometry (tangent of angles)",
+          "Energy equation relating work and temperature rise ($w = C_p \\Delta T_0$)"
+        ],
+        "helpful": [
+          "Physical interpretation of degree of reaction and blade angles",
+          "Understanding of axial flow compressor stage design assumptions (constant axial velocity)"
+        ],
+        "dependency_tree": {
+          "Main Concept": [
+            "requires: Euler turbomachinery equation for compressors",
+            "requires: Isentropic flow relations for perfect gases",
+            "requires: Definition of compressor stage efficiency",
+            "enables: Design and performance prediction of multi-stage axial compressors",
+            "enables: Matching compressor maps with turbine and nozzle performance in gas turbine engines"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Medium",
+        "score": 5,
+        "complexity_breakdown": {
+          "conceptual": 5,
+          "mathematical": 5,
+          "problem_solving": 5
+        },
+        "estimated_solve_time_seconds": 150,
+        "expected_accuracy_percent": 60,
+        "difficulty_factors": [
+          "Requires recalling the correct work expression $w = u c_a (\\tan \\beta_1 - \\tan \\beta_2)$ from velocity triangles",
+          "Needs correct interpretation of stage efficiency definition for a compressor",
+          "Involves exponentiation with non-integer exponent 3.5, which can cause numerical slips without a calculator"
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Gas Turbines",
+          "author": "V. Ganesan",
+          "chapter_number": "9",
+          "chapter_title": "Axial Flow Compressors",
+          "section": "Stage work, efficiency and pressure ratio",
+          "page_range": "Approx. 260-285",
+          "complexity": "intermediate",
+          "relevance_score": 0.95,
+          "source": "rag_retrieval",
+          "text_snippet": "The stage pressure ratio of an axial flow compressor is derived from the stagnation temperature rise across the stage and the isentropic efficiency. The work done per unit mass is related to the blade speed and flow angles through the velocity triangles."
+        },
+        {
+          "source_type": "book",
+          "book": "Fundamentals of Aerodynamics",
+          "author": "John D. Anderson",
+          "chapter_number": "13",
+          "chapter_title": "Axial-Flow Compressors and Turbines",
+          "section": "Axial-flow compressor stage analysis",
+          "page_range": "Approx. 785-820",
+          "complexity": "intermediate",
+          "relevance_score": 0.9,
+          "source": "model_consensus",
+          "text_snippet": "The specific work input to an axial-flow compressor stage is given by the Euler turbomachinery equation and can be expressed in terms of blade speed, axial velocity, and flow angles."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. A. Sameen",
+          "timestamp_start": "00:06:43",
+          "timestamp_end": "00:11:40",
+          "video_url": "https://www.youtube.com/watch?v=B6sN0pXL9eg",
+          "book_reference": "Anderson - Fundamentals of Aerodynamics",
+          "topic_covered": "Stagnation temperature rise, stage pressure ratio, and power required in axial compressors",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. A. Sameen",
+          "timestamp_start": "00:11:40",
+          "timestamp_end": "00:17:10",
+          "video_url": "https://www.youtube.com/watch?v=B6sN0pXL9eg",
+          "book_reference": "Anderson - Fundamentals of Aerodynamics",
+          "topic_covered": "Rotor blade angles, degree of reaction, and velocity triangles in axial compressors",
+          "relevance_score": 0.85,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Direct Formula Application",
+        "total_steps": 6,
+        "solution_path": "Velocity triangles \\rightarrow Stage work \\rightarrow Stagnation temperature rise \\rightarrow Isentropic temperature rise via efficiency \\rightarrow Stagnation pressure ratio via isentropic relation",
+        "key_insights": [
+          "The given blade angles and velocities are at mean radius and allow direct use of $w = u c_a (\\tan \\beta_1 - \\tan \\beta_2)$.",
+          "Stage efficiency for a compressor relates isentropic and actual stagnation temperature rises, not pressures directly.",
+          "Using the isentropic exit stagnation temperature in the perfect-gas relation yields the stagnation pressure ratio."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$w = u \\, c_a (\\tan \\beta_1 - \\tan \\beta_2)$",
+          "name": "Axial compressor stage work from velocity triangles",
+          "conditions": "Applies for an axial compressor stage with constant axial velocity and given relative flow angles at rotor inlet and outlet.",
+          "type": "equation",
+          "relevance": "Core formula to compute specific work input from blade kinematics."
+        },
+        {
+          "formula": "$w = C_p \\, \\Delta T_0$",
+          "name": "Work-stagnation temperature relation",
+          "conditions": "Steady flow of a perfect gas with negligible changes in kinetic energy of the frame and no shaft work other than compressor work.",
+          "type": "equation",
+          "relevance": "Converts mechanical work per unit mass into stagnation temperature rise."
+        },
+        {
+          "formula": "$\\eta_s = \\dfrac{\\Delta T_{0,\\text{is}}}{\\Delta T_{0,\\text{actual}}}$",
+          "name": "Compressor stage isentropic efficiency (temperature-based)",
+          "conditions": "Used for compressors where stagnation temperature rise is known; assumes same inlet stagnation state for actual and isentropic processes.",
+          "type": "equation",
+          "relevance": "Relates actual and isentropic temperature rises to account for irreversibilities."
+        },
+        {
+          "formula": "$\\dfrac{p_{03}}{p_{01}} = \\left( \\dfrac{T_{03s}}{T_{01}} \\right)^{\\tfrac{\\gamma}{\\gamma - 1}}$",
+          "name": "Isentropic stagnation pressure-temperature relation for a compressor",
+          "conditions": "Applies to isentropic compression of a perfect gas with constant specific heats.",
+          "type": "equation",
+          "relevance": "Final step to convert isentropic temperature ratio into stagnation pressure ratio."
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Preliminary design of high-pressure compressor stages in turbofan engines such as the CFM56 or GE90, where stage work and pressure ratio must be matched to overall engine cycle requirements.",
+          "Performance analysis and troubleshooting of industrial gas turbine compressors used in power plants, where measured blade angles and speeds are used to estimate stage pressure ratios."
+        ],
+        "specific_systems": [
+          "High-pressure compressor of a modern turbofan engine powering commercial airliners.",
+          "Axial compressors in aero-derivative gas turbines for offshore power generation."
+        ],
+        "practical_relevance": "Accurate prediction of stage pressure ratio from blade kinematics and efficiency is critical for ensuring that the compressor delivers the required overall pressure ratio without surge or stall, directly affecting engine thrust, efficiency, and stability."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Using $w = u (c_{w2} - c_{w1})$ without converting the given blade angles and axial velocity into tangential components, or using wrong sign convention.",
+          "why_students_make_it": "They remember the Euler equation but are not comfortable with velocity triangles, so they skip the geometric step.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Always sketch the velocity triangles and express $c_{w1}$ and $c_{w2}$ in terms of $c_a$, $u$, and the given angles before applying Euler.",
+          "consequence": "Leads to incorrect work value and hence a completely wrong pressure ratio."
+        },
+        {
+          "mistake": "Misinterpreting stage efficiency as $\\eta_s = \\Delta T_{0,\\text{actual}}/\\Delta T_{0,\\text{is}}$ for a compressor instead of the inverse.",
+          "why_students_make_it": "They confuse compressor and turbine efficiency definitions, which are reciprocals in terms of temperature ratios.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Remember: compressors consume work, so actual temperature rise is larger than isentropic; therefore $\\eta_s < 1$ implies $\\Delta T_{0,\\text{is}} < \\Delta T_{0,\\text{actual}}$.",
+          "consequence": "Gives an isentropic temperature rise larger than actual, leading to an overestimated pressure ratio."
+        },
+        {
+          "mistake": "Using the actual exit stagnation temperature (300 + 22.8 K) directly in the isentropic relation for pressure ratio instead of the isentropic exit temperature.",
+          "why_students_make_it": "They skip the intermediate step of finding $\\Delta T_{0,\\text{is}}$ and think the given efficiency is already accounted for.",
+          "type": "Calculation",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Explicitly compute $\\Delta T_{0,\\text{is}} = \\eta_s \\Delta T_{0,\\text{actual}}$ before using the pressure-temperature relation.",
+          "consequence": "Overestimates the pressure ratio by a noticeable margin, leading to selection of a wrong option."
+        },
+        {
+          "mistake": "Numerical error in evaluating $(T_{03s}/T_{01})^{3.5}$, especially without a calculator.",
+          "why_students_make_it": "Exponentiation with non-integer exponents is error-prone under time pressure.",
+          "type": "Calculation",
+          "severity": "Medium",
+          "frequency": "common",
+          "how_to_avoid": "Approximate using logarithms or binomial expansion: for small $x$, $(1+x)^n \\approx 1 + nx$ when $x$ is small.",
+          "consequence": "Can shift the answer towards a nearby but incorrect option (e.g., 1.23 vs 1.37)."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "For Compressors: Cool Ideal, Hot Actual (CIHA)",
+          "concept": "Direction of temperature rise and efficiency definition in compressors: isentropic (ideal) temperature rise is smaller than actual.",
+          "effectiveness": "high",
+          "context": "Use when recalling $\\eta_s = \\Delta T_{0,\\text{is}}/\\Delta T_{0,\\text{actual}}$ for compressors."
+        },
+        {
+          "mnemonic": "Work in Axial Compressor: UCA (u * c_a * angle-difference)",
+          "concept": "Stage work formula $w = u c_a (\\tan \\beta_1 - \\tan \\beta_2)$.",
+          "effectiveness": "medium",
+          "context": "Use when you see axial compressor with given $u$, $c_a$, and blade angles."
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "What is the expression for specific work input per kg in an axial compressor stage with constant axial velocity in terms of $u$, $c_a$, $\\beta_1$, and $\\beta_2$?",
+          "back": "The specific work is $w = u \\, c_a (\\tan \\beta_1 - \\tan \\beta_2)$, derived from the Euler turbomachinery equation and rotor velocity triangles.",
+          "difficulty": "medium",
+          "time_limit_seconds": 45
+        },
+        {
+          "card_type": "definition",
+          "front": "Define compressor stage isentropic efficiency in terms of stagnation temperature rise.",
+          "back": "For a compressor stage, $\\eta_s = \\dfrac{\\Delta T_{0,\\text{is}}}{\\Delta T_{0,\\text{actual}}}$, where $\\Delta T_{0,\\text{is}}$ is the isentropic stagnation temperature rise and $\\Delta T_{0,\\text{actual}}$ is the actual stagnation temperature rise.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "Why do we use the isentropic exit stagnation temperature, not the actual, in the formula $p_{03}/p_{01} = (T_{03}/T_{01})^{\\gamma/(\\gamma-1)}$?",
+          "back": "Because that relation is derived for an isentropic process. To account for irreversibilities, we first find the isentropic exit temperature using efficiency, then apply the isentropic relation to get the pressure ratio.",
+          "difficulty": "medium",
+          "time_limit_seconds": 45
+        },
+        {
+          "card_type": "application",
+          "front": "Air enters an axial compressor stage at $T_{01}=300$ K. If $\\Delta T_{0,\\text{actual}}=25$ K and $\\eta_s=0.8$, find $T_{03s}$.",
+          "back": "First, $\\Delta T_{0,\\text{is}} = \\eta_s \\Delta T_{0,\\text{actual}} = 0.8 \\times 25 = 20$ K. Then $T_{03s} = 300 + 20 = 320$ K.",
+          "difficulty": "easy",
+          "time_limit_seconds": 45
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "In a compressor, is $\\Delta T_{0,\\text{actual}}$ larger or smaller than $\\Delta T_{0,\\text{is}}$? What does this imply about efficiency?",
+          "back": "In a compressor, $\\Delta T_{0,\\text{actual}}$ is larger than $\\Delta T_{0,\\text{is}}$ because of irreversibilities. Therefore, $\\eta_s = \\Delta T_{0,\\text{is}}/\\Delta T_{0,\\text{actual}} < 1$.",
+          "difficulty": "easy",
+          "time_limit_seconds": 30
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Design of compressor stages in aircraft gas turbine engines",
+          "industry_example": "In a high-pressure compressor of a turbofan, each stage may have a pressure ratio around 1.2–1.4. Designers use blade angles and speeds to achieve the desired stage work and pressure ratio while maintaining efficiency.",
+          "why_it_matters": "If the stage pressure ratio is mispredicted, the overall compressor may not reach the required total pressure ratio, leading to reduced thrust, higher fuel consumption, or compressor surge."
+        },
+        {
+          "application": "Performance testing of industrial gas turbine compressors",
+          "industry_example": "During commissioning of a 100 MW gas turbine, measured blade speeds and flow angles are compared with design values to verify that each stage delivers the expected pressure rise.",
+          "why_it_matters": "Incorrect stage performance can cause off-design operation, vibration, and reduced life of compressor components."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "Scan for given $u$, $c_a$, and blade angles: this signals a direct plug-in to the stage work formula, followed by a standard efficiency and isentropic relation step. If you recall these formulas, it is a quick 2–3 minute calculation.",
+        "guessing_heuristic": "If stuck, estimate $\\Delta T_0$ from work and apply a rough $(1+x)^{3.5} \\approx 1 + 3.5x$ with $x = \\Delta T_{0,\\text{is}}/T_{01}$; eliminate options that are too high or too low.",
+        "time_management": "Allocate about 2–3 minutes. Do the velocity triangle and work calculation quickly; avoid over-precise trigonometric values—2–3 significant figures are enough to identify the correct option."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "axial flow compressor stage work formula",
+        "Euler turbomachinery equation compressor",
+        "axial compressor velocity triangles beta1 beta2",
+        "compressor stage isentropic efficiency temperature definition",
+        "stagnation pressure ratio from temperature ratio",
+        "Ganesan Gas Turbines axial compressor example",
+        "Anderson axial-flow compressor analysis"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Full velocity triangle via tangential components",
+          "description": "Instead of using $w = u c_a (\\tan \\beta_1 - \\tan \\beta_2)$ directly, first compute absolute tangential components $c_{w1}$ and $c_{w2}$ from the velocity triangles using $c_a$, $u$, and $\\beta_1$, $\\beta_2$, then apply the Euler equation $w = u (c_{w2} - c_{w1})$.",
+          "pros_cons": "Pros: Reinforces understanding of velocity triangles and sign conventions; more general and can be adapted to non-axial inlet conditions. Cons: Slightly longer and more algebraic, increasing chance of sign or trigonometric errors.",
+          "when_to_use": "Useful when the simple $u c_a (\\tan \\beta_1 - \\tan \\beta_2)$ form is not remembered or when inlet/outlet flow is not purely axial."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Thermodynamics": "Uses the first law for steady-flow devices and isentropic relations for perfect gases to relate work, temperature, and pressure.",
+        "Fluid Mechanics": "Relies on velocity triangles, decomposition of velocities into axial and tangential components, and understanding of stagnation properties.",
+        "Flight Mechanics": "Compressor performance directly affects thrust and specific fuel consumption of aircraft engines, linking to overall aircraft performance analysis."
+      },
+      "deeper_dive_topics": [
+        "Degree of reaction in axial compressors and its relation to blade angles and stage loading",
+        "Polytropic efficiency vs stage efficiency in multi-stage compressors",
+        "Loss mechanisms in compressor blades (profile, secondary, tip clearance losses)",
+        "Compressor maps and surge/stall margins in gas turbine engines"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2010_AE_Q47",
+        "year": 2010,
+        "marks": 2.0,
+        "negative_marks": 0.66,
+        "time_expected": "2-3 minutes",
+        "success_rate_estimate": "60%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 6: Propulsion",
+        "gate_subsection": "Gas turbine engines: axial flow compressor and turbine, performance parameters",
+        "weightage": "10-15%",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "The question is well-aligned with the requirement to analyze axial compressor stages using velocity triangles, efficiency, and compressible flow relations."
+      },
+      "rag_quality": {
+        "relevance_score": 0.8,
+        "chunks_used": 4,
+        "sources_distribution": {
+          "books": 3,
+          "videos": 1
+        },
+        "notes": "RAG provided formulas and examples for axial compressor stage work, stagnation temperature rise, and stage pressure ratio (Ganesan and Sameen lectures). These directly supported the solution method. Some chunks were about turbines or related explanations but still conceptually consistent. Core formulas like $w = u c_a (\\tan \\beta_1 - \\tan \\beta_2)$ and the pressure ratio relation were either present or easily inferred."
+      },
+      "model_meta": {
+        "timestamp": "2026-01-02T00:00:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Given the same blade angles and speeds, ask for the degree of reaction of the stage and discuss its implications.",
+        "Modify the question to include a work-done factor and ask for the corrected stage pressure ratio.",
+        "Ask for the power required to drive the compressor for a specified mass flow rate, including mechanical efficiency.",
+        "Extend to a multi-stage compressor: given per-stage parameters, compute overall pressure ratio and exit temperature."
+      ]
+    },
+    "question_id": "GATE_2010_AE_Q47",
+    "year": 2010,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "MCQ",
+    "question_text": "The inlet stagnation temperature for a single stage axial compressor is 300 K and the stage efficiency is 0.80. Following conditions exist at the mean radius of the rotor blade: Blade speed = 200 m/s, Axial flow velocity = 160 m/s, Inlet blade angle beta_1 = 44 deg, Outlet blade angle beta_2 = 14 deg, Cp = 1005 J/kgK and gamma = 1.4. What is the stagnation pressure ratio (P_RS) for this compressor?"
+  },
+  "tokens_used": 16516,
+  "input_tokens": 10031,
+  "output_tokens": 6485,
+  "cost": 0.07738875,
+  "time_seconds": 43.79558968544006
+}
