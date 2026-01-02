@@ -1,0 +1,383 @@
+{
+  "model_name": "gemini_2.5_pro",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "conceptual_application",
+      "media_type": "image_based",
+      "combined_type": "conceptual_application_image_based",
+      "weight_strategy": "VISION_WEIGHTED",
+      "classification_confidence": 0.9,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "The question requires understanding bending moment diagrams and interpreting the given diagrams. It's an application of concepts rather than direct calculation or derivation. The difficulty is moderate as it requires recognizing the shapes and their implications.",
+      "difficulty_score": 5,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": false,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": false,
+        "approximation_needed": false
+      },
+      "use_gpt51": false
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "C",
+        "is_correct": true,
+        "confidence": 0.99,
+        "confidence_type": "single_model",
+        "reasoning": "The problem involves a simply supported beam with a vertical load P applied via a bracket at its center. The bracket extends horizontally by a distance 'a' (where `a = 0.1L`). This configuration introduces two effects at the beam's center (`x = L/2`):\n1.  A downward vertical force `P`.\n2.  A concentrated clockwise moment `M_c = P \\times a = P \\times 0.1L = 0.1PL`.\n\nWe can use the principle of superposition to determine the Bending Moment Diagram (BMD):\n\n**Part 1: Simply Supported Beam with Point Load `P` at `L/2`**\n*   Reactions: `R_A1 = R_B1 = P/2` (upwards).\n*   Bending Moment: `M_1(x) = (P/2)x` for `0 \\le x \\le L/2`.\n    *   `M_1(L/2) = (P/2)(L/2) = PL/4 = 0.25PL`.\n*   `M_1(x) = (P/2)x - P(x - L/2) = P(L-x)/2` for `L/2 < x \\le L`.\n\n**Part 2: Simply Supported Beam with Clockwise Concentrated Moment `M_c = 0.1PL` at `L/2`**\n*   Reactions: To balance the clockwise moment, `R_A2` must be downwards and `R_B2` upwards.\n    *   `\\Sigma M_A = 0 \\implies R_{B2} \\times L - M_c = 0 \\implies R_{B2} = M_c / L = 0.1PL / L = 0.1P` (upwards).\n    *   `\\Sigma F_y = 0 \\implies R_{A2} + R_{B2} = 0 \\implies R_{A2} = -0.1P` (downwards).\n*   Bending Moment:\n    *   For `0 \\le x < L/2`: `M_2(x) = R_{A2} \\times x = -0.1P \\times x`.\n        *   `M_2(L/2)_{\\text{left}} = -0.1P(L/2) = -0.05PL`.\n    *   At `x = L/2`, a clockwise concentrated moment `M_c` causes a positive jump in the BMD (using the convention where positive moment is sagging and a clockwise external moment causes a positive jump in the BMD when moving left to right).\n        *   `M_2(L/2)_{\\text{right}} = M_2(L/2)_{\\text{left}} + M_c = -0.05PL + 0.1PL = 0.05PL`.\n    *   For `L/2 < x \\le L`: `M_2(x)` can be found by taking moments from the right end.\n        *   `M_2(x) = R_{B2} \\times (L-x) = 0.1P(L-x)`.\n\n**Combined Bending Moment Diagram (`M(x) = M_1(x) + M_2(x)`)**\n*   **For `0 \\le x < L/2`:**\n    *   `M(x) = 0.5Px - 0.1Px = 0.4Px`.\n    *   At `x=0`, `M(0) = 0`.\n    *   At `x=L/2` (left of center), `M(L/2)_{\\text{left}} = 0.4P(L/2) = 0.2PL`.\n*   **For `L/2 < x \\le L`:**\n    *   `M(x) = 0.5P(L-x) + 0.1P(L-x) = 0.6P(L-x)`.\n    *   At `x=L/2` (right of center), `M(L/2)_{\\text{right}} = 0.6P(L/2) = 0.3PL`.\n    *   At `x=L`, `M(L) = 0.6P(L-L) = 0`.\n\n**Summary of BMD shape:**\n1.  Starts at `0` at `x=0`.\n2.  Increases linearly to `0.2PL` at `x=L/2` (left side).\n3.  Jumps from `0.2PL` to `0.3PL` at `x=L/2` (right side). The jump magnitude is `0.3PL - 0.2PL = 0.1PL`, which equals `M_c`.\n4.  Decreases linearly from `0.3PL` at `x=L/2` (right side) to `0` at `x=L`.\n\nThis shape perfectly matches Diagram C."
+      },
+      "explanation": {
+        "question_nature": "Application",
+        "step_by_step": [
+          "Step 1: Analyze the loading condition. The vertical load `P` is applied at the end of a bracket of length `a = 0.1L` at the center of the beam. This translates into two distinct loads acting on the beam at its center (`x = L/2`): a downward vertical force `P` and a concentrated clockwise moment `M_c = P \\times a = 0.1PL`.",
+          "Step 2: Determine the support reactions. Apply equilibrium equations (`\\Sigma F_y = 0` and `\\Sigma M = 0`) to the entire beam. For a simply supported beam with a downward force `P` at `L/2` and a clockwise moment `M_c = 0.1PL` at `L/2`, the reactions are `R_A = 0.4P` (upwards) and `R_B = 0.6P` (upwards).",
+          "Step 3: Apply the principle of superposition. Break down the complex loading into simpler cases: (a) a simply supported beam with a point load `P` at `L/2`, and (b) a simply supported beam with a concentrated clockwise moment `M_c = 0.1PL` at `L/2`.",
+          "Step 4: Draw the Bending Moment Diagram (BMD) for case (a). For a point load `P` at mid-span, the BMD is a triangle peaking at `PL/4 = 0.25PL` at `L/2`.",
+          "Step 5: Draw the BMD for case (b). For a clockwise concentrated moment `M_c` at `L/2`, the BMD will be linear from `0` to `-M_c/2` at `L/2` (left side), then jump by `M_c` to `+M_c/2` at `L/2` (right side), and then linearly decrease to `0` at `L`. So, for `M_c = 0.1PL`, it goes from `0` to `-0.05PL` (left `L/2`), jumps to `+0.05PL` (right `L/2`), and then to `0` at `L`.",
+          "Step 6: Superimpose the two BMDs. Add the bending moment values from Step 4 and Step 5 at corresponding points along the beam. This results in a BMD that starts at `0`, increases linearly to `0.2PL` at `L/2` (left), jumps to `0.3PL` at `L/2` (right), and then decreases linearly to `0` at `L`.",
+          "Step 7: Compare the resulting BMD with the given options to identify the correct diagram."
+        ],
+        "formulas_used": [
+          "$\\Sigma F_y = 0$",
+          "$\\Sigma M = 0$",
+          "$M(x) = R \\times x$",
+          "$M_c = P \\times a$"
+        ],
+        "estimated_time_minutes": 4
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Structures",
+          "confidence": 0.98
+        },
+        "topic": {
+          "name": "Shear Force and Bending Moment Diagrams",
+          "syllabus_ref": "Section 1: Engineering Mechanics -> Beams: Shear force and bending moment diagrams"
+        },
+        "concepts": [
+          {
+            "name": "Bending Moment Diagram (BMD)",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Concentrated Moment",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Principle of Superposition",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Support Reactions",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Simply Supported Beam",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Free Body Diagrams (FBD)",
+          "Equilibrium equations (static equilibrium)",
+          "Calculation of support reactions",
+          "Basic Shear Force and Bending Moment Diagrams for point loads",
+          "Understanding of concentrated moments"
+        ],
+        "helpful": [
+          "Principle of Superposition for beams",
+          "Sign conventions for shear force and bending moment"
+        ],
+        "dependency_tree": {
+          "Bending Moment Diagram for Complex Loading": [
+            "requires: Free Body Diagrams (FBD)",
+            "requires: Equilibrium equations (static equilibrium)",
+            "requires: Calculation of support reactions",
+            "requires: Basic Shear Force and Bending Moment Diagrams for point loads",
+            "requires: Understanding of concentrated moments",
+            "enables: Stress analysis in beams",
+            "enables: Deflection analysis of beams"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Medium",
+        "score": 7,
+        "complexity_breakdown": {
+          "conceptual": 7,
+          "mathematical": 6,
+          "problem_solving": 7
+        },
+        "estimated_solve_time_seconds": 240,
+        "expected_accuracy_percent": 60,
+        "difficulty_factors": [
+          "Correctly identifying the concentrated moment due to the bracket's offset load.",
+          "Applying the correct sign convention for the concentrated moment's effect on the BMD (jump direction).",
+          "Accurate application of the superposition principle."
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Beer & Johnston, Mechanics of Materials",
+          "author": "Beer, Johnston, DeWolf, Mazurek",
+          "chapter_number": "6",
+          "chapter_title": "Shear and Bending Moment Diagrams",
+          "section": "6.2-6.5",
+          "page_range": "290-320",
+          "complexity": "intermediate",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval",
+          "text_snippet": "Primary Book: Beer & Johnston, Chapter Context: Chapter 6: 'Shear and Bending Moment Diagrams', Specific Concept: Shear Force Diagram (SFD), Bending Moment Diagram (BMD), Differential Relationships for Beams"
+        },
+        {
+          "source_type": "book",
+          "book": "Megson, Aircraft Structures for Engineering Students",
+          "author": "T.H.G. Megson",
+          "chapter_number": "2",
+          "chapter_title": "Shear Forces and Bending Moments",
+          "section": "2.3-2.5",
+          "page_range": "40-60",
+          "complexity": "intermediate",
+          "relevance_score": 0.8,
+          "source": "rag_retrieval",
+          "text_snippet": "Primary Book: Megson, T.H.G., 'Aircraft Structures for Engineering Students', Chapter Context: Chapter 2: 'Shear Forces and Bending Moments', Specific Concept: 'Bending Moment Diagrams for Distributed Loads,' 'Cubic Bending Moment Variation'"
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. S.P. Harsha",
+          "timestamp_start": "00:29:16",
+          "timestamp_end": "00:38:42",
+          "video_url": null,
+          "book_reference": "Beer & Johnston",
+          "topic_covered": "Simply Supported Beam with Point Load at Mid-span",
+          "relevance_score": 0.85,
+          "source": "rag_retrieval"
+        },
+        {
+          "source_type": "video",
+          "professor": "Prof. Nachiketa Tiwari",
+          "timestamp_start": "00:22:43",
+          "timestamp_end": "00:24:40",
+          "video_url": "https://www.youtube.com/watch?v=oi_xV72yWAM",
+          "book_reference": "Beer & Johnston",
+          "topic_covered": "Bending Moment Definition and Sign Conventions",
+          "relevance_score": 0.75,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Superposition Method",
+        "total_steps": 7,
+        "solution_path": "Load Decomposition \\rightarrow Reaction Calculation \\rightarrow Individual BMDs \\rightarrow Superposition \\rightarrow Final BMD",
+        "key_insights": [
+          "An offset vertical load creates both a direct vertical force and a concentrated moment at the point of attachment.",
+          "The principle of superposition simplifies complex loading scenarios into manageable parts.",
+          "A concentrated moment causes a sudden jump in the Bending Moment Diagram, with the direction of the jump depending on the moment's direction and the chosen sign convention."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$\\Sigma F_y = 0$",
+          "name": "Vertical Force Equilibrium",
+          "conditions": "Applicable to static equilibrium of a body",
+          "type": "principle",
+          "relevance": "Used to find support reactions."
+        },
+        {
+          "formula": "$\\Sigma M = 0$",
+          "name": "Moment Equilibrium",
+          "conditions": "Applicable to static equilibrium of a body about any point",
+          "type": "principle",
+          "relevance": "Used to find support reactions and internal bending moments."
+        },
+        {
+          "formula": "$M_c = P \\times a$",
+          "name": "Concentrated Moment due to Offset Load",
+          "conditions": "P is a force, a is the perpendicular distance from the line of action of P to the point of interest",
+          "type": "equation",
+          "relevance": "Crucial for identifying the concentrated moment generated by the bracket."
+        },
+        {
+          "formula": "$M_{\\text{total}}(x) = M_1(x) + M_2(x) + \\dots$",
+          "name": "Principle of Superposition for Bending Moment",
+          "conditions": "Applicable for linearly elastic materials and small deflections",
+          "type": "principle",
+          "relevance": "Primary method used to solve the problem by combining effects of individual loads."
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Design of aircraft wing-fuselage attachments where loads from the wing are transferred to the fuselage structure, often through brackets or fittings, creating eccentric loads and moments.",
+          "Mounting points for engines, landing gear, or other heavy components on an aircraft structure, where the load path might not be perfectly aligned with the beam's neutral axis.",
+          "Structural design of industrial machinery or building frames where components are attached via brackets, leading to combined axial, shear, and bending effects."
+        ],
+        "specific_systems": [
+          "Aircraft wing spars and ribs",
+          "Landing gear attachment points",
+          "Engine mounts"
+        ],
+        "practical_relevance": "Understanding how offset loads create concentrated moments is critical for accurately predicting stress distributions and deflections in structural components, preventing premature failure due to unexpected bending stresses. This is fundamental in aerospace design where weight optimization and structural integrity are paramount."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Failing to identify the concentrated moment caused by the offset load.",
+          "why_students_make_it": "Students often only consider the direct vertical force and overlook the moment arm 'a' created by the bracket, simplifying the problem to just a point load at mid-span.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Always draw a free body diagram of the bracket and the point of attachment to the beam. For any load not acting directly on the beam's axis, check for equivalent force-couple systems at the point of interest.",
+          "consequence": "The resulting BMD will be completely different (a simple triangle instead of a diagram with a jump), leading to an incorrect answer."
+        },
+        {
+          "mistake": "Incorrect sign convention for the concentrated moment's effect on the BMD.",
+          "why_students_make_it": "The sign convention for concentrated moments causing jumps in BMDs can be confusing and varies slightly between textbooks. Some conventions show a negative jump for clockwise, others a positive jump.",
+          "type": "Sign Error",
+          "severity": "Medium",
+          "frequency": "common",
+          "how_to_avoid": "Consistently apply one convention. For GATE, it's often useful to remember that a clockwise external moment typically causes a positive jump in the BMD when moving left to right, if positive moment is sagging. Alternatively, always verify by calculating moments from both left and right sections just before and after the concentrated moment.",
+          "consequence": "The BMD will have the correct shape but be inverted or shifted incorrectly, leading to choosing an incorrect option."
+        },
+        {
+          "mistake": "Errors in calculating support reactions.",
+          "why_students_make_it": "Mistakes in summing moments (e.g., forgetting to include the concentrated moment in the equilibrium equation) or algebraic errors.",
+          "type": "Calculation",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Double-check equilibrium equations. Draw a clear FBD. Ensure all forces and moments are included with their correct signs and moment arms.",
+          "consequence": "Incorrect reactions will propagate errors throughout the SFD and BMD calculations."
+        }
+      ],
+      "mnemonics_memory_aids": [],
+      "flashcards": [
+        {
+          "card_type": "concept_recall",
+          "front": "How does an offset vertical load on a bracket affect a beam?",
+          "back": "It creates two effects at the point of attachment: a direct vertical force and a concentrated moment (force x offset distance).",
+          "difficulty": "easy"
+        },
+        {
+          "card_type": "formula_recall",
+          "front": "What is the concentrated moment `M_c` for a force `P` acting at an offset `a`?",
+          "back": "`M_c = P \\times a`",
+          "difficulty": "easy"
+        },
+        {
+          "card_type": "application",
+          "front": "Describe the effect of a clockwise concentrated moment on a BMD (moving left to right, positive sagging moment).",
+          "back": "It causes a sudden positive jump in the Bending Moment Diagram. The magnitude of the jump is equal to the magnitude of the concentrated moment.",
+          "difficulty": "medium"
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "How to avoid missing the concentrated moment from an offset load?",
+          "back": "Always draw a Free Body Diagram of the connection point or bracket. If the load's line of action does not pass through the beam's neutral axis at the attachment, a moment is generated.",
+          "difficulty": "medium"
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "What is the principle of superposition in beam analysis?",
+          "back": "For linearly elastic beams, the total response (reactions, shear, moment, deflection) to multiple loads is the sum of the responses to each load applied individually.",
+          "difficulty": "easy"
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Aircraft structural design",
+          "industry_example": "Wing-to-fuselage attachments, landing gear mounts, or engine pylons often involve brackets that transfer loads from components to the main airframe. These loads are rarely perfectly concentric, leading to eccentric loading and concentrated moments on the primary structural members.",
+          "why_it_matters": "Incorrectly accounting for these moments can lead to underestimation of bending stresses, potentially causing fatigue failure or catastrophic structural collapse in critical flight conditions."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "Quickly identify if the load is offset, indicating a concentrated moment. If so, use superposition. If not, it's a simpler point load problem.",
+        "guessing_heuristic": "If unsure about the jump direction, eliminate options that don't show a jump or show an incorrect starting/ending moment (e.g., non-zero at simply supported ends). Focus on options with a jump at the load application point.",
+        "time_management": "Allocate 3-5 minutes. The superposition method is efficient if practiced. Don't get stuck on sign conventions; pick one and be consistent, then check against options."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "bending moment diagram concentrated moment",
+        "superposition method beams",
+        "offset load on beam bracket",
+        "shear force bending moment simply supported beam",
+        "sign convention concentrated moment BMD"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Direct Integration Method",
+          "description": "Derive the shear force and bending moment equations by taking sections along the beam and integrating the load function. For concentrated loads/moments, these act as boundary conditions or cause discontinuities in the equations.",
+          "pros_cons": "Pros: More rigorous, can handle complex distributed loads. Cons: More prone to algebraic errors, especially with discontinuities from concentrated moments/forces.",
+          "when_to_use": "When the load distribution is complex (e.g., varying distributed loads) or when superposition is not straightforward."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Mechanics of Solids": "This problem is a core concept in Mechanics of Solids, forming the basis for understanding stresses, strains, and deflections in beams.",
+        "Machine Design": "Design of machine elements often involves beams and shafts subjected to various loading conditions, including offset loads from gears, pulleys, or levers, requiring accurate BMD analysis.",
+        "Structural Analysis": "Advanced structural analysis techniques for indeterminate structures often build upon the fundamental understanding of SFD/BMD for determinate beams."
+      },
+      "deeper_dive_topics": [
+        "Influence Lines for Beams (for moving loads)",
+        "Bending stress distribution in beam cross-sections (flexure formula)",
+        "Beam deflections using Moment Area Method or Double Integration Method",
+        "Shear flow in thin-walled beams due to transverse loads and moments"
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_2010_AE_Q48",
+        "year": 2010,
+        "marks": 2.0,
+        "negative_marks": 0.66,
+        "time_expected": "3-4 minutes",
+        "success_rate_estimate": "60%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Section 1: Engineering Mechanics",
+        "gate_subsection": "Beams: Shear force and bending moment diagrams",
+        "weightage": "Typically 2-4 marks in GATE AE",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "This question perfectly aligns with the syllabus, testing fundamental concepts of beam analysis and the ability to interpret complex loading scenarios."
+      },
+      "rag_quality": {
+        "relevance_score": 0.8,
+        "chunks_used": 3,
+        "sources_distribution": {
+          "books": 2,
+          "videos": 1
+        },
+        "notes": "RAG chunks 6 (simply supported beam with point load) and 5 (bending moment definition and sign conventions) were highly relevant. Chunk 4 (overhanging beam) provided general context on SFD/BMD analysis. The RAG context was helpful in reinforcing the core concepts needed for"
+      },
+      "model_meta": {
+        "timestamp": "2026-01-03T05:02:48.322014",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": []
+    },
+    "question_id": "GATE_2010_AE_Q48",
+    "year": 2010,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "MCQ_LINKED",
+    "question_text": "Bending moment diagram is given by"
+  },
+  "tokens_used": 20039,
+  "input_tokens": 13840,
+  "output_tokens": 6199,
+  "cost": 0.005795399999999999,
+  "time_seconds": 70.37701535224915
+}
