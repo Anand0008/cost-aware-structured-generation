@@ -1,0 +1,786 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script>function neighbourhoodHighlight(params) {
+  // console.log("in nieghbourhoodhighlight");
+  allNodes = nodes.get({ returnType: "Object" });
+  // originalNodes = JSON.parse(JSON.stringify(allNodes));
+  // if something is selected:
+  if (params.nodes.length > 0) {
+    highlightActive = true;
+    var i, j;
+    var selectedNode = params.nodes[0];
+    var degrees = 2;
+
+    // mark all nodes as hard to read.
+    for (let nodeId in allNodes) {
+      // nodeColors[nodeId] = allNodes[nodeId].color;
+      allNodes[nodeId].color = "rgba(200,200,200,0.5)";
+      if (allNodes[nodeId].hiddenLabel === undefined) {
+        allNodes[nodeId].hiddenLabel = allNodes[nodeId].label;
+        allNodes[nodeId].label = undefined;
+      }
+    }
+    var connectedNodes = network.getConnectedNodes(selectedNode);
+    var allConnectedNodes = [];
+
+    // get the second degree nodes
+    for (i = 1; i < degrees; i++) {
+      for (j = 0; j < connectedNodes.length; j++) {
+        allConnectedNodes = allConnectedNodes.concat(
+          network.getConnectedNodes(connectedNodes[j])
+        );
+      }
+    }
+
+    // all second degree nodes get a different color and their label back
+    for (i = 0; i < allConnectedNodes.length; i++) {
+      // allNodes[allConnectedNodes[i]].color = "pink";
+      allNodes[allConnectedNodes[i]].color = "rgba(150,150,150,0.75)";
+      if (allNodes[allConnectedNodes[i]].hiddenLabel !== undefined) {
+        allNodes[allConnectedNodes[i]].label =
+          allNodes[allConnectedNodes[i]].hiddenLabel;
+        allNodes[allConnectedNodes[i]].hiddenLabel = undefined;
+      }
+    }
+
+    // all first degree nodes get their own color and their label back
+    for (i = 0; i < connectedNodes.length; i++) {
+      // allNodes[connectedNodes[i]].color = undefined;
+      allNodes[connectedNodes[i]].color = nodeColors[connectedNodes[i]];
+      if (allNodes[connectedNodes[i]].hiddenLabel !== undefined) {
+        allNodes[connectedNodes[i]].label =
+          allNodes[connectedNodes[i]].hiddenLabel;
+        allNodes[connectedNodes[i]].hiddenLabel = undefined;
+      }
+    }
+
+    // the main node gets its own color and its label back.
+    // allNodes[selectedNode].color = undefined;
+    allNodes[selectedNode].color = nodeColors[selectedNode];
+    if (allNodes[selectedNode].hiddenLabel !== undefined) {
+      allNodes[selectedNode].label = allNodes[selectedNode].hiddenLabel;
+      allNodes[selectedNode].hiddenLabel = undefined;
+    }
+  } else if (highlightActive === true) {
+    // console.log("highlightActive was true");
+    // reset all nodes
+    for (let nodeId in allNodes) {
+      // allNodes[nodeId].color = "purple";
+      allNodes[nodeId].color = nodeColors[nodeId];
+      // delete allNodes[nodeId].color;
+      if (allNodes[nodeId].hiddenLabel !== undefined) {
+        allNodes[nodeId].label = allNodes[nodeId].hiddenLabel;
+        allNodes[nodeId].hiddenLabel = undefined;
+      }
+    }
+    highlightActive = false;
+  }
+
+  // transform the object into an array
+  var updateArray = [];
+  if (params.nodes.length > 0) {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        // console.log(allNodes[nodeId]);
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  } else {
+    // console.log("Nothing was selected");
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        // console.log(allNodes[nodeId]);
+        // allNodes[nodeId].color = {};
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  }
+}
+
+function filterHighlight(params) {
+  allNodes = nodes.get({ returnType: "Object" });
+  // if something is selected:
+  if (params.nodes.length > 0) {
+    filterActive = true;
+    let selectedNodes = params.nodes;
+
+    // hiding all nodes and saving the label
+    for (let nodeId in allNodes) {
+      allNodes[nodeId].hidden = true;
+      if (allNodes[nodeId].savedLabel === undefined) {
+        allNodes[nodeId].savedLabel = allNodes[nodeId].label;
+        allNodes[nodeId].label = undefined;
+      }
+    }
+
+    for (let i=0; i < selectedNodes.length; i++) {
+      allNodes[selectedNodes[i]].hidden = false;
+      if (allNodes[selectedNodes[i]].savedLabel !== undefined) {
+        allNodes[selectedNodes[i]].label = allNodes[selectedNodes[i]].savedLabel;
+        allNodes[selectedNodes[i]].savedLabel = undefined;
+      }
+    }
+
+  } else if (filterActive === true) {
+    // reset all nodes
+    for (let nodeId in allNodes) {
+      allNodes[nodeId].hidden = false;
+      if (allNodes[nodeId].savedLabel !== undefined) {
+        allNodes[nodeId].label = allNodes[nodeId].savedLabel;
+        allNodes[nodeId].savedLabel = undefined;
+      }
+    }
+    filterActive = false;
+  }
+
+  // transform the object into an array
+  var updateArray = [];
+  if (params.nodes.length > 0) {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  } else {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  }
+}
+
+function selectNode(nodes) {
+  network.selectNodes(nodes);
+  neighbourhoodHighlight({ nodes: nodes });
+  return nodes;
+}
+
+function selectNodes(nodes) {
+  network.selectNodes(nodes);
+  filterHighlight({nodes: nodes});
+  return nodes;
+}
+
+function highlightFilter(filter) {
+  let selectedNodes = []
+  let selectedProp = filter['property']
+  if (filter['item'] === 'node') {
+    let allNodes = nodes.get({ returnType: "Object" });
+    for (let nodeId in allNodes) {
+      if (allNodes[nodeId][selectedProp] && filter['value'].includes((allNodes[nodeId][selectedProp]).toString())) {
+        selectedNodes.push(nodeId)
+      }
+    }
+  }
+  else if (filter['item'] === 'edge'){
+    let allEdges = edges.get({returnType: 'object'});
+    // check if the selected property exists for selected edge and select the nodes connected to the edge
+    for (let edge in allEdges) {
+      if (allEdges[edge][selectedProp] && filter['value'].includes((allEdges[edge][selectedProp]).toString())) {
+        selectedNodes.push(allEdges[edge]['from'])
+        selectedNodes.push(allEdges[edge]['to'])
+      }
+    }
+  }
+  selectNodes(selectedNodes)
+}</script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+            
+            
+            
+            
+            
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tom-select/2.0.0-rc.4/css/tom-select.min.css" integrity="sha512-43fHB3GLgZfz8QXl1RPQ8O66oIgv3po9cJ5erMt1c4QISq9dYb195T3vr5ImnJPXuVroKcGBPXBFKETW8jrPNQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/tom-select/2.0.0-rc.4/js/tom-select.complete.js" integrity="sha512-jeF9CfnvzDiw9G9xiksVjxR2lib44Gnovvkv+3CgCG6NXCD4gqlA5nDAVW5WjpA+i+/zKsUWV5xNEbW1X/HH0Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 800px;
+                 background-color: #222222;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+             #loadingBar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width: 100%;
+                 height: 800px;
+                 background-color:rgba(200,200,200,0.8);
+                 -webkit-transition: all 0.5s ease;
+                 -moz-transition: all 0.5s ease;
+                 -ms-transition: all 0.5s ease;
+                 -o-transition: all 0.5s ease;
+                 transition: all 0.5s ease;
+                 opacity:1;
+             }
+
+             #bar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width:20px;
+                 height:20px;
+                 margin:auto auto auto auto;
+                 border-radius:11px;
+                 border:2px solid rgba(30,30,30,0.05);
+                 background: rgb(0, 173, 246); /* Old browsers */
+                 box-shadow: 2px 0px 4px rgba(0,0,0,0.4);
+             }
+
+             #border {
+                 position:absolute;
+                 top:10px;
+                 left:10px;
+                 width:500px;
+                 height:23px;
+                 margin:auto auto auto auto;
+                 box-shadow: 0px 0px 4px rgba(0,0,0,0.2);
+                 border-radius:10px;
+             }
+
+             #text {
+                 position:absolute;
+                 top:8px;
+                 left:530px;
+                 width:30px;
+                 height:50px;
+                 margin:auto auto auto auto;
+                 font-size:22px;
+                 color: #000000;
+             }
+
+             div.outerBorder {
+                 position:relative;
+                 top:400px;
+                 width:600px;
+                 height:44px;
+                 margin:auto auto auto auto;
+                 border:8px solid rgba(0,0,0,0.1);
+                 background: rgb(252,252,252); /* Old browsers */
+                 background: -moz-linear-gradient(top,  rgba(252,252,252,1) 0%, rgba(237,237,237,1) 100%); /* FF3.6+ */
+                 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(252,252,252,1)), color-stop(100%,rgba(237,237,237,1))); /* Chrome,Safari4+ */
+                 background: -webkit-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Chrome10+,Safari5.1+ */
+                 background: -o-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Opera 11.10+ */
+                 background: -ms-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* IE10+ */
+                 background: linear-gradient(to bottom,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* W3C */
+                 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcfc', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
+                 border-radius:72px;
+                 box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+             }
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+                <div id="select-menu" class="card-header">
+                    <div class="row no-gutters">
+                        <div class="col-10 pb-2">
+                            <select
+                            class="form-select"
+                            aria-label="Default select example"
+                            onchange="selectNode([value]);"
+                            id="select-node"
+                            placeholder="Select node..."
+                            >
+                                <option selected>Select a Node by ID</option>
+                                
+                                    <option value="Airfoil Geometry">Airfoil Geometry</option>
+                                
+                                    <option value="Lift Curve Slope">Lift Curve Slope</option>
+                                
+                                    <option value="Drag Polar">Drag Polar</option>
+                                
+                                    <option value="Main Concept">Main Concept</option>
+                                
+                                    <option value="Aerodynamic Center">Aerodynamic Center</option>
+                                
+                                    <option value="Incompressible Flow over Airfoils">Incompressible Flow over Airfoils</option>
+                                
+                                    <option value="Kutta Condition">Kutta Condition</option>
+                                
+                                    <option value="Superposition Principle">Superposition Principle</option>
+                                
+                                    <option value="Kutta-Joukowski Theorem">Kutta-Joukowski Theorem</option>
+                                
+                                    <option value="Ideal Gas Law">Ideal Gas Law</option>
+                                
+                                    <option value="Stagnation Point">Stagnation Point</option>
+                                
+                                    <option value="Aerodynamics">Aerodynamics</option>
+                                
+                                    <option value="Potential Flow Theory">Potential Flow Theory</option>
+                                
+                                    <option value="Lift Coefficient">Lift Coefficient</option>
+                                
+                                    <option value="Thin Airfoil Theory">Thin Airfoil Theory</option>
+                                
+                                    <option value="Pressure Coefficient">Pressure Coefficient</option>
+                                
+                                    <option value="Circulation">Circulation</option>
+                                
+                                    <option value="Pitching Moment Coefficient">Pitching Moment Coefficient</option>
+                                
+                                    <option value="Potential Flow">Potential Flow</option>
+                                
+                                    <option value="Stagnation Properties">Stagnation Properties</option>
+                                
+                                    <option value="Compressible Flow">Compressible Flow</option>
+                                
+                                    <option value="Oblique Shock Waves">Oblique Shock Waves</option>
+                                
+                                    <option value="Compressors and Turbines">Compressors and Turbines</option>
+                                
+                                    <option value="Normal Shock Waves">Normal Shock Waves</option>
+                                
+                                    <option value="Mach Number">Mach Number</option>
+                                
+                                    <option value="Area-Velocity Relation">Area-Velocity Relation</option>
+                                
+                                    <option value="Speed of Sound">Speed of Sound</option>
+                                
+                                    <option value="Compressible Flow over Airfoils">Compressible Flow over Airfoils</option>
+                                
+                                    <option value="Hydrostatic Equation">Hydrostatic Equation</option>
+                                
+                                    <option value="Standard Atmosphere">Standard Atmosphere</option>
+                                
+                                    <option value="Incompressible Flow and Airspeed Measurement">Incompressible Flow and Airspeed Measurement</option>
+                                
+                                    <option value="Lift Equation">Lift Equation</option>
+                                
+                                    <option value="GATE_AE_2007_Q79">GATE_AE_2007_Q79</option>
+                                
+                                    <option value="Stall Speed">Stall Speed</option>
+                                
+                                    <option value="Finite Wing Aerodynamics">Finite Wing Aerodynamics</option>
+                                
+                                    <option value="Rate of Climb">Rate of Climb</option>
+                                
+                                    <option value="Aircraft Performance">Aircraft Performance</option>
+                                
+                                    <option value="Ordinary Differential Equations">Ordinary Differential Equations</option>
+                                
+                                    <option value="Differential Equations">Differential Equations</option>
+                                
+                                    <option value="Engineering Mathematics">Engineering Mathematics</option>
+                                
+                                    <option value="Green's Theorem">Green's Theorem</option>
+                                
+                                    <option value="Partial Derivatives">Partial Derivatives</option>
+                                
+                                    <option value="Vector Calculus">Vector Calculus</option>
+                                
+                                    <option value="Partial Differentiation">Partial Differentiation</option>
+                                
+                                    <option value="Induced Drag">Induced Drag</option>
+                                
+                                    <option value="Boundary Layer Theory">Boundary Layer Theory</option>
+                                
+                                    <option value="Finite Wing Theory">Finite Wing Theory</option>
+                                
+                                    <option value="Aspect Ratio">Aspect Ratio</option>
+                                
+                                    <option value="High-Lift Devices">High-Lift Devices</option>
+                                
+                                    <option value="Bernoulli's Principle">Bernoulli's Principle</option>
+                                
+                                    <option value="Structures">Structures</option>
+                                
+                                    <option value="Vibration of Continuous Systems">Vibration of Continuous Systems</option>
+                                
+                                    <option value="Stagnation Pressure">Stagnation Pressure</option>
+                                
+                                    <option value="Dynamic Pressure">Dynamic Pressure</option>
+                                
+                                    <option value="Equivalent Airspeed (EAS)">Equivalent Airspeed (EAS)</option>
+                                
+                                    <option value="Critical Mach Number">Critical Mach Number</option>
+                                
+                                    <option value="Compressibility Effects">Compressibility Effects</option>
+                                
+                                    <option value="Laminar Boundary Layer">Laminar Boundary Layer</option>
+                                
+                                    <option value="Boundary Layer Transition">Boundary Layer Transition</option>
+                                
+                                    <option value="Navier-Stokes Equations">Navier-Stokes Equations</option>
+                                
+                                    <option value="Static Longitudinal Stability">Static Longitudinal Stability</option>
+                                
+                                    <option value="Flight Mechanics">Flight Mechanics</option>
+                                
+                                    <option value="Airfoil Aerodynamics">Airfoil Aerodynamics</option>
+                                
+                                    <option value="Longitudinal Static Stability">Longitudinal Static Stability</option>
+                                
+                                    <option value="Aerodynamic Forces and Moments">Aerodynamic Forces and Moments</option>
+                                
+                                    <option value="Incompressible Potential Flow">Incompressible Potential Flow</option>
+                                
+                                    <option value="Velocity Potential">Velocity Potential</option>
+                                
+                                    <option value="Inviscid, Incompressible Flow">Inviscid, Incompressible Flow</option>
+                                
+                                    <option value="Irrotational Flow">Irrotational Flow</option>
+                                
+                                    <option value="Bernoulli's Equation">Bernoulli's Equation</option>
+                                
+                                    <option value="Airspeed and Altitude">Airspeed and Altitude</option>
+                                
+                                    <option value="Isentropic Flow Relations">Isentropic Flow Relations</option>
+                                
+                                    <option value="Vorticity">Vorticity</option>
+                                
+                                    <option value="Normal Shock Relations">Normal Shock Relations</option>
+                                
+                                    <option value="Choked Flow">Choked Flow</option>
+                                
+                                    <option value="Isentropic Flow">Isentropic Flow</option>
+                                
+                                    <option value="Continuity Equation">Continuity Equation</option>
+                                
+                                    <option value="Supersonic Flow">Supersonic Flow</option>
+                                
+                                    <option value="Compressible Flow Theory">Compressible Flow Theory</option>
+                                
+                                    <option value="Prandtl-Meyer Expansion">Prandtl-Meyer Expansion</option>
+                                
+                                    <option value="Theta-Beta-M Relation">Theta-Beta-M Relation</option>
+                                
+                                    <option value="Mach Angle">Mach Angle</option>
+                                
+                                    <option value="Fanno Flow">Fanno Flow</option>
+                                
+                                    <option value="GATE_2014_AE_Q09">GATE_2014_AE_Q09</option>
+                                
+                                    <option value="Vortex Dynamics">Vortex Dynamics</option>
+                                
+                                    <option value="Airfoil Theory">Airfoil Theory</option>
+                                
+                                    <option value="GATE_AE_2008_Q50">GATE_AE_2008_Q50</option>
+                                
+                                    <option value="Fluid Kinematics">Fluid Kinematics</option>
+                                
+                                    <option value="Potential Flow and Vortex Dynamics">Potential Flow and Vortex Dynamics</option>
+                                
+                                    <option value="Integral Calculus">Integral Calculus</option>
+                                
+                                    <option value="Dimensional Analysis and Similarity">Dimensional Analysis and Similarity</option>
+                                
+                                    <option value="Reynolds Number">Reynolds Number</option>
+                                
+                                    <option value="Dynamic Similarity">Dynamic Similarity</option>
+                                
+                                    <option value="Compressible Flow, Normal Shock Waves">Compressible Flow, Normal Shock Waves</option>
+                                
+                                    <option value="Compressible Flow and Gas Dynamics">Compressible Flow and Gas Dynamics</option>
+                                
+                                    <option value="GATE_AE_2007_Q16">GATE_AE_2007_Q16</option>
+                                
+                                    <option value="Angle of Attack">Angle of Attack</option>
+                                
+                                    <option value="GATE_2014_AE_Q08">GATE_2014_AE_Q08</option>
+                                
+                                    <option value="Fundamentals of Aerodynamics">Fundamentals of Aerodynamics</option>
+                                
+                                    <option value="Boundary Layer Thickness">Boundary Layer Thickness</option>
+                                
+                                    <option value="Fluid Kinematics and Vorticity">Fluid Kinematics and Vorticity</option>
+                                
+                                    <option value="Induced Drag Coefficient">Induced Drag Coefficient</option>
+                                
+                                    <option value="Aircraft Stability and Control">Aircraft Stability and Control</option>
+                                
+                                    <option value="Subsonic Compressible Flow over Airfoils">Subsonic Compressible Flow over Airfoils</option>
+                                
+                                    <option value="GATE_2014_AE_Q07">GATE_2014_AE_Q07</option>
+                                
+                                    <option value="Compressible Flow Principles">Compressible Flow Principles</option>
+                                
+                                    <option value="Compressible Flow Fundamentals">Compressible Flow Fundamentals</option>
+                                
+                                    <option value="GATE_2009_AE_Q13">GATE_2009_AE_Q13</option>
+                                
+                                    <option value="Oswald Efficiency Factor">Oswald Efficiency Factor</option>
+                                
+                                    <option value="Prandtl's Lifting Line Theory">Prandtl's Lifting Line Theory</option>
+                                
+                                    <option value="Airfoil Nomenclature and Characteristics">Airfoil Nomenclature and Characteristics</option>
+                                
+                                    <option value="Viscous Flow">Viscous Flow</option>
+                                
+                                    <option value="Velocity Triangles">Velocity Triangles</option>
+                                
+                                    <option value="Fluid Mechanics Principles">Fluid Mechanics Principles</option>
+                                
+                                    <option value="Axial Flow Compressors">Axial Flow Compressors</option>
+                                
+                                    <option value="Degree of Reaction">Degree of Reaction</option>
+                                
+                                    <option value="Airspeed Definitions and Relationships">Airspeed Definitions and Relationships</option>
+                                
+                                    <option value="Incompressible Flow">Incompressible Flow</option>
+                                
+                                    <option value="GATE_2016_AE_Q04">GATE_2016_AE_Q04</option>
+                                
+                                    <option value="Euler Turbomachinery Equation">Euler Turbomachinery Equation</option>
+                                
+                                    <option value="Lift-to-Drag Ratio">Lift-to-Drag Ratio</option>
+                                
+                                    <option value="Flow Separation">Flow Separation</option>
+                                
+                                    <option value="Adverse Pressure Gradient">Adverse Pressure Gradient</option>
+                                
+                                    <option value="Flow Visualization">Flow Visualization</option>
+                                
+                                    <option value="Vector Calculus in Fluid Dynamics">Vector Calculus in Fluid Dynamics</option>
+                                
+                                    <option value="GATE_2012_AE_Q06">GATE_2012_AE_Q06</option>
+                                
+                                    <option value="Dimensional Analysis">Dimensional Analysis</option>
+                                
+                                    <option value="Gradient of a Scalar Field">Gradient of a Scalar Field</option>
+                                
+                                    <option value="GATE_2013_AE_Q26">GATE_2013_AE_Q26</option>
+                                
+                                    <option value="Directional Derivative">Directional Derivative</option>
+                                
+                                    <option value="Incompressible Flow over Finite Wings">Incompressible Flow over Finite Wings</option>
+                                
+                                    <option value="Directional Stability">Directional Stability</option>
+                                
+                                    <option value="Gauss's Divergence Theorem">Gauss's Divergence Theorem</option>
+                                
+                                    <option value="Propulsion">Propulsion</option>
+                                
+                                    <option value="GATE_2022_AE_Q50">GATE_2022_AE_Q50</option>
+                                
+                                    <option value="Stream Function">Stream Function</option>
+                                
+                                    <option value="Fluid Properties">Fluid Properties</option>
+                                
+                                    <option value="Wind Tunnel Testing and Scaling">Wind Tunnel Testing and Scaling</option>
+                                
+                                    <option value="Service Ceiling">Service Ceiling</option>
+                                
+                                    <option value="Excess Power">Excess Power</option>
+                                
+                                    <option value="Drag Divergence Mach Number">Drag Divergence Mach Number</option>
+                                
+                                    <option value="Airspeed Measurement">Airspeed Measurement</option>
+                                
+                                    <option value="GATE_2010_AE_Q46">GATE_2010_AE_Q46</option>
+                                
+                                    <option value="Absolute Ceiling">Absolute Ceiling</option>
+                                
+                                    <option value="Turbulent Boundary Layer">Turbulent Boundary Layer</option>
+                                
+                                    <option value="Airfoil Design and Characteristics">Airfoil Design and Characteristics</option>
+                                
+                                    <option value="GATE_2021_AE_Q16">GATE_2021_AE_Q16</option>
+                                
+                                    <option value="Airfoil Geometry and Nomenclature">Airfoil Geometry and Nomenclature</option>
+                                
+                                    <option value="Aerodynamic Center (AC)">Aerodynamic Center (AC)</option>
+                                
+                                    <option value="Fundamentals of Fluid Mechanics">Fundamentals of Fluid Mechanics</option>
+                                
+                            </select>
+                        </div>
+                        <div class="col-2 pb-2">
+                            <button type="button" class="btn btn-primary btn-block" onclick="neighbourhoodHighlight({nodes: []});">Reset Selection</button>
+                        </div>
+                    </div>
+                </div>
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+            <div id="loadingBar">
+              <div class="outerBorder">
+                <div id="text">0%</div>
+                <div id="border">
+                  <div id="bar"></div>
+                </div>
+              </div>
+            </div>
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+                  new TomSelect("#select-node",{
+                      create: false,
+                      sortField: {
+                          field: "text",
+                          direction: "asc"
+                      }
+                  });
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"font": {"color": "white"}, "group": "Concept", "id": "Airfoil Geometry", "label": "Airfoil Geometry", "shape": "dot", "size": 20, "title": "Concept: Airfoil Geometry"}, {"font": {"color": "white"}, "group": "Concept", "id": "Lift Curve Slope", "label": "Lift Curve Slope", "shape": "dot", "size": 20, "title": "Concept: Lift Curve Slope"}, {"font": {"color": "white"}, "group": "Formula", "id": "Drag Polar", "label": "Drag Polar", "shape": "dot", "size": 15, "title": "Formula: Drag Polar"}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Main Concept", "label": "Main Concept", "shape": "dot", "size": 10}, {"font": {"color": "white"}, "group": "Concept", "id": "Aerodynamic Center", "label": "Aerodynamic Center", "shape": "dot", "size": 20, "title": "Concept: Aerodynamic Center"}, {"font": {"color": "white"}, "group": "Topic", "id": "Incompressible Flow over Airfoils", "label": "Incompressible Flow over Airfoils", "shape": "dot", "size": 10, "title": "Topic: Incompressible Flow over Airfoils"}, {"font": {"color": "white"}, "group": "Formula", "id": "Kutta Condition", "label": "Kutta Condition", "shape": "dot", "size": 15, "title": "Formula: Kutta Condition"}, {"font": {"color": "white"}, "group": "Formula", "id": "Superposition Principle", "label": "Superposition Principle", "shape": "dot", "size": 15, "title": "Formula: Superposition Principle"}, {"font": {"color": "white"}, "group": "Formula", "id": "Kutta-Joukowski Theorem", "label": "Kutta-Joukowski Theorem", "shape": "dot", "size": 15, "title": "Formula: Kutta-Joukowski Theorem"}, {"font": {"color": "white"}, "group": "Formula", "id": "Ideal Gas Law", "label": "Ideal Gas Law", "shape": "dot", "size": 15, "title": "Formula: Ideal Gas Law"}, {"font": {"color": "white"}, "group": "Concept", "id": "Stagnation Point", "label": "Stagnation Point", "shape": "dot", "size": 20, "title": "Concept: Stagnation Point"}, {"font": {"color": "white"}, "group": "Subject", "id": "Aerodynamics", "label": "Aerodynamics", "shape": "dot", "size": 30, "title": "Subject: Aerodynamics"}, {"font": {"color": "white"}, "group": "Topic", "id": "Potential Flow Theory", "label": "Potential Flow Theory", "shape": "dot", "size": 10, "title": "Topic: Potential Flow Theory"}, {"font": {"color": "white"}, "group": "Formula", "id": "Lift Coefficient", "label": "Lift Coefficient", "shape": "dot", "size": 15, "title": "Formula: Lift Coefficient"}, {"font": {"color": "white"}, "group": "Topic", "id": "Thin Airfoil Theory", "label": "Thin Airfoil Theory", "shape": "dot", "size": 10, "title": "Topic: Thin Airfoil Theory"}, {"font": {"color": "white"}, "group": "Concept", "id": "Pressure Coefficient", "label": "Pressure Coefficient", "shape": "dot", "size": 20, "title": "Concept: Pressure Coefficient"}, {"font": {"color": "white"}, "group": "Formula", "id": "Circulation", "label": "Circulation", "shape": "dot", "size": 15, "title": "Formula: Circulation"}, {"font": {"color": "white"}, "group": "Concept", "id": "Pitching Moment Coefficient", "label": "Pitching Moment Coefficient", "shape": "dot", "size": 20, "title": "Concept: Pitching Moment Coefficient"}, {"font": {"color": "white"}, "group": "Topic", "id": "Potential Flow", "label": "Potential Flow", "shape": "dot", "size": 10, "title": "Topic: Potential Flow"}, {"font": {"color": "white"}, "group": "Concept", "id": "Stagnation Properties", "label": "Stagnation Properties", "shape": "dot", "size": 20, "title": "Concept: Stagnation Properties"}, {"font": {"color": "white"}, "group": "Topic", "id": "Compressible Flow", "label": "Compressible Flow", "shape": "dot", "size": 10, "title": "Topic: Compressible Flow"}, {"font": {"color": "white"}, "group": "Topic", "id": "Oblique Shock Waves", "label": "Oblique Shock Waves", "shape": "dot", "size": 10, "title": "Topic: Oblique Shock Waves"}, {"font": {"color": "white"}, "group": "Topic", "id": "Compressors and Turbines", "label": "Compressors and Turbines", "shape": "dot", "size": 10, "title": "Topic: Compressors and Turbines"}, {"font": {"color": "white"}, "group": "Concept", "id": "Normal Shock Waves", "label": "Normal Shock Waves", "shape": "dot", "size": 20, "title": "Concept: Normal Shock Waves"}, {"font": {"color": "white"}, "group": "Concept", "id": "Mach Number", "label": "Mach Number", "shape": "dot", "size": 20, "title": "Concept: Mach Number"}, {"font": {"color": "white"}, "group": "Formula", "id": "Area-Velocity Relation", "label": "Area-Velocity Relation", "shape": "dot", "size": 15, "title": "Formula: Area-Velocity Relation"}, {"font": {"color": "white"}, "group": "Formula", "id": "Speed of Sound", "label": "Speed of Sound", "shape": "dot", "size": 15, "title": "Formula: Speed of Sound"}, {"font": {"color": "white"}, "group": "Topic", "id": "Compressible Flow over Airfoils", "label": "Compressible Flow over Airfoils", "shape": "dot", "size": 10, "title": "Topic: Compressible Flow over Airfoils"}, {"font": {"color": "white"}, "group": "Formula", "id": "Hydrostatic Equation", "label": "Hydrostatic Equation", "shape": "dot", "size": 15, "title": "Formula: Hydrostatic Equation"}, {"font": {"color": "white"}, "group": "Topic", "id": "Standard Atmosphere", "label": "Standard Atmosphere", "shape": "dot", "size": 10, "title": "Topic: Standard Atmosphere"}, {"font": {"color": "white"}, "group": "Topic", "id": "Incompressible Flow and Airspeed Measurement", "label": "Incompressible Flow and Airspeed Measurement", "shape": "dot", "size": 10, "title": "Topic: Incompressible Flow and Airspeed Measurement"}, {"font": {"color": "white"}, "group": "Formula", "id": "Lift Equation", "label": "Lift Equation", "shape": "dot", "size": 15, "title": "Formula: Lift Equation"}, {"font": {"color": "white"}, "group": "Question", "id": "GATE_AE_2007_Q79", "label": "GATE_AE_2007_Q79", "shape": "dot", "size": 15, "title": "Question: GATE_AE_2007_Q79"}, {"font": {"color": "white"}, "group": "Formula", "id": "Stall Speed", "label": "Stall Speed", "shape": "dot", "size": 15, "title": "Formula: Stall Speed"}, {"font": {"color": "white"}, "group": "Topic", "id": "Finite Wing Aerodynamics", "label": "Finite Wing Aerodynamics", "shape": "dot", "size": 10, "title": "Topic: Finite Wing Aerodynamics"}, {"font": {"color": "white"}, "group": "Formula", "id": "Rate of Climb", "label": "Rate of Climb", "shape": "dot", "size": 15, "title": "Formula: Rate of Climb"}, {"font": {"color": "white"}, "group": "Topic", "id": "Aircraft Performance", "label": "Aircraft Performance", "shape": "dot", "size": 10, "title": "Topic: Aircraft Performance"}, {"font": {"color": "white"}, "group": "Topic", "id": "Ordinary Differential Equations", "label": "Ordinary Differential Equations", "shape": "dot", "size": 10, "title": "Topic: Ordinary Differential Equations"}, {"font": {"color": "white"}, "group": "Topic", "id": "Differential Equations", "label": "Differential Equations", "shape": "dot", "size": 10, "title": "Topic: Differential Equations"}, {"font": {"color": "white"}, "group": "Subject", "id": "Engineering Mathematics", "label": "Engineering Mathematics", "shape": "dot", "size": 30, "title": "Subject: Engineering Mathematics"}, {"font": {"color": "white"}, "group": "Formula", "id": "Green\u0027s Theorem", "label": "Green\u0027s Theorem", "shape": "dot", "size": 15, "title": "Formula: Green\u0027s Theorem"}, {"font": {"color": "white"}, "group": "Concept", "id": "Partial Derivatives", "label": "Partial Derivatives", "shape": "dot", "size": 20, "title": "Concept: Partial Derivatives"}, {"font": {"color": "white"}, "group": "Topic", "id": "Vector Calculus", "label": "Vector Calculus", "shape": "dot", "size": 10, "title": "Topic: Vector Calculus"}, {"font": {"color": "white"}, "group": "Concept", "id": "Partial Differentiation", "label": "Partial Differentiation", "shape": "dot", "size": 20, "title": "Concept: Partial Differentiation"}, {"font": {"color": "white"}, "group": "Formula", "id": "Induced Drag", "label": "Induced Drag", "shape": "dot", "size": 15, "title": "Formula: Induced Drag"}, {"font": {"color": "white"}, "group": "Topic", "id": "Boundary Layer Theory", "label": "Boundary Layer Theory", "shape": "dot", "size": 10, "title": "Topic: Boundary Layer Theory"}, {"font": {"color": "white"}, "group": "Topic", "id": "Finite Wing Theory", "label": "Finite Wing Theory", "shape": "dot", "size": 10, "title": "Topic: Finite Wing Theory"}, {"font": {"color": "white"}, "group": "Formula", "id": "Aspect Ratio", "label": "Aspect Ratio", "shape": "dot", "size": 15, "title": "Formula: Aspect Ratio"}, {"font": {"color": "white"}, "group": "Topic", "id": "High-Lift Devices", "label": "High-Lift Devices", "shape": "dot", "size": 10, "title": "Topic: High-Lift Devices"}, {"font": {"color": "white"}, "group": "Formula", "id": "Bernoulli\u0027s Principle", "label": "Bernoulli\u0027s Principle", "shape": "dot", "size": 15, "title": "Formula: Bernoulli\u0027s Principle"}, {"font": {"color": "white"}, "group": "Subject", "id": "Structures", "label": "Structures", "shape": "dot", "size": 30, "title": "Subject: Structures"}, {"font": {"color": "white"}, "group": "Topic", "id": "Vibration of Continuous Systems", "label": "Vibration of Continuous Systems", "shape": "dot", "size": 10, "title": "Topic: Vibration of Continuous Systems"}, {"font": {"color": "white"}, "group": "Concept", "id": "Stagnation Pressure", "label": "Stagnation Pressure", "shape": "dot", "size": 20, "title": "Concept: Stagnation Pressure"}, {"font": {"color": "white"}, "group": "Formula", "id": "Dynamic Pressure", "label": "Dynamic Pressure", "shape": "dot", "size": 15, "title": "Formula: Dynamic Pressure"}, {"font": {"color": "white"}, "group": "Concept", "id": "Equivalent Airspeed (EAS)", "label": "Equivalent Airspeed (EAS)", "shape": "dot", "size": 20, "title": "Concept: Equivalent Airspeed (EAS)"}, {"font": {"color": "white"}, "group": "Formula", "id": "Critical Mach Number", "label": "Critical Mach Number", "shape": "dot", "size": 15, "title": "Formula: Critical Mach Number"}, {"font": {"color": "white"}, "group": "Concept", "id": "Compressibility Effects", "label": "Compressibility Effects", "shape": "dot", "size": 20, "title": "Concept: Compressibility Effects"}, {"font": {"color": "white"}, "group": "Concept", "id": "Laminar Boundary Layer", "label": "Laminar Boundary Layer", "shape": "dot", "size": 20, "title": "Concept: Laminar Boundary Layer"}, {"font": {"color": "white"}, "group": "Concept", "id": "Boundary Layer Transition", "label": "Boundary Layer Transition", "shape": "dot", "size": 20, "title": "Concept: Boundary Layer Transition"}, {"font": {"color": "white"}, "group": "Topic", "id": "Navier-Stokes Equations", "label": "Navier-Stokes Equations", "shape": "dot", "size": 10, "title": "Topic: Navier-Stokes Equations"}, {"font": {"color": "white"}, "group": "Topic", "id": "Static Longitudinal Stability", "label": "Static Longitudinal Stability", "shape": "dot", "size": 10, "title": "Topic: Static Longitudinal Stability"}, {"font": {"color": "white"}, "group": "Subject", "id": "Flight Mechanics", "label": "Flight Mechanics", "shape": "dot", "size": 30, "title": "Subject: Flight Mechanics"}, {"font": {"color": "white"}, "group": "Topic", "id": "Airfoil Aerodynamics", "label": "Airfoil Aerodynamics", "shape": "dot", "size": 10, "title": "Topic: Airfoil Aerodynamics"}, {"font": {"color": "white"}, "group": "Topic", "id": "Longitudinal Static Stability", "label": "Longitudinal Static Stability", "shape": "dot", "size": 10, "title": "Topic: Longitudinal Static Stability"}, {"font": {"color": "white"}, "group": "Topic", "id": "Aerodynamic Forces and Moments", "label": "Aerodynamic Forces and Moments", "shape": "dot", "size": 10, "title": "Topic: Aerodynamic Forces and Moments"}, {"font": {"color": "white"}, "group": "Topic", "id": "Incompressible Potential Flow", "label": "Incompressible Potential Flow", "shape": "dot", "size": 10, "title": "Topic: Incompressible Potential Flow"}, {"font": {"color": "white"}, "group": "Concept", "id": "Velocity Potential", "label": "Velocity Potential", "shape": "dot", "size": 20, "title": "Concept: Velocity Potential"}, {"font": {"color": "white"}, "group": "Topic", "id": "Inviscid, Incompressible Flow", "label": "Inviscid, Incompressible Flow", "shape": "dot", "size": 10, "title": "Topic: Inviscid, Incompressible Flow"}, {"font": {"color": "white"}, "group": "Concept", "id": "Irrotational Flow", "label": "Irrotational Flow", "shape": "dot", "size": 20, "title": "Concept: Irrotational Flow"}, {"font": {"color": "white"}, "group": "Formula", "id": "Bernoulli\u0027s Equation", "label": "Bernoulli\u0027s Equation", "shape": "dot", "size": 15, "title": "Formula: Bernoulli\u0027s Equation"}, {"font": {"color": "white"}, "group": "Topic", "id": "Airspeed and Altitude", "label": "Airspeed and Altitude", "shape": "dot", "size": 10, "title": "Topic: Airspeed and Altitude"}, {"font": {"color": "white"}, "group": "Formula", "id": "Isentropic Flow Relations", "label": "Isentropic Flow Relations", "shape": "dot", "size": 15, "title": "Formula: Isentropic Flow Relations"}, {"font": {"color": "white"}, "group": "Concept", "id": "Vorticity", "label": "Vorticity", "shape": "dot", "size": 20, "title": "Concept: Vorticity"}, {"font": {"color": "white"}, "group": "Concept", "id": "Normal Shock Relations", "label": "Normal Shock Relations", "shape": "dot", "size": 20, "title": "Concept: Normal Shock Relations"}, {"font": {"color": "white"}, "group": "Concept", "id": "Choked Flow", "label": "Choked Flow", "shape": "dot", "size": 20, "title": "Concept: Choked Flow"}, {"font": {"color": "white"}, "group": "Concept", "id": "Isentropic Flow", "label": "Isentropic Flow", "shape": "dot", "size": 20, "title": "Concept: Isentropic Flow"}, {"font": {"color": "white"}, "group": "Formula", "id": "Continuity Equation", "label": "Continuity Equation", "shape": "dot", "size": 15, "title": "Formula: Continuity Equation"}, {"font": {"color": "white"}, "group": "Topic", "id": "Supersonic Flow", "label": "Supersonic Flow", "shape": "dot", "size": 10, "title": "Topic: Supersonic Flow"}, {"font": {"color": "white"}, "group": "Topic", "id": "Compressible Flow Theory", "label": "Compressible Flow Theory", "shape": "dot", "size": 10, "title": "Topic: Compressible Flow Theory"}, {"font": {"color": "white"}, "group": "Concept", "id": "Prandtl-Meyer Expansion", "label": "Prandtl-Meyer Expansion", "shape": "dot", "size": 20, "title": "Concept: Prandtl-Meyer Expansion"}, {"font": {"color": "white"}, "group": "Formula", "id": "Theta-Beta-M Relation", "label": "Theta-Beta-M Relation", "shape": "dot", "size": 15, "title": "Formula: Theta-Beta-M Relation"}, {"font": {"color": "white"}, "group": "Formula", "id": "Mach Angle", "label": "Mach Angle", "shape": "dot", "size": 15, "title": "Formula: Mach Angle"}, {"font": {"color": "white"}, "group": "Topic", "id": "Fanno Flow", "label": "Fanno Flow", "shape": "dot", "size": 10, "title": "Topic: Fanno Flow"}, {"font": {"color": "white"}, "group": "Question", "id": "GATE_2014_AE_Q09", "label": "GATE_2014_AE_Q09", "shape": "dot", "size": 15, "title": "Question: GATE_2014_AE_Q09"}, {"font": {"color": "white"}, "group": "Topic", "id": "Vortex Dynamics", "label": "Vortex Dynamics", "shape": "dot", "size": 10, "title": "Topic: Vortex Dynamics"}, {"font": {"color": "white"}, "group": "Topic", "id": "Airfoil Theory", "label": "Airfoil Theory", "shape": "dot", "size": 10, "title": "Topic: Airfoil Theory"}, {"font": {"color": "white"}, "group": "Question", "id": "GATE_AE_2008_Q50", "label": "GATE_AE_2008_Q50", "shape": "dot", "size": 15, "title": "Question: GATE_AE_2008_Q50"}, {"font": {"color": "white"}, "group": "Topic", "id": "Fluid Kinematics", "label": "Fluid Kinematics", "shape": "dot", "size": 10, "title": "Topic: Fluid Kinematics"}, {"font": {"color": "white"}, "group": "Topic", "id": "Potential Flow and Vortex Dynamics", "label": "Potential Flow and Vortex Dynamics", "shape": "dot", "size": 10, "title": "Topic: Potential Flow and Vortex Dynamics"}, {"font": {"color": "white"}, "group": "Topic", "id": "Integral Calculus", "label": "Integral Calculus", "shape": "dot", "size": 10, "title": "Topic: Integral Calculus"}, {"font": {"color": "white"}, "group": "Topic", "id": "Dimensional Analysis and Similarity", "label": "Dimensional Analysis and Similarity", "shape": "dot", "size": 10, "title": "Topic: Dimensional Analysis and Similarity"}, {"font": {"color": "white"}, "group": "Formula", "id": "Reynolds Number", "label": "Reynolds Number", "shape": "dot", "size": 15, "title": "Formula: Reynolds Number"}, {"font": {"color": "white"}, "group": "Concept", "id": "Dynamic Similarity", "label": "Dynamic Similarity", "shape": "dot", "size": 20, "title": "Concept: Dynamic Similarity"}, {"font": {"color": "white"}, "group": "Topic", "id": "Compressible Flow, Normal Shock Waves", "label": "Compressible Flow, Normal Shock Waves", "shape": "dot", "size": 10, "title": "Topic: Compressible Flow, Normal Shock Waves"}, {"font": {"color": "white"}, "group": "Topic", "id": "Compressible Flow and Gas Dynamics", "label": "Compressible Flow and Gas Dynamics", "shape": "dot", "size": 10, "title": "Topic: Compressible Flow and Gas Dynamics"}, {"font": {"color": "white"}, "group": "Question", "id": "GATE_AE_2007_Q16", "label": "GATE_AE_2007_Q16", "shape": "dot", "size": 15, "title": "Question: GATE_AE_2007_Q16"}, {"font": {"color": "white"}, "group": "Concept", "id": "Angle of Attack", "label": "Angle of Attack", "shape": "dot", "size": 20, "title": "Concept: Angle of Attack"}, {"font": {"color": "white"}, "group": "Question", "id": "GATE_2014_AE_Q08", "label": "GATE_2014_AE_Q08", "shape": "dot", "size": 15, "title": "Question: GATE_2014_AE_Q08"}, {"font": {"color": "white"}, "group": "Topic", "id": "Fundamentals of Aerodynamics", "label": "Fundamentals of Aerodynamics", "shape": "dot", "size": 10, "title": "Topic: Fundamentals of Aerodynamics"}, {"font": {"color": "white"}, "group": "Formula", "id": "Boundary Layer Thickness", "label": "Boundary Layer Thickness", "shape": "dot", "size": 15, "title": "Formula: Boundary Layer Thickness"}, {"font": {"color": "white"}, "group": "Topic", "id": "Fluid Kinematics and Vorticity", "label": "Fluid Kinematics and Vorticity", "shape": "dot", "size": 10, "title": "Topic: Fluid Kinematics and Vorticity"}, {"font": {"color": "white"}, "group": "Formula", "id": "Induced Drag Coefficient", "label": "Induced Drag Coefficient", "shape": "dot", "size": 15, "title": "Formula: Induced Drag Coefficient"}, {"font": {"color": "white"}, "group": "Topic", "id": "Aircraft Stability and Control", "label": "Aircraft Stability and Control", "shape": "dot", "size": 10, "title": "Topic: Aircraft Stability and Control"}, {"font": {"color": "white"}, "group": "Topic", "id": "Subsonic Compressible Flow over Airfoils", "label": "Subsonic Compressible Flow over Airfoils", "shape": "dot", "size": 10, "title": "Topic: Subsonic Compressible Flow over Airfoils"}, {"font": {"color": "white"}, "group": "Question", "id": "GATE_2014_AE_Q07", "label": "GATE_2014_AE_Q07", "shape": "dot", "size": 15, "title": "Question: GATE_2014_AE_Q07"}, {"font": {"color": "white"}, "group": "Concept", "id": "Compressible Flow Principles", "label": "Compressible Flow Principles", "shape": "dot", "size": 20, "title": "Concept: Compressible Flow Principles"}, {"font": {"color": "white"}, "group": "Concept", "id": "Compressible Flow Fundamentals", "label": "Compressible Flow Fundamentals", "shape": "dot", "size": 20, "title": "Concept: Compressible Flow Fundamentals"}, {"font": {"color": "white"}, "group": "Question", "id": "GATE_2009_AE_Q13", "label": "GATE_2009_AE_Q13", "shape": "dot", "size": 15, "title": "Question: GATE_2009_AE_Q13"}, {"font": {"color": "white"}, "group": "Concept", "id": "Oswald Efficiency Factor", "label": "Oswald Efficiency Factor", "shape": "dot", "size": 20, "title": "Concept: Oswald Efficiency Factor"}, {"font": {"color": "white"}, "group": "Concept", "id": "Prandtl\u0027s Lifting Line Theory", "label": "Prandtl\u0027s Lifting Line Theory", "shape": "dot", "size": 20, "title": "Concept: Prandtl\u0027s Lifting Line Theory"}, {"font": {"color": "white"}, "group": "Topic", "id": "Airfoil Nomenclature and Characteristics", "label": "Airfoil Nomenclature and Characteristics", "shape": "dot", "size": 10, "title": "Topic: Airfoil Nomenclature and Characteristics"}, {"font": {"color": "white"}, "group": "Topic", "id": "Viscous Flow", "label": "Viscous Flow", "shape": "dot", "size": 10, "title": "Topic: Viscous Flow"}, {"font": {"color": "white"}, "group": "Concept", "id": "Velocity Triangles", "label": "Velocity Triangles", "shape": "dot", "size": 20, "title": "Concept: Velocity Triangles"}, {"font": {"color": "white"}, "group": "Concept", "id": "Fluid Mechanics Principles", "label": "Fluid Mechanics Principles", "shape": "dot", "size": 20, "title": "Concept: Fluid Mechanics Principles"}, {"font": {"color": "white"}, "group": "Topic", "id": "Axial Flow Compressors", "label": "Axial Flow Compressors", "shape": "dot", "size": 10, "title": "Topic: Axial Flow Compressors"}, {"font": {"color": "white"}, "group": "Formula", "id": "Degree of Reaction", "label": "Degree of Reaction", "shape": "dot", "size": 15, "title": "Formula: Degree of Reaction"}, {"font": {"color": "white"}, "group": "Topic", "id": "Airspeed Definitions and Relationships", "label": "Airspeed Definitions and Relationships", "shape": "dot", "size": 10, "title": "Topic: Airspeed Definitions and Relationships"}, {"font": {"color": "white"}, "group": "Topic", "id": "Incompressible Flow", "label": "Incompressible Flow", "shape": "dot", "size": 10, "title": "Topic: Incompressible Flow"}, {"font": {"color": "white"}, "group": "Question", "id": "GATE_2016_AE_Q04", "label": "GATE_2016_AE_Q04", "shape": "dot", "size": 15, "title": "Question: GATE_2016_AE_Q04"}, {"font": {"color": "white"}, "group": "Formula", "id": "Euler Turbomachinery Equation", "label": "Euler Turbomachinery Equation", "shape": "dot", "size": 15, "title": "Formula: Euler Turbomachinery Equation"}, {"font": {"color": "white"}, "group": "Formula", "id": "Lift-to-Drag Ratio", "label": "Lift-to-Drag Ratio", "shape": "dot", "size": 15, "title": "Formula: Lift-to-Drag Ratio"}, {"font": {"color": "white"}, "group": "Formula", "id": "Flow Separation", "label": "Flow Separation", "shape": "dot", "size": 15, "title": "Formula: Flow Separation"}, {"font": {"color": "white"}, "group": "Formula", "id": "Adverse Pressure Gradient", "label": "Adverse Pressure Gradient", "shape": "dot", "size": 15, "title": "Formula: Adverse Pressure Gradient"}, {"font": {"color": "white"}, "group": "Topic", "id": "Flow Visualization", "label": "Flow Visualization", "shape": "dot", "size": 10, "title": "Topic: Flow Visualization"}, {"font": {"color": "white"}, "group": "Topic", "id": "Vector Calculus in Fluid Dynamics", "label": "Vector Calculus in Fluid Dynamics", "shape": "dot", "size": 10, "title": "Topic: Vector Calculus in Fluid Dynamics"}, {"font": {"color": "white"}, "group": "Question", "id": "GATE_2012_AE_Q06", "label": "GATE_2012_AE_Q06", "shape": "dot", "size": 15, "title": "Question: GATE_2012_AE_Q06"}, {"font": {"color": "white"}, "group": "Concept", "id": "Dimensional Analysis", "label": "Dimensional Analysis", "shape": "dot", "size": 20, "title": "Concept: Dimensional Analysis"}, {"font": {"color": "white"}, "group": "Formula", "id": "Gradient of a Scalar Field", "label": "Gradient of a Scalar Field", "shape": "dot", "size": 15, "title": "Formula: Gradient of a Scalar Field"}, {"font": {"color": "white"}, "group": "Question", "id": "GATE_2013_AE_Q26", "label": "GATE_2013_AE_Q26", "shape": "dot", "size": 15, "title": "Question: GATE_2013_AE_Q26"}, {"font": {"color": "white"}, "group": "Formula", "id": "Directional Derivative", "label": "Directional Derivative", "shape": "dot", "size": 15, "title": "Formula: Directional Derivative"}, {"font": {"color": "white"}, "group": "Topic", "id": "Incompressible Flow over Finite Wings", "label": "Incompressible Flow over Finite Wings", "shape": "dot", "size": 10, "title": "Topic: Incompressible Flow over Finite Wings"}, {"font": {"color": "white"}, "group": "Topic", "id": "Directional Stability", "label": "Directional Stability", "shape": "dot", "size": 10, "title": "Topic: Directional Stability"}, {"font": {"color": "white"}, "group": "Formula", "id": "Gauss\u0027s Divergence Theorem", "label": "Gauss\u0027s Divergence Theorem", "shape": "dot", "size": 15, "title": "Formula: Gauss\u0027s Divergence Theorem"}, {"font": {"color": "white"}, "group": "Subject", "id": "Propulsion", "label": "Propulsion", "shape": "dot", "size": 30, "title": "Subject: Propulsion"}, {"font": {"color": "white"}, "group": "Question", "id": "GATE_2022_AE_Q50", "label": "GATE_2022_AE_Q50", "shape": "dot", "size": 15, "title": "Question: GATE_2022_AE_Q50"}, {"font": {"color": "white"}, "group": "Concept", "id": "Stream Function", "label": "Stream Function", "shape": "dot", "size": 20, "title": "Concept: Stream Function"}, {"font": {"color": "white"}, "group": "Topic", "id": "Fluid Properties", "label": "Fluid Properties", "shape": "dot", "size": 10, "title": "Topic: Fluid Properties"}, {"font": {"color": "white"}, "group": "Topic", "id": "Wind Tunnel Testing and Scaling", "label": "Wind Tunnel Testing and Scaling", "shape": "dot", "size": 10, "title": "Topic: Wind Tunnel Testing and Scaling"}, {"font": {"color": "white"}, "group": "Concept", "id": "Service Ceiling", "label": "Service Ceiling", "shape": "dot", "size": 20, "title": "Concept: Service Ceiling"}, {"font": {"color": "white"}, "group": "Formula", "id": "Excess Power", "label": "Excess Power", "shape": "dot", "size": 15, "title": "Formula: Excess Power"}, {"font": {"color": "white"}, "group": "Formula", "id": "Drag Divergence Mach Number", "label": "Drag Divergence Mach Number", "shape": "dot", "size": 15, "title": "Formula: Drag Divergence Mach Number"}, {"font": {"color": "white"}, "group": "Topic", "id": "Airspeed Measurement", "label": "Airspeed Measurement", "shape": "dot", "size": 10, "title": "Topic: Airspeed Measurement"}, {"font": {"color": "white"}, "group": "Question", "id": "GATE_2010_AE_Q46", "label": "GATE_2010_AE_Q46", "shape": "dot", "size": 15, "title": "Question: GATE_2010_AE_Q46"}, {"font": {"color": "white"}, "group": "Concept", "id": "Absolute Ceiling", "label": "Absolute Ceiling", "shape": "dot", "size": 20, "title": "Concept: Absolute Ceiling"}, {"font": {"color": "white"}, "group": "Concept", "id": "Turbulent Boundary Layer", "label": "Turbulent Boundary Layer", "shape": "dot", "size": 20, "title": "Concept: Turbulent Boundary Layer"}, {"font": {"color": "white"}, "group": "Topic", "id": "Airfoil Design and Characteristics", "label": "Airfoil Design and Characteristics", "shape": "dot", "size": 10, "title": "Topic: Airfoil Design and Characteristics"}, {"font": {"color": "white"}, "group": "Question", "id": "GATE_2021_AE_Q16", "label": "GATE_2021_AE_Q16", "shape": "dot", "size": 15, "title": "Question: GATE_2021_AE_Q16"}, {"font": {"color": "white"}, "group": "Topic", "id": "Airfoil Geometry and Nomenclature", "label": "Airfoil Geometry and Nomenclature", "shape": "dot", "size": 10, "title": "Topic: Airfoil Geometry and Nomenclature"}, {"font": {"color": "white"}, "group": "Concept", "id": "Aerodynamic Center (AC)", "label": "Aerodynamic Center (AC)", "shape": "dot", "size": 20, "title": "Concept: Aerodynamic Center (AC)"}, {"font": {"color": "white"}, "group": "Topic", "id": "Fundamentals of Fluid Mechanics", "label": "Fundamentals of Fluid Mechanics", "shape": "dot", "size": 10, "title": "Topic: Fundamentals of Fluid Mechanics"}]);
+                  edges = new vis.DataSet([{"from": "Airfoil Geometry", "label": "REQUIRES", "title": "REQUIRES", "to": "Lift Curve Slope", "width": 1}, {"from": "Airfoil Geometry", "label": "REQUIRES", "title": "REQUIRES", "to": "Drag Polar", "width": 1}, {"from": "Airfoil Geometry", "label": "REQUIRES", "title": "REQUIRES", "to": "Main Concept", "width": 1}, {"from": "Airfoil Geometry", "label": "REQUIRES", "title": "REQUIRES", "to": "Aerodynamic Center", "width": 1}, {"from": "Incompressible Flow over Airfoils", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Kutta Condition", "width": 1}, {"from": "Incompressible Flow over Airfoils", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Superposition Principle", "width": 1}, {"from": "Incompressible Flow over Airfoils", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Kutta-Joukowski Theorem", "width": 1}, {"from": "Incompressible Flow over Airfoils", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Ideal Gas Law", "width": 1}, {"from": "Incompressible Flow over Airfoils", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Lift Curve Slope", "width": 1}, {"from": "Incompressible Flow over Airfoils", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Stagnation Point", "width": 1}, {"from": "Incompressible Flow over Airfoils", "label": "PART_OF", "title": "PART_OF", "to": "Aerodynamics", "width": 1}, {"from": "Incompressible Flow over Airfoils", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Potential Flow Theory", "width": 1}, {"from": "Incompressible Flow over Airfoils", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Lift Coefficient", "width": 1}, {"from": "Incompressible Flow over Airfoils", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Thin Airfoil Theory", "width": 1}, {"from": "Incompressible Flow over Airfoils", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Aerodynamic Center", "width": 1}, {"from": "Incompressible Flow over Airfoils", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Pressure Coefficient", "width": 1}, {"from": "Incompressible Flow over Airfoils", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Circulation", "width": 1}, {"from": "Incompressible Flow over Airfoils", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Pitching Moment Coefficient", "width": 1}, {"from": "Incompressible Flow over Airfoils", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Potential Flow", "width": 1}, {"from": "Stagnation Properties", "label": "REQUIRES", "title": "REQUIRES", "to": "Main Concept", "width": 1}, {"from": "Stagnation Properties", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Compressible Flow", "width": 1}, {"from": "Stagnation Properties", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Oblique Shock Waves", "width": 1}, {"from": "Stagnation Properties", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Compressors and Turbines", "width": 1}, {"from": "Stagnation Properties", "label": "REQUIRES", "title": "REQUIRES", "to": "Normal Shock Waves", "width": 1}, {"from": "Mach Number", "label": "REQUIRES", "title": "REQUIRES", "to": "Area-Velocity Relation", "width": 1}, {"from": "Mach Number", "label": "REQUIRES", "title": "REQUIRES", "to": "Main Concept", "width": 1}, {"from": "Mach Number", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Compressible Flow", "width": 1}, {"from": "Mach Number", "label": "REQUIRES", "title": "REQUIRES", "to": "Speed of Sound", "width": 1}, {"from": "Mach Number", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Compressible Flow over Airfoils", "width": 1}, {"from": "Mach Number", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Oblique Shock Waves", "width": 1}, {"from": "Hydrostatic Equation", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Standard Atmosphere", "width": 1}, {"from": "Hydrostatic Equation", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Incompressible Flow and Airspeed Measurement", "width": 1}, {"from": "Hydrostatic Equation", "label": "REQUIRES", "title": "REQUIRES", "to": "Main Concept", "width": 1}, {"from": "Lift Equation", "label": "TESTS", "title": "TESTS", "to": "GATE_AE_2007_Q79", "width": 1}, {"from": "Lift Equation", "label": "REQUIRES", "title": "REQUIRES", "to": "Stall Speed", "width": 1}, {"from": "Lift Equation", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Finite Wing Aerodynamics", "width": 1}, {"from": "Lift Equation", "label": "REQUIRES", "title": "REQUIRES", "to": "Main Concept", "width": 1}, {"from": "Lift Equation", "label": "REQUIRES", "title": "REQUIRES", "to": "Rate of Climb", "width": 1}, {"from": "Lift Equation", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Aircraft Performance", "width": 1}, {"from": "Lift Equation", "label": "REQUIRES", "title": "REQUIRES", "to": "Lift Coefficient", "width": 1}, {"from": "Ordinary Differential Equations", "label": "REQUIRES", "title": "REQUIRES", "to": "Differential Equations", "width": 1}, {"from": "Ordinary Differential Equations", "label": "REQUIRES", "title": "REQUIRES", "to": "Main Concept", "width": 1}, {"from": "Ordinary Differential Equations", "label": "PART_OF", "title": "PART_OF", "to": "Engineering Mathematics", "width": 1}, {"from": "Green\u0027s Theorem", "label": "REQUIRES", "title": "REQUIRES", "to": "Partial Derivatives", "width": 1}, {"from": "Green\u0027s Theorem", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Vector Calculus", "width": 1}, {"from": "Green\u0027s Theorem", "label": "REQUIRES", "title": "REQUIRES", "to": "Partial Differentiation", "width": 1}, {"from": "Green\u0027s Theorem", "label": "REQUIRES", "title": "REQUIRES", "to": "Main Concept", "width": 1}, {"from": "Induced Drag", "label": "REQUIRES", "title": "REQUIRES", "to": "Kutta-Joukowski Theorem", "width": 1}, {"from": "Induced Drag", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Finite Wing Aerodynamics", "width": 1}, {"from": "Induced Drag", "label": "REQUIRES", "title": "REQUIRES", "to": "Boundary Layer Theory", "width": 1}, {"from": "Induced Drag", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Finite Wing Theory", "width": 1}, {"from": "Induced Drag", "label": "REQUIRES", "title": "REQUIRES", "to": "Aspect Ratio", "width": 1}, {"from": "Induced Drag", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Aircraft Performance", "width": 1}, {"from": "Induced Drag", "label": "REQUIRES", "title": "REQUIRES", "to": "Lift Coefficient", "width": 1}, {"from": "Stall Speed", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Aircraft Performance", "width": 1}, {"from": "Stall Speed", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "High-Lift Devices", "width": 1}, {"from": "Stall Speed", "label": "REQUIRES", "title": "REQUIRES", "to": "Bernoulli\u0027s Principle", "width": 1}, {"from": "Stall Speed", "label": "REQUIRES", "title": "REQUIRES", "to": "Lift Coefficient", "width": 1}, {"from": "Structures", "label": "PART_OF", "title": "PART_OF", "to": "Vector Calculus", "width": 1}, {"from": "Structures", "label": "PART_OF", "title": "PART_OF", "to": "Vibration of Continuous Systems", "width": 1}, {"from": "Structures", "label": "PART_OF", "title": "PART_OF", "to": "Engineering Mathematics", "width": 1}, {"from": "Incompressible Flow and Airspeed Measurement", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Stagnation Pressure", "width": 1}, {"from": "Incompressible Flow and Airspeed Measurement", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Ideal Gas Law", "width": 1}, {"from": "Incompressible Flow and Airspeed Measurement", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Dynamic Pressure", "width": 1}, {"from": "Incompressible Flow and Airspeed Measurement", "label": "PART_OF", "title": "PART_OF", "to": "Aerodynamics", "width": 1}, {"from": "Incompressible Flow and Airspeed Measurement", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Bernoulli\u0027s Principle", "width": 1}, {"from": "Incompressible Flow and Airspeed Measurement", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Equivalent Airspeed (EAS)", "width": 1}, {"from": "Compressible Flow over Airfoils", "label": "PART_OF", "title": "PART_OF", "to": "Aerodynamics", "width": 1}, {"from": "Compressible Flow over Airfoils", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Lift Coefficient", "width": 1}, {"from": "Compressible Flow over Airfoils", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Thin Airfoil Theory", "width": 1}, {"from": "Compressible Flow over Airfoils", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Critical Mach Number", "width": 1}, {"from": "Compressible Flow over Airfoils", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Compressibility Effects", "width": 1}, {"from": "Laminar Boundary Layer", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Boundary Layer Theory", "width": 1}, {"from": "Laminar Boundary Layer", "label": "ENABLES", "title": "ENABLES", "to": "Boundary Layer Transition", "width": 1}, {"from": "Laminar Boundary Layer", "label": "REQUIRES", "title": "REQUIRES", "to": "Navier-Stokes Equations", "width": 1}, {"from": "Static Longitudinal Stability", "label": "PART_OF", "title": "PART_OF", "to": "Flight Mechanics", "width": 1}, {"from": "Static Longitudinal Stability", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Airfoil Aerodynamics", "width": 1}, {"from": "Static Longitudinal Stability", "label": "REQUIRES", "title": "REQUIRES", "to": "Main Concept", "width": 1}, {"from": "Static Longitudinal Stability", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Longitudinal Static Stability", "width": 1}, {"from": "Static Longitudinal Stability", "label": "REQUIRES", "title": "REQUIRES", "to": "Aerodynamic Forces and Moments", "width": 1}, {"from": "Static Longitudinal Stability", "label": "REQUIRES", "title": "REQUIRES", "to": "Pitching Moment Coefficient", "width": 1}, {"from": "Static Longitudinal Stability", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Static Longitudinal Stability", "width": 1}, {"from": "Incompressible Potential Flow", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Kutta-Joukowski Theorem", "width": 1}, {"from": "Incompressible Potential Flow", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Velocity Potential", "width": 1}, {"from": "Incompressible Potential Flow", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Inviscid, Incompressible Flow", "width": 1}, {"from": "Incompressible Potential Flow", "label": "PART_OF", "title": "PART_OF", "to": "Aerodynamics", "width": 1}, {"from": "Incompressible Potential Flow", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Circulation", "width": 1}, {"from": "Incompressible Potential Flow", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Irrotational Flow", "width": 1}, {"from": "Incompressible Potential Flow", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Potential Flow Theory", "width": 1}, {"from": "Incompressible Potential Flow", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Pressure Coefficient", "width": 1}, {"from": "Incompressible Potential Flow", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Bernoulli\u0027s Equation", "width": 1}, {"from": "Airspeed and Altitude", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Equivalent Airspeed (EAS)", "width": 1}, {"from": "Airspeed and Altitude", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Dynamic Pressure", "width": 1}, {"from": "Airspeed and Altitude", "label": "PART_OF", "title": "PART_OF", "to": "Aerodynamics", "width": 1}, {"from": "Compressible Flow", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Isentropic Flow Relations", "width": 1}, {"from": "Compressible Flow", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Stagnation Pressure", "width": 1}, {"from": "Compressible Flow", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Vorticity", "width": 1}, {"from": "Compressible Flow", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Dynamic Pressure", "width": 1}, {"from": "Compressible Flow", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Area-Velocity Relation", "width": 1}, {"from": "Compressible Flow", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Normal Shock Relations", "width": 1}, {"from": "Compressible Flow", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Choked Flow", "width": 1}, {"from": "Compressible Flow", "label": "PART_OF", "title": "PART_OF", "to": "Aerodynamics", "width": 1}, {"from": "Compressible Flow", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Isentropic Flow", "width": 1}, {"from": "Compressible Flow", "label": "REQUIRES", "title": "REQUIRES", "to": "Aerodynamic Center", "width": 1}, {"from": "Compressible Flow", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Normal Shock Waves", "width": 1}, {"from": "Compressible Flow", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Pressure Coefficient", "width": 1}, {"from": "Compressible Flow", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Continuity Equation", "width": 1}, {"from": "Compressible Flow", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Supersonic Flow", "width": 1}, {"from": "Compressible Flow", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Compressible Flow Theory", "width": 1}, {"from": "Compressible Flow", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Prandtl-Meyer Expansion", "width": 1}, {"from": "Compressible Flow", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Oblique Shock Waves", "width": 1}, {"from": "Compressible Flow", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Theta-Beta-M Relation", "width": 1}, {"from": "Compressible Flow", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Mach Angle", "width": 1}, {"from": "Compressible Flow", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Speed of Sound", "width": 1}, {"from": "Compressible Flow", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Fanno Flow", "width": 1}, {"from": "Circulation", "label": "ENABLES", "title": "ENABLES", "to": "Kutta-Joukowski Theorem", "width": 1}, {"from": "Circulation", "label": "TESTS", "title": "TESTS", "to": "GATE_2014_AE_Q09", "width": 1}, {"from": "Circulation", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Vortex Dynamics", "width": 1}, {"from": "Circulation", "label": "ENABLES", "title": "ENABLES", "to": "Airfoil Theory", "width": 1}, {"from": "Circulation", "label": "BENEFITS_FROM", "title": "BENEFITS_FROM", "to": "GATE_AE_2008_Q50", "width": 1}, {"from": "Circulation", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Potential Flow", "width": 1}, {"from": "Circulation", "label": "REQUIRES", "title": "REQUIRES", "to": "Vector Calculus", "width": 1}, {"from": "Circulation", "label": "REQUIRES", "title": "REQUIRES", "to": "Fluid Kinematics", "width": 1}, {"from": "Circulation", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Potential Flow and Vortex Dynamics", "width": 1}, {"from": "Circulation", "label": "REQUIRES", "title": "REQUIRES", "to": "Irrotational Flow", "width": 1}, {"from": "Engineering Mathematics", "label": "PART_OF", "title": "PART_OF", "to": "Differential Equations", "width": 1}, {"from": "Engineering Mathematics", "label": "PART_OF", "title": "PART_OF", "to": "Vector Calculus", "width": 1}, {"from": "Engineering Mathematics", "label": "PART_OF", "title": "PART_OF", "to": "Integral Calculus", "width": 1}, {"from": "Dimensional Analysis and Similarity", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Reynolds Number", "width": 1}, {"from": "Dimensional Analysis and Similarity", "label": "REQUIRES", "title": "REQUIRES", "to": "Dynamic Similarity", "width": 1}, {"from": "Dimensional Analysis and Similarity", "label": "PART_OF", "title": "PART_OF", "to": "Aerodynamics", "width": 1}, {"from": "Potential Flow and Vortex Dynamics", "label": "PART_OF", "title": "PART_OF", "to": "Aerodynamics", "width": 1}, {"from": "Normal Shock Waves", "label": "REQUIRES", "title": "REQUIRES", "to": "Isentropic Flow Relations", "width": 1}, {"from": "Normal Shock Waves", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Compressible Flow, Normal Shock Waves", "width": 1}, {"from": "Normal Shock Waves", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Compressible Flow and Gas Dynamics", "width": 1}, {"from": "Normal Shock Waves", "label": "REQUIRES", "title": "REQUIRES", "to": "Continuity Equation", "width": 1}, {"from": "Normal Shock Waves", "label": "REQUIRES", "title": "REQUIRES", "to": "Compressible Flow Theory", "width": 1}, {"from": "Compressible Flow and Gas Dynamics", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Isentropic Flow Relations", "width": 1}, {"from": "Compressible Flow and Gas Dynamics", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Choked Flow", "width": 1}, {"from": "Compressible Flow and Gas Dynamics", "label": "PART_OF", "title": "PART_OF", "to": "Aerodynamics", "width": 1}, {"from": "Compressible Flow and Gas Dynamics", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Supersonic Flow", "width": 1}, {"from": "Compressible Flow Theory", "label": "PART_OF", "title": "PART_OF", "to": "Aerodynamics", "width": 1}, {"from": "Compressible Flow Theory", "label": "REQUIRES", "title": "REQUIRES", "to": "GATE_AE_2007_Q16", "width": 1}, {"from": "Compressible Flow Theory", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Continuity Equation", "width": 1}, {"from": "Kutta Condition", "label": "TESTS", "title": "TESTS", "to": "GATE_AE_2008_Q50", "width": 1}, {"from": "Kutta Condition", "label": "ENABLES", "title": "ENABLES", "to": "Thin Airfoil Theory", "width": 1}, {"from": "Kutta Condition", "label": "REQUIRES", "title": "REQUIRES", "to": "Potential Flow Theory", "width": 1}, {"from": "Kutta Condition", "label": "REQUIRES", "title": "REQUIRES", "to": "Bernoulli\u0027s Principle", "width": 1}, {"from": "Angle of Attack", "label": "REQUIRES", "title": "REQUIRES", "to": "Lift Curve Slope", "width": 1}, {"from": "Angle of Attack", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Airfoil Theory", "width": 1}, {"from": "Angle of Attack", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Longitudinal Static Stability", "width": 1}, {"from": "Mach Angle", "label": "USES_FORMULA", "title": "USES_FORMULA", "to": "GATE_2014_AE_Q08", "width": 1}, {"from": "Mach Angle", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Supersonic Flow", "width": 1}, {"from": "GATE_AE_2007_Q79", "label": "TESTS", "title": "TESTS", "to": "Aspect Ratio", "width": 1}, {"from": "GATE_AE_2007_Q79", "label": "REQUIRES", "title": "REQUIRES", "to": "Fundamentals of Aerodynamics", "width": 1}, {"from": "Boundary Layer Thickness", "label": "REQUIRES", "title": "REQUIRES", "to": "Boundary Layer Theory", "width": 1}, {"from": "Boundary Layer Thickness", "label": "REQUIRES", "title": "REQUIRES", "to": "Reynolds Number", "width": 1}, {"from": "Boundary Layer Thickness", "label": "REQUIRES", "title": "REQUIRES", "to": "Navier-Stokes Equations", "width": 1}, {"from": "Vorticity", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Fluid Kinematics and Vorticity", "width": 1}, {"from": "Vorticity", "label": "REQUIRES", "title": "REQUIRES", "to": "Vector Calculus", "width": 1}, {"from": "Fluid Kinematics and Vorticity", "label": "PART_OF", "title": "PART_OF", "to": "Aerodynamics", "width": 1}, {"from": "Fluid Kinematics and Vorticity", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Vector Calculus", "width": 1}, {"from": "Lift Coefficient", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Finite Wing Aerodynamics", "width": 1}, {"from": "Lift Coefficient", "label": "REQUIRES", "title": "REQUIRES", "to": "Boundary Layer Theory", "width": 1}, {"from": "Lift Coefficient", "label": "REQUIRES", "title": "REQUIRES", "to": "Drag Polar", "width": 1}, {"from": "Lift Coefficient", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Finite Wing Theory", "width": 1}, {"from": "Lift Coefficient", "label": "REQUIRES", "title": "REQUIRES", "to": "Induced Drag Coefficient", "width": 1}, {"from": "Lift Coefficient", "label": "REQUIRES", "title": "REQUIRES", "to": "Main Concept", "width": 1}, {"from": "Lift Coefficient", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Airfoil Theory", "width": 1}, {"from": "Lift Coefficient", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Aircraft Performance", "width": 1}, {"from": "Lift Coefficient", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "High-Lift Devices", "width": 1}, {"from": "Lift Coefficient", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Aircraft Stability and Control", "width": 1}, {"from": "Lift Coefficient", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Subsonic Compressible Flow over Airfoils", "width": 1}, {"from": "Lift Coefficient", "label": "REQUIRES", "title": "REQUIRES", "to": "Bernoulli\u0027s Principle", "width": 1}, {"from": "Oblique Shock Waves", "label": "TESTS", "title": "TESTS", "to": "GATE_2014_AE_Q07", "width": 1}, {"from": "Oblique Shock Waves", "label": "REQUIRES", "title": "REQUIRES", "to": "Compressible Flow Principles", "width": 1}, {"from": "Oblique Shock Waves", "label": "REQUIRES", "title": "REQUIRES", "to": "Ideal Gas Law", "width": 1}, {"from": "Oblique Shock Waves", "label": "REQUIRES", "title": "REQUIRES", "to": "Compressible Flow Fundamentals", "width": 1}, {"from": "Oblique Shock Waves", "label": "PART_OF", "title": "PART_OF", "to": "Aerodynamics", "width": 1}, {"from": "Oblique Shock Waves", "label": "ENABLES", "title": "ENABLES", "to": "Main Concept", "width": 1}, {"from": "Oblique Shock Waves", "label": "REQUIRES", "title": "REQUIRES", "to": "Supersonic Flow", "width": 1}, {"from": "Oblique Shock Waves", "label": "TESTS", "title": "TESTS", "to": "GATE_2014_AE_Q08", "width": 1}, {"from": "Oblique Shock Waves", "label": "REQUIRES", "title": "REQUIRES", "to": "Pressure Coefficient", "width": 1}, {"from": "Oblique Shock Waves", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Oblique Shock Waves", "width": 1}, {"from": "Oblique Shock Waves", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Theta-Beta-M Relation", "width": 1}, {"from": "Speed of Sound", "label": "REQUIRES", "title": "REQUIRES", "to": "Ideal Gas Law", "width": 1}, {"from": "Equivalent Airspeed (EAS)", "label": "REQUIRES", "title": "REQUIRES", "to": "Dynamic Pressure", "width": 1}, {"from": "Equivalent Airspeed (EAS)", "label": "TESTS", "title": "TESTS", "to": "GATE_2009_AE_Q13", "width": 1}, {"from": "Integral Calculus", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Boundary Layer Theory", "width": 1}, {"from": "Integral Calculus", "label": "REQUIRES", "title": "REQUIRES", "to": "Main Concept", "width": 1}, {"from": "Finite Wing Theory", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Lift Curve Slope", "width": 1}, {"from": "Finite Wing Theory", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Oswald Efficiency Factor", "width": 1}, {"from": "Finite Wing Theory", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Prandtl\u0027s Lifting Line Theory", "width": 1}, {"from": "Finite Wing Theory", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Aspect Ratio", "width": 1}, {"from": "Finite Wing Theory", "label": "PART_OF", "title": "PART_OF", "to": "Aerodynamics", "width": 1}, {"from": "Finite Wing Theory", "label": "REQUIRES", "title": "REQUIRES", "to": "Thin Airfoil Theory", "width": 1}, {"from": "Finite Wing Theory", "label": "REQUIRES", "title": "REQUIRES", "to": "Main Concept", "width": 1}, {"from": "Airfoil Nomenclature and Characteristics", "label": "PART_OF", "title": "PART_OF", "to": "Aerodynamics", "width": 1}, {"from": "Stagnation Pressure", "label": "REQUIRES", "title": "REQUIRES", "to": "Isentropic Flow Relations", "width": 1}, {"from": "Stagnation Pressure", "label": "REQUIRES", "title": "REQUIRES", "to": "Ideal Gas Law", "width": 1}, {"from": "Stagnation Pressure", "label": "REQUIRES", "title": "REQUIRES", "to": "Bernoulli\u0027s Principle", "width": 1}, {"from": "Viscous Flow", "label": "PART_OF", "title": "PART_OF", "to": "Aerodynamics", "width": 1}, {"from": "Velocity Triangles", "label": "REQUIRES", "title": "REQUIRES", "to": "Fluid Mechanics Principles", "width": 1}, {"from": "Velocity Triangles", "label": "REQUIRES", "title": "REQUIRES", "to": "Main Concept", "width": 1}, {"from": "Velocity Triangles", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Axial Flow Compressors", "width": 1}, {"from": "Velocity Triangles", "label": "REQUIRES", "title": "REQUIRES", "to": "Bernoulli\u0027s Equation", "width": 1}, {"from": "Velocity Triangles", "label": "REQUIRES", "title": "REQUIRES", "to": "Degree of Reaction", "width": 1}, {"from": "Airfoil Theory", "label": "REQUIRES", "title": "REQUIRES", "to": "Finite Wing Aerodynamics", "width": 1}, {"from": "Airfoil Theory", "label": "PART_OF", "title": "PART_OF", "to": "Aerodynamics", "width": 1}, {"from": "Airfoil Theory", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Thin Airfoil Theory", "width": 1}, {"from": "Airfoil Theory", "label": "REQUIRES", "title": "REQUIRES", "to": "Prandtl\u0027s Lifting Line Theory", "width": 1}, {"from": "Airspeed Definitions and Relationships", "label": "REQUIRES", "title": "REQUIRES", "to": "Dynamic Pressure", "width": 1}, {"from": "Airspeed Definitions and Relationships", "label": "PART_OF", "title": "PART_OF", "to": "Aerodynamics", "width": 1}, {"from": "Velocity Potential", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Potential Flow", "width": 1}, {"from": "Velocity Potential", "label": "REQUIRES", "title": "REQUIRES", "to": "Vector Calculus", "width": 1}, {"from": "Incompressible Flow", "label": "TESTS", "title": "TESTS", "to": "GATE_2016_AE_Q04", "width": 1}, {"from": "Incompressible Flow", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Boundary Layer Theory", "width": 1}, {"from": "Incompressible Flow", "label": "PART_OF", "title": "PART_OF", "to": "Aerodynamics", "width": 1}, {"from": "Incompressible Flow", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Bernoulli\u0027s Equation", "width": 1}, {"from": "Incompressible Flow", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Fundamentals of Aerodynamics", "width": 1}, {"from": "Incompressible Flow", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Continuity Equation", "width": 1}, {"from": "Incompressible Flow", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Potential Flow", "width": 1}, {"from": "Degree of Reaction", "label": "REQUIRES", "title": "REQUIRES", "to": "Euler Turbomachinery Equation", "width": 1}, {"from": "Degree of Reaction", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Axial Flow Compressors", "width": 1}, {"from": "Degree of Reaction", "label": "REQUIRES", "title": "REQUIRES", "to": "Bernoulli\u0027s Principle", "width": 1}, {"from": "Lift-to-Drag Ratio", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Aircraft Performance", "width": 1}, {"from": "Lift-to-Drag Ratio", "label": "ENABLES", "title": "ENABLES", "to": "Drag Polar", "width": 1}, {"from": "Lift-to-Drag Ratio", "label": "REQUIRES", "title": "REQUIRES", "to": "Oswald Efficiency Factor", "width": 1}, {"from": "Flow Separation", "label": "REQUIRES", "title": "REQUIRES", "to": "Boundary Layer Theory", "width": 1}, {"from": "Flow Separation", "label": "REQUIRES", "title": "REQUIRES", "to": "Boundary Layer Transition", "width": 1}, {"from": "Flow Separation", "label": "REQUIRES", "title": "REQUIRES", "to": "Adverse Pressure Gradient", "width": 1}, {"from": "Flow Separation", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "High-Lift Devices", "width": 1}, {"from": "Stagnation Point", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Potential Flow", "width": 1}, {"from": "Stagnation Point", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Potential Flow Theory", "width": 1}, {"from": "Stagnation Point", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Fundamentals of Aerodynamics", "width": 1}, {"from": "Isentropic Flow Relations", "label": "REQUIRES", "title": "REQUIRES", "to": "Prandtl-Meyer Expansion", "width": 1}, {"from": "Isentropic Flow Relations", "label": "REQUIRES", "title": "REQUIRES", "to": "Critical Mach Number", "width": 1}, {"from": "Isentropic Flow Relations", "label": "REQUIRES", "title": "REQUIRES", "to": "Choked Flow", "width": 1}, {"from": "Isentropic Flow Relations", "label": "REQUIRES", "title": "REQUIRES", "to": "Area-Velocity Relation", "width": 1}, {"from": "Isentropic Flow Relations", "label": "REQUIRES", "title": "REQUIRES", "to": "Fanno Flow", "width": 1}, {"from": "Isentropic Flow Relations", "label": "REQUIRES", "title": "REQUIRES", "to": "Main Concept", "width": 1}, {"from": "Fluid Kinematics", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Partial Derivatives", "width": 1}, {"from": "Fluid Kinematics", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Flow Visualization", "width": 1}, {"from": "Fluid Kinematics", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Inviscid, Incompressible Flow", "width": 1}, {"from": "Fluid Kinematics", "label": "PART_OF", "title": "PART_OF", "to": "Aerodynamics", "width": 1}, {"from": "Fluid Kinematics", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Vector Calculus in Fluid Dynamics", "width": 1}, {"from": "Compressible Flow Fundamentals", "label": "REQUIRES", "title": "REQUIRES", "to": "GATE_2012_AE_Q06", "width": 1}, {"from": "Compressible Flow Fundamentals", "label": "REQUIRES", "title": "REQUIRES", "to": "GATE_2014_AE_Q08", "width": 1}, {"from": "Compressible Flow Fundamentals", "label": "REQUIRES", "title": "REQUIRES", "to": "Critical Mach Number", "width": 1}, {"from": "Compressible Flow Fundamentals", "label": "REQUIRES", "title": "REQUIRES", "to": "Main Concept", "width": 1}, {"from": "GATE_2016_AE_Q04", "label": "TESTS", "title": "TESTS", "to": "Reynolds Number", "width": 1}, {"from": "GATE_2016_AE_Q04", "label": "REQUIRES", "title": "REQUIRES", "to": "Boundary Layer Theory", "width": 1}, {"from": "GATE_2016_AE_Q04", "label": "REQUIRES", "title": "REQUIRES", "to": "Navier-Stokes Equations", "width": 1}, {"from": "GATE_2016_AE_Q04", "label": "BENEFITS_FROM", "title": "BENEFITS_FROM", "to": "Dimensional Analysis", "width": 1}, {"from": "Partial Derivatives", "label": "REQUIRES", "title": "REQUIRES", "to": "Gradient of a Scalar Field", "width": 1}, {"from": "Partial Derivatives", "label": "REQUIRES", "title": "REQUIRES", "to": "GATE_2013_AE_Q26", "width": 1}, {"from": "Partial Derivatives", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Vector Calculus", "width": 1}, {"from": "Partial Derivatives", "label": "REQUIRES", "title": "REQUIRES", "to": "Directional Derivative", "width": 1}, {"from": "Partial Derivatives", "label": "REQUIRES", "title": "REQUIRES", "to": "Main Concept", "width": 1}, {"from": "Incompressible Flow over Finite Wings", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Kutta-Joukowski Theorem", "width": 1}, {"from": "Incompressible Flow over Finite Wings", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Finite Wing Aerodynamics", "width": 1}, {"from": "Incompressible Flow over Finite Wings", "label": "PART_OF", "title": "PART_OF", "to": "Aerodynamics", "width": 1}, {"from": "Incompressible Flow over Finite Wings", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Prandtl\u0027s Lifting Line Theory", "width": 1}, {"from": "Pitching Moment Coefficient", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Airfoil Aerodynamics", "width": 1}, {"from": "Pitching Moment Coefficient", "label": "REQUIRES", "title": "REQUIRES", "to": "Main Concept", "width": 1}, {"from": "Pitching Moment Coefficient", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Longitudinal Static Stability", "width": 1}, {"from": "Pitching Moment Coefficient", "label": "REQUIRES", "title": "REQUIRES", "to": "Aerodynamic Center", "width": 1}, {"from": "Pitching Moment Coefficient", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Aircraft Stability and Control", "width": 1}, {"from": "Pitching Moment Coefficient", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Thin Airfoil Theory", "width": 1}, {"from": "Aerodynamic Forces and Moments", "label": "REQUIRES", "title": "REQUIRES", "to": "Directional Stability", "width": 1}, {"from": "Aerodynamic Forces and Moments", "label": "PART_OF", "title": "PART_OF", "to": "Aerodynamics", "width": 1}, {"from": "Aerodynamic Forces and Moments", "label": "REQUIRES", "title": "REQUIRES", "to": "Main Concept", "width": 1}, {"from": "Aerodynamic Forces and Moments", "label": "REQUIRES", "title": "REQUIRES", "to": "Longitudinal Static Stability", "width": 1}, {"from": "Standard Atmosphere", "label": "PART_OF", "title": "PART_OF", "to": "Flight Mechanics", "width": 1}, {"from": "Standard Atmosphere", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Ideal Gas Law", "width": 1}, {"from": "Standard Atmosphere", "label": "REQUIRES", "title": "REQUIRES", "to": "Dynamic Pressure", "width": 1}, {"from": "Standard Atmosphere", "label": "PART_OF", "title": "PART_OF", "to": "Aerodynamics", "width": 1}, {"from": "Standard Atmosphere", "label": "BENEFITS_FROM", "title": "BENEFITS_FROM", "to": "GATE_2009_AE_Q13", "width": 1}, {"from": "Induced Drag Coefficient", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Finite Wing Aerodynamics", "width": 1}, {"from": "Induced Drag Coefficient", "label": "REQUIRES", "title": "REQUIRES", "to": "Aspect Ratio", "width": 1}, {"from": "Induced Drag Coefficient", "label": "REQUIRES", "title": "REQUIRES", "to": "Oswald Efficiency Factor", "width": 1}, {"from": "Supersonic Flow", "label": "TESTS", "title": "TESTS", "to": "GATE_2012_AE_Q06", "width": 1}, {"from": "Supersonic Flow", "label": "PART_OF", "title": "PART_OF", "to": "Aerodynamics", "width": 1}, {"from": "Supersonic Flow", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Isentropic Flow", "width": 1}, {"from": "Supersonic Flow", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Subsonic Compressible Flow over Airfoils", "width": 1}, {"from": "Supersonic Flow", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Prandtl-Meyer Expansion", "width": 1}, {"from": "Gauss\u0027s Divergence Theorem", "label": "TESTS", "title": "TESTS", "to": "GATE_2013_AE_Q26", "width": 1}, {"from": "Gauss\u0027s Divergence Theorem", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Vector Calculus in Fluid Dynamics", "width": 1}, {"from": "Gauss\u0027s Divergence Theorem", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Vector Calculus", "width": 1}, {"from": "GATE_2012_AE_Q06", "label": "BENEFITS_FROM", "title": "BENEFITS_FROM", "to": "Boundary Layer Theory", "width": 1}, {"from": "GATE_2012_AE_Q06", "label": "TESTS", "title": "TESTS", "to": "Critical Mach Number", "width": 1}, {"from": "GATE_2012_AE_Q06", "label": "TESTS", "title": "TESTS", "to": "Compressibility Effects", "width": 1}, {"from": "GATE_2012_AE_Q06", "label": "REQUIRES", "title": "REQUIRES", "to": "Bernoulli\u0027s Principle", "width": 1}, {"from": "Compressors and Turbines", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Adverse Pressure Gradient", "width": 1}, {"from": "Compressors and Turbines", "label": "PART_OF", "title": "PART_OF", "to": "Propulsion", "width": 1}, {"from": "Vibration of Continuous Systems", "label": "REQUIRES", "title": "REQUIRES", "to": "Differential Equations", "width": 1}, {"from": "Directional Derivative", "label": "ENABLES", "title": "ENABLES", "to": "Gradient of a Scalar Field", "width": 1}, {"from": "Directional Derivative", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Vector Calculus", "width": 1}, {"from": "Directional Derivative", "label": "ENABLES", "title": "ENABLES", "to": "Main Concept", "width": 1}, {"from": "Compressible Flow Principles", "label": "REQUIRES", "title": "REQUIRES", "to": "GATE_2014_AE_Q07", "width": 1}, {"from": "Compressible Flow Principles", "label": "REQUIRES", "title": "REQUIRES", "to": "Theta-Beta-M Relation", "width": 1}, {"from": "Compressible Flow Principles", "label": "REQUIRES", "title": "REQUIRES", "to": "Critical Mach Number", "width": 1}, {"from": "Compressible Flow Principles", "label": "REQUIRES", "title": "REQUIRES", "to": "Normal Shock Relations", "width": 1}, {"from": "Compressible Flow Principles", "label": "REQUIRES", "title": "REQUIRES", "to": "Main Concept", "width": 1}, {"from": "Adverse Pressure Gradient", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Boundary Layer Theory", "width": 1}, {"from": "Adverse Pressure Gradient", "label": "REQUIRES", "title": "REQUIRES", "to": "Main Concept", "width": 1}, {"from": "Vector Calculus", "label": "REQUIRES", "title": "REQUIRES", "to": "Gradient of a Scalar Field", "width": 1}, {"from": "Vector Calculus", "label": "PART_OF", "title": "PART_OF", "to": "Aerodynamics", "width": 1}, {"from": "Vector Calculus", "label": "REQUIRES", "title": "REQUIRES", "to": "Main Concept", "width": 1}, {"from": "Vector Calculus", "label": "REQUIRES", "title": "REQUIRES", "to": "GATE_2013_AE_Q26", "width": 1}, {"from": "Vector Calculus", "label": "TESTS", "title": "TESTS", "to": "GATE_2022_AE_Q50", "width": 1}, {"from": "Vector Calculus", "label": "REQUIRES", "title": "REQUIRES", "to": "Stream Function", "width": 1}, {"from": "Vector Calculus", "label": "REQUIRES", "title": "REQUIRES", "to": "Potential Flow Theory", "width": 1}, {"from": "Vector Calculus", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Partial Differentiation", "width": 1}, {"from": "Dynamic Similarity", "label": "REQUIRES", "title": "REQUIRES", "to": "Fluid Mechanics Principles", "width": 1}, {"from": "Dynamic Similarity", "label": "REQUIRES", "title": "REQUIRES", "to": "Fluid Properties", "width": 1}, {"from": "Dynamic Similarity", "label": "REQUIRES", "title": "REQUIRES", "to": "Dimensional Analysis", "width": 1}, {"from": "Dynamic Similarity", "label": "REQUIRES", "title": "REQUIRES", "to": "Reynolds Number", "width": 1}, {"from": "Dynamic Similarity", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Wind Tunnel Testing and Scaling", "width": 1}, {"from": "Dynamic Similarity", "label": "REQUIRES", "title": "REQUIRES", "to": "Bernoulli\u0027s Principle", "width": 1}, {"from": "GATE_2014_AE_Q08", "label": "TESTS", "title": "TESTS", "to": "Theta-Beta-M Relation", "width": 1}, {"from": "Rate of Climb", "label": "REQUIRES", "title": "REQUIRES", "to": "Service Ceiling", "width": 1}, {"from": "Rate of Climb", "label": "REQUIRES", "title": "REQUIRES", "to": "Drag Polar", "width": 1}, {"from": "Rate of Climb", "label": "REQUIRES", "title": "REQUIRES", "to": "Excess Power", "width": 1}, {"from": "Rate of Climb", "label": "REQUIRES", "title": "REQUIRES", "to": "Main Concept", "width": 1}, {"from": "Rate of Climb", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Aircraft Performance", "width": 1}, {"from": "GATE_2014_AE_Q09", "label": "TESTS", "title": "TESTS", "to": "Irrotational Flow", "width": 1}, {"from": "GATE_2014_AE_Q09", "label": "TESTS", "title": "TESTS", "to": "Potential Flow", "width": 1}, {"from": "GATE_2014_AE_Q09", "label": "REQUIRES", "title": "REQUIRES", "to": "Potential Flow Theory", "width": 1}, {"from": "Fundamentals of Aerodynamics", "label": "PART_OF", "title": "PART_OF", "to": "Aerodynamics", "width": 1}, {"from": "Fundamentals of Aerodynamics", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Bernoulli\u0027s Equation", "width": 1}, {"from": "Superposition Principle", "label": "REQUIRES", "title": "REQUIRES", "to": "Main Concept", "width": 1}, {"from": "Fluid Mechanics Principles", "label": "REQUIRES", "title": "REQUIRES", "to": "Vortex Dynamics", "width": 1}, {"from": "Fluid Mechanics Principles", "label": "REQUIRES", "title": "REQUIRES", "to": "Reynolds Number", "width": 1}, {"from": "Stream Function", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Potential Flow", "width": 1}, {"from": "Stream Function", "label": "REQUIRES", "title": "REQUIRES", "to": "Continuity Equation", "width": 1}, {"from": "Dimensional Analysis", "label": "REQUIRES", "title": "REQUIRES", "to": "Boundary Layer Theory", "width": 1}, {"from": "Dimensional Analysis", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Fluid Properties", "width": 1}, {"from": "Dimensional Analysis", "label": "REQUIRES", "title": "REQUIRES", "to": "Reynolds Number", "width": 1}, {"from": "Euler Turbomachinery Equation", "label": "REQUIRES", "title": "REQUIRES", "to": "Main Concept", "width": 1}, {"from": "Euler Turbomachinery Equation", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Axial Flow Compressors", "width": 1}, {"from": "Critical Mach Number", "label": "REQUIRES", "title": "REQUIRES", "to": "Main Concept", "width": 1}, {"from": "Critical Mach Number", "label": "REQUIRES", "title": "REQUIRES", "to": "Drag Divergence Mach Number", "width": 1}, {"from": "Critical Mach Number", "label": "TESTS", "title": "TESTS", "to": "GATE_AE_2007_Q16", "width": 1}, {"from": "Critical Mach Number", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Subsonic Compressible Flow over Airfoils", "width": 1}, {"from": "Critical Mach Number", "label": "REQUIRES", "title": "REQUIRES", "to": "Bernoulli\u0027s Principle", "width": 1}, {"from": "Critical Mach Number", "label": "REQUIRES", "title": "REQUIRES", "to": "Pressure Coefficient", "width": 1}, {"from": "Airspeed Measurement", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Dynamic Pressure", "width": 1}, {"from": "Airspeed Measurement", "label": "PART_OF", "title": "PART_OF", "to": "Aerodynamics", "width": 1}, {"from": "Flow Visualization", "label": "PART_OF", "title": "PART_OF", "to": "Aerodynamics", "width": 1}, {"from": "Flight Mechanics", "label": "PART_OF", "title": "PART_OF", "to": "Directional Stability", "width": 1}, {"from": "Flight Mechanics", "label": "PART_OF", "title": "PART_OF", "to": "Longitudinal Static Stability", "width": 1}, {"from": "Flight Mechanics", "label": "PART_OF", "title": "PART_OF", "to": "Aircraft Stability and Control", "width": 1}, {"from": "Flight Mechanics", "label": "PART_OF", "title": "PART_OF", "to": "Aircraft Performance", "width": 1}, {"from": "Normal Shock Relations", "label": "REQUIRES", "title": "REQUIRES", "to": "Main Concept", "width": 1}, {"from": "Propulsion", "label": "PART_OF", "title": "PART_OF", "to": "Axial Flow Compressors", "width": 1}, {"from": "Bernoulli\u0027s Principle", "label": "REQUIRES", "title": "REQUIRES", "to": "Kutta-Joukowski Theorem", "width": 1}, {"from": "Bernoulli\u0027s Principle", "label": "REQUIRES", "title": "REQUIRES", "to": "Dynamic Pressure", "width": 1}, {"from": "Bernoulli\u0027s Principle", "label": "REQUIRES", "title": "REQUIRES", "to": "Main Concept", "width": 1}, {"from": "Bernoulli\u0027s Principle", "label": "REQUIRES", "title": "REQUIRES", "to": "GATE_2009_AE_Q13", "width": 1}, {"from": "Bernoulli\u0027s Principle", "label": "REQUIRES", "title": "REQUIRES", "to": "Pressure Coefficient", "width": 1}, {"from": "Potential Flow Theory", "label": "REQUIRES", "title": "REQUIRES", "to": "Kutta-Joukowski Theorem", "width": 1}, {"from": "Potential Flow Theory", "label": "REQUIRES", "title": "REQUIRES", "to": "GATE_2010_AE_Q46", "width": 1}, {"from": "Potential Flow Theory", "label": "PART_OF", "title": "PART_OF", "to": "Aerodynamics", "width": 1}, {"from": "Potential Flow Theory", "label": "REQUIRES", "title": "REQUIRES", "to": "Main Concept", "width": 1}, {"from": "Potential Flow Theory", "label": "REQUIRES", "title": "REQUIRES", "to": "Pressure Coefficient", "width": 1}, {"from": "Potential Flow Theory", "label": "REQUIRES", "title": "REQUIRES", "to": "GATE_AE_2008_Q50", "width": 1}, {"from": "Potential Flow Theory", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Potential Flow", "width": 1}, {"from": "Potential Flow Theory", "label": "REQUIRES", "title": "REQUIRES", "to": "Thin Airfoil Theory", "width": 1}, {"from": "Service Ceiling", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Aircraft Performance", "width": 1}, {"from": "Service Ceiling", "label": "REQUIRES", "title": "REQUIRES", "to": "Absolute Ceiling", "width": 1}, {"from": "GATE_2022_AE_Q50", "label": "BENEFITS_FROM", "title": "BENEFITS_FROM", "to": "Navier-Stokes Equations", "width": 1}, {"from": "Compressibility Effects", "label": "ENABLES", "title": "ENABLES", "to": "Turbulent Boundary Layer", "width": 1}, {"from": "Compressibility Effects", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Boundary Layer Theory", "width": 1}, {"from": "Compressibility Effects", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Subsonic Compressible Flow over Airfoils", "width": 1}, {"from": "Wind Tunnel Testing and Scaling", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Ideal Gas Law", "width": 1}, {"from": "Wind Tunnel Testing and Scaling", "label": "PART_OF", "title": "PART_OF", "to": "Aerodynamics", "width": 1}, {"from": "Wind Tunnel Testing and Scaling", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Reynolds Number", "width": 1}, {"from": "Prandtl\u0027s Lifting Line Theory", "label": "REQUIRES", "title": "REQUIRES", "to": "Kutta-Joukowski Theorem", "width": 1}, {"from": "Prandtl\u0027s Lifting Line Theory", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Finite Wing Aerodynamics", "width": 1}, {"from": "Prandtl\u0027s Lifting Line Theory", "label": "REQUIRES", "title": "REQUIRES", "to": "Lift Curve Slope", "width": 1}, {"from": "Prandtl\u0027s Lifting Line Theory", "label": "REQUIRES", "title": "REQUIRES", "to": "Main Concept", "width": 1}, {"from": "Oswald Efficiency Factor", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Finite Wing Aerodynamics", "width": 1}, {"from": "Oswald Efficiency Factor", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Aircraft Performance", "width": 1}, {"from": "Finite Wing Aerodynamics", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Lift Curve Slope", "width": 1}, {"from": "Finite Wing Aerodynamics", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Aspect Ratio", "width": 1}, {"from": "Finite Wing Aerodynamics", "label": "PART_OF", "title": "PART_OF", "to": "Aerodynamics", "width": 1}, {"from": "Finite Wing Aerodynamics", "label": "REQUIRES", "title": "REQUIRES", "to": "Boundary Layer Theory", "width": 1}, {"from": "Finite Wing Aerodynamics", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Finite Wing Aerodynamics", "width": 1}, {"from": "Finite Wing Aerodynamics", "label": "REQUIRES", "title": "REQUIRES", "to": "Main Concept", "width": 1}, {"from": "Partial Differentiation", "label": "REQUIRES", "title": "REQUIRES", "to": "Main Concept", "width": 1}, {"from": "Airfoil Design and Characteristics", "label": "PART_OF", "title": "PART_OF", "to": "Aerodynamics", "width": 1}, {"from": "Excess Power", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Aircraft Performance", "width": 1}, {"from": "Excess Power", "label": "REQUIRES", "title": "REQUIRES", "to": "Main Concept", "width": 1}, {"from": "Inviscid, Incompressible Flow", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Irrotational Flow", "width": 1}, {"from": "Inviscid, Incompressible Flow", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Bernoulli\u0027s Equation", "width": 1}, {"from": "Inviscid, Incompressible Flow", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Potential Flow", "width": 1}, {"from": "Inviscid, Incompressible Flow", "label": "PART_OF", "title": "PART_OF", "to": "Aerodynamics", "width": 1}, {"from": "Ideal Gas Law", "label": "REQUIRES", "title": "REQUIRES", "to": "Kutta-Joukowski Theorem", "width": 1}, {"from": "Ideal Gas Law", "label": "REQUIRES", "title": "REQUIRES", "to": "GATE_2009_AE_Q13", "width": 1}, {"from": "Ideal Gas Law", "label": "REQUIRES", "title": "REQUIRES", "to": "Dynamic Pressure", "width": 1}, {"from": "Ideal Gas Law", "label": "REQUIRES", "title": "REQUIRES", "to": "Main Concept", "width": 1}, {"from": "Aerodynamic Center", "label": "TESTS", "title": "TESTS", "to": "GATE_2021_AE_Q16", "width": 1}, {"from": "Aerodynamic Center", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Airfoil Aerodynamics", "width": 1}, {"from": "Aerodynamic Center", "label": "REQUIRES", "title": "REQUIRES", "to": "Main Concept", "width": 1}, {"from": "Aerodynamic Center", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Longitudinal Static Stability", "width": 1}, {"from": "Aerodynamic Center", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Aircraft Stability and Control", "width": 1}, {"from": "Aerodynamic Center", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Thin Airfoil Theory", "width": 1}, {"from": "Navier-Stokes Equations", "label": "REQUIRES", "title": "REQUIRES", "to": "Boundary Layer Theory", "width": 1}, {"from": "Navier-Stokes Equations", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Navier-Stokes Equations", "width": 1}, {"from": "Pressure Coefficient", "label": "REQUIRES", "title": "REQUIRES", "to": "Bernoulli\u0027s Equation", "width": 1}, {"from": "Compressible Flow, Normal Shock Waves", "label": "PART_OF", "title": "PART_OF", "to": "Aerodynamics", "width": 1}, {"from": "Boundary Layer Theory", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Turbulent Boundary Layer", "width": 1}, {"from": "Boundary Layer Theory", "label": "REQUIRES", "title": "REQUIRES", "to": "GATE_AE_2007_Q16", "width": 1}, {"from": "Boundary Layer Theory", "label": "BENEFITS_FROM", "title": "BENEFITS_FROM", "to": "GATE_AE_2008_Q50", "width": 1}, {"from": "Boundary Layer Theory", "label": "PART_OF", "title": "PART_OF", "to": "Aerodynamics", "width": 1}, {"from": "Boundary Layer Theory", "label": "REQUIRES", "title": "REQUIRES", "to": "Thin Airfoil Theory", "width": 1}, {"from": "Boundary Layer Theory", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Reynolds Number", "width": 1}, {"from": "Boundary Layer Theory", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Boundary Layer Transition", "width": 1}, {"from": "Boundary Layer Theory", "label": "REQUIRES", "title": "REQUIRES", "to": "Main Concept", "width": 1}, {"from": "Aircraft Stability and Control", "label": "PART_OF", "title": "PART_OF", "to": "Aerodynamics", "width": 1}, {"from": "Aircraft Stability and Control", "label": "ENABLES", "title": "ENABLES", "to": "Main Concept", "width": 1}, {"from": "GATE_2021_AE_Q16", "label": "TESTS", "title": "TESTS", "to": "Thin Airfoil Theory", "width": 1}, {"from": "GATE_2021_AE_Q16", "label": "BENEFITS_FROM", "title": "BENEFITS_FROM", "to": "Airfoil Geometry and Nomenclature", "width": 1}, {"from": "Airfoil Aerodynamics", "label": "BENEFITS_FROM", "title": "BENEFITS_FROM", "to": "GATE_AE_2007_Q16", "width": 1}, {"from": "Airfoil Aerodynamics", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Aerodynamic Center (AC)", "width": 1}, {"from": "Airfoil Aerodynamics", "label": "PART_OF", "title": "PART_OF", "to": "Aerodynamics", "width": 1}, {"from": "Airfoil Aerodynamics", "label": "REQUIRES", "title": "REQUIRES", "to": "High-Lift Devices", "width": 1}, {"from": "Airfoil Aerodynamics", "label": "REQUIRES", "title": "REQUIRES", "to": "Main Concept", "width": 1}, {"from": "GATE_2009_AE_Q13", "label": "TESTS", "title": "TESTS", "to": "Dynamic Pressure", "width": 1}, {"from": "Potential Flow", "label": "PART_OF", "title": "PART_OF", "to": "Aerodynamics", "width": 1}, {"from": "Potential Flow", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Irrotational Flow", "width": 1}, {"from": "Potential Flow", "label": "TESTS", "title": "TESTS", "to": "GATE_AE_2008_Q50", "width": 1}, {"from": "Potential Flow", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Potential Flow", "width": 1}, {"from": "Aspect Ratio", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Aircraft Performance", "width": 1}, {"from": "Prandtl-Meyer Expansion", "label": "ENABLES", "title": "ENABLES", "to": "Main Concept", "width": 1}, {"from": "Differential Equations", "label": "PART_OF", "title": "PART_OF", "to": "Aerodynamics", "width": 1}, {"from": "Reynolds Number", "label": "REQUIRES", "title": "REQUIRES", "to": "Main Concept", "width": 1}, {"from": "Longitudinal Static Stability", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Lift Curve Slope", "width": 1}, {"from": "Longitudinal Static Stability", "label": "REQUIRES", "title": "REQUIRES", "to": "Main Concept", "width": 1}, {"from": "Longitudinal Static Stability", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Longitudinal Static Stability", "width": 1}, {"from": "Longitudinal Static Stability", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Aerodynamic Center (AC)", "width": 1}, {"from": "Dynamic Pressure", "label": "REQUIRES", "title": "REQUIRES", "to": "Main Concept", "width": 1}, {"from": "Fanno Flow", "label": "PART_OF", "title": "PART_OF", "to": "Aerodynamics", "width": 1}, {"from": "Fanno Flow", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Fanno Flow", "width": 1}, {"from": "Thin Airfoil Theory", "label": "REQUIRES", "title": "REQUIRES", "to": "Lift Curve Slope", "width": 1}, {"from": "Thin Airfoil Theory", "label": "PART_OF", "title": "PART_OF", "to": "Aerodynamics", "width": 1}, {"from": "Thin Airfoil Theory", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Thin Airfoil Theory", "width": 1}, {"from": "Thin Airfoil Theory", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Aerodynamic Center (AC)", "width": 1}, {"from": "Vortex Dynamics", "label": "PART_OF", "title": "PART_OF", "to": "Aerodynamics", "width": 1}, {"from": "Fundamentals of Fluid Mechanics", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Irrotational Flow", "width": 1}, {"from": "Fundamentals of Fluid Mechanics", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Bernoulli\u0027s Equation", "width": 1}, {"from": "Fundamentals of Fluid Mechanics", "label": "PART_OF", "title": "PART_OF", "to": "Aerodynamics", "width": 1}, {"from": "Absolute Ceiling", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Aircraft Performance", "width": 1}, {"from": "Fluid Properties", "label": "PART_OF", "title": "PART_OF", "to": "Aerodynamics", "width": 1}, {"from": "Bernoulli\u0027s Equation", "label": "REQUIRES", "title": "REQUIRES", "to": "Main Concept", "width": 1}, {"from": "Continuity Equation", "label": "REQUIRES", "title": "REQUIRES", "to": "Area-Velocity Relation", "width": 1}, {"from": "Continuity Equation", "label": "REQUIRES", "title": "REQUIRES", "to": "Main Concept", "width": 1}, {"from": "Airfoil Geometry and Nomenclature", "label": "PART_OF", "title": "PART_OF", "to": "Aerodynamics", "width": 1}, {"from": "Turbulent Boundary Layer", "label": "ENABLES", "title": "ENABLES", "to": "Boundary Layer Transition", "width": 1}, {"from": "GATE_AE_2007_Q16", "label": "TESTS", "title": "TESTS", "to": "Drag Divergence Mach Number", "width": 1}, {"from": "Vector Calculus in Fluid Dynamics", "label": "PART_OF", "title": "PART_OF", "to": "Aerodynamics", "width": 1}, {"from": "Aerodynamics", "label": "PART_OF", "title": "PART_OF", "to": "Aircraft Performance", "width": 1}, {"from": "Aerodynamics", "label": "PART_OF", "title": "PART_OF", "to": "Subsonic Compressible Flow over Airfoils", "width": 1}, {"from": "Aerodynamics", "label": "PART_OF", "title": "PART_OF", "to": "High-Lift Devices", "width": 1}, {"from": "Aerodynamics", "label": "PART_OF", "title": "PART_OF", "to": "Axial Flow Compressors", "width": 1}, {"from": "Kutta-Joukowski Theorem", "label": "REQUIRES", "title": "REQUIRES", "to": "Main Concept", "width": 1}, {"from": "Drag Polar", "label": "BELONGS_TO", "title": "BELONGS_TO", "to": "Aircraft Performance", "width": 1}, {"from": "Drag Polar", "label": "REQUIRES", "title": "REQUIRES", "to": "Main Concept", "width": 1}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "forceAtlas2Based": {
+            "avoidOverlap": 0,
+            "centralGravity": 0.01,
+            "damping": 0.4,
+            "gravitationalConstant": -50,
+            "springConstant": 0.08,
+            "springLength": 100
+        },
+        "solver": "forceAtlas2Based",
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+                    network.on("selectNode", neighbourhoodHighlight);
+                  
+
+                  
+
+
+                  
+                      network.on("stabilizationProgress", function(params) {
+                          document.getElementById('loadingBar').removeAttribute("style");
+                          var maxWidth = 496;
+                          var minWidth = 20;
+                          var widthFactor = params.iterations/params.total;
+                          var width = Math.max(minWidth,maxWidth * widthFactor);
+                          document.getElementById('bar').style.width = width + 'px';
+                          document.getElementById('text').innerHTML = Math.round(widthFactor*100) + '%';
+                      });
+                      network.once("stabilizationIterationsDone", function() {
+                          document.getElementById('text').innerHTML = '100%';
+                          document.getElementById('bar').style.width = '496px';
+                          document.getElementById('loadingBar').style.opacity = 0;
+                          // really clean the dom element
+                          setTimeout(function () {document.getElementById('loadingBar').style.display = 'none';}, 500);
+                      });
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
