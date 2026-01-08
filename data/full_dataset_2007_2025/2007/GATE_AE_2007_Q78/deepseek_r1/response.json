@@ -1,0 +1,385 @@
+{
+  "model_name": "deepseek_r1",
+  "response_json": {
+    "tier_0_classification": {
+      "content_type": "numerical_calculation",
+      "media_type": "text_only",
+      "combined_type": "numerical_calculation_text_only",
+      "weight_strategy": "NUMERICAL_WEIGHTED",
+      "classification_confidence": 0.9,
+      "classification_method": "llm_assisted",
+      "classifier_model": "gemini_2.0_flash_exp",
+      "classification_reasoning": "The question requires calculating the lift curve slope, which involves applying a formula or using given data (not provided in the question itself, implying external knowledge or data is needed). It's a numerical calculation, but requires some understanding of aerodynamics to know what parameters are needed, making it a difficulty score of 5.",
+      "difficulty_score": 5,
+      "complexity_flags": {
+        "requires_derivation": false,
+        "multi_concept_integration": false,
+        "ambiguous_wording": false,
+        "image_interpretation_complex": false,
+        "edge_case_scenario": false,
+        "multi_step_reasoning": false,
+        "approximation_needed": false
+      },
+      "use_gpt51": false
+    },
+    "tier_1_core_research": {
+      "answer_validation": {
+        "correct_answer": "C",
+        "is_correct": true,
+        "confidence": 1.0,
+        "confidence_type": "single_model",
+        "reasoning": "The wing lift curve slope (a_wing) is defined as the change in lift coefficient per degree angle of attack. For a symmetric airfoil in the linear range, the lift curve passes through (0,0). Using the given data: Lift L = 35.3 N, air density ρ = 1.225 kg/m³, velocity V = 20 m/s, wing area S = chord * span = 0.2 m * 1.2 m = 0.24 m², angle of attack α = 8°. First, compute the lift coefficient: C_L = L / (0.5 * ρ * V² * S). Substituting yields C_L ≈ 0.6003. Then a_wing = C_L / α ≈ 0.6003 / 8 = 0.07504 per degree. This matches option C (0.075 per deg). The airfoil lift slope (0.1 per deg) is a distractor; the finite wing's slope is lower due to downwash effects."
+      },
+      "explanation": {
+        "question_nature": "Calculation",
+        "step_by_step": [
+          "Step 1: Identify known parameters. Wing geometry: chord c = 0.2 m, span b = 1.2 m → wing area S = b * c = 0.24 m². Air properties: ρ = 1.225 kg/m³, V = 20 m/s. Experimental data: α = 8°, lift L = 35.3 N. The airfoil is symmetric with a 2D lift slope a0 = 0.1/deg (not directly used in this direct method).",
+          "Step 2: Compute the dynamic pressure: q = 0.5 * ρ * V² = 0.5 * 1.225 * (20)² = 0.5 * 1.225 * 400 = 245 N/m².",
+          "Step 3: Compute the lift coefficient: C_L = L / (q * S) = 35.3 N / (245 N/m² * 0.24 m²) = 35.3 / 58.8 ≈ 0.60034.",
+          "Step 4: Since the airfoil is symmetric, the lift at α=0 is zero. Assuming linear behavior, the wing lift curve slope is a_wing = C_L / α = 0.60034 / 8° ≈ 0.07504 per degree.",
+          "Step 5: Compare with options: 0.075 per deg (Option C) is the closest match. The slight discrepancy is due to rounding."
+        ],
+        "formulas_used": [
+          "$S = b \\times c$",
+          "$q = \\frac{1}{2} \\rho V^2$",
+          "$C_L = \\frac{L}{q S}$",
+          "$a_{\\text{wing}} = \\frac{C_L}{\\alpha}$ (for symmetric airfoil in linear range, with α in degrees)"
+        ],
+        "estimated_time_minutes": 2
+      },
+      "hierarchical_tags": {
+        "subject": {
+          "name": "Aerodynamics",
+          "confidence": 1.0
+        },
+        "topic": {
+          "name": "Finite Wing Aerodynamics",
+          "syllabus_ref": "Section 2: Aerodynamics → Finite Wing Theory"
+        },
+        "concepts": [
+          {
+            "name": "Lift Coefficient",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Lift Curve Slope",
+            "importance": "primary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Finite Wing Effects (Downwash)",
+            "importance": "secondary",
+            "consensus": "single_model"
+          },
+          {
+            "name": "Symmetric Airfoil Characteristics",
+            "importance": "secondary",
+            "consensus": "single_model"
+          }
+        ]
+      },
+      "prerequisites": {
+        "essential": [
+          "Definition of lift coefficient: $C_L = L / (q S)$",
+          "Concept of lift curve slope (change in $C_L$ per degree angle of attack)",
+          "Geometry: wing area calculation for rectangular planform"
+        ],
+        "helpful": [
+          "Understanding that symmetric airfoils have zero lift at α=0°",
+          "Finite wing theory: wing lift slope is less than airfoil lift slope due to downwash"
+        ],
+        "dependency_tree": {
+          "Main Concept: Wing Lift Curve Slope": [
+            "requires: Lift coefficient formula",
+            "requires: Linear lift assumption for symmetric airfoils",
+            "enables: Prediction of lift at different angles of attack",
+            "enables: Stability and control analysis (longitudinal static stability)"
+          ]
+        }
+      },
+      "difficulty_analysis": {
+        "overall": "Easy",
+        "score": 3,
+        "complexity_breakdown": {
+          "conceptual": 2,
+          "mathematical": 3,
+          "problem_solving": 3
+        },
+        "estimated_solve_time_seconds": 90,
+        "expected_accuracy_percent": 80,
+        "difficulty_factors": [
+          "Straightforward plug-and-chug, but requires careful unit consistency.",
+          "Potential trap: using the given airfoil lift slope (0.1/deg) instead of calculating from data."
+        ]
+      },
+      "textbook_references": [
+        {
+          "source_type": "book",
+          "book": "Introduction to Flight",
+          "author": "John D. Anderson Jr.",
+          "chapter_number": "7",
+          "chapter_title": "Principles of Stability and Control",
+          "section": "Lift and Moment Coefficients",
+          "complexity": "introductory",
+          "relevance_score": 0.7,
+          "source": "rag_retrieval",
+          "text_snippet": "In the worked example, lift coefficient is computed from given force, and moment coefficients are analyzed. Relevant for understanding C_L calculation."
+        },
+        {
+          "source_type": "book",
+          "book": "Intro to Aerodynamics",
+          "author": "J. D. Anderson",
+          "chapter_number": "5",
+          "chapter_title": "Incompressible Flow over Finite Wings",
+          "section": "Finite Wing Lift Slope Formula",
+          "complexity": "intermediate",
+          "relevance_score": 0.8,
+          "source": "rag_retrieval",
+          "text_snippet": "Provides formula for finite wing lift slope: $a = \\frac{a_0}{1 + (a_0/(\\pi AR))(1+\\tau)}$, which explains why wing lift slope is less than airfoil slope."
+        }
+      ],
+      "video_references": [
+        {
+          "source_type": "video",
+          "professor": "Prof. A.K. Ghosh",
+          "timestamp_start": "00:07:40",
+          "timestamp_end": "00:08:21",
+          "video_url": "https://www.youtube.com/watch?v=fD-moJZ9IdE",
+          "book_reference": "Perkins & Hage / Anderson",
+          "topic_covered": "Lift curve slope for symmetric airfoils",
+          "relevance_score": 0.9,
+          "source": "rag_retrieval"
+        }
+      ],
+      "step_by_step_solution": {
+        "approach_type": "Direct Formula Application",
+        "total_steps": 5,
+        "solution_path": "Calculate wing area → Compute dynamic pressure → Compute lift coefficient → Divide by angle of attack to get wing lift slope.",
+        "key_insights": [
+          "The wing lift curve slope is not the same as the airfoil lift curve slope; it must be derived from the given experimental lift force.",
+          "For symmetric airfoils, the lift curve passes through the origin, so a_wing = C_L/α is valid in the linear range."
+        ]
+      },
+      "formulas_principles": [
+        {
+          "formula": "$C_L = \\frac{L}{\\frac{1}{2} \\rho V^2 S}$",
+          "name": "Lift Coefficient Definition",
+          "conditions": "Incompressible, steady flow",
+          "type": "equation",
+          "relevance": "Core formula to compute lift coefficient from given force"
+        },
+        {
+          "formula": "$a_{\\text{wing}} = \\frac{C_L}{\\alpha}$",
+          "name": "Wing Lift Curve Slope (Linear Range)",
+          "conditions": "Symmetric airfoil, small angles, linear lift curve",
+          "type": "equation",
+          "relevance": "Direct calculation of the requested quantity"
+        },
+        {
+          "formula": "$a = \\frac{a_0}{1 + \\frac{a_0}{\\pi AR}(1+\\tau)}$",
+          "name": "Finite Wing Lift Slope Relation",
+          "conditions": "Prandtl's lifting line theory, elliptical or near-elliptical lift distribution",
+          "type": "equation",
+          "relevance": "Explains why wing lift slope (0.075/deg) is less than airfoil slope (0.1/deg)"
+        }
+      ],
+      "real_world_applications": {
+        "industry_examples": [
+          "Wind tunnel testing of scale models to determine aerodynamic characteristics",
+          "Preliminary design of UAV wings where quick lift estimation is needed"
+        ],
+        "specific_systems": [
+          "Light aircraft with rectangular wings (e.g., Piper Cub, many gliders)"
+        ],
+        "practical_relevance": "Determining the lift curve slope experimentally is fundamental for predicting aircraft performance, stability, and control across the flight envelope."
+      }
+    },
+    "tier_2_student_learning": {
+      "common_mistakes": [
+        {
+          "mistake": "Using the airfoil lift slope (0.1 per deg) directly as the answer (Option A), ignoring finite wing effects.",
+          "why_students_make_it": "The question provides the airfoil lift slope prominently, which can be a distractor. Students might not read carefully that the question asks for the wing lift slope.",
+          "type": "Conceptual",
+          "severity": "High",
+          "frequency": "common",
+          "how_to_avoid": "Always note what entity is being asked: 'wing' vs 'airfoil'. Finite wing lift slope is always less than 2D airfoil slope due to downwash.",
+          "consequence": "Will pick wrong option A and lose marks."
+        },
+        {
+          "mistake": "Incorrect wing area calculation (e.g., using span only or chord only).",
+          "why_students_make_it": "Haste or misremembering formula for area of rectangular planform.",
+          "type": "Calculation",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Recall: area S = span × chord (for rectangle). Write down given dimensions and compute S explicitly.",
+          "consequence": "Wrong C_L, leading to incorrect a_wing."
+        },
+        {
+          "mistake": "Forgetting to use degrees consistently. Using α in radians without conversion.",
+          "why_students_make_it": "Aerodynamics formulas often use radians, but here α is given in degrees and options are per degree.",
+          "type": "Units",
+          "severity": "Medium",
+          "frequency": "occasional",
+          "how_to_avoid": "Check units of given data and options. Here, α=8°, and answer is per degree, so no conversion needed for a_wing = C_L/α.",
+          "consequence": "If α is mistakenly taken as radians, a_wing becomes much larger."
+        },
+        {
+          "mistake": "Using incorrect dynamic pressure formula (e.g., q = ρV² instead of 0.5ρV²).",
+          "type": "Formula Recall",
+          "severity": "Medium",
+          "frequency": "rare",
+          "how_to_avoid": "Memorize standard definition: dynamic pressure q = 0.5 ρ V².",
+          "consequence": "C_L off by factor of 2."
+        }
+      ],
+      "mnemonics_memory_aids": [
+        {
+          "mnemonic": "LIFT: Lift Is From q, S, and C_L → L = q S C_L",
+          "concept": "Lift force equation",
+          "effectiveness": "high",
+          "context": "Whenever you need to compute lift or C_L"
+        },
+        {
+          "mnemonic": "Wing Slope Less Than Airfoil (WSLTA): Finite wings have lower lift slope due to downwash.",
+          "concept": "Finite wing vs airfoil lift slope",
+          "effectiveness": "medium",
+          "context": "Comparing 2D and 3D aerodynamic characteristics"
+        }
+      ],
+      "flashcards": [
+        {
+          "card_type": "formula_recall",
+          "front": "What is the formula for lift coefficient C_L in terms of lift force L, density ρ, velocity V, and wing area S?",
+          "back": "$C_L = \\frac{L}{\\frac{1}{2} \\rho V^2 S}$",
+          "difficulty": "easy",
+          "time_limit_seconds": 20
+        },
+        {
+          "card_type": "concept_recall",
+          "front": "For a symmetric airfoil, what is the lift at α=0°? How does this simplify the lift curve slope calculation?",
+          "back": "Lift is zero at α=0°. Thus, in the linear range, the wing lift curve slope is simply a = C_L / α (with α in degrees or radians).",
+          "difficulty": "medium",
+          "time_limit_seconds": 30
+        },
+        {
+          "card_type": "mistake_prevention",
+          "front": "What is a common distractor in questions asking for wing lift curve slope?",
+          "back": "The airfoil (2D) lift slope is often given, but the finite wing slope is lower due to downwash. Do not pick the airfoil value without calculation.",
+          "difficulty": "easy",
+          "time_limit_seconds": 25
+        },
+        {
+          "card_type": "definition",
+          "front": "Define Aspect Ratio (AR) for a rectangular wing.",
+          "back": "AR = span² / area = span / chord. For rectangle: AR = b / c.",
+          "difficulty": "easy",
+          "time_limit_seconds": 20
+        },
+        {
+          "card_type": "application",
+          "front": "Given: L=35.3 N, ρ=1.225 kg/m³, V=20 m/s, S=0.24 m², α=8°. Compute wing lift curve slope.",
+          "back": "C_L = 35.3/(0.5*1.225*400*0.24) ≈ 0.6003; a_wing = 0.6003/8 ≈ 0.075 per degree.",
+          "difficulty": "medium",
+          "time_limit_seconds": 40
+        }
+      ],
+      "real_world_context": [
+        {
+          "application": "Wind Tunnel Calibration",
+          "industry_example": "Aerospace companies test scaled models to measure lift, drag, and moments. The measured lift at a known α gives the wing lift curve slope, crucial for flight performance prediction.",
+          "why_it_matters": "An inaccurate lift slope leads to incorrect stall speed prediction, affecting safety."
+        },
+        {
+          "application": "Flight Test Data Reduction",
+          "industry_example": "During aircraft flight testing, engineers use similar calculations to derive aerodynamic derivatives from measured forces and angles.",
+          "why_it_matters": "Essential for validating computational models and updating flight manuals."
+        }
+      ],
+      "exam_strategy": {
+        "priority": "Must Attempt",
+        "triage_tip": "Quick calculation (2 mins): Compute S, then C_L, then a_wing = C_L/α. Avoid trap of selecting airfoil slope.",
+        "guessing_heuristic": "If stuck, note that finite wing slope must be less than airfoil slope (0.1/deg), so eliminate A. Then compute roughly: L≈35, q≈0.5*1.2*400=240, S≈0.24, so C_L≈35/(240*0.24)≈0.6, a≈0.6/8=0.075 → C.",
+        "time_management": "Budget 2-3 minutes max; it's straightforward."
+      }
+    },
+    "tier_3_enhanced_learning": {
+      "search_keywords": [
+        "finite wing lift curve slope calculation",
+        "rectangular wing aspect ratio",
+        "wind tunnel lift coefficient measurement",
+        "symmetric airfoil lift characteristics",
+        "downwash effect on lift slope",
+        "Prandtl lifting line theory",
+        "GATE aerospace aerodynamics numerical",
+        "wing area dynamic pressure"
+      ],
+      "alternative_methods": [
+        {
+          "name": "Using Finite Wing Formula with Estimated τ",
+          "description": "Compute aspect ratio AR = b/c = 6. Convert airfoil lift slope a0 to per radian: a0_rad = 0.1 * (180/π) ≈ 5.73 /rad. Assume a typical τ value (e.g., 0.05 for rectangular wing). Then use a = a0_rad / [1 + (a0_rad/(π AR)) (1+τ)], convert back to per degree. This yields a ≈ 0.076/deg, close to the experimental 0.075/deg.",
+          "pros_cons": "Pros: Illustrates theoretical foundation. Cons: Requires knowing τ, which is not given; slight approximation.",
+          "when_to_use": "When experimental data is not available, and only airfoil properties and wing geometry are known."
+        }
+      ],
+      "connections_to_other_subjects": {
+        "Flight Mechanics": "The wing lift curve slope is a key parameter in longitudinal static stability analysis (e.g., derivative C_{L_α}).",
+        "Aircraft Performance": "Used in takeoff, landing, and climb performance calculations where lift must balance weight.",
+        "Structures": "Lift distribution affects wing bending moments."
+      },
+      "deeper_dive_topics": [
+        "Prandtl's Lifting Line Theory: Derivation of the finite wing lift slope formula.",
+        "Effect of Wing Taper and Twist on Lift Distribution and Effective τ.",
+        "Compressibility Correction: At high subsonic speeds, lift slope increases by 1/√(1-M²) (Prandtl-Glauert).",
+        "Stall Characteristics: How finite wing stall differs from airfoil stall due to three-dimensional flow."
+      ]
+    },
+    "tier_4_metadata_and_future": {
+      "question_metadata": {
+        "id": "GATE_AE_2007_Q78",
+        "year": 2007,
+        "marks": 2.0,
+        "negative_marks": 0.66,
+        "time_expected": "2-3 minutes",
+        "success_rate_estimate": "75%"
+      },
+      "syllabus_mapping": {
+        "gate_section": "Aerodynamics",
+        "gate_subsection": "Finite Wing Theory",
+        "weightage": "Approx 10-15% of Aerodynamics section",
+        "syllabus_relevance_score": "5/5",
+        "feedback_for_syllabus_design": "Well-aligned with core aerodynamics concepts: lift coefficient, finite wing effects, and experimental data interpretation."
+      },
+      "rag_quality": {
+        "relevance_score": 0.7,
+        "chunks_used": 3,
+        "sources_distribution": {
+          "books": 2,
+          "videos": 1
+        },
+        "notes": "RAG provided relevant context: Chunk 2 explained lift curve slope for symmetric airfoils, Chunk 3 and 5 provided formulas for finite wing lift slope calculation, which support the conceptual background. However, the specific question is solved directly from given experimental data without needing the theoretical formula. Thus, RAG was helpful but not directly necessary for the calculation."
+      },
+      "model_meta": {
+        "timestamp": "2025-12-13T10:30:00Z",
+        "version": "GATE_AE_SOTA_v1.0"
+      },
+      "future_questions_potential": [
+        "Change the wing planform (tapered, elliptical) and ask for lift slope using given τ and δ.",
+        "Given wing lift slope and airfoil slope, find aspect ratio or correction factor τ.",
+        "Include compressibility: if freestream Mach number is given, compute compressible lift slope using Prandtl-Glauert rule.",
+        "Ask for the angle of attack for a different lift force, using the computed wing lift slope."
+      ]
+    },
+    "question_id": "GATE_AE_2007_Q78",
+    "year": 2007,
+    "subject": "Aerospace Engineering",
+    "exam_name": "GATE",
+    "question_type": "MCQ_LINKED",
+    "question_text": "The lift curve slope of this wing is"
+  },
+  "tokens_used": 17174,
+  "input_tokens": 9567,
+  "output_tokens": 7607,
+  "cost": 0.021921180000000002,
+  "time_seconds": 263.7853081226349
+}
