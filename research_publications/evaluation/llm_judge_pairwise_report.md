@@ -1,0 +1,149 @@
+# LLM-as-Judge Ablation Report: FLSS vs Single Models
+
+**Generated:** 2026-01-10T01:43:26.417730
+**Questions Evaluated:** 1268
+**API Calls Made:** 8698
+**Judge Model:** Gemini 2.5 Flash
+
+---
+
+## Executive Summary
+
+This evaluation uses **pairwise comparison** to determine whether FLSS consensus
+outputs are better than individual model outputs. For each field, the judge picks
+A (FLSS) or B (single model) or TIE.
+
+> **Key Finding:** See win rates below to determine if FLSS adds value.
+
+---
+
+## 1. Overall Win Rates (FLSS vs Each Model)
+
+| Model | FLSS Wins | Model Wins | Ties | **Win Rate** | p-value | Significant? | Effect Size |
+|-------|-----------|------------|------|--------------|---------|--------------|-------------|
+| claude_sonnet_4.5 | 11425 | 615 | 402 | **91.8%** | 0.0000 | ✅ Yes | 1.74 (large) |
+| deepseek_r1 | 5817 | 3396 | 3008 | **47.6%** | 0.0000 | ✅ Yes | 0.40 (small) |
+| gemini_2.5_pro | 8238 | 2502 | 1823 | **65.6%** | 0.0000 | ✅ Yes | 0.91 (large) |
+| gpt_5_1 | 2483 | 2358 | 550 | **46.1%** | 0.0724 | ❌ No | 0.05 (negligible) |
+
+**Interpretation:**
+- **Win Rate > 50%**: FLSS is better than this model
+- **p-value < 0.05**: Result is statistically significant
+- **Effect Size**: negligible (<0.2), small (0.2-0.5), medium (0.5-0.8), large (>0.8)
+
+---
+
+## 2. Per-Field Win Rates
+
+### answer_reasoning
+
+| Model | FLSS Wins | Model Wins | Ties | Win Rate |
+|-------|-----------|------------|------|----------|
+| claude_sonnet_4.5 | 1209 | 54 | 5 | 95.3% |
+| deepseek_r1 | 794 | 349 | 107 | 63.5% |
+| gemini_2.5_pro | 563 | 290 | 415 | 44.4% |
+| gpt_5_1 | 276 | 274 | 13 | 49.0% |
+
+### step_by_step
+
+| Model | FLSS Wins | Model Wins | Ties | Win Rate |
+|-------|-----------|------------|------|----------|
+| claude_sonnet_4.5 | 1127 | 90 | 1 | 92.5% |
+| deepseek_r1 | 388 | 700 | 117 | 32.2% |
+| gemini_2.5_pro | 676 | 515 | 60 | 54.0% |
+| gpt_5_1 | 224 | 280 | 10 | 43.6% |
+
+### common_mistakes
+
+| Model | FLSS Wins | Model Wins | Ties | Win Rate |
+|-------|-----------|------------|------|----------|
+| claude_sonnet_4.5 | 992 | 125 | 98 | 81.6% |
+| deepseek_r1 | 86 | 510 | 598 | 7.2% |
+| gemini_2.5_pro | 394 | 282 | 568 | 31.7% |
+| gpt_5_1 | 33 | 184 | 295 | 6.4% |
+
+### mnemonics
+
+| Model | FLSS Wins | Model Wins | Ties | Win Rate |
+|-------|-----------|------------|------|----------|
+| claude_sonnet_4.5 | 1071 | 81 | 61 | 88.3% |
+| deepseek_r1 | 450 | 342 | 400 | 37.8% |
+| gemini_2.5_pro | 982 | 208 | 51 | 79.1% |
+| gpt_5_1 | 224 | 272 | 14 | 43.9% |
+
+### flashcards
+
+| Model | FLSS Wins | Model Wins | Ties | Win Rate |
+|-------|-----------|------------|------|----------|
+| claude_sonnet_4.5 | 1057 | 142 | 7 | 87.6% |
+| deepseek_r1 | 339 | 592 | 260 | 28.5% |
+| gemini_2.5_pro | 791 | 434 | 15 | 63.8% |
+| gpt_5_1 | 201 | 304 | 2 | 39.6% |
+
+### real_world_context
+
+| Model | FLSS Wins | Model Wins | Ties | Win Rate |
+|-------|-----------|------------|------|----------|
+| claude_sonnet_4.5 | 1185 | 44 | 39 | 93.5% |
+| deepseek_r1 | 646 | 178 | 426 | 51.7% |
+| gemini_2.5_pro | 1084 | 148 | 36 | 85.5% |
+| gpt_5_1 | 333 | 223 | 7 | 59.1% |
+
+### exam_strategy
+
+| Model | FLSS Wins | Model Wins | Ties | Win Rate |
+|-------|-----------|------------|------|----------|
+| claude_sonnet_4.5 | 1258 | 0 | 6 | 99.5% |
+| deepseek_r1 | 738 | 229 | 274 | 59.5% |
+| gemini_2.5_pro | 1075 | 119 | 71 | 85.0% |
+| gpt_5_1 | 361 | 156 | 40 | 64.8% |
+
+### real_world_applications
+
+| Model | FLSS Wins | Model Wins | Ties | Win Rate |
+|-------|-----------|------------|------|----------|
+| claude_sonnet_4.5 | 1219 | 40 | 5 | 96.4% |
+| deepseek_r1 | 951 | 219 | 63 | 77.1% |
+| gemini_2.5_pro | 897 | 213 | 152 | 71.1% |
+| gpt_5_1 | 227 | 306 | 22 | 40.9% |
+
+### key_insights
+
+| Model | FLSS Wins | Model Wins | Ties | Win Rate |
+|-------|-----------|------------|------|----------|
+| claude_sonnet_4.5 | 1122 | 33 | 108 | 88.8% |
+| deepseek_r1 | 711 | 201 | 321 | 57.7% |
+| gemini_2.5_pro | 937 | 156 | 169 | 74.2% |
+| gpt_5_1 | 309 | 197 | 49 | 55.7% |
+
+### difficulty_factors
+
+| Model | FLSS Wins | Model Wins | Ties | Win Rate |
+|-------|-----------|------------|------|----------|
+| claude_sonnet_4.5 | 1185 | 6 | 72 | 93.8% |
+| deepseek_r1 | 714 | 76 | 442 | 58.0% |
+| gemini_2.5_pro | 839 | 137 | 286 | 66.5% |
+| gpt_5_1 | 295 | 162 | 98 | 53.2% |
+
+---
+
+## 3. Statistical Notes
+
+- **Test Used:** Sign test (Wilcoxon signed-rank approximation)
+- **Confidence Intervals:** 95% bootstrap CI (1000 iterations)
+- **Effect Size:** Cohen's d calculated from win/loss proportions
+
+---
+
+## 4. Methodology
+
+1. **Pairwise Comparison:** FLSS (A) vs each model (B) separately
+2. **5 Fields per API Call:** Prevents skimming, ensures focused evaluation
+3. **Judge Instructions:** Evaluate only provided content, no hallucination
+4. **10 Fields Evaluated:**
+   - answer_reasoning, step_by_step, common_mistakes, mnemonics, flashcards
+   - real_world_context, exam_strategy, real_world_applications, key_insights, difficulty_factors
+
+---
+
+*Generated by `llm_judge_evaluation.py` v2*
