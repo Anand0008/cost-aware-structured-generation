@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GATE AE Knowledge Graph | Interactive Explorer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --bg-panel: #1e293b;
+            --border-color: #334155;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent: #38bdf8;
+            /* Sky blue */
+            --accent-hover: #0ea5e9;
+            --accent-glow: rgba(56, 189, 248, 0.2);
+            --header-height: 60px;
+            --sidebar-width: 320px;
+            --info-width: 400px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            /* Using Flex for 3-column layout */
+            overflow: hidden;
+        }
+
+        /* SCROLLBAR */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-secondary);
+        }
+
+        /* --- LEFT SIDEBAR --- */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--bg-panel);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            z-index: 10;
+        }
+
+        .brand {
+            height: var(--header-height);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .brand h1 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -0.01em;
+        }
+
+        .brand span {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        /* TABS */
+        .tabs {
+            display: flex;
+            /* Flexrow */
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            padding: 16px 0;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .tab-btn.active {
+            color: var(--accent);
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--accent);
+            box-shadow: 0 -1px 8px var(--accent-glow);
+        }
+
+        /* FILTER CONTENT */
+        .sidebar-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px;
+        }
+
+        .filter-section {
+            margin-bottom: 20px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .filter-label {
+            display: block;
+            text-transform: uppercase;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            letter-spacing: 0.05em;
+        }
+
+        select {
+            width: 100%;
+            background-color: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 10px 12px;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: border-color 0.2s;
+            /* Custom arrow */
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 16px;
+        }
+
+        select:hover {
+            border-color: var(--text-secondary);
+        }
+
+        select:focus {
+            border-color: var(--accent);
+        }
+
+        select:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* LISTS */
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .list-wrap {
+            list-style: none;
+        }
+
+        .list-item {
+            padding: 8px 10px;
+            margin-bottom: 2px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .list-item:hover {
+            background: rgba(255, 255, 255, 0.03);
+            transform: translateX(2px);
+        }
+
+        .list-item.active {
+            background: rgba(56, 189, 248, 0.1);
+            border-color: rgba(56, 189, 248, 0.2);
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #666;
+        }
+
+        .item-text {
+            font-size: 0.8rem;
+            color: var(--text-primary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .sidebar-footer {
+            padding: 16px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .btn-full {
+            width: 100%;
+            padding: 10px;
+            background: transparent;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-full:hover {
+            border-color: var(--text-primary);
+            color: #fff;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* --- MAIN VIEW (CENTER) --- */
+        .main-view {
+            flex: 1;
+            position: relative;
+            background: radial-gradient(circle at center, #1e293b 0%, #020617 100%);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        #graph-container {
+            width: 100%;
+            height: 100%;
+        }
+
+        .top-bar {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 5;
+            display: flex;
+            gap: 12px;
+        }
+
+        .action-btn {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--border-color);
+            color: var(--accent);
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .action-btn:hover {
+            background: var(--bg-panel);
+            border-color: var(--accent);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .legend {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(8px);
+            padding: 12px 16px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            gap: 16px;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .l-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        /* --- RIGHT INFO PANEL (DOCKED) --- */
+        .info-panel {
+            width: 0;
+            /* Hidden by default */
+            background-color: var(--bg-panel);
+            border-left: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow: hidden;
+            flex-shrink: 0;
+            z-index: 20;
+            box-shadow: -5px 0 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .info-panel.open {
+            width: var(--info-width);
+        }
+
+        .info-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: rgba(255, 255, 255, 0.01);
+        }
+
+        .node-meta {
+            font-size: 0.75rem;
+            color: var(--accent);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 1.2rem;
+            line-height: 1;
+        }
+
+        .close-btn:hover {
+            color: #fff;
+        }
+
+        .node-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            line-height: 1.3;
+            color: #fff;
+        }
+
+        .info-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px;
+        }
+
+        .info-section {
+            margin-bottom: 28px;
+        }
+
+        .section-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            font-weight: 700;
+            margin-bottom: 12px;
+            padding-left: 10px;
+            border-left: 2px solid var(--border-color);
+        }
+
+        .pill-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .pill {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 6px 10px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+            max-width: 100%;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-right: 6px;
+            line-height: 1;
+        }
+
+        .badge.core {
+            background: rgba(251, 191, 36, 0.2);
+            color: #fbbf24;
+            border: 1px solid rgba(251, 191, 36, 0.3);
+        }
+
+        .badge.primary {
+            background: rgba(56, 189, 248, 0.2);
+            color: #38bdf8;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+        }
+
+        .badge.secondary {
+            background: rgba(148, 163, 184, 0.2);
+            color: #94a3b8;
+            border: 1px solid rgba(148, 163, 184, 0.3);
+        }
+
+        .pill:hover {
+            color: var(--text-primary);
+            border-color: var(--accent);
+            background: rgba(56, 189, 248, 0.1);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Loading */
+        #loader {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 0.9rem;
+            color: var(--accent);
+            letter-spacing: 0.05em;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- LEFT COLUMN -->
+    <aside class="sidebar">
+        <div class="brand">
+            <h1>GATE AE Explorer</h1>
+            <span>Knowledge Graph & Learning Path</span>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('year')">Year Filter</button>
+            <button class="tab-btn" onclick="switchTab('syllabus')">Syllabus Map</button>
+        </div>
+
+        <div class="sidebar-content">
+            <!-- YEAR CONTENT -->
+            <div id="tab-year" class="filter-section">
+                <label class="filter-label">Select Exam Year</label>
+                <select id="yearSelect" onchange="filterByYear()">
+                    <option value="">Select Year...</option>
+                </select>
+
+                <div class="results-header">
+                    <span>QUESTIONS FOUND</span>
+                    <span id="qCount">0</span>
+                </div>
+                <ul class="list-wrap" id="yearList"></ul>
+            </div>
+
+            <!-- SYLLABUS CONTENT -->
+            <div id="tab-syllabus" class="filter-section" style="display:none;">
+                <label class="filter-label" style="margin-top:0;">Core Subject</label>
+                <select id="subjectSelect" onchange="filterBySubject()" style="margin-bottom: 20px;">
+                    <option value="">Select Subject...</option>
+                </select>
+
+                <label class="filter-label">Topic</label>
+                <select id="topicSelect" onchange="filterByTopic()" disabled>
+                    <option value="">Select Topic...</option>
+                </select>
+
+                <div class="results-header">
+                    <span>CONCEPTS</span>
+                    <span id="cCount">--</span>
+                </div>
+                <ul class="list-wrap" id="syllabusList"></ul>
+            </div>
+        </div>
+
+        <div class="sidebar-footer">
+            <button class="btn-full" onclick="resetAll()">Restore Full Overview</button>
+        </div>
+    </aside>
+
+
+    <!-- MIDDLE COLUMN -->
+    <main class="main-view">
+        <div class="top-bar">
+            <button class="action-btn" id="btn3d" onclick="toggle3D()">
+                <span>Enable 3D View</span>
+            </button>
+        </div>
+
+        <div id="graph-container"></div>
+        <div id="loader">INITIALIZING GRAPH...</div>
+
+        <div class="legend">
+            <div class="legend-item">
+                <div class="l-dot" style="background:#fbbf24"></div>Core
+            </div>
+            <div class="legend-item">
+                <div class="l-dot" style="background:#38bdf8"></div>Concept
+            </div>
+            <div class="legend-item">
+                <div class="l-dot" style="background:#f87171"></div>Question
+            </div>
+            <div class="legend-item">
+                <div class="l-dot" style="background:#4ade80"></div>Formula
+            </div>
+        </div>
+    </main>
+
+
+    <!-- RIGHT COLUMN (DOCKED) -->
+    <aside class="info-panel" id="infoPanel">
+        <!-- Content injected via JS -->
+    </aside>
+
+
+    <!-- LIBS -->
+    <script src="https://unpkg.com/3d-force-graph@1"></script>
+    <script src="https://unpkg.com/force-graph@1"></script>
+
+    <script>
+        // --- CONSTANTS ---
+        const colors = {
+            Question: '#f87171',
+            Concept: '#38bdf8',
+            Formula: '#4ade80',
+            Topic: '#fbbf24',
+            Section: '#fbbf24',
+            Subject: '#fbbf24'
+        };
+
+        // --- STATE ---
+        let graphData = null;
+        let graph2D = null;
+        let graph3D = null;
+        let is3D = false;
+        let selectedNodeId = null;
+
+        // --- INIT ---
+        fetch('graph_data.json')
+            .then(res => res.json())
+            .then(data => {
+                graphData = data;
+                document.getElementById('loader').style.display = 'none';
+                initFilters();
+                renderGraph(data.nodes, data.links);
+            });
+
+        function initFilters() {
+            // Years
+            const years = new Set(graphData.nodes.filter(n => n.type === 'Question' && n.year).map(n => n.year));
+            const ySel = document.getElementById('yearSelect');
+            Array.from(years).sort((a, b) => b - a).forEach(y => {
+                const opt = document.createElement('option');
+                opt.value = y; opt.innerText = `GATE ${y}`;
+                ySel.appendChild(opt);
+            });
+
+            // Subjects
+            const subjects = new Set();
+            if (graphData.sections) {
+                graphData.sections.forEach(s => subjects.add(s.name));
+            } else {
+                graphData.nodes.forEach(n => {
+                    if (n.type === 'Subject' || n.type === 'Section') subjects.add(n.name);
+                });
+            }
+            const sSel = document.getElementById('subjectSelect');
+            Array.from(subjects).sort().forEach(s => {
+                const opt = document.createElement('option');
+                opt.value = s; opt.innerText = s;
+                sSel.appendChild(opt);
+            });
+        }
+
+        // --- RENDER ---
+        function renderGraph(nodes, links) {
+            const container = document.getElementById('graph-container');
+            container.innerHTML = '';
+
+            if (is3D) {
+                graph3D = ForceGraph3D()(container)
+                    .graphData({ nodes, links })
+                    .nodeColor(n => n.color || colors[n.type] || '#999')
+                    .nodeLabel('name')
+                    .nodeVal(n => n.type === 'Question' ? 3 : 6)
+                    .linkWidth(0.5)
+                    .linkOpacity(0.3)
+                    .backgroundColor('#0f172a') // Dark bg
+                    .onNodeClick(handleNodeClick);
+            } else {
+                graph2D = ForceGraph()(container)
+                    .graphData({ nodes, links })
+                    .nodeCanvasObject((node, ctx, globalScale) => {
+                        const label = node.name;
+                        const fontSize = 12 / globalScale;
+                        ctx.font = `${fontSize}px Inter`;
+
+                        const r = node.type === 'Question' ? 2 : 4;
+                        ctx.beginPath();
+                        ctx.arc(node.x, node.y, r, 0, 2 * Math.PI, false);
+                        ctx.fillStyle = node.color || colors[node.type] || '#999';
+
+                        // Highlight selected
+                        if (node.id === selectedNodeId) {
+                            ctx.strokeStyle = '#fff';
+                            ctx.lineWidth = 2 / globalScale;
+                            ctx.stroke();
+                        }
+                        ctx.fill();
+
+                        if (globalScale > 1.8 || node.id === selectedNodeId) {
+                            ctx.textAlign = 'center';
+                            ctx.textBaseline = 'middle';
+                            ctx.fillStyle = '#fff';
+                            ctx.fillText(label, node.x, node.y + r + fontSize + 2);
+                        }
+                    })
+                    .linkColor(() => 'rgba(148, 163, 184, 0.2)')
+                    .backgroundColor('rgba(0,0,0,0)') // Transparent to see CSS bg
+                    .onNodeClick(handleNodeClick);
+            }
+        }
+
+        // --- INTERACTION ---
+        function handleNodeClick(node) {
+            selectedNodeId = node.id;
+
+            // 1. Highlight in Graph (re-render not always needed, but 2D needs it for highlighting ring)
+            if (!is3D && graph2D) graph2D.d3ReheatSimulation();
+
+            // 2. Open Info Panel
+            const panel = document.getElementById('infoPanel');
+            panel.classList.add('open');
+
+            // 3. Populate Info
+            renderInfoPanel(node);
+
+            // 4. Camera Focus
+            focusCamera(node);
+        }
+
+        function renderInfoPanel(node) {
+            const panel = document.getElementById('infoPanel');
+
+            // Calc Relations
+            const links = graphData.links.filter(l =>
+                (l.source.id === node.id || l.source === node.id) ||
+                (l.target.id === node.id || l.target === node.id)
+            );
+
+            const prereqs = [];
+            const leads = [];
+            const related = [];
+            const questions = [];
+
+            links.forEach(l => {
+                const isSource = (l.source.id === node.id || l.source === node.id);
+                const other = isSource ? (l.target.id ? l.target : graphData.nodes.find(n => n.id === l.target))
+                    : (l.source.id ? l.source : graphData.nodes.find(n => n.id === l.source));
+                if (!other) return;
+
+                if (other.type === 'Question') {
+                    questions.push({ n: other, rel: l.type });
+                } else if (l.type === 'REQUIRES') {
+                    if (isSource) leads.push(other); // This node requires other? No. Source REQUIRES Target. 
+                    // Wait, if Source REQUIRES Target, then Source depends on Target. 
+                    // So Target is a Prerequisite for Source.
+                    // If isSource (Node -> Other), Node REQUIRES Other. Other is Prereq.
+                    if (isSource) prereqs.push(other);
+                    else leads.push(other); // Other REQUIRES Node. Node leads to Other.
+                } else if (l.type === 'CONTAINS') {
+                    // Hierarchy
+                    if (isSource) related.push({ n: other, rel: 'Contains' });
+                    else related.push({ n: other, rel: 'Part Of' });
+                } else {
+                    related.push({ n: other, rel: l.type.replace(/_/g, ' ') });
+                }
+            });
+
+            const pillHtml = (arr, isRel = false) => {
+                if (!arr.length) return '<span style="color:#64748b; font-size:0.8rem; font-style:italic;">None</span>';
+                return arr.map(item => {
+                    const n = isRel ? item.n : item;
+                    const txt = isRel ? `${item.rel ? item.rel + ': ' : ''}${n.name}` : n.name;
+                    return `<div class="pill" onclick="centerFromId('${n.id}')" title="${n.name}">${txt}</div>`;
+                }).join('');
+            };
+
+            const descriptionHtml = node.description ?
+                `<div class="info-section">
+                    <div class="section-title">Description</div>
+                    <p style="font-size:0.9rem; color:#cbd5e1; line-height:1.5;">${node.description}</p>
+                </div>` : '';
+
+            // Importance Badge
+            let badges = '';
+            if (node.isCore) badges += `<span class="badge core">CORE</span>`;
+            if (node.importance) {
+                const cls = node.importance === 'primary' ? 'primary' : 'secondary';
+                if (node.importance !== 'secondary' || !node.isCore) { // Show secondary if not core? Or just show all
+                    badges += `<span class="badge ${cls}">${node.importance}</span>`;
+                }
+            }
+
+            panel.innerHTML = `
+                <div class="info-header">
+                    <div class="node-meta">
+                        <div style="display:flex; align-items:center;">
+                            <span>${node.type} ${node.year ? '• ' + node.year : ''}</span>
+                            <div style="margin-left:8px;">${badges}</div>
+                        </div>
+                        <button class="close-btn" onclick="closePanel()">×</button>
+                    </div>
+                    <div class="node-title">${node.name}</div>
+                </div>
+                <div class="info-body">
+                    ${descriptionHtml}
+                    
+                    <div class="info-section">
+                        <div class="section-title">Prerequisites (Requires)</div>
+                        <div class="pill-container">${pillHtml(prereqs)}</div>
+                    </div>
+                    
+                    <div class="info-section">
+                        <div class="section-title">Enables (Leads To)</div>
+                        <div class="pill-container">${pillHtml(leads)}</div>
+                    </div>
+
+                     <div class="info-section">
+                        <div class="section-title">Related Concepts / Hierarchy</div>
+                        <div class="pill-container">${pillHtml(related, true)}</div>
+                    </div>
+                    
+                    ${questions.length ? `
+                    <div class="info-section">
+                        <div class="section-title">Linked Questions</div>
+                        <div class="pill-container">${pillHtml(questions, true)}</div>
+                    </div>` : ''}
+                </div>
+            `;
+        }
+
+        function closePanel() {
+            document.getElementById('infoPanel').classList.remove('open');
+            selectedNodeId = null;
+        }
+
+        function centerFromId(id) {
+            const node = graphData.nodes.find(n => n.id === id);
+            if (node) handleNodeClick(node);
+        }
+
+        function focusCamera(node) {
+            // Re-finding node object from graph memory is safest
+            let target = node;
+            if (is3D && graph3D) {
+                // ForceGraf 3D camera
+                const dist = 60;
+                const ratio = 1 + dist / Math.hypot(node.x, node.y, node.z);
+                graph3D.cameraPosition(
+                    { x: node.x * ratio, y: node.y * ratio, z: node.z * ratio },
+                    node,
+                    2000
+                );
+            } else if (!is3D && graph2D) {
+                graph2D.centerAt(node.x, node.y, 1000);
+                graph2D.zoom(5, 2000);
+            }
+        }
+
+        // --- FILTERING ---
+        function filterByYear() {
+            const y = parseInt(document.getElementById('yearSelect').value);
+            if (!y) return;
+
+            const qs = graphData.nodes.filter(n => n.type === 'Question' && n.year === y);
+            const qIds = new Set(qs.map(n => n.id));
+            const relevantLinks = graphData.links.filter(l =>
+                qIds.has(l.source.id || l.source) || qIds.has(l.target.id || l.target)
+            );
+            const showIds = new Set();
+            relevantLinks.forEach(l => {
+                showIds.add(l.source.id || l.source); showIds.add(l.target.id || l.target);
+            });
+            const nodes = graphData.nodes.filter(n => showIds.has(n.id));
+
+            renderGraph(nodes, relevantLinks);
+            updateList('yearList', qs, colors.Question);
+            document.getElementById('qCount').innerText = qs.length;
+        }
+
+        function filterBySubject() {
+            const sub = document.getElementById('subjectSelect').value;
+            const tSel = document.getElementById('topicSelect');
+            tSel.innerHTML = '<option value="">Select Topic...</option>';
+            tSel.disabled = !sub;
+
+            if (!sub) { resetAll(); return; }
+
+            const topics = graphData.nodes.filter(n => n.parent === sub || n.parent === sub.replace(' ', '_'));
+            // Also include if node.id matches (some inconsistency in naming maybe)
+            // Simple Hack: If topic filtering needs improvement, we check basic data
+            // sorting
+            topics.sort((a, b) => a.name.localeCompare(b.name));
+
+            topics.forEach(t => {
+                const opt = document.createElement('option');
+                opt.value = t.id; opt.innerText = t.name;
+                tSel.appendChild(opt);
+            });
+
+            // Visualize Subject Cluster
+            const nodesToShow = [graphData.nodes.find(n => n.name === sub), ...topics].filter(x => x);
+            const ids = new Set(nodesToShow.map(n => n.id));
+            const links = graphData.links.filter(l => ids.has(l.source.id || l.source) && ids.has(l.target.id || l.target));
+            renderGraph(nodesToShow, links);
+        }
+
+        function filterByTopic() {
+            const tid = document.getElementById('topicSelect').value;
+            if (!tid) return;
+
+            const topic = graphData.nodes.find(n => n.id === tid);
+            const concepts = graphData.nodes.filter(n => n.parent === topic.name || n.parent === tid);
+
+            // Links
+            const coreIds = new Set([tid, ...concepts.map(c => c.id)]);
+            const links = graphData.links.filter(l => {
+                const s = l.source.id || l.source; const t = l.target.id || l.target;
+                return coreIds.has(s) || coreIds.has(t);
+            });
+            const allIds = new Set();
+            links.forEach(l => { allIds.add(l.source.id || l.source); allIds.add(l.target.id || l.target); });
+            const nodes = graphData.nodes.filter(n => allIds.has(n.id));
+
+            renderGraph(nodes, links);
+            updateList('syllabusList', concepts, colors.Concept);
+            document.getElementById('cCount').innerText = concepts.length;
+        }
+
+        function updateList(elId, items, color) {
+            const ul = document.getElementById(elId);
+            ul.innerHTML = items.map(i => `
+                <li class="list-item" onclick="centerFromId('${i.id}')">
+                    <div class="dot" style="background:${color}"></div>
+                    <span class="item-text" title="${i.name}">${i.name}</span>
+                </li>
+            `).join('');
+        }
+
+        function resetAll() {
+            document.getElementById('yearSelect').value = '';
+            document.getElementById('subjectSelect').value = '';
+            document.getElementById('topicSelect').value = '';
+            document.getElementById('yearList').innerHTML = '';
+            document.getElementById('syllabusList').innerHTML = '';
+            document.getElementById('qCount').innerText = '0';
+            document.getElementById('cCount').innerText = '--';
+            document.getElementById('infoPanel').classList.remove('open');
+            renderGraph(graphData.nodes, graphData.links);
+        }
+
+        // --- UTL ---
+        function switchTab(t) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById('tab-year').style.display = t === 'year' ? 'block' : 'none';
+            document.getElementById('tab-syllabus').style.display = t === 'syllabus' ? 'block' : 'none';
+        }
+
+        function toggle3D() {
+            is3D = !is3D;
+            document.getElementById('btn3d').innerHTML = is3D ? '<span>Disable 3D View</span>' : '<span>Enable 3D View</span>';
+            const curData = is3D ? graph2D.graphData() : graph3D.graphData();
+            renderGraph(curData.nodes, curData.links);
+        }
+
+    </script>
+</body>
+
+</html>
